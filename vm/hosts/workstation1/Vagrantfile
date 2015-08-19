@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "Ubuntu Desktop 64-bit 15.04 20150808"
+  config.vm.box = "Ubuntu Desktop 64-bit 15.04"
 
   config.ssh.private_key_path= "/Users/demouser/vm/keys/vagrant"
 
