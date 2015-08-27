@@ -10,7 +10,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "../../data", "/vagrant_data"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.gui = true
+    # vb.gui = true
     vb.name = "ws-3-102"
     # Use VirtualBox's VBoxManage to set the second NIC to "Not attached" for
     # use in GNS3
@@ -20,5 +20,6 @@ Vagrant.configure(2) do |config|
 config.vm.provision "shell", inline: <<-SHELL
     # sudo apt-get update
     # sudo apt-get upgrade
+    sudo shutdown -h now
   SHELL
 end
