@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "Ubuntu Desktop 64-bit 15.04"
+  config.ssh.private_key_path= "/Users/dmb/vm/keys/vagrant"
+
+  config.vm.network "private_network", ip: "192.168.3.100", virtualbox__null: true
+
+  config.vm.synced_folder "../../data", "/vagrant_data"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.gui = true
+    vb.name = "ws-3-100"
+    # Use VirtualBox's VBoxManage to set the second NIC to "Not attached" for
+    # use in GNS3
+    vb.customize ["modifyvm", :id, "--nic2", "null"]
+  end
+
+config.vm.provision "shell", inline: <<-SHELL
+    # sudo apt-get update
+    # sudo apt-get upgrade
+  SHELL
+end
