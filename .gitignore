@@ -2,3 +2,4 @@ vm.tar
 vm/basebox/UbuntuDesktop1504.box
 vm/basebox/UbuntuServer1504.box
 .vagrant
+.DS_Store
