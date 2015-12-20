@@ -1,0 +1,28 @@
+Building a base box
+===================
+The Makefile helps automate, to a certain extent, building base boxes for
+Vagrant.  Full documentation can be found at
+https://docs.vagrantup.com/v2/boxes/base.html.  The Makefile builds an Ubuntu
+Desktop by default.  The basic steps are:
+
+#== Install ubnutu as normal with the demouser
+make
+#== apt-get install dkms; install Guest Addtions; add demouser to vboxsf group
+make vboxext
+#== Run make as root with the Makefile in the shared folder
+make vagrant
+make package
+
+Building Ubuntu server is basically the same process but you add
+"-e PLATFORM=server" to the make command: 
+
+make -e PLATFORM=server
+make -e PLATFORM=server vboxext
+make -e PLATFORM=server vagrant
+make -e PLATFORM=server package
+
+There are also some other make targets you may find useful:
+
+make cleanvm (removed the VM from VirtualBox)
+make iso (downloads the ubunto ISO file if you don't already have it.
+
