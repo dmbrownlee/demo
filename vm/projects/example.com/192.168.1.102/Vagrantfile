@@ -11,7 +11,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |vb|
     # vb.gui = true
-    vb.name = "ws-1-102"
+    vb.name = "192.168.1.102"
     # Use VirtualBox's VBoxManage to set the second NIC to "Not attached" for
     # use in GNS3
     vb.customize ["modifyvm", :id, "--nic2", "null"]
