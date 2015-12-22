@@ -19,7 +19,7 @@ DISTRO_MIRROR := http://mirror.pnl.gov/releases
 VM = $(DISTRO) $(PLATFORM) $(ARCH) $(DISTRO_VERSION)
 ISO = $(DISTRO)-$(DISTRO_VERSION)-$(PLATFORM)-$(ARCH).iso
 
-ISODIR := $(HOME)/vm/basebox
+ISODIR := $(HOME)/vm/basebox/iso
 
 all: buildvm
 
@@ -30,7 +30,8 @@ iso:
 	#======================================================================
 	# Downloading $(ISO)
 	#======================================================================
-	if [ ! -f $(ISO) ]; then curl -O $(DISTRO_MIRROR)/$(DISTRO_VERSION)/$(ISO); fi
+	if [ ! -d $(ISODIR) ]; then mkdir -p $(ISODIR); fi
+	if [ ! -f $(ISODIR)/$(ISO) ]; then sh -c "cd $(ISODIR) && curl -O $(DISTRO_MIRROR)/$(DISTRO_VERSION)/$(ISO)"; fi
 
 #==============================================================================
 # Remove the exiting VM with the same name (if any)
