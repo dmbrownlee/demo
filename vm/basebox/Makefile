@@ -5,7 +5,7 @@
 
 .PHONY:iso
 .PHONY:cleanvm
-.PHONY:buildvm
+.PHONY:newvm
 .PHONY:vboxext
 .PHONY:vagrant
 .PHONY:package
@@ -21,7 +21,16 @@ ISO = $(DISTRO)-$(DISTRO_VERSION)-$(PLATFORM)-$(ARCH).iso
 
 ISODIR := $(HOME)/vm/basebox/iso
 
-all: buildvm
+help:
+	@echo ""
+	@echo "This make file is used to build vagrant base boxes.  The"
+	@echo "typical steps are:"
+	@echo ""
+	@echo "  make newvm	(create the VM and install the OS)"
+	@echo "  make vboxext	(add the VirtualBox guest extensions)"
+	@echo "  make vagrant	(add the vagrant user account)"
+	@echo "  make package	(create the basebox)"
+	@echo ""
 
 #==============================================================================
 # Fetch the ISO image for the install
@@ -47,7 +56,7 @@ cleanvm:
 #==============================================================================
 # Build the VM
 #==============================================================================
-buildvm: iso cleanvm
+newvm: iso cleanvm
 	#======================================================================
 	# (Re)create "$(VM)" VM
 	#======================================================================
