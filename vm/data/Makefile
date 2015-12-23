@@ -16,4 +16,7 @@ setup:
 	mkdir -m 700 ~vagrant/.ssh
 	cat /media/sf_vagrant_data/vagrant.pub >> ~vagrant/.ssh/authorized_keys
 	chown -R vagrant ~vagrant/.ssh
-	chmod 600 ~vagrant/.ssh/authorized_keys 
+	chmod 600 ~vagrant/.ssh/authorized_keys
+	# Vagrant still requires old-style "ethX" interface names
+	sed -r -i -e 's/^GRUB_CMDLINE_LINUX=""$$/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/'
+	grub-mkconfig -o /boot/grub/grub.cfg
