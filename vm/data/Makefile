@@ -18,5 +18,5 @@ setup:
 	chown -R vagrant ~vagrant/.ssh
 	chmod 600 ~vagrant/.ssh/authorized_keys
 	# Vagrant still requires old-style "ethX" interface names
-	sed -r -i -e 's/^GRUB_CMDLINE_LINUX=""$$/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/'
+	sed -r -i -e 's/^GRUB_CMDLINE_LINUX=""$$/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/' /etc/default/grub
 	grub-mkconfig -o /boot/grub/grub.cfg
