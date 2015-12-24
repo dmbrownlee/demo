@@ -52,7 +52,7 @@ cleanvm:
 	#======================================================================
 	# Delete the "$(VM)" VM (if it exists)
 	#======================================================================
-	-vboxmanage controlvm "ubuntu desktop amd64 15.10" poweroff
+	-vboxmanage controlvm "$(VM)" poweroff
 	-vboxmanage unregistervm "$(VM)" --delete
 	-vboxmanage closemedium disk "$(HOME)/VirtualBox VMs/$(VM)/box-disk1.vmdk" --delete
 
@@ -84,7 +84,7 @@ newvm: iso cleanvm
 # Install the guest additions
 #==============================================================================
 vboxext:
-	-vboxmanage controlvm "ubuntu desktop amd64 15.10" poweroff
+	-vboxmanage controlvm "$(VM)" poweroff
 	vboxmanage startvm "$(VM)"
 	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
 	@echo ""
@@ -108,7 +108,7 @@ vboxext:
 # Add the vagrant user
 #==============================================================================
 vagrant:
-	-vboxmanage controlvm "ubuntu desktop amd64 15.10" poweroff
+	-vboxmanage controlvm "$(VM)" poweroff
 	vboxmanage startvm "$(VM)"
 	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium emptydrive
 	vboxmanage sharedfolder add "$(VM)" --name "vagrant_data" --hostpath "$(HOME)/vm/data" --transient --automount
@@ -128,7 +128,7 @@ vagrant:
 # Package the VM for Vagrant
 #==============================================================================
 package:
-	-vboxmanage controlvm "ubuntu desktop amd64 15.10" poweroff
+	-vboxmanage controlvm "$(VM)" poweroff
 	vagrant package --base "$(VM)"
 	vagrant box remove "$(VM)" || true
 	vagrant box add --name "$(VM)" package.box
