@@ -44,6 +44,7 @@ visudo -c
 #=============================================================================
 sed -r -i -e 's/^GRUB_CMDLINE_LINUX=""$$/GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
+sed -r -i -e 's/enp0s3/eth0/' /etc/default/grub
 
 #============================================================
 # Optional: These commands are NOT required for vagrant to
