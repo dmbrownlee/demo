@@ -54,3 +54,5 @@ grub-mkconfig -o /boot/grub/grub.cfg
 #============================================================
 # psuedo idempotent edit of user.conf
 sed -r -i -e '/^hidden-users=/{s/ vagrant//;s/$$/ vagrant/}' /etc/lightdm/users.conf
+# install a better browser
+apt-get install -y chromium-browser
