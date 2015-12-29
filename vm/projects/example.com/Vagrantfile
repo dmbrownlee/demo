@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.ssh.private_key_path= "~/vm/keys/vagrant"
+
+  config.vm.define "dns" do |dns|
+    dns.vm.box = "ubuntu-15.10-server-amd64"
+    dns.vm.network "private_network", ip: "10.0.10.1", virtualbox__null: true
+    dns.vm.synced_folder "~/vm/data", "/vagrant_data"
+    dns.vm.boot_timeout = 60
+    dns.vm.provider "virtualbox" do |vb|
+      vb.name = "dns"
+    end
+    dns.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "playbook.yml"
+    end
+  end
+
+  config.vm.define "dhcp" do |dhcp|
+    dhcp.vm.box = "ubuntu-15.10-server-amd64"
+    dhcp.vm.network "private_network", ip: "10.0.10.2", virtualbox__null: true
+    dhcp.vm.synced_folder "~/vm/data", "/vagrant_data"
+    dhcp.vm.boot_timeout = 60
+    dhcp.vm.provider "virtualbox" do |vb|
+      vb.name = "dhcp"
+    end
+    dhcp.vm.provision "ansible" do |ansible|
+      ansible.verbose = "v"
+      ansible.playbook = "playbook.yml"
+    end
+  end
+
+end
