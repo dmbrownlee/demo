@@ -3,22 +3,13 @@
 # to the list of available packagees in vagrant.  If a package already exists
 # with the same name, it is replaced.
 
-.PHONY:iso
 .PHONY:cleanvm
 .PHONY:newvm
 .PHONY:vboxext
 .PHONY:vagrant
 .PHONY:package
 
-DISTRO := ubuntu
-PLATFORM := desktop
-ARCH := amd64
-DISTRO_VERSION := 15.10
-DISTRO_MIRROR := http://mirror.pnl.gov/releases
-
-VM = $(DISTRO) $(PLATFORM) $(ARCH) $(DISTRO_VERSION)
-ISO = $(DISTRO)-$(DISTRO_VERSION)-$(PLATFORM)-$(ARCH).iso
-
+#VM = CentOS-7-x86_64-Minimal-1511
 ISODIR := $(HOME)/vm/basebox/iso
 
 help:
@@ -26,6 +17,8 @@ help:
 	@echo "This make file is used to build vagrant base boxes.  The"
 	@echo "typical steps are:"
 	@echo ""
+	@echo "  export VM=<VM>"
+	@echo "    (where <VM> is the ISO filename without the .iso extension)"
 	@echo "  make newvm	(create the VM and install the OS)"
 	@echo "  make vboxext	(add the VirtualBox guest extensions)"
 	@echo "  make vagrant	(add the vagrant user account)"
@@ -36,14 +29,18 @@ help:
 	@echo ""
 
 #==============================================================================
-# Fetch the ISO image for the install
+# Verify that $VM is set
 #==============================================================================
-iso:
-	#======================================================================
-	# Downloading $(ISO)
-	#======================================================================
-	if [ ! -d $(ISODIR) ]; then mkdir -p $(ISODIR); fi
-	if [ ! -f $(ISODIR)/$(ISO) ]; then sh -c "cd $(ISODIR) && curl -O $(DISTRO_MIRROR)/$(DISTRO_VERSION)/$(ISO)"; fi
+$(VM).isset:
+	@if [[ -z "$(VM)" ]]; then echo "You must set the VM environment variable"; exit 1; fi
+	export ISO=$(VM).iso
+
+#==============================================================================
+# Print warning and exit if the ISO file does not exist
+#==============================================================================
+$(ISODIR)/$(ISO):
+	@echo "You need to download $(ISO) to the $(ISODIR) directory"
+	@exit 1
 
 #==============================================================================
 # Remove the exiting VM with the same name (if any)
@@ -59,11 +56,11 @@ cleanvm:
 #==============================================================================
 # Build the VM
 #==============================================================================
-newvm: iso cleanvm
+newvm: $(VM).isset $(ISODIR)/$(ISO) cleanvm
 	#======================================================================
 	# (Re)create "$(VM)" VM
 	#======================================================================
-	vboxmanage createvm --name "$(VM)" --register --ostype Ubuntu_64
+	vboxmanage createvm --name "$(VM)" --register --ostype RedHat_64
 	vboxmanage modifyvm "$(VM)" --memory 768 --vram 12 --pae off --boot1 dvd --boot2 disk --boot3 none --rtcuseutc on --mouse usbtablet --clipboard bidirectional --usb on --nestedpaging on
 	vboxmanage storagectl "$(VM)" --name IDE --add ide --controller PIIX4 --portcount 2 --bootable on
 	vboxmanage storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 1 --bootable on
@@ -83,7 +80,7 @@ newvm: iso cleanvm
 #==============================================================================
 # Install the guest additions
 #==============================================================================
-vboxext:
+vboxext: $(VM).isset
 	-vboxmanage controlvm "$(VM)" poweroff
 	vboxmanage startvm "$(VM)"
 	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
@@ -96,7 +93,10 @@ vboxext:
 	@echo "  - Upgrade all existing packages"
 	@echo "  - Install the kernel module devel tools"
 	@echo "      (Ubuntu: sudo apt-get install dkms)"
+	@echo "      (Centos: sudo yum install epel-release)"
+	@echo "      (Centos: sudo yum install dkms)"
 	@echo "  - Install the Guest Additions"
+	@echo "      (Centos: sudo yum install dkms)"
 	@echo "      (sudo sh /media/demouser/VBOXADDITIONS_5.0.10_104061/autorun.sh)"
 	@echo "  - Add the user to the vboxsf group"
 	@echo "      (sudo usermod -a -G vboxsf demouser)"
@@ -107,7 +107,7 @@ vboxext:
 #==============================================================================
 # Add the vagrant user
 #==============================================================================
-vagrant:
+vagrant: $(VM).isset
 	-vboxmanage controlvm "$(VM)" poweroff
 	vboxmanage startvm "$(VM)"
 	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium emptydrive
@@ -127,7 +127,7 @@ vagrant:
 #==============================================================================
 # Package the VM for Vagrant
 #==============================================================================
-package:
+package: $(VM).isset
 	-vboxmanage controlvm "$(VM)" poweroff
 	vagrant package --base "$(VM)"
 	vagrant box remove "$(VM)" || true
