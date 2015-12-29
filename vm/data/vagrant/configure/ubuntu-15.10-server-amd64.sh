@@ -46,6 +46,11 @@ sed -r -i -e 's/^GRUB_CMDLINE_LINUX=""$$/GRUB_CMDLINE_LINUX="net.ifnames=0 biosd
 grub-mkconfig -o /boot/grub/grub.cfg
 sed -r -i -e 's/enp0s3/eth0/' /etc/default/grub
 
+#=============================================================================
+# Step 6: Install python (required by anisible)
+#=============================================================================
+apt-get install python
+
 #============================================================
 # Optional: These commands are NOT required for vagrant to
 #           run but are common enough that we want to
