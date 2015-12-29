@@ -33,13 +33,12 @@ help:
 #==============================================================================
 $(VM).isset:
 	@if [[ -z "$(VM)" ]]; then echo "You must set the VM environment variable"; exit 1; fi
-	export ISO=$(VM).iso
 
 #==============================================================================
 # Print warning and exit if the ISO file does not exist
 #==============================================================================
-$(ISODIR)/$(ISO):
-	@echo "You need to download $(ISO) to the $(ISODIR) directory"
+$(ISODIR)/$(VM).iso:
+	@echo "You need to download $(VM).iso to the $(ISODIR) directory"
 	@exit 1
 
 #==============================================================================
@@ -56,7 +55,7 @@ cleanvm:
 #==============================================================================
 # Build the VM
 #==============================================================================
-newvm: $(VM).isset $(ISODIR)/$(ISO) cleanvm
+newvm: $(VM).isset $(ISODIR)/$(VM).iso cleanvm
 	#======================================================================
 	# (Re)create "$(VM)" VM
 	#======================================================================
@@ -65,7 +64,7 @@ newvm: $(VM).isset $(ISODIR)/$(ISO) cleanvm
 	vboxmanage storagectl "$(VM)" --name IDE --add ide --controller PIIX4 --portcount 2 --bootable on
 	vboxmanage storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 1 --bootable on
 	vboxmanage createhd --filename "$(HOME)/VirtualBox VMs/$(VM)/box-disk1.vmdk" --size 8192 --format VMDK
-	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium $(ISODIR)/$(ISO)
+	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium $(ISODIR)/$(VM).iso
 	vboxmanage storageattach "$(VM)" --storagectl SATA --port 0 --device 0 --type hdd --medium "$(HOME)/VirtualBox VMs/$(VM)/box-disk1.vmdk" --hotpluggable on
 	vboxmanage startvm "$(VM)"
 	@echo ""
