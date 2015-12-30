@@ -10,3 +10,19 @@
     - name: restart ntpd
       sudo: True
       service: name=ntp.service enabled=yes state=restarted
+- hosts: dns
+  tasks:
+    - name: Configure system hostname
+      sudo: True
+      hostname: name=dns
+    - name: Configure system dnsdomainname
+      sudo: True
+      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.1  dns.example.test dns' owner=root group=root mode=0644 state=present
+- hosts: dhcp
+  tasks:
+    - name: Configure system hostname
+      sudo: True
+      hostname: name=dhcp
+    - name: Configure system dnsdomainname
+      sudo: True
+      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  dhcp.example.test dhcp' owner=root group=root mode=0644 state=present
