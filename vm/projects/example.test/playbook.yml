@@ -1,7 +1,37 @@
 ---
-- hosts: all
+- name: Common Configuration for all hosts
+  hosts: all
   tasks:
-    - name: ensure ntpd is at the latest version
+    - name: Install common packages
+      sudo: True
+      apt: "pkg={{ item }} state=latest"
+      with_items:
+      - dnsutils
+      - sysstat
+      - git
+      - strace
+    - name: Configure system hostname
+      sudo: True
+      hostname: 'name={{ hostname }}'
+    - name: Configure system dnsdomainname
+      sudo: True
+      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  {{ hostname }}.example.test {{ hostname }}' owner=root group=root mode=0644 state=present
+- name: Configure DNS server
+  hosts: dns
+  tasks:
+    - name: Install the BIND DNS server
+      sudo: True
+      apt: pkg=bind9 state=latest
+- name: Configure DHCP server
+  hosts: dhcp
+  tasks:
+    - name: Install the ISC's DHCP Server
+      sudo: True
+      apt: pkg=isc-dhcp-server state=latest
+- name: Configure NTP server
+  hosts: ntp
+  tasks:
+    - name: Install NTP server
       sudo: True
       apt: pkg=ntp state=latest
       notify:
@@ -10,19 +40,3 @@
     - name: restart ntpd
       sudo: True
       service: name=ntp.service enabled=yes state=restarted
-- hosts: dns
-  tasks:
-    - name: Configure system hostname
-      sudo: True
-      hostname: name=dns
-    - name: Configure system dnsdomainname
-      sudo: True
-      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.1  dns.example.test dns' owner=root group=root mode=0644 state=present
-- hosts: dhcp
-  tasks:
-    - name: Configure system hostname
-      sudo: True
-      hostname: name=dhcp
-    - name: Configure system dnsdomainname
-      sudo: True
-      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  dhcp.example.test dhcp' owner=root group=root mode=0644 state=present
