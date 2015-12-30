@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
     end
     dns.vm.provision "ansible" do |ansible|
       ansible.verbose = "v"
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "ansible/playbook.yml"
     end
   end
 
@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
     end
     dhcp.vm.provision "ansible" do |ansible|
       ansible.verbose = "v"
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "ansible/playbook.yml"
     end
   end
 
@@ -37,6 +37,6 @@ Vagrant.configure(2) do |config|
         "dhcpservers" => ["dhcp"],
       }
       ansible.verbose = "v"
-      ansible.playbook = "playbook.yml"
+      ansible.playbook = "ansible/playbook.yml"
     end
 end
