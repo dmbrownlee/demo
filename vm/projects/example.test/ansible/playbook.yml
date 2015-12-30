@@ -16,20 +16,20 @@
     - name: Configure system dnsdomainname
       sudo: True
       lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  {{ hostname }}.example.test {{ hostname }}' owner=root group=root mode=0644 state=present
-- name: Configure DNS server
-  hosts: dns
+- name: Install DNS server
+  hosts: nameservers
   tasks:
     - name: Install the BIND DNS server
       sudo: True
       apt: pkg=bind9 state=latest
-- name: Configure DHCP server
-  hosts: dhcp
+- name: Install DHCP server
+  hosts: dhcpservers
   tasks:
     - name: Install the ISC's DHCP Server
       sudo: True
       apt: pkg=isc-dhcp-server state=latest
-- name: Configure NTP server
-  hosts: ntp
+- name: Install NTP server
+  hosts: ntpservers
   tasks:
     - name: Install NTP server
       sudo: True
