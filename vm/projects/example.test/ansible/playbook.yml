@@ -12,10 +12,10 @@
       - strace
     - name: Configure system hostname
       sudo: True
-      hostname: 'name={{ hostname }}'
+      hostname: 'name={{ inventory_hostname }}'
     - name: Configure system dnsdomainname
       sudo: True
-      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  {{ hostname }}.example.test {{ hostname }}' owner=root group=root mode=0644 state=present
+      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='10.0.10.2  {{ inventory_hostname }}.example.test {{ inventory_hostname }}' owner=root group=root mode=0644 state=present
 - name: Install DNS server
   hosts: nameservers
   tasks:
