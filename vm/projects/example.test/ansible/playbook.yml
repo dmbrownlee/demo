@@ -28,6 +28,12 @@
     - name: Install the ISC's DHCP Server
       sudo: True
       apt: pkg=isc-dhcp-server state=latest
+- name: Configure NAT gateway
+  hosts: gateway
+  tasks:
+    - name: Enable routing between interfaces
+      sudo: True
+      sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
 - name: Install NTP server
   hosts: ntpservers
   tasks:
