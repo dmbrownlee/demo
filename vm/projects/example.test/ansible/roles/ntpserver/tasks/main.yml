@@ -5,7 +5,3 @@
   apt: pkg=ntp state=latest
   notify:
   - restart ntpd
-  handlers:
-- name: restart ntpd
-  sudo: True
-  service: name=ntp.service enabled=yes state=restarted
