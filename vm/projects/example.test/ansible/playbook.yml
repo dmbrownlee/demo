@@ -8,9 +8,9 @@
   roles:
     - role: nameserver
 - name: Install DHCP server
-  hosts: dhcpserver
+  hosts: dhcpservers
   roles:
-    - role: dhcpservers
+    - role: dhcpserver
 - name: Configure NAT gateway
   hosts: gateway
   roles:
