@@ -1,48 +1,21 @@
 ---
 - name: Common Configuration for all hosts
   hosts: all
-  tasks:
-    - name: Install common packages
-      sudo: True
-      apt: "pkg={{ item }} state=latest"
-      with_items:
-      - dnsutils
-      - sysstat
-      - git
-      - strace
-    - name: Configure system hostname
-      sudo: True
-      hostname: 'name={{ inventory_hostname }}'
-    - name: Configure system dnsdomainname
-      sudo: True
-      lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='{{ ansible_eth1.ipv4.address }}  {{ inventory_hostname }}.example.test {{ inventory_hostname }}' owner=root group=root mode=0644 state=present
+  roles:
+    - role: common
 - name: Install DNS server
   hosts: nameservers
-  tasks:
-    - name: Install the BIND DNS server
-      sudo: True
-      apt: pkg=bind9 state=latest
+  roles:
+    - role: nameserver
 - name: Install DHCP server
-  hosts: dhcpservers
-  tasks:
-    - name: Install the ISC's DHCP Server
-      sudo: True
-      apt: pkg=isc-dhcp-server state=latest
+  hosts: dhcpserver
+  roles:
+    - role: dhcpservers
 - name: Configure NAT gateway
   hosts: gateway
-  tasks:
-    - name: Enable routing between interfaces
-      sudo: True
-      sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+  roles:
+    - role: gateway
 - name: Install NTP server
   hosts: ntpservers
-  tasks:
-    - name: Install NTP server
-      sudo: True
-      apt: pkg=ntp state=latest
-      notify:
-      - restart ntpd
-  handlers:
-    - name: restart ntpd
-      sudo: True
-      service: name=ntp.service enabled=yes state=restarted
+  roles:
+    - role: ntpserver
