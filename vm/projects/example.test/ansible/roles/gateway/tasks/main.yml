@@ -1,2 +1,35 @@
 ---
 # tasks file for gateway
+- name: Configure sub-interface with default gateway address
+  sudo: True
+  copy: src=etc_network_interfaces.d_eth1-254 dest=/etc/network/interfaces.d/eth1-254
+  notify: networking_restart
+- name: Enable routing between interfaces
+  sudo: True
+  sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+- name: Allow incoming traffic from internal network
+  sudo: True
+  ufw: rule=allow interface=eth1 direction=in src={{ internal_net }}
+- name: Allow outgoing traffic to internal network
+  sudo: True
+  ufw: rule=allow interface=eth1 direction=out dest={{ internal_net }}
+- name: Change default policy to allow forwarding
+  sudo: True
+  copy: src=etc_default_ufw dest=/etc/default/ufw
+  notify: ufw_reload
+- name: Configure masquerading
+  sudo: True
+  blockinfile:
+    dest: /etc/ufw/before.rules
+    content: |
+      # NAT table rules
+      *nat
+      :POSTROUTING ACCEPT [0:0]
+      
+      -F
+      # Forward traffic through eth0 - Change to match you out-interface
+      -A POSTROUTING -s {{ internal_net }} -o eth0 -j MASQUERADE
+      
+      # don't delete the 'COMMIT' line or these nat table rules won't
+      # be processed
+      COMMIT
