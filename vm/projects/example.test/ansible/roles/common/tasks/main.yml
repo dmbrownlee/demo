@@ -14,3 +14,15 @@
 - name: Configure system dnsdomainname
   sudo: True
   lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='{{ hostvars[inventory_hostname].ansible_eth1.ipv4.address }}  {{ inventory_hostname }}.example.test {{ inventory_hostname }}' owner=root group=root mode=0644 state=present
+- name: Enable ufw logging
+  sudo: True
+  ufw: logging=on
+- name: Enable ufw rate limiting of ssh connections
+  sudo: True
+  ufw: rule=limit port=ssh proto=tcp
+- name: Configure ufw to allow incoming SSH connections
+  sudo: True
+  ufw: rule=allow name=OpenSSH
+- name: Enable ufw firewall
+  sudo: True
+  ufw: state=enabled
