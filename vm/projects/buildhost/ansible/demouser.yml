@@ -1,0 +1,28 @@
+---
+- name: Setup the dev environment for building demouser
+  hosts: localhost
+  vars:
+    - install_dir: "{{ ansible_user_dir }}/demouser"
+    - src_repo: "https://github.com/dmbrownlee/demouser.git"
+    - iso_dir: "{{ install_dir }}/vm/basebox/iso"
+    - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
+  tasks:
+    - name: Install blockinfile
+      sudo: True
+      command: "ansible-galaxy install yaegashi.blockinfile"
+      args:
+        creates: /etc/ansible/roles/yaegashi.blockinfile
+    - name: Verify git is installed
+      command: "git --version"
+    - name: Verify VirtualBox is installed
+      command: "VBoxManage --version"
+    - name: Verify Vagrant is installed
+      command: "vagrant --version"
+    - name: Fetch demouser project from github
+      git: clone=yes dest={{ install_dir }} repo={{ src_repo }}
+    - name: Download ubuntu server ISO used to build the basebox
+      tags:
+        get-iso
+      get_url:
+        dest: "{{ iso_dir }}"
+        url: "{{ iso_url }}"
