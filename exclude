@@ -1,12 +1,10 @@
 # This file retricts what goes into the tarball we sideload onto training
 # machines.
 
-# The ./vm/hosts/playground directory is for testing Vagrantfiles.  These
-# machines will be moved to a more appropriate location when they are ready
-# but, for now, we don't want them in the tarball.
-./vm/hosts/playground
-
 # To keep the tarball small, we only want to include the Vagrantfile config
 # for each machine.  The .vagrant file in each host directory is created when
 # "vagrant up" is run so it doesn't need to be included.
-./vm/hosts/*/.vagrant
+./vm/projects/*
+./vm/basebox/iso/*
+*/.DS_Store
+*.swp
