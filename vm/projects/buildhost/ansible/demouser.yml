@@ -7,11 +7,6 @@
     - iso_dir: "{{ install_dir }}/vm/basebox/iso"
     - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
   tasks:
-    - name: Install blockinfile
-      become: True
-      command: "ansible-galaxy install yaegashi.blockinfile"
-      args:
-        creates: /etc/ansible/roles/yaegashi.blockinfile
     - name: Verify git is installed
       command: "git --version"
     - name: Verify VirtualBox is installed
