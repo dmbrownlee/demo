@@ -1,7 +1,7 @@
 ---
 # tasks file for common
 - name: Install common packages
-  sudo: True
+  become: True
   apt: "pkg={{ item }} state=latest"
   with_items:
   - dnsutils
@@ -9,20 +9,20 @@
   - git
   - strace
 - name: Configure system hostname
-  sudo: True
+  become: True
   hostname: 'name={{ inventory_hostname }}'
 - name: Configure system dnsdomainname
-  sudo: True
+  become: True
   lineinfile: dest=/etc/hosts regexp='^127\.0\.1\.1' line='{{ hostvars[inventory_hostname].ansible_eth1.ipv4.address }}  {{ inventory_hostname }}.example.test {{ inventory_hostname }}' owner=root group=root mode=0644 state=present
 - name: Enable ufw logging
-  sudo: True
+  become: True
   ufw: logging=on
 - name: Enable ufw rate limiting of ssh connections
-  sudo: True
+  become: True
   ufw: rule=limit port=ssh proto=tcp
 - name: Configure ufw to allow incoming SSH connections
-  sudo: True
+  become: True
   ufw: rule=allow name=OpenSSH
 - name: Enable ufw firewall
-  sudo: True
+  become: True
   ufw: state=enabled

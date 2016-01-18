@@ -1,5 +1,5 @@
 ---
 # tasks file for dhcpserver
 - name: Install the ISC's DHCP Server
-  sudo: True
+  become: True
   apt: pkg=isc-dhcp-server state=latest

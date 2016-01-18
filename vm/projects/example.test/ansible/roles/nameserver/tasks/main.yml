@@ -1,6 +1,5 @@
 ---
 # tasks file for nameservers
 - name: Install the BIND DNS server
-  sudo: True
+  become: True
   apt: pkg=bind9 state=latest
-
