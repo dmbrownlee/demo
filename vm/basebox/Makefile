@@ -3,29 +3,28 @@
 # to the list of available packagees in vagrant.  If a package already exists
 # with the same name, it is replaced.
 
-.PHONY:cleanvm
-.PHONY:newvm
-.PHONY:vboxext
-.PHONY:vagrant
-.PHONY:package
+.PHONY:clean
+.PHONY:vm
+.PHONY:config
+.PHONY:install
 
 #VM = CentOS-7-x86_64-Minimal-1511
 ISODIR := $(HOME)/vm/basebox/iso
+SSHPORT := 2268
 
 help:
 	@echo ""
-	@echo "This make file is used to build vagrant base boxes.  The"
-	@echo "typical steps are:"
+	@echo "This make file is used to build vagrant baseboxes.  The steps"
+	@echo "are:"
 	@echo ""
 	@echo "  export VM=<VM>"
 	@echo "    (where <VM> is the ISO filename without the .iso extension)"
-	@echo "  make newvm	(create the VM and install the OS)"
-	@echo "  make vboxext	(add the VirtualBox guest extensions)"
-	@echo "  make vagrant	(add the vagrant user account)"
-	@echo "  make package	(create the basebox)"
+	@echo "  make vm	(create the VM and install the OS)"
+	@echo "  make config	(use ansible to configure the VM for vagrant)"
+	@echo "  make install	(create the basebox from the VM and install it)"
 	@echo ""
-	@echo "Start by running \"make newvm\" and follow the steps echoed"
-	@echo "to the terminal."
+	@echo "You may also wish to start by running \"make clean\" to remove"
+	@echo "a VM with the same name from a previous basebox build."
 	@echo ""
 
 #==============================================================================
@@ -44,7 +43,7 @@ $(ISODIR)/$(VM).iso:
 #==============================================================================
 # Remove the exiting VM with the same name (if any)
 #==============================================================================
-cleanvm:
+clean:
 	#======================================================================
 	# Delete the "$(VM)" VM (if it exists)
 	#======================================================================
@@ -53,14 +52,15 @@ cleanvm:
 	-vboxmanage closemedium disk "$(HOME)/VirtualBox VMs/$(VM)/box-disk1.vmdk" --delete
 
 #==============================================================================
-# Build the VM
+# Create the VM
 #==============================================================================
-newvm: $(VM).isset $(ISODIR)/$(VM).iso cleanvm
+vm: $(VM).isset $(ISODIR)/$(VM).iso
 	#======================================================================
 	# (Re)create "$(VM)" VM
 	#======================================================================
 	vboxmanage createvm --name "$(VM)" --register --ostype RedHat_64
 	vboxmanage modifyvm "$(VM)" --memory 768 --vram 12 --pae off --boot1 dvd --boot2 disk --boot3 none --rtcuseutc on --mouse usbtablet --clipboard bidirectional --usb on --nestedpaging on
+	vboxmanage modifyvm "$(VM)" --natpf1 "ssh,tcp,127.0.0.1,$(SSHPORT),,22"
 	vboxmanage storagectl "$(VM)" --name IDE --add ide --controller PIIX4 --portcount 2 --bootable on
 	vboxmanage storagectl "$(VM)" --name SATA --add sata --controller IntelAHCI --portcount 1 --bootable on
 	vboxmanage createhd --filename "$(HOME)/VirtualBox VMs/$(VM)/box-disk1.vmdk" --size 8192 --format VMDK
@@ -71,62 +71,28 @@ newvm: $(VM).isset $(ISODIR)/$(VM).iso cleanvm
 	@echo "The VM for the basebox has been created and the OS installer"
 	@echo "has been launched.  Do the following:"
 	@echo ""
-	@echo "  - Install a minimal OS as you normally would"
-	@echo "  - Shutdown the VM"
-	@echo "  - Run \"make vboxext\" to begin the next step"
+	@echo "  - Install a minimal OS and make sure you install openssh-server and python"
+	@echo "  - Run \"make config\" to begin the next step"
 	@echo ""
 
 #==============================================================================
-# Install the guest additions
+# Use ansible to configure the VM
 #==============================================================================
-vboxext: $(VM).isset
-	-vboxmanage controlvm "$(VM)" poweroff
-	vboxmanage startvm "$(VM)"
-	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
+config:
+	ansible-playbook -i inventory.basebox -e 'host_key_checking=False' --ssh-extra-args '-o UserKnownHostsFile=/dev/null' --user=demouser --ask-pass --ask-become-pass basebox.yml
 	@echo ""
-	@echo "Now we need to install the Guest Addtions.  The VM has been"
-	@echo "started again and the Guest Additions virtual disk is loaded."
-	@echo "Login to the virtual machine, launch the terminal, and do"
-	@echo "the following:"
+	@echo "Ansible has configured the VM for use with Vagrant.  Assuming"
+	@echo "all your basebox customizations are done by ansible (as they"
+	@echo "should be), all that is left is to packed the basebox and"
+	@echo "install it."
 	@echo ""
-	@echo "  - Upgrade all existing packages"
-	@echo "  - Install the kernel module devel tools"
-	@echo "      (Ubuntu: sudo apt-get install dkms)"
-	@echo "      (Centos: sudo yum install epel-release)"
-	@echo "      (Centos: sudo yum install dkms)"
-	@echo "  - Install the Guest Additions"
-	@echo "      (Centos: sudo yum install dkms)"
-	@echo "      (sudo sh /media/demouser/VBOXADDITIONS_5.0.10_104061/autorun.sh)"
-	@echo "  - Add the user to the vboxsf group"
-	@echo "      (sudo usermod -a -G vboxsf demouser)"
-	@echo "  - Shutdown the VM"
-	@echo "  - Run \"make vagrant\" to begin the next step"
-	@echo ""
-
-#==============================================================================
-# Add the vagrant user
-#==============================================================================
-vagrant: $(VM).isset
-	-vboxmanage controlvm "$(VM)" poweroff
-	vboxmanage startvm "$(VM)"
-	vboxmanage storageattach "$(VM)" --storagectl IDE --port 1 --device 0 --type dvddrive --medium emptydrive
-	vboxmanage sharedfolder add "$(VM)" --name "vagrant_data" --hostpath "$(HOME)/vm/data" --transient --automount
-	@echo ""
-	@echo "Now we are going to add the vagrant user. A Makefile is in"
-	@echo "the shared folder to automate this step.  Login to the"
-	@echo "virtual machine, launch the terminal, and do the following:"
-	@echo ""
-	@echo "  - Add the vagrant user"
-	@echo "      (sudo /media/sf_vagrant_data/vagrant/configure/<script>)"
-	@echo "  - Make ANY other customizations you want every VMs to have"
-	@echo "  - Shutdown the VM"
-	@echo "  - Run \"make package\" to begin the next step"
+	@echo "  - Run \"make install\""
 	@echo ""
 
 #==============================================================================
 # Package the VM for Vagrant
 #==============================================================================
-package: $(VM).isset
+install: $(VM).isset
 	-vboxmanage controlvm "$(VM)" poweroff
 	vagrant package --base "$(VM)"
 	vagrant box remove "$(VM)" || true
