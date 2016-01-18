@@ -2,4 +2,4 @@ You can use these files to setup a buildhost for the demouser project.
 
 Run:
 ansible-playbook -i inventory.local --skip "get-iso"\
-    --ask-sudo-pass demouser.yml
+    --ask-become-pass demouser.yml
