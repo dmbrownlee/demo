@@ -100,5 +100,4 @@
       ignore_errors: true
     - name: waiting for the VM to start
       tags: guestadditions
-      tags: wait
       local_action: wait_for state=started host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=10 port=2268 timeout=60
