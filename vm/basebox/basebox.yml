@@ -49,37 +49,22 @@
     #======================================================================
     #  Configure VirtualBox GuestAdditions (if needed)
     #======================================================================
+    - name: Install linux-headers-generic
+      tags: guestadditions
+      become: True
+      apt: name=linux-headers-generic state=latest
+    - name: Install build-essential 
+      tags: guestadditions
+      become: True
+      apt: name=build-essential state=latest
     - name: Install dkms
       tags: guestadditions
       become: True
       apt: name=dkms state=latest
-    - name: Insert Guest Additions virtual media
-      tags: guestadditions
-      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
-    - name: Mount Guest Additions virtual media
+    - name: Install virtualbox-guest-dkms
       tags: guestadditions
       become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 opts=ro state=mounted
-    - name: Run the Guest Additions installer
-      tags: guestadditions
-      become: True
-      command: "sh /mnt/VBoxLinuxAdditions.run"
-      # We ignore errors because the script fails to build kernel modules for
-      # Xorg when it is not installed (e.g. with Ubuntu server) which is OK.
-      ignore_errors: yes
-      args:
-        creates: /lib/modules/{{ ansible_kernel }}/updates/dkms/vboxsf.ko
-    - name: Unmount Guest Additions virtual media
-      tags: guestadditions
-      become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=unmounted
-    - name: Remove the /etc/fstab created by mounting above
-      tags: guestadditions
-      become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=absent
-    - name: Remove Guest Additions virtual media
-      tags: guestadditions
-      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --forceunmount --medium emptydrive
+      apt: name=virtualbox-guest-dkms state=latest
     - name: Add demouser to the vboxsf group
       tags: guestadditions
       become: True

@@ -79,7 +79,7 @@ vm: $(VM).isset $(ISODIR)/$(VM).iso
 # Use ansible to configure the VM
 #==============================================================================
 config:
-	ansible-playbook -i inventory.basebox -e 'host_key_checking=False' --ssh-extra-args '-o UserKnownHostsFile=/dev/null' --user=demouser --ask-pass --ask-become-pass --skip-tags=guestadditions basebox.yml
+	ansible-playbook -i inventory.basebox -e 'host_key_checking=False' --ssh-extra-args '-o UserKnownHostsFile=/dev/null' --user=demouser --ask-pass --ask-become-pass basebox.yml
 	@echo ""
 	@echo "Ansible has configured the VM for use with Vagrant.  Assuming"
 	@echo "all your basebox customizations are done by ansible (as they"
