@@ -8,7 +8,7 @@
     - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
   tasks:
     - name: Install blockinfile
-      sudo: True
+      become: True
       command: "ansible-galaxy install yaegashi.blockinfile"
       args:
         creates: /etc/ansible/roles/yaegashi.blockinfile
