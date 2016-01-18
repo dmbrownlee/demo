@@ -1,64 +1,23 @@
 ---
-- name: Install VirtualBox guest additions
+- name: Configure VM for use as Vagrant basebox
   hosts: basebox
   vars:
     - virtual_machine: ubuntu-15.10-server-amd64
     - local_home: /Users/dmb
   tasks:
     - name: waiting for the VM to start
-      tags: wait
       local_action: wait_for state=started host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=5 timeout=30
     - name: Update packages
+      tags: common
       become: True
       apt: upgrade=full update_cache=yes
-    - name: Install dkms
-      become: True
-      apt: name=dkms state=latest
-    - name: Insert Guest Additions virtual media
-      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
-    - name: Mount Guest Additions virtual media
-      become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 opts=ro state=mounted
-    - name: Run the Guest Additions installer
-      tags: build
-      become: True
-      command: "sh /mnt/VBoxLinuxAdditions.run"
-      # We ignore errors because the script fails to build kernel modules for
-      # Xorg when it is not installed (e.g. with Ubuntu server) which is OK.
-      ignore_errors: yes
-      args:
-        creates: /lib/modules/{{ ansible_kernel }}/updates/dkms/vboxsf.ko
-    - name: Unmount Guest Additions virtual media
-      become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=unmounted
-    - name: Remove the /etc/fstab created by mounting above
-      become: True
-      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=absent
-    - name: Remove Guest Additions virtual media
-      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --forceunmount --medium emptydrive
-    - name: Add demouser to the vboxsf group
-      become: True
-      user: name=demouser append=yes groups=vboxsf
-    - name: Add shared folders to the VM
-      local_action: command /usr/local/bin/vboxmanage sharedfolder add "{{ virtual_machine }}" --name "vagrant_data" --hostpath "{{ local_home }}/vm/data" --transient --automount
-    - name: restart machine
-      tags:
-        - reboot
-      become: True
-      #always_run: True
-      shell: "sleep 2 && shutdown -r now"
-      async: 1
-      poll: 0
-      ignore_errors: true
-      #changed_when: /bin/false
-    - name: waiting for the VM to start
-      tags: wait
-      local_action: wait_for state=started host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=10 port=2268 timeout=60
+    #======================================================================
+    #  Configuration required by Vagrant
+    #======================================================================
     - name: Add the vagrant user
       tags: vagrant
       become: True
-      user: name=vagrant groups=vboxsf system=yes
-# NOTE: these lines from the original script may only be needed on VMs with X
+      user: name=vagrant system=yes
     - name: Configure vagrant as a system user in AccountsService
       tags: vagrant
       become: True
@@ -87,7 +46,59 @@
       tags: vagrant
       become: True
       command: grub-mkconfig -o /boot/grub/grub.cfg
-    - name: Sync filesystems
-      tags: sync
+    #======================================================================
+    #  Configure VirtualBox GuestAdditions (if needed)
+    #======================================================================
+    - name: Install dkms
+      tags: guestadditions
       become: True
-      command: sync && sync && sync
+      apt: name=dkms state=latest
+    - name: Insert Guest Additions virtual media
+      tags: guestadditions
+      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
+    - name: Mount Guest Additions virtual media
+      tags: guestadditions
+      become: True
+      mount: name=/mnt src=/dev/cdrom fstype=iso9660 opts=ro state=mounted
+    - name: Run the Guest Additions installer
+      tags: guestadditions
+      become: True
+      command: "sh /mnt/VBoxLinuxAdditions.run"
+      # We ignore errors because the script fails to build kernel modules for
+      # Xorg when it is not installed (e.g. with Ubuntu server) which is OK.
+      ignore_errors: yes
+      args:
+        creates: /lib/modules/{{ ansible_kernel }}/updates/dkms/vboxsf.ko
+    - name: Unmount Guest Additions virtual media
+      tags: guestadditions
+      become: True
+      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=unmounted
+    - name: Remove the /etc/fstab created by mounting above
+      tags: guestadditions
+      become: True
+      mount: name=/mnt src=/dev/cdrom fstype=iso9660 state=absent
+    - name: Remove Guest Additions virtual media
+      tags: guestadditions
+      local_action: command /usr/local/bin/vboxmanage storageattach "{{ virtual_machine }}" --storagectl IDE --port 1 --device 0 --type dvddrive --forceunmount --medium emptydrive
+    - name: Add demouser to the vboxsf group
+      tags: guestadditions
+      become: True
+      user: name=demouser append=yes groups=vboxsf
+    - name: Add vagrant to the vboxsf group
+      tags: guestadditions
+      become: True
+      user: name=vagrant append=yes groups=vboxsf
+    - name: Add shared folders to the VM
+      tags: guestadditions
+      local_action: command /usr/local/bin/vboxmanage sharedfolder add "{{ virtual_machine }}" --name "vagrant_data" --hostpath "{{ local_home }}/vm/data" --transient --automount
+    - name: restart machine
+      tags: guestadditions
+      become: True
+      shell: "sleep 2 && shutdown -r now"
+      async: 1
+      poll: 0
+      ignore_errors: true
+    - name: waiting for the VM to start
+      tags: guestadditions
+      tags: wait
+      local_action: wait_for state=started host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=10 port=2268 timeout=60
