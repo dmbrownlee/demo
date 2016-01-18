@@ -88,5 +88,6 @@
       become: True
       command: grub-mkconfig -o /boot/grub/grub.cfg
     - name: Sync filesystems
+      tags: sync
       become: True
-      command: sync; sync; sync
+      command: sync && sync && sync
