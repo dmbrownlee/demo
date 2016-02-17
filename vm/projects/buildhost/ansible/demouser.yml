@@ -8,12 +8,18 @@
     - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
     - sshpass_version: 1.05
   tasks:
-    - name: Verify git is installed
-      command: "git --version"
-    - name: Verify VirtualBox is installed
-      command: "VBoxManage --version"
-    - name: Verify Vagrant is installed
-      command: "vagrant --version"
+    - stat: path=/usr/bin/git
+      register: git_binary
+    - fail: msg='Install git by running "git" on the command line (it is part of xcode).'
+      when: git_binary.stat.exists == False
+    - stat: path=/usr/local/bin/VBoxManage
+      register: vboxmanage_binary
+    - fail: msg='Download the latest VirtualBox dmg from https://www.virtualbox.org/ and install it.'
+      when: vboxmanage_binary.stat.exists == False
+    - stat: path=/usr/local/bin/vagrant
+      register: vagrant_binary
+    - fail: msg='Download the latest vagrant dmg from https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1.dmg and install it.'
+      when: vagrant_binary.stat.exists == False
       #===================
       #= Install sshpass =
       #===================
