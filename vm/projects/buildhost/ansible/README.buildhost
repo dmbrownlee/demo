@@ -1,5 +1,11 @@
 You can use these files to setup a buildhost for the demouser project.
 
 Run:
-ansible-playbook -i inventory.local --skip "get-iso"\
+
+  ansible-playbook -i inventory.local --ask-become-pass demouser.yml
+
+Alternatively, if this is a new install and you want to download the Ubuntu
+ISO file later, you can run:
+
+  ansible-playbook -i inventory.local --skip "get-iso"\
     --ask-become-pass demouser.yml

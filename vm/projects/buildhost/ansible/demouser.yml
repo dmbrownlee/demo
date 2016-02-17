@@ -5,6 +5,7 @@
     - install_dir: "{{ ansible_user_dir }}/demouser"
     - src_repo: "https://github.com/dmbrownlee/demouser.git"
     - iso_dir: "{{ install_dir }}/vm/basebox/iso"
+    - iso: "ubuntu-15.10-server-amd64.iso"
     - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
     - sshpass_version: 1.05
   tasks:
@@ -38,9 +39,12 @@
       #===================
     - name: Fetch demouser project from github
       git: clone=yes dest={{ install_dir }} repo={{ src_repo }}
+    - stat: path={{ iso_dir }}/{{ iso }}
+      register: iso_file
     - name: Download ubuntu server ISO used to build the basebox
       tags:
         get-iso
       get_url:
         dest: "{{ iso_dir }}"
         url: "{{ iso_url }}"
+      when: iso_file.stat.exists == False
