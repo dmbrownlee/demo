@@ -6,6 +6,7 @@
     - src_repo: "https://github.com/dmbrownlee/demouser.git"
     - iso_dir: "{{ install_dir }}/vm/basebox/iso"
     - iso_url: "http://mirror.pnl.gov/releases/15.10/ubuntu-15.10-server-amd64.iso"
+    - sshpass_version: 1.05
   tasks:
     - name: Verify git is installed
       command: "git --version"
@@ -13,6 +14,22 @@
       command: "VBoxManage --version"
     - name: Verify Vagrant is installed
       command: "vagrant --version"
+      #===================
+      #= Install sshpass =
+      #===================
+    - stat: path=/usr/local/bin/sshpass
+      register: sshpass_binary
+    - name: Fetch sshpass tarball
+      unarchive: copy=no src=http://iweb.dl.sourceforge.net/project/sshpass/sshpass/1.05/sshpass-{{ sshpass_version }}.tar.gz dest=/tmp
+      when: sshpass_binary.stat.exists == False
+    - name: Configure sshpass
+      command: creates=/tmp/sshpass-{{ sshpass_version }}/Makefile chdir=/tmp/sshpass-{{ sshpass_version }} ./configure
+    - name: Build the sshpass binary
+      command: creates=/tmp/sshpass-{{ sshpass_version }}/sshpass chdir=/tmp/sshpass-{{ sshpass_version }} make
+    - name: Install sshpass
+      command: creates=/usr/local/bin/sshpass chdir=/tmp/sshpass-{{ sshpass_version }} make install
+      become: yes
+      #===================
     - name: Fetch demouser project from github
       git: clone=yes dest={{ install_dir }} repo={{ src_repo }}
     - name: Download ubuntu server ISO used to build the basebox
