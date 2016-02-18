@@ -1,0 +1,7 @@
+---
+# tasks file for virtualbox
+- name: Check for the existance of VBoxManage
+  stat: path=/usr/local/bin/VBoxManage
+  register: vboxmanage_binary
+- fail: msg='Download the latest VirtualBox dmg from https://www.virtualbox.org/ and install it.'
+  when: vboxmanage_binary.stat.exists == False
