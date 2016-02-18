@@ -1,5 +1,5 @@
-Role Name
-=========
+sshpass
+=======
 
 Installs sshpass from source tarball.  Ansible needs this to run tasks that
 use "become".
@@ -25,7 +25,7 @@ None
 Example Playbook
 ----------------
 
-    - hosts: servers
+    - hosts: localhost
       roles:
          - { role: sshpass, sshpass_version: 1.05 }
 
