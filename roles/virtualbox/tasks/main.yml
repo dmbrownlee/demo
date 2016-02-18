@@ -16,6 +16,6 @@
   become: yes
   when: virtualbox_installation.stat.exists == False
 - name: Unmount VirtualBox image
-  command: hdiutil detach $mount_path
+  command: hdiutil detach "{{ mount_path }}"
   become: yes
   when: virtualbox_installation.stat.exists == False
