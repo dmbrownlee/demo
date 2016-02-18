@@ -17,4 +17,4 @@ writting, installing ansible on Mac OS X is a matter of running these commands:
 === Bootstrapping the VirtualBox environment
 Use ansible to install VirtualBox, vagrant, and other support files.
 
-  (to be written)
+  ansible-playbook -i localhost --ask-become-pass playbook.yml
