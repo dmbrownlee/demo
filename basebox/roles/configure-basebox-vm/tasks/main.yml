@@ -1,0 +1,109 @@
+---
+# tasks file for configure-basebox-vm
+- name: Update packages
+  yum: name='*' state="latest"
+  when: update_packages_first == True
+  become: True
+
+#======================================================================
+#  Configuration required by Vagrant
+#======================================================================
+- name: Add the vagrant user
+  tags: vagrant
+  become: True
+  user: name=vagrant system=yes
+#    - name: Configure vagrant as a system user in AccountsService
+#      tags: vagrant
+#      become: True
+#      lineinfile: dest=/var/lib/AccountsService/users/vagrant state=present create=yes insertbefore=BOF line='[User]'
+#    - name: Configure vagrant as a system user in AccountsService part 2
+#      tags: vagrant
+#      become: True
+#      lineinfile: dest=/var/lib/AccountsService/users/vagrant state=present create=yes insertafter='^[User]$' line='SystemAccount=true'
+- name: Add ssh keys for vagrant
+  authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vm/master/data/vagrant/vagrant.pub
+  become: True
+  tags: vagrant
+- name: Configure sudo for vagrant
+  lineinfile: dest=/etc/sudoers.d/vagrant state=present create=yes mode=0440 regexp='^vagrant ALL\=' line='vagrant ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
+  become: True
+  tags: vagrant
+- name: Check GRUB_CMDLINE_LINUX in /etc/default/grub
+  command: egrep 'GRUB_CMDLINE_LINUX=".*net.ifnames=0 biosdevname=0.*"' /etc/default/grub
+  always_run: yes
+  register: grub_cmdline_updated
+  ignore_errors: True
+  changed_when: False
+  tags: vagrant
+- name: Update GRUB_CMDLINE_LINUX in /etc/default/grub
+  lineinfile: dest=/etc/default/grub state=present backrefs=yes regexp='^GRUB_CMDLINE_LINUX="(.*)"$' line='GRUB_CMDLINE_LINUX="\1 net.ifnames=0 biosdevname=0"'
+  when: grub_cmdline_updated.rc != 0
+  notify:
+    - Update grub config
+  become: True
+  tags: vagrant
+#    - name: Configure ethX interface names in /etc/network/interfaces
+#      tags: vagrant
+#      become: True
+#      replace: dest=/etc/network/interfaces regexp='enp0s3' replace='eth0'
+#    #======================================================================
+#    #  Configure VirtualBox GuestAdditions (if needed)
+#    #======================================================================
+- name: Add the Extra Packages for Enterprise Linux repo
+  yum: name='epel-release' state="latest"
+  become: True
+  tags: guestadditions
+- name: Ensure packages needed to build VirtualBox GuestAdditions are installed
+  yum: name='bzip2,epel-release,dkms' state="latest"
+  become: True
+  tags: guestadditions
+- name: Insert Guest Additions CD Image
+  local_action: command vboxmanage storageattach "{{ vm }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
+  tags: guestadditions
+- name: Mount Guest Additions virtual media
+  mount: name=/mnt src=/dev/cdrom fstype=iso9660 opts=ro state=mounted
+  become: True
+  tags: guestadditions
+- name: Run the Guest Additions installer
+  command: creates=/lib/modules/{{ ansible_kernel }}/updates/dkms/vboxsf.ko
+           "sh /mnt/VBoxLinuxAdditions.run"
+  #shell: creates=/lib/modules/{{ ansible_kernel }}/updates/dkms/vboxsf.ko sh /mnt/VBoxLinuxAdditions.run
+  become: True
+  tags: guestadditions
+#    - name: Install linux-headers-generic
+#      tags: guestadditions
+#      become: True
+#      apt: name=linux-headers-generic state=latest
+#    - name: Install build-essential 
+#      tags: guestadditions
+#      become: True
+#      apt: name=build-essential state=latest
+#    - name: Install dkms
+#      tags: guestadditions
+#      become: True
+#      apt: name=dkms state=latest
+#    - name: Install virtualbox-guest-dkms
+#      tags: guestadditions
+#      become: True
+#      apt: name=virtualbox-guest-dkms state=latest
+#    - name: Add demouser to the vboxsf group
+#      tags: guestadditions
+#      become: True
+#      user: name=demouser append=yes groups=vboxsf
+#    - name: Add vagrant to the vboxsf group
+#      tags: guestadditions
+#      become: True
+#      user: name=vagrant append=yes groups=vboxsf
+#    - name: Add shared folders to the VM
+#      tags: guestadditions
+#      local_action: command /usr/local/bin/vboxmanage sharedfolder add "{{ virtual_machine }}" --name "vagrant_data" --hostpath "{{ local_home }}/vm/data" --transient --automount
+#    - name: restart machine
+#      tags: guestadditions
+#      become: True
+#      shell: "sleep 2 && shutdown -r now"
+#      async: 1
+#      poll: 0
+#      ignore_errors: true
+#    - name: waiting for the VM to start
+#      tags: guestadditions
+#      local_action: wait_for state=started host={{ ansible_ssh_host }} port={{ ansible_ssh_port }} delay=10 port=2268 timeout=60

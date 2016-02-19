@@ -1,0 +1,8 @@
+---
+# vars file for create-basebox-vm
+iso_dir: "{{ ansible_user_dir }}/vm/basebox/iso"
+vm_disk: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}/box-disk1.vmdk"
+iso_file: "{{ vm }}.iso"
+iso_src: "{{ iso_mirror }}/{{ iso_file }}"
+iso_dest: "{{ iso_dir }}/{{ iso_file }}"
+localsshport: 2268

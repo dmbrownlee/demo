@@ -1,0 +1,3 @@
+---
+# defaults file for configure-basebox-vm
+update_packages_first: True
