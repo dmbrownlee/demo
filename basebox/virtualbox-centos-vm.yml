@@ -1,0 +1,15 @@
+---
+- name: Create a VirtualBox VM with a clean install of CentOS
+  hosts: localhost
+  vars:
+    osversion: 7
+    osarch: x86_64
+    osspin: DVD
+    osbuild: 1511
+    vm: "CentOS-{{ osversion }}-{{ osarch }}-{{ osspin }}-{{ osbuild }}"
+    ostype: RedHat_64
+    iso_mirror: "http://centos.s.uw.edu/centos/{{ osversion }}/isos/{{ osspin }}/"
+  roles:
+    - role: virtualbox-centos-vm
+  tags:
+    - virtualbox-centos-vm
