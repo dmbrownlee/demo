@@ -1,7 +1,7 @@
 ---
-# tasks file for vagrantbox-centos-basebox-package
-include: update-packages.yml
-include: add-vagrant-user.yml
-include: use-legacy-interface-names.yml
-include: install-guest-addtions.yml
-include: add-shared-folders.yml
+# tasks file for vagrantbox-centos-basebox
+- include: update-packages.yml
+- include: add-vagrant-user.yml
+- include: use-legacy-interface-names.yml
+- include: install-guest-addtions.yml
+- include: add-shared-folders.yml
