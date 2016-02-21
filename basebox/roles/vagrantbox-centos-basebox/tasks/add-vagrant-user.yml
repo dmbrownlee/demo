@@ -1,0 +1,14 @@
+---
+# tasks file for vagrantbox-centos-basebox-package/add-vagrant-user
+- name: Add the vagrant user
+  user: name=vagrant system=yes
+  become: True
+  tags: add-vagrant-user
+- name: Add ssh keys for vagrant
+  authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vm/master/data/vagrant/vagrant.pub
+  become: True
+  tags: add-vagrant-user
+- name: Configure sudo for vagrant
+  lineinfile: dest=/etc/sudoers.d/vagrant state=present create=yes mode=0440 regexp='^vagrant ALL\=' line='vagrant ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
+  become: True
+  tags: add-vagrant-user
