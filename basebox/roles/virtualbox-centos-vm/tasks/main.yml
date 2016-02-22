@@ -5,7 +5,7 @@
   stat: path="{{ iso_dest }}"
   register: iso_file_test
 - name: Download ISO file
-  get_url: src={{ iso_src }} dest={{ iso_dest }}
+  get_url: url={{ iso_src }} dest={{ iso_dest }}
   when: iso_file_test.stat.exists == false
   # Remove any existing VM with the same name if make_clean is True
 - name: Power off duplicate VM before deleting
