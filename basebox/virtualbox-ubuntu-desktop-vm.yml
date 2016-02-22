@@ -2,7 +2,7 @@
 - name: Create a VirtualBox VM with a clean install of Ubuntu Desktop
   hosts: localhost
   vars:
-    osversion: 15.10
+    osversion: "15.10"
     osarch: amd64
     osspin: desktop
     vm: "ubuntu-{{ osversion }}-{{ osspin }}-{{ osarch }}"
