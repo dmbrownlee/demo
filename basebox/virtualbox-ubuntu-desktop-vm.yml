@@ -1,0 +1,14 @@
+---
+- name: Create a VirtualBox VM with a clean install of Ubuntu Desktop
+  hosts: localhost
+  vars:
+    osversion: 15.10
+    osarch: amd64
+    osspin: desktop
+    vm: "ubuntu-{{ osversion }}-{{ osspin }}-{{ osarch }}"
+    ostype: Ubuntu_64
+    iso_mirror: "http://mirror.pnl.gov/releases/{{ osversion }}/"
+  roles:
+    - role: virtualbox-ubuntu-desktop-vm
+  tags:
+    - virtualbox-ubuntu-desktop-vm
