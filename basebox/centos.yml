@@ -10,7 +10,7 @@
     ostype: RedHat_64
     iso_mirror: "http://centos.s.uw.edu/centos/{{ osversion }}/isos/{{ osspin }}/"
   roles:
-    - role: create-basebox-vm
+    - role: virtualbox-centos-vm
   tags:
     - make-vm
 
@@ -24,6 +24,6 @@
     vm: "CentOS-{{ osversion }}-{{ osarch }}-{{ osspin }}-{{ osbuild }}"
   remote_user: demouser
   roles:
-    - role: configure-basebox-vm
+    - role: vagrantbox-centos-basebox
   tags:
     - make-config
