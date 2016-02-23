@@ -1,0 +1,22 @@
+---
+# tasks file for vagrantbox-ubuntu-desktop-basebox/package-defaults
+- name: Install screen
+  apt: name=screen state=latest
+  become: True
+  tags: package-defaults
+- name: Install traceroute
+  apt: name=traceroute state=latest
+  become: True
+  tags: package-defaults
+- name: Install vim
+  apt: name=vim state=latest
+  become: True
+  tags: package-defaults
+- name: Install nmap
+  apt: name=nmap state=latest
+  become: True
+  tags: package-defaults
+#- name: Install 
+#  apt: name= state=latest
+#  become: True
+#  tags: package-defaults

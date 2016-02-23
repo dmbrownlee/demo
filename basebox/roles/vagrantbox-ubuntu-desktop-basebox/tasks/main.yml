@@ -5,3 +5,4 @@
 - include: use-legacy-interface-names.yml
 - include: install-guest-addtions.yml
 - include: add-shared-folders.yml
+- include: package-defaults.yml
