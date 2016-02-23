@@ -1,0 +1,21 @@
+---
+# tasks file for virtualbox
+- name: Test for the existance of /Applications/VirtualBox.app
+  stat: path=/Applications/VirtualBox.app
+  register: virtualbox_installation
+- name: Download VirtualBox image
+  get_url: url="{{ virtualbox_url }}"
+           dest="{{ downloads }}/{{ virtualbox_dmg }}"
+  when: virtualbox_installation.stat.exists == False
+- name: Mount VirtualBox image
+  command: hdiutil attach {{ virtualbox_dmg }} chdir={{ downloads }}
+  become: yes
+  when: virtualbox_installation.stat.exists == False
+- name: Install VirtualBox.pkg
+  command: installer -package "{{ mount_path }}/VirtualBox.pkg" -target /
+  become: yes
+  when: virtualbox_installation.stat.exists == False
+- name: Unmount VirtualBox image
+  command: hdiutil detach "{{ mount_path }}"
+  become: yes
+  when: virtualbox_installation.stat.exists == False

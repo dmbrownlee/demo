@@ -1,0 +1,4 @@
+---
+# tasks file for github-vm
+- name: Fetch demouser project from github
+  git: clone=yes dest={{ install_dir }} repo={{ vm_repo }}
