@@ -1,0 +1,20 @@
+---
+# tasks file for vagrantbox-ubuntu-desktop-basebox/use-legacy-interface-names
+- name: Check GRUB_CMDLINE_LINUX in /etc/default/grub
+  command: egrep 'GRUB_CMDLINE_LINUX=".*net.ifnames=0 biosdevname=0.*"' /etc/default/grub
+  always_run: yes
+  register: grub_cmdline_updated
+  ignore_errors: True
+  changed_when: False
+  tags: use-legacy-interface-names
+- name: Update GRUB_CMDLINE_LINUX in /etc/default/grub
+  lineinfile: dest=/etc/default/grub state=present backrefs=yes regexp='^GRUB_CMDLINE_LINUX="(.*)"$' line='GRUB_CMDLINE_LINUX="\1 net.ifnames=0 biosdevname=0"'
+  when: grub_cmdline_updated.rc != 0
+  notify:
+    - Update grub config
+  become: True
+  tags: use-legacy-interface-names
+- name: Configure ethX interface names in /etc/network/interfaces
+  tags: vagrant
+  become: True
+  replace: dest=/etc/network/interfaces regexp='enp0s3' replace='eth0'

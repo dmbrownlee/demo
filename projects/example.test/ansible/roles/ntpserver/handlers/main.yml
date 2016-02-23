@@ -1,0 +1,5 @@
+---
+# handlers file for ntpserver
+- name: restart ntpd
+  become: True
+  service: name=ntp.service enabled=yes state=restarted

@@ -1,0 +1,3 @@
+---
+# defaults file for create-basebox-vm
+make_clean: True

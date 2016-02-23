@@ -1,0 +1,21 @@
+---
+- name: Common Configuration for all hosts
+  hosts: all
+  roles:
+    - role: common
+- name: Install DNS server
+  hosts: nameservers
+  roles:
+    - role: nameserver
+- name: Install DHCP server
+  hosts: dhcpservers
+  roles:
+    - role: dhcpserver
+- name: Configure NAT gateway
+  hosts: gateway
+  roles:
+    - role: gateway
+- name: Install NTP server
+  hosts: ntpservers
+  roles:
+    - role: ntpserver

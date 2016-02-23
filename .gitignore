@@ -1,0 +1,6 @@
+vm.tar
+.vagrant
+basebox/iso/*
+.travis.yml
+*.swp
+.DS_Store
