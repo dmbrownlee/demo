@@ -1,0 +1,35 @@
+---
+- name: Create the VM for the basebox
+  hosts: localhost
+  vars:
+    osversion: "15.10"
+    osarch: amd64
+    osspin: desktop
+    vm: "ubuntu-{{ osversion }}-{{ osspin }}-{{ osarch }}"
+    ostype: Ubuntu_64
+    iso_mirror: "http://mirror.pnl.gov/releases/{{ osversion }}/"
+  roles:
+    - role: virtualbox-ubuntu-desktop-vm
+
+- name: Configure the VM for vagrant
+  hosts: centos-7-x86_64-dvd-1511
+  vars:
+    osversion: "15.10"
+    osarch: amd64
+    osspin: desktop
+    vm: "ubuntu-{{ osversion }}-{{ osspin }}-{{ osarch }}"
+  remote_user: demouser
+  roles:
+    - role: vagrantbox-ubuntu-desktop-basebox
+
+- name: Create the basebox image
+  hosts: localhost
+  vars:
+    osversion: "15.10"
+    osarch: amd64
+    osspin: desktop
+    vm: "ubuntu-{{ osversion }}-{{ osspin }}-{{ osarch }}"
+    ostype: Ubuntu_64
+    iso_mirror: "http://mirror.pnl.gov/releases/{{ osversion }}/"
+  roles:
+    - role: vagrantbox-ubuntu-desktop-basebox-install
