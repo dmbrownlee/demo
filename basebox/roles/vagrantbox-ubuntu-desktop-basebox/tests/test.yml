@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: ubuntu-15.10-desktop-amd64
+  remote_user: demouser
   roles:
     - vagrantbox-ubuntu-desktop-basebox
