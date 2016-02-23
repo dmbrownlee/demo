@@ -5,7 +5,7 @@
   become: True
   tags: add-vagrant-user
 - name: Add ssh keys for vagrant
-  authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vm/master/data/vagrant/vagrant.pub
+  authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vagrantbox/master/data/vagrant/vagrant.pub
   become: True
   tags: add-vagrant-user
 - name: Configure sudo for vagrant
