@@ -1,7 +1,7 @@
 ---
 # tasks file for vagrantbox-ubuntu-desktop-basebox
 - include: update-packages.yml
-#- include: add-vagrant-user.yml
+- include: add-vagrant-user.yml
 #- include: use-legacy-interface-names.yml
 #- include: install-guest-addtions.yml
 #- include: add-shared-folders.yml
