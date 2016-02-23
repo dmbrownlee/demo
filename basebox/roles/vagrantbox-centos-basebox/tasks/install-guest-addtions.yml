@@ -19,11 +19,12 @@
   become: True
   async: 0
   poll: 0
-  when: running_kernel_match != 0
+  when: running_kernel_match.rc != 0
+  ignore_errors: true
   tags: install-guest-addtions
 - name: Wait for reboot to complete
   pause: msg="Press Ctrl-c when reboot completes."
-  when: running_kernel_match != 0
+  when: running_kernel_match.rc != 0
   tags: install-guest-addtions
 - name: Insert Guest Additions CD Image
   local_action: command vboxmanage storageattach "{{ vm }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
