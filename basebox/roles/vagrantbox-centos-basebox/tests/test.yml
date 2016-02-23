@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
-  remote_user: root
+- hosts: CentOS-7-x86_64-DVD-1511
+  remote_user: demouser
   roles:
-    - vagrantbox-centos-basebox-package
+    - vagrantbox-centos-basebox
