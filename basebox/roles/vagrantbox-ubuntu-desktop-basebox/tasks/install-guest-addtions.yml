@@ -1,0 +1,18 @@
+---
+# tasks file for vagrantbox-ubuntu-desktop-basebox/install-guest-addtions
+- name: Install linux-headers-generic
+  apt: name=linux-headers-generic state=latest
+  become: True
+  tags: install-guest-addtions
+- name: Install build-essential 
+  apt: name=build-essential state=latest
+  become: True
+  tags: install-guest-addtions
+- name: Install dkms
+  apt: name=dkms state=latest
+  become: True
+  tags: install-guest-addtions
+- name: Install virtualbox-guest-dkms
+  apt: name=virtualbox-guest-dkms state=latest
+  become: True
+  tags: install-guest-addtions
