@@ -1,3 +1,12 @@
 ---
-# defaults file for create-basebox-vm
-make_clean: True
+# defaults file for virtualbox-centos-vm
+make_clean: False
+vm: "CentOS-7-x86_64-DVD-1511"
+ostype: RedHat_64
+iso_mirror: "http://centos.s.uw.edu/centos/7/isos/x86_64/"
+iso_dir: "{{ ansible_user_dir }}/vagrantbox/basebox/iso"
+vm_disk: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}/box-disk1.vmdk"
+iso_file: "{{ vm }}.iso"
+iso_src: "{{ iso_mirror }}/{{ iso_file }}"
+iso_dest: "{{ iso_dir }}/{{ iso_file }}"
+localsshport: 2268
