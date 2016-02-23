@@ -5,4 +5,3 @@
     - role: sshpass
     - role: virtualbox
     - role: vagrant
-    - role: github-vm

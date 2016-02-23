@@ -8,12 +8,15 @@
   command: creates={{ sshpass_srcdir }}/Makefile
            chdir={{ sshpass_srcdir }}
            ./configure
+  when: sshpass_source.stat.exists == False
 - name: sshpass make
   command: creates={{ sshpass_srcdir }}/sshpass
            chdir={{ sshpass_srcdir }}
            make
+  when: sshpass_source.stat.exists == False
 - name: sshpass make install
   command: creates=/usr/local/bin/sshpass
            chdir={{ sshpass_srcdir }}
            make install
   become: yes
+  when: sshpass_source.stat.exists == False

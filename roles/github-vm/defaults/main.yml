@@ -1,4 +1,0 @@
----
-# defaults file for github-vm
-install_dir: "{{ ansible_user_dir }}/vm"
-vm_repo: "https://github.com/dmbrownlee/vm.git"

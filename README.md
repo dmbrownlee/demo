@@ -11,10 +11,13 @@ isn't installed already.
 To install ansible, follow the instructions on their web site.  As of this
 writting, installing ansible on Mac OS X is a matter of running these commands:
 
-  sudo easy_install pip
-  sudo pip install ansible
+  $ sudo easy_install pip
+  $ sudo pip install ansible
 
 === Bootstrapping the VirtualBox environment
-Use ansible to install VirtualBox, vagrant, and other support files.
+The following commands use ansible to install VirtualBox, vagrant, and other
+support utilities used for building vagrant baseboxes for use with your own
+projects:
 
-  ansible-playbook vagrantbox-setup.yml
+  $ cd setup
+  $ ansible-playbook setup.yml
