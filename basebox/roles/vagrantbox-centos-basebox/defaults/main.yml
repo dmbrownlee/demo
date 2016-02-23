@@ -1,4 +1,5 @@
 ---
 # defaults file for vagrantbox-centos-basebox
 update_packages_first: True
-vm: CentOS-7-x86_64-DVD-1511
+vm: "CentOS-7-x86_64-DVD-1511"
+vagrantbox_dir: "{{ ansible_user_dir }}/vagrantbox"
