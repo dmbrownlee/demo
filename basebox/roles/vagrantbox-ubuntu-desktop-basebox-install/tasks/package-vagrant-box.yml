@@ -2,11 +2,14 @@
 # tasks file for vagrantbox-ubuntu-desktop-basebox/package-vagrant-box
 - name: Shutdown the VM
   command: vboxmanage controlvm "{{ vm }}" poweroff
-  become: True
-  delegate_to: localhost
   tags: package-vagrant-box
-- name: Install traceroute
+- name: Build the basebox image
   command: vagrant package --base "{{ vm }}" --output "{{ vm }}.box"
-  become: True
-  delegate_to: localhost
+  tags: package-vagrant-box
+- name: Remove any existing basebox with the same name
+  command: vagrant box remove "{{ vm }}"
+  ignore_errors: True
+  tags: package-vagrant-box
+- name: Install the new basebox
+  command: vagrant box add --name "{{ vm }}" "{{ vm }}.box"
   tags: package-vagrant-box
