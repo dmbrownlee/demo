@@ -1,2 +1,3 @@
 ---
 # defaults file for vagrantbox-ubuntu-desktop-basebox
+update_packages_first: True
