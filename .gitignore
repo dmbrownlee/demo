@@ -1,6 +1,7 @@
 vm.tar
 .vagrant
 basebox/iso/*
+basebox/boxes/*
 .travis.yml
 *.swp
 .DS_Store
