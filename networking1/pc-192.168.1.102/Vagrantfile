@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu desktop amd64 15.10"
+  config.ssh.private_key_path= "/Users/demouser/vm/keys/vagrant"
+
+  config.vm.synced_folder "~/vm/data", "/vagrant_data"
+
+  config.vm.provider "virtualbox" do |vb|
+    # vb.gui = true
+    vb.name = "pc-192.168.1.102"
+    vb.customize ["modifyvm", :id, "--nic2", "null"]
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo cat >> /etc/network/interfaces <<END
+auto eth1
+iface eth1 inet static
+  address 192.168.1.102
+  netmask 255.255.255.0
+  gateway 192.168.1.254
+  dns-nameserver 10.0.0.100
+END
+    sudo apt-get purge network-manager -y
+    sudo apt-get upgrade -y
+    sudo shutdown -h now
+  SHELL
+end

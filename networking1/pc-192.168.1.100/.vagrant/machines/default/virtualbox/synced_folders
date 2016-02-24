@@ -1,0 +1,1 @@
+{"virtualbox":{"/vagrant_data":{"guestpath":"/vagrant_data","hostpath":"/Users/demouser/vm/data","disabled":false},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/demouser/vm/hosts/networking1/pc-192.168.1.100","disabled":false}}}
