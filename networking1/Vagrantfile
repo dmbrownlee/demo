@@ -1,0 +1,95 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  # Common to all VMs
+  config.vm.box = "ubuntu-15.10-desktop-amd64"
+  config.ssh.private_key_path= "./keys/vagrant"
+  config.vm.boot_timeout = 60
+
+  # Loop for VM specific config
+  (100..102).each do |vmNum|
+    config.vm.define "pc-192.168.1.#{vmNum}" do |node|
+      node.vm.network "private_network", ip: "192.168.1.#{vmNum}", virtualbox__null: true
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "pc-192.168.1.#{vmNum}"
+        vb.customize ["modifyvm", :id, "--nic2", "null']
+      end
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo apt-get update
+        sudo cat >> /etc/network/interfaces <<END
+auto eth1
+iface eth1 inet static
+  address 192.168.1.#{vmNum}
+  netmask 255.255.255.0
+  gateway 192.168.1.254
+  dns-nameserver 10.0.0.100
+END
+        sudo apt-get purge network-manager -y
+        sudo apt-get upgrade -y
+        sudo apt-get install debconf-utils
+        sudo apt-get install screen
+        sudo apt-get install traceroute
+        sudo apt-get install tcpdump
+        sudo apt-get install nmap
+        sudo apt-get install wireshark
+        sudo shutdown -h now
+      SHELL
+    end
+    config.vm.define "pc-172.16.0.#{vmNum}" do |node|
+      node.vm.network "private_network", ip: "172.16.0.#{vmNum}", virtualbox__null: true
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "pc-172.16.0.#{vmNum}"
+        vb.customize ["modifyvm", :id, "--nic2", "null']
+      end
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo apt-get update
+        sudo cat >> /etc/network/interfaces <<END
+auto eth1
+iface eth1 inet static
+  address 172.16.0.#{vmNum}
+  netmask 255.255.255.0
+  gateway 172.16.0.254
+  dns-nameserver 10.0.0.100
+END
+        sudo apt-get purge network-manager -y
+        sudo apt-get upgrade -y
+        sudo apt-get install debconf-utils
+        sudo apt-get install screen
+        sudo apt-get install traceroute
+        sudo apt-get install tcpdump
+        sudo apt-get install nmap
+        sudo apt-get install wireshark
+        sudo shutdown -h now
+      SHELL
+    end
+    config.vm.define "pc-10.0.0.#{vmNum}" do |node|
+      node.vm.network "private_network", ip: "10.0.0.#{vmNum}", virtualbox__null: true
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "pc-10.0.0.#{vmNum}"
+        vb.customize ["modifyvm", :id, "--nic2", "null']
+      end
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo apt-get update
+        sudo cat >> /etc/network/interfaces <<END
+auto eth1
+iface eth1 inet static
+  address 10.0.0.#{vmNum}
+  netmask 255.255.255.0
+  gateway 10.0.0.254
+  dns-nameserver 10.0.0.100
+END
+        sudo apt-get purge network-manager -y
+        sudo apt-get upgrade -y
+        sudo apt-get install debconf-utils
+        #sudo apt-get upgrade -y
+        sudo apt-get install screen
+        sudo apt-get install traceroute
+        sudo apt-get install tcpdump
+        sudo apt-get install nmap
+        sudo apt-get install wireshark
+        sudo shutdown -h now
+      SHELL
+    end
+  end
+end
