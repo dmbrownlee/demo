@@ -1,0 +1,13 @@
+---
+# defaults file for virtualbox-ubuntu-server-vm
+make_clean: True
+vagrantbox_dir: "{{ ansible_user_dir }}/vagrantbox"
+vm: "ubuntu-15.10-server-amd64"
+ostype: Ubuntu_64
+iso_mirror: "http://mirror.pnl.gov/releases/15.10/"
+iso_dir: "{{ vagrantbox_dir }}/basebox/iso"
+vm_disk: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}/box-disk1.vmdk"
+iso_file: "{{ vm }}.iso"
+iso_src: "{{ iso_mirror }}/{{ iso_file }}"
+iso_dest: "{{ iso_dir }}/{{ iso_file }}"
+localsshport: 2270

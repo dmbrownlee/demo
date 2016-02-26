@@ -1,0 +1,1 @@
+localhostlocalhost ansible_connection=local make_clean=True
