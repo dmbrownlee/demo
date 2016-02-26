@@ -1,5 +1,5 @@
 ---
-# tasks file for vagrantbox-centos-basebox-package/update-packages
+# tasks file for vagrantbox-ubuntu-desktop-basebox-package/update-packages
 - name: Update packages
   apt: upgrade=full update_cache=yes
   when: update_packages_first == True
