@@ -1,0 +1,5 @@
+---
+- hosts: ubuntu-15.10-server-amd64
+  remote_user: demouser
+  roles:
+    - vagrantbox-ubuntu-server-basebox

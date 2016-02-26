@@ -1,0 +1,22 @@
+---
+# tasks file for vagrantbox-ubuntu-server-basebox/add-vagrant-user
+- name: Add the vagrant user
+  tags: vagrant
+  become: True
+  user: name=vagrant system=yes
+- name: Configure vagrant as a system user in AccountsService
+  tags: vagrant
+  become: True
+  lineinfile: dest=/var/lib/AccountsService/users/vagrant state=present create=yes insertbefore=BOF line='[User]'
+- name: Configure vagrant as a system user in AccountsService part 2
+  tags: vagrant
+  become: True
+  lineinfile: dest=/var/lib/AccountsService/users/vagrant state=present create=yes insertafter='^[User]$' line='SystemAccount=true'
+- name: Add ssh keys for vagrant
+  tags: vagrant
+  become: True
+  authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vagrantbox/master/data/vagrant/vagrant.pub
+- name: Configure sudo for vagrant
+  tags: vagrant
+  become: True
+  lineinfile: dest=/etc/sudoers.d/vagrant state=present create=yes mode=0440 regexp='^vagrant ALL\=' line='vagrant ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
