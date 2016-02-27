@@ -1,0 +1,3 @@
+---
+# tasks file for vagrantbox-ubuntu-server-basebox-install
+- include: package-vagrant-box.yml
