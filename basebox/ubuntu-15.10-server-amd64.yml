@@ -1,0 +1,21 @@
+---
+# This playbook contains three plays.
+
+# Create the VirtualBox VM if it does not already exist
+- name: Create the VM for the basebox
+  hosts: localhost
+  roles:
+    - role: virtualbox-ubuntu-server-vm
+
+# Ensure the VirtualBox VM is configure for use as a Vagrant basebox
+- name: Configure the VM for vagrant
+  hosts: ubuntu-15.10-server-amd64
+  remote_user: demouser
+  roles:
+    - role: vagrantbox-ubuntu-server-basebox
+
+# Package and install the VM as a Vagrant basebox
+- name: Create the basebox image
+  hosts: localhost
+  roles:
+    - role: vagrantbox-ubuntu-server-basebox-install
