@@ -1,0 +1,15 @@
+---
+# tasks file for nat-firewall
+- name: Create /etc/iptables.rules from template
+  template: src=roles/nat-firewall/templates/iptables.rules.j2 dest=/etc/iptables.rules owner=root group=root mode=0644
+  when: ansible_distribution == "Ubuntu"
+  become: True
+- name: Add static routes and firewall when eth1 is started
+  patch:
+    src: interfaces.patch
+    dest: /etc/network/interfaces
+  when: ansible_distribution == "Ubuntu"
+  become: True
+- name: Ensure routing between interfaces
+  replace: dest=/etc/sysctl.conf regexp='^#net.ipv4.ip_forward=1$' replace='net.ipv4.ip_forward=1' validate='/sbin/sysctl -p %s'
+  become: True

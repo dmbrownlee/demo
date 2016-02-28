@@ -2,94 +2,53 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
+  config.ssh.private_key_path= "../keys/vagrant"
   # Common to all VMs
   config.vm.box = "ubuntu-15.10-desktop-amd64"
-  config.ssh.private_key_path= "./keys/vagrant"
   config.vm.boot_timeout = 60
+  #config.vm.synced_folder ".", "/vagrant", disabled=true
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "ansible/playbook.yml"
+    ansible.host_vars = {
+      "pc-192.168.2.100" => {"nethost" => 100,
+                             "disable_eth0" => "yes" },
+      "pc-192.168.2.101" => {"nethost" => 101,
+                             "disable_eth0" => "yes" },
+      "pc-192.168.2.102" => {"nethost" => 102,
+                             "disable_eth0" => "yes" },
+      "pc-172.16.0.100" => {"nethost" => 100,
+                            "disable_eth0" => "yes" },
+      "pc-172.16.0.101" => {"nethost" => 101,
+                            "disable_eth0" => "yes" },
+      "pc-172.16.0.102" => {"nethost" => 102,
+                            "disable_eth0" => "yes" },
+      "pc-10.0.0.100" => {"nethost" => 100},
+      "pc-10.0.0.101" => {"nethost" => 101},
+      "pc-10.0.0.102" => {"nethost" => 102,
+                          "disable_eth0" => "yes" }
+    }
+    ansible.groups = {
+      "net1" => ["pc-192.168.2.[100:102]"],
+      "net2" => ["pc-172.16.0.[100:102]"],
+      "net3" => ["pc-10.0.0.[100:102]"],
+      "all_groups:children" => ["net1", "net2", "net3"],
+      "net1:vars" => {"netprefix" => "192.168.2"},
+      "net2:vars" => {"netprefix" => "172.16.2"},
+      "net3:vars" => {"netprefix" => "10.0.0"}
+    }
+  end
 
-  # Loop for VM specific config
-  (100..102).each do |vmNum|
-    config.vm.define "pc-192.168.1.#{vmNum}" do |node|
-      node.vm.network "private_network", ip: "192.168.1.#{vmNum}", virtualbox__null: true
-      node.vm.provider "virtualbox" do |vb|
-        vb.name = "pc-192.168.1.#{vmNum}"
-        vb.customize ["modifyvm", :id, "--nic2", "null']
+  # For each of these networks...
+  ["192.168.2","172.16.0","10.0.0"].each do |net|
+    # Configure these three nodes
+    (100..102).each do |host|
+      config.vm.define "pc-#{net}.#{host}" do |node|
+        node.vm.network "private_network", ip: "#{net}.#{host}", virtualbox__null: true, auto_config: false
+        node.vm.provider "virtualbox" do |vb|
+          vb.name = "pc-#{net}.#{host}"
+          vb.customize ["modifyvm", :id, "--nic2", "null"]
+        end
       end
-      node.vm.provision "shell", inline: <<-SHELL
-        sudo apt-get update
-        sudo cat >> /etc/network/interfaces <<END
-auto eth1
-iface eth1 inet static
-  address 192.168.1.#{vmNum}
-  netmask 255.255.255.0
-  gateway 192.168.1.254
-  dns-nameserver 10.0.0.100
-END
-        sudo apt-get purge network-manager -y
-        sudo apt-get upgrade -y
-        sudo apt-get install debconf-utils
-        sudo apt-get install screen
-        sudo apt-get install traceroute
-        sudo apt-get install tcpdump
-        sudo apt-get install nmap
-        sudo apt-get install wireshark
-        sudo shutdown -h now
-      SHELL
-    end
-    config.vm.define "pc-172.16.0.#{vmNum}" do |node|
-      node.vm.network "private_network", ip: "172.16.0.#{vmNum}", virtualbox__null: true
-      node.vm.provider "virtualbox" do |vb|
-        vb.name = "pc-172.16.0.#{vmNum}"
-        vb.customize ["modifyvm", :id, "--nic2", "null']
-      end
-      node.vm.provision "shell", inline: <<-SHELL
-        sudo apt-get update
-        sudo cat >> /etc/network/interfaces <<END
-auto eth1
-iface eth1 inet static
-  address 172.16.0.#{vmNum}
-  netmask 255.255.255.0
-  gateway 172.16.0.254
-  dns-nameserver 10.0.0.100
-END
-        sudo apt-get purge network-manager -y
-        sudo apt-get upgrade -y
-        sudo apt-get install debconf-utils
-        sudo apt-get install screen
-        sudo apt-get install traceroute
-        sudo apt-get install tcpdump
-        sudo apt-get install nmap
-        sudo apt-get install wireshark
-        sudo shutdown -h now
-      SHELL
-    end
-    config.vm.define "pc-10.0.0.#{vmNum}" do |node|
-      node.vm.network "private_network", ip: "10.0.0.#{vmNum}", virtualbox__null: true
-      node.vm.provider "virtualbox" do |vb|
-        vb.name = "pc-10.0.0.#{vmNum}"
-        vb.customize ["modifyvm", :id, "--nic2", "null']
-      end
-      node.vm.provision "shell", inline: <<-SHELL
-        sudo apt-get update
-        sudo cat >> /etc/network/interfaces <<END
-auto eth1
-iface eth1 inet static
-  address 10.0.0.#{vmNum}
-  netmask 255.255.255.0
-  gateway 10.0.0.254
-  dns-nameserver 10.0.0.100
-END
-        sudo apt-get purge network-manager -y
-        sudo apt-get upgrade -y
-        sudo apt-get install debconf-utils
-        #sudo apt-get upgrade -y
-        sudo apt-get install screen
-        sudo apt-get install traceroute
-        sudo apt-get install tcpdump
-        sudo apt-get install nmap
-        sudo apt-get install wireshark
-        sudo shutdown -h now
-      SHELL
     end
   end
 end

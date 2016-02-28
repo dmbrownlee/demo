@@ -1,0 +1,8 @@
+# interfaces(5) file used by ifup(8) and ifdown(8)
+auto lo
+iface lo inet loopback
+auto {{ ansible_eth1.device }}
+iface {{ ansible_eth1.device }} inet static
+  address {{ ansible_eth1.ipv4.address }}
+  netmask 255.255.255.0
+  dns-nameserver 10.0.0.100

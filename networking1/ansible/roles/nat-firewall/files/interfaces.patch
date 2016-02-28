@@ -1,0 +1,12 @@
+--- interfaces	2016-02-28 08:47:55.000000000 -0800
++++ interfaces.new	2016-02-28 08:49:45.000000000 -0800
+@@ -6,6 +6,7 @@
+ iface eth1 inet static
+   address 10.0.0.100
+   netmask 255.255.255.0
+-  gateway 10.0.0.254
+-  dns-nameserver 10.0.0.100
++  post-up route add -net 192.168.1.0 netmask 255.255.255.0 gw 10.0.0.254
++  post-up route add -net 172.16.0.0 netmask 255.255.255.0 gw 10.0.0.254
++  post-up /sbin/iptables-restore -c < /etc/iptables.rules
+ # END ANSIBLE MANAGED BLOCK

@@ -1,0 +1,19 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Common configuration
+  hosts: all
+  roles:
+    - role: software-updates
+    - role: networking
+    - role: add-on-software
+
+- name: Gateway configuration
+  hosts: pc-10.0.0.100
+  roles:
+    - role: nat-firewall
+    - role: caching-nameserver
+
+- name: Final clean-up (for Networking classes)
+  hosts: all
+  roles:
+    - role: eth0-disable
