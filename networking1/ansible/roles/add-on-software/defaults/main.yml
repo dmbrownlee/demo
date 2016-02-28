@@ -1,3 +1,3 @@
 ---
 # defaults file for add-on-software
-has_GUI: "no"
+has_GUI: "yes"
