@@ -4,10 +4,3 @@
   apt: name=network-manager state=absent purge=yes
   when: ansible_distribution == "Ubuntu" and disable_eth0 == "yes"
   become: True
-- name: Reboot
-  command: /sbin/shutdown -r now "Network configuration changed"
-  when: disable_eth0 == "yes"
-  become: True
-  async: 0
-  poll: 0
-  ignore_errors: true
