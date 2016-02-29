@@ -1,3 +1,0 @@
----
-# vars file for gateway
-internal_net: "{{ hostvars[inventory_hostname].ansible_eth1.ipv4.network }}/{{ hostvars[inventory_hostname].ansible_eth1.ipv4.netmask }}"

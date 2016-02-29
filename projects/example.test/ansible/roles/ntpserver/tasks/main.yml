@@ -1,7 +1,0 @@
----
-# tasks file for ntpserver
-- name: Install NTP server
-  become: True
-  apt: pkg=ntp state=latest
-  notify:
-  - restart ntpd
