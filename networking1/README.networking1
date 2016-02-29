@@ -10,7 +10,9 @@ Prerequisites
 =============
 The ./data directory must contain vagrant.pub, the public key (or a link to it)
 matching the private key vagrant will use to ssh to the VMs when configuring
-them.  All other prerequisites are handled by the vagrantbox project.
+them.  Additionally, some of the exercises use Wireshark which must be
+installed on the host and its path configured in GNS3.  All other prerequisites
+are handled by the vagrantbox project.
 
 Creating the VMs
 ================
