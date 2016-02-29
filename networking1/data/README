@@ -1,5 +1,9 @@
-This folder is mounted as a shared folder within the VMs and can be used for sharing data between them.  The
-make file is used to setup the vagrant user in a VM when building the vagrant base boxes and the vagrant.pub
-file is the vagrant user's public key (the private key is in ../keys).  There are security implications to
-having an admin account able to login without a password and you may want to have vagrant disable itself after
-the first run.
+This folder is mounted as a shared folder within the VMs and ansible expects to
+find vagrant.pub, the public key corressponding to the private key vagrant will
+use to ssh into the guest VMs, in this directory.  Rather than check the keys
+into source control, we will create them in ../../keys and link to the public
+key here.
+
+If vagrant.pub does not exist here, run:
+
+  ln -s ../../keys/vagrant.pub ./vagrant.pub
