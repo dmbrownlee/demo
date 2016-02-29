@@ -5,8 +5,8 @@
   when: ansible_distribution == "Ubuntu"
   become: True
 - name: Configure interface for dnsmasq
-    replace:
-      dest=/etc/dnsmasq.conf
-      regexp='^#interface=$'
-      replace='interface=eth1'
+  replace:
+    dest=/etc/dnsmasq.conf
+    regexp='^#interface=$'
+    replace='interface=eth1'
   become: True
