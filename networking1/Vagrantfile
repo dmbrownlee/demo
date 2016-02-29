@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
       "net3" => ["pc-10.0.0.[100:102]"],
       "all_groups:children" => ["net1", "net2", "net3"],
       "net1:vars" => {"netprefix" => "192.168.2"},
-      "net2:vars" => {"netprefix" => "172.16.2"},
+      "net2:vars" => {"netprefix" => "172.16.0"},
       "net3:vars" => {"netprefix" => "10.0.0"}
     }
   end
