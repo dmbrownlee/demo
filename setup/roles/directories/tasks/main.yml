@@ -1,0 +1,8 @@
+---
+# tasks file for directories
+- name: Create ../iso
+  file: path=../iso state=directory
+- name: Create ../boxfiles
+  file: path=../boxfiles state=directory
+- name: Create ~/keys
+  file: path={{ ansible_user_dir }}/keys state=directory
