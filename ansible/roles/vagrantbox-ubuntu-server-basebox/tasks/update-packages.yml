@@ -1,7 +1,0 @@
----
-# tasks file for vagrantbox-ubuntu-server-basebox-package/update-packages
-- name: Update packages
-  apt: upgrade=full update_cache=yes
-  when: update_packages_first == True
-  become: True
-  tags: update-packages

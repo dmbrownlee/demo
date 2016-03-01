@@ -1,4 +1,0 @@
----
-# defaults file for vagrantbox-ubuntu-desktop-basebox
-update_packages_first: True
-vm: "ubuntu-15.10-desktop-amd64"

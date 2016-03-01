@@ -16,8 +16,10 @@
 - name: Configure the VM for vagrant
   hosts: ubuntu-15.10-desktop-amd64
   remote_user: demouser
+  vars:
+    - vm: "ubuntu-15.10-desktop-amd64"
   roles:
-    - role: vagrantbox-ubuntu-desktop-basebox
+    - role: vagrantbox
 
 # Package and install the VM as a Vagrant basebox
 - name: Create the basebox image
