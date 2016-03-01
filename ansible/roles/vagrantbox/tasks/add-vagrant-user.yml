@@ -13,9 +13,10 @@
   file: path=~vagrant/.ssh state=directory owner=vagrant mode=0700
   become: True
 - name: Add ssh keys for vagrant
-  copy: src=vagrant.pub dest=~vagrant/.ssh/authorized_keys owner=vagrant mode=0600
   become: True
-  #authorized_key: user=vagrant key=https://raw.githubusercontent.com/dmbrownlee/vagrantbox/master/data/vagrant/vagrant.pub
+  authorized_key: user=vagrant key={{ item }} state=present exclusive=yes
+  with_file:
+    - "~/keys/vagrant.pub"
 - name: Configure sudo for vagrant
   lineinfile: dest=/etc/sudoers.d/vagrant state=present create=yes mode=0440 regexp='^vagrant ALL\=' line='vagrant ALL=(ALL) NOPASSWD:ALL' validate='visudo -cf %s'
   become: True
