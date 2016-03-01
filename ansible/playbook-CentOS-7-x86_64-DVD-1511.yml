@@ -4,8 +4,13 @@
 # Create the VirtualBox VM if it does not already exist
 - name: Create the VM for the basebox
   hosts: localhost
+  vars:
+    - vm: "CentOS-7-x86_64-DVD-1511"
+    - ostype: RedHat_64
+    - iso_mirror: "http://centos.s.uw.edu/centos/7/isos/x86_64/"
+    - localsshport: 2268
   roles:
-    - role: virtualbox-centos-vm
+    - role: virtualbox-vm
 
 # Ensure the VirtualBox VM is configure for use as a Vagrant basebox
 - name: Configure the VM for vagrant

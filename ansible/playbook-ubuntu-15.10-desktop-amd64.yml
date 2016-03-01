@@ -4,8 +4,13 @@
 # Create the VirtualBox VM if it does not already exist
 - name: Create the VM for the basebox
   hosts: localhost
+  vars:
+    - vm: "ubuntu-15.10-desktop-amd64"
+    - ostype: Ubuntu_64
+    - iso_mirror: "http://mirror.pnl.gov/releases/15.10/"
+    - localsshport: 2269
   roles:
-    - role: virtualbox-ubuntu-desktop-vm
+    - role: virtualbox-vm
 
 # Ensure the VirtualBox VM is configure for use as a Vagrant basebox
 - name: Configure the VM for vagrant

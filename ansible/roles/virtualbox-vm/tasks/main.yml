@@ -1,5 +1,5 @@
 ---
-# tasks file for virtualbox-ubuntu-server-vm
+# tasks file for virtualbox-vm
   # Make sure we have the ISO file before we do anything with the VMs
 - name: Check if the ISO image has already been downloaded
   stat: path="{{ iso_dest }}"
