@@ -1,0 +1,7 @@
+---
+# tasks file for vagrantbox-install
+- name: Remove any existing basebox with the same name
+  command: vagrant box remove "{{ vm }}"
+  ignore_errors: True
+- name: Install the new basebox
+  command: vagrant box add --name "{{ vm }}" "../boxfiles/{{ vm }}.box"
