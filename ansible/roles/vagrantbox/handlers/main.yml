@@ -1,5 +1,2 @@
 ---
 # handlers file for vagrantbox
-- name: Update grub config
-  command: grub-mkconfig -o /boot/grub/grub.cfg
-  become: True
