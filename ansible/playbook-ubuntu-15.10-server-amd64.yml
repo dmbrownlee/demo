@@ -24,5 +24,7 @@
 # Package and install the VM as a Vagrant basebox
 - name: Create the basebox image
   hosts: localhost
+  vars:
+    - vm: "ubuntu-15.10-server-amd64"
   roles:
-    - role: vagrantbox-ubuntu-server-basebox-install
+    - role: vagrantbox-install
