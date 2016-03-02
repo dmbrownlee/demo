@@ -6,3 +6,4 @@
 - include: install-guest-addtions.yml
 - include: add-shared-folders.yml
 - include: package-defaults.yml
+- include: package-box.yml
