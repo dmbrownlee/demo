@@ -5,5 +5,7 @@
   pause: prompt="Press Ctrl-c to continue."
 - name: Shutdown the VM
   local_action: command vboxmanage controlvm "{{ vm }}" poweroff
+- name: Remove existing box file if it exists
+  local_action: file path="../boxfiles/{{ vm }}.box" state=absent
 - name: Build the basebox image
   local_action: command vagrant package --base "{{ vm }}" --output "../boxfiles/{{ vm }}.box"
