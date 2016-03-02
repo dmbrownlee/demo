@@ -9,3 +9,9 @@
   local_action: file path="../boxfiles/{{ vm }}.box" state=absent
 - name: Build the basebox image
   local_action: command vagrant package --base "{{ vm }}" --output "../boxfiles/{{ vm }}.box"
+- name: Unregister base box VM
+  command: vboxmanage unregistervm "{{ vm }}" --delete
+  when: make_clean == True
+- name: Close and delete base box VM's disk file
+  command: vboxmanage closemedium disk "{{ vm_disk }}" --delete
+  when: make_clean == True
