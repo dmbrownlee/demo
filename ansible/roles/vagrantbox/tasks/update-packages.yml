@@ -1,7 +1,10 @@
 ---
-# tasks file for vagrantbox-ubuntu-server-basebox-package/update-packages
-- name: Update packages
+# tasks file for update-packages
+- name: Update packages using apt-get
   apt: upgrade=full update_cache=yes
-  when: update_packages_first == True
+  when: update_packages_first == True and ansible_os_family == "Debian"
   become: True
-  tags: update-packages
+- name: Update packages using yum
+  yum: name='*' state="latest"
+  when: update_packages_first == True and ansible_os_family == "RedHat"
+  become: True

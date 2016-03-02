@@ -18,3 +18,4 @@
   tags: vagrant
   become: True
   replace: dest=/etc/network/interfaces regexp='enp0s3' replace='eth0'
+  when: ansible_os_family == "Debian"
