@@ -1,0 +1,20 @@
+---
+# tasks file for GNS3
+- name: Test for the existance of /Applications/GNS3.app
+  stat: path=/Applications/GNS3.app
+  register: gns3_app
+- name: Download GNS3
+  get_url: url="{{ gns3_url }}"
+           dest="{{ downloads }}/{{ gns3_dmg }}"
+  when: gns3_app.stat.exists == False
+- name: Mount GNS3 image
+  command: hdiutil attach {{ gns3_dmg }} chdir={{ downloads }}
+  become: yes
+  when: gns3_app.stat.exists == False
+- name: Copy GNS3.app to Applications directory
+  command: cp -R {{ mount_path }}/GNS3.app /Applications
+  when: gns3_app.stat.exists == False
+- name: Unmount GNS3 image
+  command: hdiutil detach {{ mount_path }}
+  become: yes
+  when: gns3_app.stat.exists == False
