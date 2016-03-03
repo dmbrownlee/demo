@@ -11,14 +11,21 @@
 - name: Power off duplicate VM before deleting
   command: vboxmanage controlvm "{{ vm }}" poweroff
   when: make_clean == True
-  ignore_errors: True
+  register: result
+  failed_when: "result.rc != 0 and 'Could not find a registered machine named' not in result.stderr and 'is not currently running' not in result.stderr"
+  changed_when: result.rc == 0
 - name: Unregister duplicate VM
   command: vboxmanage unregistervm "{{ vm }}" --delete
   when: make_clean == True
-  ignore_errors: True
+  register: result
+  failed_when: "result.rc != 0 and 'Could not find a registered machine named' not in result.stderr"
+  changed_when: result.rc == 0
 - name: Close and delete duplicate VM's disk file
   command: vboxmanage closemedium disk "{{ vm_disk }}" --delete
   when: make_clean == True
+  register: result
+  failed_when: "result.rc != 0 and 'Could not find file for the medium' not in result.stderr"
+  changed_when: result.rc == 0
   ignore_errors: True
   # Create the VM
 - name: Create the basebox VM
