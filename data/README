@@ -1,0 +1,9 @@
+This folder is mounted as a shared folder within the VMs and ansible expects to
+find vagrant.pub, the public key corressponding to the private key vagrant will
+use to ssh into the guest VMs, in this directory.  Rather than check the keys
+into source control, we will create them in ../../keys and link to the public
+key here.
+
+If vagrant.pub does not exist here, run:
+
+  ln -s ../../keys/vagrant.pub ./vagrant.pub

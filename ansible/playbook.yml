@@ -1,0 +1,26 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Common configuration
+  hosts: all
+  roles:
+    # - role: software-updates
+    - role: networking
+    - role: packages
+
+- name: Gateway configuration
+  hosts: pc-10.0.200.100
+  roles:
+    - role: nat-firewall
+    - role: caching-nameserver
+
+- name: Final clean-up (for Networking classes)
+  hosts: all
+  roles:
+    - role: eth0-disable
+  tasks:
+    - name: Shutdown (we expect the module to fail as it gets disconnected)
+      command: /sbin/shutdown -h now "Configuration finished"
+      become: True
+      async: 0
+      poll: 0
+      ignore_errors: true

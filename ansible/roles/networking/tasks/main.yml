@@ -1,0 +1,14 @@
+---
+# tasks file for networking
+- name: Make sure eth1 is in /etc/network/interfaces
+  blockinfile:
+    dest: /etc/network/interfaces
+    block: |
+      auto eth1
+      iface eth1 inet static
+        address {{ netprefix }}.{{ nethost }}
+        netmask 255.255.255.0
+        gateway {{ netprefix }}.254
+        dns-nameserver 10.0.200.100
+  when: ansible_distribution == "Ubuntu"
+  become: True

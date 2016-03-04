@@ -1,0 +1,6 @@
+---
+# tasks file for eth0-disable
+- name: Purge Network Manager
+  apt: name=network-manager state=absent purge=yes
+  when: ansible_distribution == "Ubuntu" and disable_eth0 == "yes"
+  become: True
