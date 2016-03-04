@@ -15,17 +15,17 @@ Vagrant.configure(2) do |config|
                              "disable_eth0" => "yes" },
       "pc-192.168.200.101" => {"nethost" => 101,
                              "disable_eth0" => "yes" },
-      "pc-192.168.201.100" => {"nethost" => 100,
+      "pc-172.16.200.100" => {"nethost" => 100,
                              "disable_eth0" => "yes" },
       "pc-10.0.200.100" => {"nethost" => 100}
     }
     ansible.groups = {
       "net1" => ["pc-192.168.200.[100:101]"],
-      "net2" => ["pc-192.168.201.100"],
+      "net2" => ["pc-172.16.200.100"],
       "net3" => ["pc-10.0.200.100"],
       "all_groups:children" => ["net1", "net2", "net3"],
       "net1:vars" => {"netprefix" => "192.168.200"},
-      "net2:vars" => {"netprefix" => "192.168.201"},
+      "net2:vars" => {"netprefix" => "172.16.200"},
       "net3:vars" => {"netprefix" => "10.0.200"}
     }
   end
@@ -40,10 +40,10 @@ Vagrant.configure(2) do |config|
   end
 
   # PC on the second network
-  config.vm.define "pc-192.168.201.100" do |node|
-    node.vm.network "private_network", ip: "192.168.201.100", virtualbox__null: true, auto_config: false
+  config.vm.define "pc-172.16.200.100" do |node|
+    node.vm.network "private_network", ip: "172.16.200.100", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.201.100"
+      vb.name = "pc-172.16.200.100"
       vb.customize ["modifyvm", :id, "--nic2", "null"]
     end
   end
