@@ -12,7 +12,7 @@
   become: yes
   when: wireshark_binary.stat.exists == False
 - name: Install Wireshark pkg
-  command: installer -package "{{ mount_path }}/Wireshark.pkg" -target /
+  command: installer -package "{{ mount_path }}/Wireshark {{ wireshark_version }}.pkg" -target /
   become: yes
   when: wireshark_binary.stat.exists == False
 - name: Unmount Wireshark image
