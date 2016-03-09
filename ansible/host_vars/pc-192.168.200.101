@@ -1,0 +1,4 @@
+---
+nethost: 192.168.200
+netprefix: 101
+disable_eth0: yes

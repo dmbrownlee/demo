@@ -1,0 +1,4 @@
+---
+nethost: 10.0.200
+netprefix: 100
+disable_eth0: no

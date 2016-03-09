@@ -13,6 +13,11 @@
     - role: nat-firewall
     - role: caching-nameserver
 
+- name: Internet configuration
+  hosts: Internet
+  roles:
+    - role: nat-firewall
+
 - name: Final clean-up (for Networking classes)
   hosts: all
   roles:

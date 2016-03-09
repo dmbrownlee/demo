@@ -10,24 +10,6 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/playbook.yml"
-    ansible.host_vars = {
-      "pc-192.168.200.100" => {"nethost" => 100,
-                             "disable_eth0" => "yes" },
-      "pc-192.168.200.101" => {"nethost" => 101,
-                             "disable_eth0" => "yes" },
-      "pc-172.16.200.100" => {"nethost" => 100,
-                             "disable_eth0" => "yes" },
-      "pc-10.0.200.100" => {"nethost" => 100}
-    }
-    ansible.groups = {
-      "net1" => ["pc-192.168.200.[100:101]"],
-      "net2" => ["pc-172.16.200.100"],
-      "net3" => ["pc-10.0.200.100"],
-      "all_groups:children" => ["net1", "net2", "net3"],
-      "net1:vars" => {"netprefix" => "192.168.200"},
-      "net2:vars" => {"netprefix" => "172.16.200"},
-      "net3:vars" => {"netprefix" => "10.0.200"}
-    }
   end
 
   # PC on the first network
@@ -58,13 +40,15 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  # NAT Firewall (if needed)
-  config.vm.define "pc-10.0.200.100" do |node|
+  # "Internet" (Linux VM routing and doing NAT)
+  config.vm.define "Internet" do |node|
     node.vm.box = "ubuntu-15.10-server-amd64"
-    node.vm.network "private_network", ip: "10.0.200.100", virtualbox__null: true, auto_config: false
+    node.vm.network "private_network", ip: "1.1.1.254", virtualbox__null: true, auto_config: false
+    node.vm.network "private_network", ip: "2.2.2.254", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-10.0.200.100"
+      vb.name = "Internet"
       vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic3", "null"]
     end
   end
 
