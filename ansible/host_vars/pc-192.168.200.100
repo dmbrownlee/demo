@@ -1,4 +1,4 @@
 ---
-nethost: 192.168.200
-netprefix: 100
+nethost: 100
+netprefix: 192.168.200
 disable_eth0: yes
