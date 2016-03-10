@@ -1,3 +1,0 @@
----
-# defaults file for eth0-disable
-disable_eth0: "no"
