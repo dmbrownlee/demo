@@ -17,6 +17,7 @@
   hosts: Internet
   roles:
     - role: nat-firewall
+    - role: caching-nameserver
 
 - name: Final clean-up (for Networking classes)
   hosts: all
