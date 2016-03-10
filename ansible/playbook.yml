@@ -7,11 +7,10 @@
     - role: networking
     - role: packages
 
-- name: Gateway configuration
-  hosts: pc-10.0.200.100
+- name: Web server configuration
+  hosts: pc-172.16.200.100
   roles:
-    - role: nat-firewall
-    - role: caching-nameserver
+    - role: apachessl
 
 - name: Internet configuration
   hosts: Internet

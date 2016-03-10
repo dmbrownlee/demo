@@ -1,0 +1,6 @@
+---
+# tasks file for apachessl
+- name: Install apache2 with apt
+  apt: name=apache2 state=present
+  when: ansible_distribution == "Ubuntu"
+  become: True
