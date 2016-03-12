@@ -32,17 +32,6 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  # Webserver/CA server on the first network
-  config.vm.define "pc-192.168.200.101" do |node|
-    node.vm.hostname = "pc-192-168-200-101"
-    node.vm.box = "ubuntu-15.10-server-amd64"
-    node.vm.network "private_network", ip: "192.168.200.101", virtualbox__null: true, auto_config: false
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.200.101"
-      vb.customize ["modifyvm", :id, "--nic2", "null"]
-    end
-  end
-
   # "Internet" (Linux VM routing and doing NAT)
   config.vm.define "Internet" do |node|
     node.vm.hostname = "Internet"
