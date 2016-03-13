@@ -13,6 +13,5 @@
   when: ansible_distribution == "Ubuntu"
   become: True
 - name: Restart apache
-  command: service apache2 restart
-  when: ansible_distribution == "Ubuntu"
+  service: name=apache2 state=restarted
   become: True
