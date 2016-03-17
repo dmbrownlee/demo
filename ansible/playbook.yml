@@ -3,7 +3,7 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: software-updates
+    # - role: software-updates
     - role: networking
     - role: add-on-software
 
