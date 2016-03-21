@@ -6,8 +6,7 @@
 #   iso_mirror
 #
 make_clean: False
-iso_dir: "../iso"
-#iso_dir: "{{ ansible_user_dir }}/Downloads"
+iso_dir: "{{ ansible_user_dir }}/Downloads"
 vm_disk: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}/box-disk1.vmdk"
 iso_file: "{{ vm }}.iso"
 iso_src: "{{ iso_mirror }}/{{ iso_file }}"
