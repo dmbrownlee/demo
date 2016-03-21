@@ -22,4 +22,4 @@
 - name: Create ~/keys directory
   file: path={{ ansible_user_dir }}/keys state=directory mode=700
 - name: Create key pair in ~/keys for vagrant user
-  command: chdir={{ ansible_user_dir }}/keys ssh-keygen -t rsa -b 4096 -f vagrant -C "vagrant public key created by vagrantbox setup"
+  command: chdir={{ ansible_user_dir }}/keys creates={{ ansible_user_dir }}/keys/vagrant ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
