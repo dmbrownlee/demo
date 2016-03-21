@@ -7,43 +7,65 @@
 - name: Download ISO file
   get_url: url={{ iso_src }} dest={{ iso_dest }}
   when: iso_file_test.stat.exists == false
-  # Remove any existing VM with the same name if make_clean is True
-- name: Power off duplicate VM before deleting
+  #===========================================================================
+  #=  Check if the VM exists and power it off if it does
+  #===========================================================================
+- name: Check of VM exists
+  shell: vboxmanage list vms | grep "{{ vm }}"
+  register: vm_exists
+  failed_when: False
+  changed_when: False
+- name: Power off the VM if it exists
   command: vboxmanage controlvm "{{ vm }}" poweroff
-  when: make_clean == True
+  when: vm_exists.rc == 0
   register: result
-  failed_when: "result.rc != 0 and 'Could not find a registered machine named' not in result.stderr and 'is not currently running' not in result.stderr"
+  failed_when: "result.rc != 0 and 'is not currently running' not in result.stderr"
   changed_when: result.rc == 0
+  #===========================================================================
+  #=  If the VM exists and make_clean is True, delete it
+  #===========================================================================
 - name: Unregister duplicate VM
   command: vboxmanage unregistervm "{{ vm }}" --delete
-  when: make_clean == True
+  when: vm_exists.rc == 0 and make_clean == True
   register: result
-  failed_when: "result.rc != 0 and 'Could not find a registered machine named' not in result.stderr"
   changed_when: result.rc == 0
 - name: Close and delete duplicate VM's disk file
   command: vboxmanage closemedium disk "{{ vm_disk }}" --delete
-  when: make_clean == True
+  when: vm_exists.rc == 0 and make_clean == True
   register: result
   failed_when: "result.rc != 0 and 'Could not find file for the medium' not in result.stderr"
   changed_when: result.rc == 0
   ignore_errors: True
-  # Create the VM
+  #===========================================================================
+  #=  Create the VM if it never existed or  make_clean deleted it
+  #===========================================================================
 - name: Create the basebox VM
   command: vboxmanage createvm --name "{{ vm }}" --register --ostype {{ ostype }}
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Tweak the VM settings
   command: vboxmanage modifyvm "{{ vm }}" --memory 768 --vram 12 --pae off --boot1 dvd --boot2 disk --boot3 none --rtcuseutc on --mouse usbtablet --clipboard bidirectional --usb on --nestedpaging on
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Configure ssh port forwarding from the local host to the VM
   command: vboxmanage modifyvm "{{ vm }}" --natpf1 "ssh,tcp,127.0.0.1,{{ localsshport }},,22"
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Add and IDE controller
   command: vboxmanage storagectl "{{ vm }}" --name IDE --add ide --controller PIIX4 --portcount 2 --bootable on
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Add a SATA controller
   command: vboxmanage storagectl "{{ vm }}" --name SATA --add sata --controller IntelAHCI --portcount 1 --bootable on
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Create the disk image file for the VM
   command: vboxmanage createhd --filename "{{ vm_disk }}" --size 8192 --format VMDK
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Attach the harddrive image file to the SATA controller
   command: vboxmanage storageattach "{{ vm }}" --storagectl SATA --port 0 --device 0 --type hdd --medium "{{ vm_disk }}" --hotpluggable on
+  when: vm_exists.rc != 0 or make_clean == True
 - name: Attach the ISO file to the IDE DVD drive
   command: vboxmanage storageattach "{{ vm }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium {{ iso_dest }}
+  when: vm_exists.rc != 0 or make_clean == True
+  #===========================================================================
+  #=  Start the VM and wait for the OS install to finish
+  #===========================================================================
 - name: Start the VM
   command: vboxmanage startvm "{{ vm }}"
 - name: Pause for OS installation
