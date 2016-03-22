@@ -16,11 +16,15 @@
 - name: Configure the VM for vagrant
   hosts: CentOS-7-x86_64-Minimal-1511
   remote_user: demouser
+  vars:
+    - vm: "CentOS-7-x86_64-Minimal-1511"
   roles:
-    - role: vagrantbox-centos-basebox
+    - role: vagrantbox
 
 # Package and install the VM as a Vagrant basebox
 - name: Create the basebox image
   hosts: localhost
+  vars:
+    - vm: "CentOS-7-x86_64-Minimal-1511"
   roles:
-    - role: vagrantbox-centos-basebox-install
+    - role: vagrantbox-install
