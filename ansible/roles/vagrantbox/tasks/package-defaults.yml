@@ -4,3 +4,7 @@
   apt: name=sysstat state=latest
   become: True
   when: ansible_os_family == "Debian"
+- name: Install libselinux-python
+  yum: name=libselinux-python state=latest
+  become: True
+  when: ansible_os_family == "RedHat"
