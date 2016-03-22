@@ -9,8 +9,3 @@
   command: vagrant box add --name "{{ vm }}" "../boxfiles/{{ vm }}.box"
 - name: Unregister base box VM
   local_action: command vboxmanage unregistervm "{{ vm }}" --delete
-- name: Close and delete base box VM's disk file
-  local_action: command vboxmanage closemedium disk "{{ vm_disk }}" --delete
-  register: result
-  failed_when: "result.rc != 0 and 'Could not find file for the medium' not in result.stderr"
-  changed_when: result.rc == 0
