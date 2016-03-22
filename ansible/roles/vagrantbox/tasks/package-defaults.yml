@@ -1,2 +1,6 @@
 ---
 # tasks file for vagrantbox-ubuntu-desktop-basebox/package-defaults
+- name: Install sysstat
+  apt: name=sysstat state=latest
+  become: True
+  when: ansible_os_family == "Debian"
