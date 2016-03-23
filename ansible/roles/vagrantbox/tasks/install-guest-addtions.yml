@@ -45,8 +45,10 @@
   when: ansible_os_family == "RedHat" and running_kernel_match.rc != 0
   ignore_errors: true
 - name: Wait for reboot to complete
-  pause: msg="Press Ctrl-c when reboot completes."
+  pause: prompt="Press Ctrl-c when reboot completes."
   when: ansible_os_family == "RedHat" and running_kernel_match.rc != 0
+  failed_when: False
+  changed_when: False
 - name: Insert Guest Additions CD Image
   local_action: command vboxmanage storageattach "{{ vm }}" --storagectl IDE --port 1 --device 0 --type dvddrive --medium additions
   when: ansible_os_family == "RedHat"
