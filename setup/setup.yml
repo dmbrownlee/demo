@@ -2,6 +2,7 @@
 - name: Setup the VirtualBox environment
   hosts: localhost
   roles:
+    - role: demoimage
     - role: wireshark
     - role: GNS3
   tasks:
