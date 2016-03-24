@@ -1,5 +1,5 @@
 ---
-# tasks file for add-on-software
+# tasks file for packages
 # Remove packages we don't want installed first
 - name: Remove libreoffice
   apt: name=libreoffice-common state=absent purge=yes
