@@ -8,8 +8,8 @@
   template: src=eth2.j2 dest=/etc/network/interfaces.d/eth2 owner=root group=root mode=0644
   when: ansible_distribution == "Ubuntu"
   become: True
-- name: Create /etc/iptables.rules from template
-  template: src=iptables.rules.j2 dest=/etc/iptables.rules owner=root group=root mode=0644
+- name: Add routers back to DHCP request
+  template: src=dhclient.conf.j2 dest=/etc/dhcp/dhclient.conf owner=root group=root mode=0644
   when: ansible_distribution == "Ubuntu"
   become: True
 - name: Ensure routing between interfaces
