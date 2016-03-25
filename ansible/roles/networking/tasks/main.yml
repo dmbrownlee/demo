@@ -1,35 +1,29 @@
 ---
 # tasks file for networking
-- name: Make sure eth1 is in /etc/network/interfaces
-  blockinfile:
-    dest: /etc/network/interfaces
-    block: |
-      auto eth1
-      iface eth1 inet static
-        address {{ netprefix }}.{{ nethost }}
-        netmask 255.255.255.0
-        gateway {{ netprefix }}.254
-        dns-nameserver 10.0.0.100
-  when: ansible_distribution == "Ubuntu"
-  become: True
-- name: Register eth0 uuid for use in template
-  shell: "nmcli -t -f device,uuid connection | awk -F: '/^eth0/ { print $2 }'"
-  register: nic_uuid
-- name: Create /etc/NetworkManager/system-connections
-  file:
-    path: /etc/NetworkManager/system-connections
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  when: ansible_distribution == "Ubuntu"
-  become: True
-- name: Tell network-manager not to create default route for eth0
+- name: Do not get routers from DHCP (eth0)
   template:
-    dest: "/etc/NetworkManager/system-connections/Wired connection 1"
-    src: wired-connection-1.j2
+    dest: /etc/dhcp/dhclient.conf
+    src: dhclient.conf.j2
     owner: root
     group: root
-    mode: 0600
+    mode: 0644
+  when: ansible_distribution == "Ubuntu"
+  become: True
+- name: Add eth0
+  template:
+    dest: /etc/network/interfaces
+    src: interfaces.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == "Ubuntu"
+  become: True
+- name: Add eth1
+  template:
+    dest: /etc/network/interfaces.d/eth1
+    src: eth1.j2
+    owner: root
+    group: root
+    mode: 0644
   when: ansible_distribution == "Ubuntu"
   become: True
