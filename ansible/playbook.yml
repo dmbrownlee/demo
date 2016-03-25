@@ -20,5 +20,5 @@
 - name: Internet configuration
   hosts: Internet
   roles:
-    - role: nat-firewall
+    - role: Internet
     - role: caching-nameserver
