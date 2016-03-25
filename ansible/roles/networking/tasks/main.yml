@@ -9,24 +9,3 @@
     mode: 0644
   when: ansible_distribution == "Ubuntu"
   become: True
-- name: Register eth0 uuid for use in template
-  shell: "nmcli -t -f device,uuid connection | awk -F: '/^eth0/ { print $2 }'"
-  register: nic_uuid
-- name: Create /etc/NetworkManager/system-connections
-  file:
-    path: /etc/NetworkManager/system-connections
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-  when: ansible_distribution == "Ubuntu"
-  become: True
-- name: Tell network-manager not to create default route for eth0
-  template:
-    dest: "/etc/NetworkManager/system-connections/Wired connection 1"
-    src: wired-connection-1.j2
-    owner: root
-    group: root
-    mode: 0600
-  when: ansible_distribution == "Ubuntu"
-  become: True
