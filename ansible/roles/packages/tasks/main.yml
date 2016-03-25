@@ -22,10 +22,6 @@
   when: ansible_distribution == "Ubuntu"
   become: True
 # Install packages that DO NOT require a GUI
-- name: Install vim with apt
-  apt: name=vim state=present
-  when: ansible_distribution == "Ubuntu"
-  become: True
 - name: Install screen with apt
   apt: name=screen state=present
   when: ansible_distribution == "Ubuntu"
@@ -36,6 +32,10 @@
   become: True
 - name: Install traceroute with apt
   apt: name=traceroute state=present
+  when: ansible_distribution == "Ubuntu"
+  become: True
+- name: Install vim with apt
+  apt: name=vim state=present
   when: ansible_distribution == "Ubuntu"
   become: True
 # Install packages that DO require a GUI
