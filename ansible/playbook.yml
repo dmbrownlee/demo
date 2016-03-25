@@ -3,13 +3,22 @@
 - name: Common configuration
   hosts: all
   roles:
+    - role: packages
     # - role: software-updates
     - role: networking
-    - role: packages
 
-- name: Gateway configuration
-  hosts: pc-10.0.0.100
+- name: Web server configuration
+  hosts: pc-172.16.200.100
   roles:
-    - role: nat-firewall
-    - role: caching-nameserver
+    - role: apachessl
 
+- name: NAT Gateway config
+  hosts: NAT1 NAT2
+  roles:
+    - role: natgw
+
+- name: Internet configuration
+  hosts: Internet
+  roles:
+    - role: Internet
+    - role: caching-nameserver

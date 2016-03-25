@@ -1,0 +1,4 @@
+---
+nethost: 100
+netprefix: 172.16.200
+disable_eth0: yes
