@@ -9,6 +9,15 @@
     mode: 0644
   when: ansible_distribution == "Ubuntu"
   become: True
+- name: Add eth0
+  template:
+    dest: /etc/network/interfaces
+    src: interfaces.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == "Ubuntu"
+  become: True
 - name: Add eth1
   template:
     dest: /etc/network/interfaces.d/eth1

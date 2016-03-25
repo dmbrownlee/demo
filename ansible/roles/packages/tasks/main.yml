@@ -51,7 +51,12 @@
   apt: name=wireshark state=present
   when: ansible_distribution == "Ubuntu" and has_GUI == "yes"
   become: True
-# Revmove packages installed as dependencies for packages we have removed
+# Revmove network-manager and packages installed as dependencies for other
+# packages we have removed
+- name: Remove network-manager
+  apt: name=network-manager state=absent purge=yes
+  when: ansible_distribution == "Ubuntu"
+  become: True
 - name: Autoremove packages no longer needed
   command: apt-get -y autoremove
   when: ansible_distribution == "Ubuntu"
