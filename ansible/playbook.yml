@@ -3,9 +3,9 @@
 - name: Common configuration
   hosts: all
   roles:
+    - role: packages
     # - role: software-updates
     - role: networking
-    - role: packages
 
 - name: Web server configuration
   hosts: pc-172.16.200.100
