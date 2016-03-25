@@ -33,6 +33,30 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  # First NAT gateway
+  config.vm.define "NAT1" do |node|
+    node.vm.hostname = "NAT1"
+    node.vm.box = "ubuntu-15.10-server-amd64"
+    node.vm.network "private_network", ip: "10.0.0.254", virtualbox__null: true, auto_config: false
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "NAT1"
+      vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic3", "null"]
+    end
+  end
+
+  # Second NAT gateway
+  config.vm.define "NAT2" do |node|
+    node.vm.hostname = "NAT2"
+    node.vm.box = "ubuntu-15.10-server-amd64"
+    node.vm.network "private_network", ip: "10.0.0.254", virtualbox__null: true, auto_config: false
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "NAT2"
+      vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic3", "null"]
+    end
+  end
+
   # "Internet" (Linux VM routing and doing NAT)
   config.vm.define "Internet" do |node|
     node.vm.hostname = "Internet"

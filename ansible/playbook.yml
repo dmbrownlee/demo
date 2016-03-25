@@ -12,6 +12,11 @@
   roles:
     - role: apachessl
 
+- name: NAT Gateway config
+  hosts: NAT1 NAT2
+  roles:
+    - role: natgw
+
 - name: Internet configuration
   hosts: Internet
   roles:
