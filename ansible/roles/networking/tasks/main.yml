@@ -1,5 +1,14 @@
 ---
 # tasks file for networking
+- name: Do not get routers from DHCP (eth0)
+  template:
+    dest: /etc/dhcp/dhclient.conf
+    src: dhclient.conf.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == "Ubuntu"
+  become: True
 - name: Add eth1
   template:
     dest: /etc/network/interfaces.d/eth1
