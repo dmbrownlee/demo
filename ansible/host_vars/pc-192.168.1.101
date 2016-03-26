@@ -1,4 +1,4 @@
 ---
 nethost: 101
-netprefix: 172.16.0
+netprefix: 192.168.1
 has_GUI: "yes"

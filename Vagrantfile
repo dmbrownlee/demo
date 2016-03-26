@@ -10,29 +10,10 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "data/", "/data"
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/playbook.yml"
-    ansible.host_vars = {
-      "pc-192.168.1.100" => {"nethost" => 100,
-                             "disable_eth0" => "yes" },
-      "pc-192.168.1.101" => {"nethost" => 101,
-                             "disable_eth0" => "yes" },
-      "pc-192.168.1.102" => {"nethost" => 102,
-                             "disable_eth0" => "yes" },
-      "pc-172.16.0.100" => {"nethost" => 100,
-                            "disable_eth0" => "yes" },
-      "pc-172.16.0.101" => {"nethost" => 101,
-                            "disable_eth0" => "yes" },
-      "pc-172.16.0.102" => {"nethost" => 102,
-                            "disable_eth0" => "yes" },
-      "pc-10.0.0.100" => {"nethost" => 100}
-    }
     ansible.groups = {
-      "net1" => ["pc-192.168.1.[100:102]"],
-      "net2" => ["pc-172.16.0.[100:102]"],
-      "net3" => ["pc-10.0.0.100"],
-      "all_groups:children" => ["net1", "net2", "net3"],
-      "net1:vars" => {"netprefix" => "192.168.1"},
-      "net2:vars" => {"netprefix" => "172.16.0"},
-      "net3:vars" => {"netprefix" => "10.0.0"}
+      "networking1" => ["pc-192.168.1.[100:102]","pc-172.16.0.[100:102]"],
+      "networking2" => ["pc-192.168.200.100","pc-172.16.200.100"],
+      "both" => ["Internet","NAT1","NAT2"]
     }
   end
 
@@ -50,11 +31,14 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.define "pc-10.0.0.100" do |node|
-    node.vm.network "private_network", ip: "10.0.0.100", virtualbox__null: true, auto_config: false
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-10.0.0.100"
-      vb.customize ["modifyvm", :id, "--nic2", "null"]
+  ["Internet","NAT1","NAT2"].each do |host|
+    config.vm.define "#{host}" do |node|
+      node.vm.box = "ubuntu-15.10-server-amd64"
+      node.vm.network "private_network", ip: "10.0.0.100", virtualbox__null: true, auto_config: false
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{host}"
+        vb.customize ["modifyvm", :id, "--nic2", "null"]
+      end
     end
   end
 end
