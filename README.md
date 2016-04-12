@@ -76,3 +76,4 @@ ubuntu-15.10-server-amd64
 - python
 
 CentOS-7-x86_64-DVD-1511
+- Make sure you chose "Default" as the Security Policy.
