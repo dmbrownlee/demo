@@ -2,7 +2,7 @@
 - stat: path={{ sshpass_srcdir }}
   register: sshpass_source
 - name: Fetch sshpass tarball
-  unarchive: copy=no src={{ sshpass_url }} dest=/tmp
+  unarchive: copy=no src={{ sshpass_url }} dest=/tmp/
   when: sshpass_source.stat.exists == False
 - name: sshpass configure
   command: creates={{ sshpass_srcdir }}/Makefile
