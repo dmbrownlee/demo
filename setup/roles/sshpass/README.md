@@ -13,8 +13,8 @@ Role Variables
 --------------
 
 The following variables are set in defaults/main.yml:
-sshpass_version    Defaults to 1.05
-sshpass_url        The URL for the 1.05 tarball
+sshpass_version    Defaults to 1.06
+sshpass_url        The URL for the 1.06 tarball
 sshpass_srcdir     The directory created by the unpacked tarball
 
 Dependencies
@@ -27,7 +27,7 @@ Example Playbook
 
     - hosts: localhost
       roles:
-         - { role: sshpass, sshpass_version: 1.05 }
+         - { role: sshpass, sshpass_version: 1.06 }
 
 License
 -------
