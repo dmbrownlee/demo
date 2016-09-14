@@ -1,0 +1,14 @@
+#!/bin/bash
+
+function die {
+  echo $1
+  exit 1
+}
+
+which -s git || die "ERROR: you must install git first"
+
+# First, we install Ansible.  Then we setup everything else in an Ansible
+# playbook
+sudo easy_install pip &&
+sudo pip install ansible &&
+ansible-playbook security2.yml
