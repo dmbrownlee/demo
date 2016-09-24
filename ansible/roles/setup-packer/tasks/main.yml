@@ -1,0 +1,12 @@
+---
+# tasks file for packer
+- name: Install Packer
+  copy: src=packer
+        dest=/usr/local/bin/packer
+  become: yes
+# - name: Install Packer
+#   unarchive: src="{{ downloads }}/{{ packer_zip }}"
+#              dest=/tmp
+#              remote_src=yes
+#              creates=/usr/local/bin/packer
+#   become: yes

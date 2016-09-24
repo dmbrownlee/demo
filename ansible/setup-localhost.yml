@@ -4,5 +4,6 @@
   roles:
     - role: setup-directories
     - role: setup-sshpass
-    - role: setup-virtualbox
+    - role: setup-packer
     - role: setup-vagrant
+    - role: setup-virtualbox
