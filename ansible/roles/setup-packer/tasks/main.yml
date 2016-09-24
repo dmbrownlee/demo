@@ -3,6 +3,7 @@
 - name: Install Packer
   copy: src=packer
         dest=/usr/local/bin/packer
+        mode=0755
   become: yes
 # - name: Install Packer
 #   unarchive: src="{{ downloads }}/{{ packer_zip }}"
