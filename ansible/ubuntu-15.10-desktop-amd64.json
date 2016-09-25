@@ -1,0 +1,87 @@
+{
+  "variables": {
+    "env_home": "{{env `HOME` }}",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "os_version": "15.10",
+    "os_spin": "",
+    "os_isomd5": "fb4eef05edcabfc5cccd4cb44f3f9b48",
+    "hostname": "ubuntu-desktop"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Ubuntu_64",
+
+    "iso_urls": [
+      "{{user `env_home`}}/Downloads/ubuntu-{{user `os_version`}}{{user `os_spin`}}-server-amd64.iso",
+      "http://releases.ubuntu.com/{{user `os_version`}}/ubuntu-{{user `os_version`}}{{user `os_spin`}}-server-amd64.iso"
+    ],
+    "iso_checksum": "{{user `os_isomd5`}}",
+    "iso_checksum_type": "md5",
+    "iso_target_path": "{{user `env_home`}}/Downloads/",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_password": "{{user `ssh_password`}}",
+    "ssh_wait_timeout": "20m",
+
+    "vm_name": "ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64",
+    "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
+    "boot_command": [
+      "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+      "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+      "/install/vmlinuz<wait>",
+      " auto<wait>",
+      " console-setup/ask_detect=false<wait>",
+      " console-setup/layoutcode=us<wait>",
+      " console-setup/modelcode=pc105<wait>",
+      " debconf/frontend=noninteractive<wait>",
+      " debian-installer=en_US<wait>",
+      " fb=false<wait>",
+      " initrd=/install/initrd.gz<wait>",
+      " kbd-chooser/method=us<wait>",
+      " keyboard-configuration/layout=USA<wait>",
+      " keyboard-configuration/variant=USA<wait>",
+      " locale=en_US<wait>",
+      " netcfg/get_domain=example.com<wait>",
+      " netcfg/get_hostname=ubuntu-desktop<wait>",
+      " grub-installer/bootdev=/dev/sda<wait>",
+      " noapic<wait>",
+      " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64.preseed.cfg",
+      " -- <wait>",
+      "<enter><wait>"
+    ]
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{user `env_home`}}/keys/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
+                  "chmod 0440 /etc/sudoers.d/vagrant"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "only": ["virtualbox-iso"],
+    "output": "ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64.box"
+  }]
+}
