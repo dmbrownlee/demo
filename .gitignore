@@ -1,8 +1,7 @@
-vm.tar
 .vagrant
-iso/*
-boxfiles/*
 .travis.yml
 *.swp
 .DS_Store
 *.retry
+*.box
+packer_cache
