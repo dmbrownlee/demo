@@ -5,3 +5,4 @@
 *.retry
 *.box
 packer_cache
+output-virtualbox-iso
