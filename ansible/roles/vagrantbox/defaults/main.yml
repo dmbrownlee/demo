@@ -1,4 +1,0 @@
----
-# defaults file for vagrantbox
-update_packages_first: True
-vm_disk: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}/box-disk1.vmdk"
