@@ -77,6 +77,11 @@
        "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",
                    "./VBoxLinuxAdditions.run"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mkdir -p /etc/lightdm/lightdm.conf.d",
+                   "sh -c 'printf \"[SeatDefaults]\nallow-guest=false\n\" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'"]
     }
   ],
   "post-processors": [{
