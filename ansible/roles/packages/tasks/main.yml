@@ -21,6 +21,10 @@
   apt: name=unity-scope-firefoxbookmarks state=absent purge=yes
   when: ansible_distribution == "Ubuntu"
   become: True
+- name: Remove webbrowser-app
+  apt: name=webbrowser-app state=absent purge=yes
+  when: ansible_distribution == "Ubuntu"
+  become: True
 # Install packages that DO NOT require a GUI
 - name: Install screen with apt
   apt: name=screen state=present
