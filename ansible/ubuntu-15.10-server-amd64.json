@@ -82,6 +82,14 @@
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "mkdir -p /etc/lightdm/lightdm.conf.d",
                    "sh -c 'printf \"[SeatDefaults]\nallow-guest=false\n\" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "if [[ -f /var/lib/AccountsService/users/vagrant ]]; then",
+                   "  sed -rie 's/^(SystemAccount=)false$/\\1true/' /var/lib/AccountsService/users/vagrant",
+                   "else",
+                   "  echo -e \"[User]\nSystemAccount=true\n\" > /var/lib/AccountsService/users/vagrant",
+                   "fi"]
     }
   ],
   "post-processors": [{
