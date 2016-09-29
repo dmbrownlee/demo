@@ -90,6 +90,12 @@
                    "else",
                    "  echo -e \"[User]\nSystemAccount=true\n\" > /var/lib/AccountsService/users/vagrant",
                    "fi"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "sed -rie 's/^GRUB_CMDLINE_LINUX=\"(.*)\"$/GRUB_CMDLINE_LINUX=\"\\1 net.ifnames=0 biosdevname=0\"/' /etc/default/grub",
+                   "grub-mkconfig -o /boot/grub/grub.cfg",
+                   "sed -ie 's/enp0s3/eth0/g' /etc/network/interfaces" ]
     }
   ],
   "post-processors": [{
