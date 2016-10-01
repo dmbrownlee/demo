@@ -3,6 +3,7 @@
 - name: Common configuration
   hosts: all
   roles:
+    - role: add-demouser-account
     - role: packages
     # - role: software-updates
     - role: networking
