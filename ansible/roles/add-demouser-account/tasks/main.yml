@@ -3,12 +3,9 @@
 - name: Adding demouser account
   user: name='demouser'
     comment='demouser' 
-    createhome=yes
     append=yes
     groups='adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare'
-    state=present
     password='$6$0uv2s1to$4jNYr75l5bq6YaLWBYorzj.h.eYhkhshofjreOvgOb6Pv5oJobcFc5VNcliOV345.cKY7T79W3y1wnqT1bmXc0'
-    system=no
   become: True
 # Hide the vagrant user while we are at it
 - name: Configure vagrant as a system user in AccountsService
