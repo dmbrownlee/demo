@@ -3,7 +3,6 @@
 
 Vagrant.configure(2) do |config|
   config.ssh.private_key_path= "../keys/vagrant"
-  config.ssh.timeout=20
   # Common to all VMs
   config.vm.box = "ubuntu-15.10-desktop-amd64"
   config.vm.boot_timeout = 90
