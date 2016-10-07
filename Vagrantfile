@@ -10,6 +10,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "data/", "/data"
 
   config.vm.provision :ansible do |ansible|
+    # ansible.verbose = "v"
     ansible.playbook = "ansible/playbook.yml"
   end
 
@@ -19,6 +20,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.200.100", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.200.100"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
     end
   end
@@ -29,6 +31,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "172.16.200.100", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-172.16.200.100"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
     end
   end
@@ -40,6 +43,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "10.0.0.254", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "NAT1"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
       vb.customize ["modifyvm", :id, "--nic3", "null"]
     end
@@ -52,6 +56,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "10.0.0.254", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "NAT2"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
       vb.customize ["modifyvm", :id, "--nic3", "null"]
     end
@@ -65,6 +70,7 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "2.2.2.254", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Internet"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
       vb.customize ["modifyvm", :id, "--nic3", "null"]
     end
