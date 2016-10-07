@@ -2,9 +2,9 @@
 - name: Setup the VirtualBox environment
   hosts: localhost
   roles:
-    - role: demoimage
-    - role: wireshark
-    - role: GNS3
+    - role: setup-demo-image-customizations
+    - role: setup-wireshark
+    - role: setup-GNS3
   tasks:
     - fail: msg="You will have to install your own Cisco IOS binary."
       ignore_errors: True
