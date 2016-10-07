@@ -25,6 +25,7 @@ Vagrant.configure(2) do |config|
         node.vm.network "private_network", ip: "#{net}.#{host}", virtualbox__null: true, auto_config: false
         node.vm.provider "virtualbox" do |vb|
           vb.name = "pc-#{net}.#{host}"
+          vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
           vb.customize ["modifyvm", :id, "--nic2", "null"]
         end
       end
@@ -37,6 +38,7 @@ Vagrant.configure(2) do |config|
       node.vm.network "private_network", ip: "10.0.0.100", virtualbox__null: true, auto_config: false
       node.vm.provider "virtualbox" do |vb|
         vb.name = "#{host}"
+        vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
         vb.customize ["modifyvm", :id, "--nic2", "null"]
       end
     end
