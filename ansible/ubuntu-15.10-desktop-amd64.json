@@ -55,6 +55,9 @@
       " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64.preseed.cfg",
       " -- <wait>",
       "<enter><wait>"
+    ],
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"]
     ]
   }],
   "provisioners": [
