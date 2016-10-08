@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.synced_folder "data/", "/data"
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "ansible/playbook.yml"
+    ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.groups = {
       "networking1" => ["pc-192.168.1.[100:102]","pc-172.16.0.[100:102]"],
       "networking2" => ["pc-192.168.200.100","pc-172.16.200.100"],
