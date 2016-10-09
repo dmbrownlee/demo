@@ -1,8 +1,0 @@
----
-- name: Setup the VirtualBox environment
-  hosts: localhost
-  roles:
-    - role: directories
-    - role: sshpass
-    - role: virtualbox
-    - role: vagrant
