@@ -4,7 +4,7 @@
 Vagrant.configure(2) do |config|
   config.ssh.private_key_path= "../keys/vagrant"
   # Common to all VMs
-  config.vm.box = "ubuntu-15.10-desktop-amd64"
+  config.vm.box = "ubuntu-16.04.1-desktop-amd64"
   config.vm.boot_timeout = 90
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.synced_folder "data/", "/data"
@@ -34,7 +34,7 @@ Vagrant.configure(2) do |config|
 
   ["Internet","NAT1","NAT2"].each do |host|
     config.vm.define "#{host}" do |node|
-      node.vm.box = "ubuntu-15.10-server-amd64"
+      node.vm.box = "ubuntu-16.04.1-server-amd64"
       node.vm.network "private_network", ip: "10.0.0.100", virtualbox__null: true, auto_config: false
       node.vm.provider "virtualbox" do |vb|
         vb.name = "#{host}"
