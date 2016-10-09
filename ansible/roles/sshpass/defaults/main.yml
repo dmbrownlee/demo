@@ -1,5 +1,0 @@
----
-# defaults file for sshpass
-sshpass_version: 1.06
-sshpass_url: "http://heanet.dl.sourceforge.net/project/sshpass/sshpass/{{ sshpass_version }}/sshpass-{{ sshpass_version }}.tar.gz"
-sshpass_srcdir: /tmp/sshpass-{{ sshpass_version }}
