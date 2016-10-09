@@ -18,7 +18,7 @@
     ],
     "iso_checksum": "{{user `os_isomd5`}}",
     "iso_checksum_type": "md5",
-    "iso_target_path": "{{user `env_home`}}/Downloads/",
+    "iso_target_path": "{{user `env_home`}}/Downloads/ubuntu-{{user `os_version`}}{{user `os_spin`}}-server-amd64.iso",
 
     "http_directory" : ".",
     "http_port_min" : 9001,
@@ -55,6 +55,9 @@
       " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-{{user `os_version`}}{{user `os_spin`}}-server-amd64.preseed.cfg",
       " -- <wait>",
       "<enter><wait>"
+    ],
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"]
     ]
   }],
   "provisioners": [
@@ -82,7 +85,23 @@
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "mkdir -p /etc/lightdm/lightdm.conf.d",
                    "sh -c 'printf \"[SeatDefaults]\nallow-guest=false\n\" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'"]
-    } 
+    },
+    {  "type": "file",
+       "source": "vagrant",
+       "destination": "/tmp/vagrant"        
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mv /tmp/vagrant /var/lib/AccountsService/users/vagrant",
+                   "chown root.root /var/lib/AccountsService/users/vagrant",
+                   "chmod 644 /var/lib/AccountsService/users/vagrant" ]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "sed -r -i -e 's/^GRUB_CMDLINE_LINUX=\"(.*)\"$/GRUB_CMDLINE_LINUX=\"\\1 net.ifnames=0 biosdevname=0\"/' /etc/default/grub",
+                   "grub-mkconfig -o /boot/grub/grub.cfg",
+                   "echo 'auto eth0\niface eth0 inet dhcp\n' > /etc/network/interfaces.d/eth0" ]
+    }
   ],
   "post-processors": [{
     "type": "vagrant",
