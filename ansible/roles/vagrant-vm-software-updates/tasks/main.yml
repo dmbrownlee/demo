@@ -1,0 +1,10 @@
+---
+# tasks file for software-updates
+- name: Update packages apt
+  apt: upgrade=full update_cache=yes
+  when: ansible_distribution == "Ubuntu" and update_packages == "yes"
+  become: True
+- name: Update packages with yum
+  yum: name='*' state="latest"
+  when: ansible_distribution == "CentOS" and update_packages == "yes"
+  become: True

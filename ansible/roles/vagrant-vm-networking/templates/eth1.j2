@@ -1,0 +1,6 @@
+auto eth1
+iface eth1 inet static
+  address {{ netprefix }}.{{ nethost }}
+  netmask 255.255.255.0
+  gateway {{ netprefix }}.254
+  dns-nameserver 1.1.1.254

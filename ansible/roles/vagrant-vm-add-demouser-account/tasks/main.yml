@@ -1,0 +1,13 @@
+---
+# tasks file for add-demouser-account
+- name: Adding demouser account
+  user: name='demouser'
+    comment='demouser' 
+    append=yes
+    groups='adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare'
+    password='$6$0uv2s1to$4jNYr75l5bq6YaLWBYorzj.h.eYhkhshofjreOvgOb6Pv5oJobcFc5VNcliOV345.cKY7T79W3y1wnqT1bmXc0'
+  become: True
+# First login attempt fails if we don't pre-create this file
+- name: Add AccountsService file for demouser
+  template: dest=/var/lib/AccountsService/users/demouser src=demouser
+  become: True
