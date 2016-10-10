@@ -1,0 +1,5 @@
+.vagrant
+.travis.yml
+*.swp
+.DS_Store
+*.retry
