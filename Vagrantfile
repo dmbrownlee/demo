@@ -35,4 +35,16 @@ Vagrant.configure(2) do |config|
       vb.customize ["modifyvm", :id, "--nic2", "null"]
     end
   end
+
+  # SecurityOnion
+  config.vm.define "SecurityOnion" do |node|
+    node.vm.hostname = "SecurityOnion"
+    node.vm.box = "ubuntu-14.04.5-desktop-amd64"
+    node.vm.network "private_network", ip: "192.168.200.253", virtualbox__null: true, auto_config: false
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "SecurityOnion"
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+      vb.customize ["modifyvm", :id, "--nic2", "null"]
+    end
+  end
 end

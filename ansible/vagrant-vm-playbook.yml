@@ -7,3 +7,8 @@
     # - role: vagrant-vm-packages
     # - role: vagrant-vm-software-updates
     - role: vagrant-vm-networking
+
+- name: SecurityOnion
+  hosts: SecurityOnion
+  roles:
+    - role: vagrant-vm-securityonion
