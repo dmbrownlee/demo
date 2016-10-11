@@ -11,4 +11,7 @@
 - name: SecurityOnion
   hosts: SecurityOnion
   roles:
+    - role: vagrant-vm-add-demouser-account
+    - role: vagrant-vm-packages
+    - role: vagrant-vm-networking
     - role: vagrant-vm-securityonion
