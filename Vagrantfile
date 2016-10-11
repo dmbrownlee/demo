@@ -43,6 +43,8 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.200.253", virtualbox__null: true, auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "SecurityOnion"
+      vb.memory = 2048
+      vb.cpus = 2
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
       vb.customize ["modifyvm", :id, "--nic2", "null"]
     end
