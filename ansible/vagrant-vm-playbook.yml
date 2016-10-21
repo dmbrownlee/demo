@@ -3,15 +3,15 @@
 - name: Generic PC configuration
   hosts: pc-192.168.200.100 pc-192.168.200.101 
   roles:
-    - role: vagrant-vm-add-demouser-account
     # - role: vagrant-vm-packages
     # - role: vagrant-vm-software-updates
     - role: vagrant-vm-networking
+    - role: vagrant-vm-add-demouser-account
 
 - name: SecurityOnion
   hosts: SecurityOnion
   roles:
-    - role: vagrant-vm-add-demouser-account
     - role: vagrant-vm-packages
     - role: vagrant-vm-networking
     - role: vagrant-vm-securityonion
+    - role: vagrant-vm-add-demouser-account
