@@ -11,3 +11,14 @@
 - name: Add AccountsService file for demouser
   template: dest=/var/lib/AccountsService/users/demouser src=demouser
   become: True
+# Edit the icons in the unity task bar
+- name: Update the icons docked in the Unity Launcher
+  shell: "su - demouser -c dbus-launch --exit-with-session gsettings set com.canonical.Unity.Launcher favorites "['application://terminal.desktop', 'application://wireshark.desktop']""
+  become: yes
+# Tweak Ubuntus invasive privacy settings
+- name: Security Settings - Do not remember files
+  shell: "su - demouser -c dbus-launch --exit-with-session gsettings set org.gnome.desktop.privacy remember-recent-files 'false'"
+  become: yes
+- name: Security Settings - Do not search Internet
+  shell: "su - demouser -c dbus-launch --exit-with-session gsettings set com.canonical.Unity.Lenses remote-content.search 'none'"
+  become: yes
