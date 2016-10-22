@@ -81,6 +81,10 @@
        "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",
                    "./VBoxLinuxAdditions.run"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "sed -i -e 's/^APT::Periodic::Update-Package-Lists \"1\";$/APT::Periodic::Update-Package-Lists \"0\";/' /etc/apt/apt.conf.d/10periodic" ]
     }
   ],
   "post-processors": [{

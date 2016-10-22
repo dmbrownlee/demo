@@ -26,7 +26,7 @@
 
     "ssh_username": "{{user `ssh_username`}}",
     "ssh_password": "{{user `ssh_password`}}",
-    "ssh_wait_timeout": "20m",
+    "ssh_wait_timeout": "25m",
 
     "vm_name": "ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64",
     "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
@@ -101,6 +101,10 @@
        "inline": [ "sed -r -i -e 's/^GRUB_CMDLINE_LINUX=\"(.*)\"$/GRUB_CMDLINE_LINUX=\"\\1 net.ifnames=0 biosdevname=0\"/' /etc/default/grub",
                    "grub-mkconfig -o /boot/grub/grub.cfg",
                    "echo 'auto eth0\niface eth0 inet dhcp\n' > /etc/network/interfaces.d/eth0" ]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "echo 'APT::Periodic::Update-Package-Lists \"0\";\nAPT::Periodic::Download-Upgradeable-Packages \"0\";\nAPT::Periodic::AutocleanInterval \"0\"' > /etc/apt/apt.conf.d/10periodic" ]
     }
   ],
   "post-processors": [{
