@@ -101,7 +101,7 @@
     },
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "echo 'APT::Periodic::Update-Package-Lists \"0\";\nAPT::Periodic::Download-Upgradeable-Packages \"0\";\nAPT::Periodic::AutocleanInterval \"0\"' > /etc/apt/apt.conf.d/10periodic" ]
+       "inline": [ "echo 'APT::Periodic::Update-Package-Lists \"0\";\nAPT::Periodic::Download-Upgradeable-Packages \"0\";\nAPT::Periodic::AutocleanInterval \"0\";' > /etc/apt/apt.conf.d/10periodic" ]
     }
   ],
   "post-processors": [{
