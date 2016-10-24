@@ -104,7 +104,8 @@
     },
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "echo 'APT::Periodic::Update-Package-Lists \"0\";\nAPT::Periodic::Download-Upgradeable-Packages \"0\";\nAPT::Periodic::AutocleanInterval \"0\";' > /etc/apt/apt.conf.d/10periodic" ]
+       "inline": [ "systemctl disable apt-daily.service",
+                   "systemctl disable apt-daily.timer" ]
     }
   ],
   "post-processors": [{
