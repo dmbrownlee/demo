@@ -13,7 +13,7 @@
   become: True
 # Edit the icons in the unity task bar
 - name: Update the icons docked in the Unity Launcher
-  shell: "dbus-launch --exit-with-session gsettings set com.canonical.Unity.Launcher favorites \"['application://terminal.desktop', 'application://wireshark.desktop']\""
+  shell: "cp /data/fix-launcher.sh /home/demouser/.fix-launcher.sh && mkdir -p /home/demouser/.config/autostart/ && cp /data/fix-launcher.desktop /home/demouser/.config/autostart/"
   become: yes
   become_user: demouser
 # Tweak Ubuntus invasive privacy settings
