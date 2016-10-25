@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.200.100"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-      vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic2", "hostonly", "--hostonlyadapter2", "vboxnet5"]
     end
   end
 
@@ -32,7 +32,7 @@ Vagrant.configure(2) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.200.101"
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-      vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic2", "hostonly", "--hostonlyadapter2", "vboxnet5"]
     end
   end
 
