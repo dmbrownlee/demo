@@ -9,6 +9,11 @@
     - role: vagrant-vm-nmcli
     - role: vagrant-vm-add-demouser-account
 
+- name: Kali2
+  hosts: Kali2
+  roles:
+    - role: vagrant-vm-nmcli
+
 - name: SecurityOnion
   hosts: SecurityOnion
   roles:

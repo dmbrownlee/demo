@@ -36,6 +36,20 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  # Kali2
+  config.vm.define "Kali2" do |node|
+    node.vm.hostname = "Kali2"
+    node.vm.box = "Kali-Linux-2016.2-vbox-amd64"
+    node.vm.network "private_network", ip: "192.168.200.200", virtualbox__null: true, auto_config: false
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "Kali2"
+      vb.memory = 2048
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
+      vb.customize ["modifyvm", :id, "--nic2", "hostonly", "--hostonlyadapter2", "vboxnet5" ]
+    end
+  end
+
   # SecurityOnion
   config.vm.define "SecurityOnion" do |node|
     node.vm.hostname = "SecurityOnion"

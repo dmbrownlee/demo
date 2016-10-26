@@ -1,0 +1,7 @@
+---
+has_GUI: "yes"
+eth1: "static"
+eth1_ip4: 192.168.200.200/24
+eth1_gw: 192.168.200.254
+eth0: "static"
+eth0_ip4: 10.0.2.15/24
