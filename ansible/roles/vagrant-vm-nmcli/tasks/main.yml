@@ -5,6 +5,7 @@
     conn_name: eth0
     ifname: eth0
     type: ethernet
+    ip4: "{{ eth0_ip4 }}"
     state: present
   become: yes
 - name: Never use eth0 for default routes
