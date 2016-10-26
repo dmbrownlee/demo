@@ -67,7 +67,7 @@
 # Kali2 specific package changes
 - name: Install packages specific to Kali2
   apt: name={{ item }} state=present
-  with_item:
+  with_items:
     - openvas
     - mitmproxy
   become: True
