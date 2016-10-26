@@ -64,6 +64,16 @@
   apt: name=gir1.2-networkmanager-1.0 state=present
   when: ansible_distribution == "Ubuntu"
   become: True
+# Kali2 specific package changes
+- name: Install packages specific to Kali2
+  apt: name={{ item }} state=present
+  with_item:
+    - openvas
+    - mitmproxy
+  become: True
+  when: inventory_hostname == "Kali2"
+  notify:
+    - OpenVAS setup
 # Revmove packages installed as dependencies for packages we removed
 - name: Autoremove packages no longer needed
   command: apt-get -y autoremove
