@@ -5,7 +5,6 @@
   roles:
     - role: vagrant-vm-packages
     # - role: vagrant-vm-software-updates
-    # - role: vagrant-vm-networking
     - role: vagrant-vm-nmcli
     - role: vagrant-vm-add-demouser-account
 
