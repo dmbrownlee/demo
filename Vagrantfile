@@ -21,6 +21,8 @@ Vagrant.configure(2) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.200.100"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
     end
   end
 
@@ -31,6 +33,8 @@ Vagrant.configure(2) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.200.101"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
     end
   end
 
@@ -44,6 +48,8 @@ Vagrant.configure(2) do |config|
       vb.memory = 2048
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
     end
   end
 
@@ -57,6 +63,8 @@ Vagrant.configure(2) do |config|
       vb.memory = 2048
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
     end
   end
