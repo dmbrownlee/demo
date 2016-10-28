@@ -84,6 +84,21 @@
     },
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mkdir -p /etc/lightdm/lightdm.conf.d",
+                   "sh -c 'printf \"[SeatDefaults]\nallow-guest=false\n\" > /etc/lightdm/lightdm.conf.d/50-no-guest.conf'"]
+    },
+    {  "type": "file",
+       "source": "vagrant",
+       "destination": "/tmp/vagrant"
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mv /tmp/vagrant /var/lib/AccountsService/users/vagrant",
+                   "chown root.root /var/lib/AccountsService/users/vagrant",
+                   "chmod 644 /var/lib/AccountsService/users/vagrant" ]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "sed -i -e 's/^APT::Periodic::Update-Package-Lists \"1\";$/APT::Periodic::Update-Package-Lists \"0\";/' /etc/apt/apt.conf.d/10periodic" ]
     }
   ],
@@ -93,3 +108,8 @@
     "output": "ubuntu-{{user `os_version`}}{{user `os_spin`}}-desktop-amd64.box"
   }]
 }
+
+
+
+
+
