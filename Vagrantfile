@@ -63,7 +63,7 @@ Vagrant.configure(2) do |config|
       vb.memory = 2048
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-      vb.customize ["modifyvm", :id, "--nic2", "null"]
+      vb.customize ["modifyvm", :id, "--nic2", "hostonly", "--hostonlyadapter2", "vboxnet5" ]
       vb.customize ["modifyvm", :id, "--vrde", "off"]
     end
   end

@@ -1,4 +1,4 @@
 ---
-nethost: 253
-netprefix: 192.168.200
-disable_eth0: yes
+has_GUI: "yes"
+eth1: "not configured"
+eth0_ip4: 10.0.2.15/24
