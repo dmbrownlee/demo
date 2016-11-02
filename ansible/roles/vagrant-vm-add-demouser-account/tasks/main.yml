@@ -14,3 +14,20 @@
 - name: Configure vagrant as a system user in AccountsService
   replace: dest=/var/lib/AccountsService/users/vagrant regexp='^SystemAccount=false$' replace='SystemAccount=true'
   become: True
+# Edit the icons in the unity task bar
+- name: Update the icons docked in the Unity Launcher
+  shell: "cp /data/fix-launcher.sh /home/demouser/.fix-launcher.sh && mkdir -p /home/demouser/.config/autostart/ && cp /data/fix-launcher.desktop /home/demouser/.config/autostart/"
+  become: yes
+  become_user: demouser
+  when: has_GUI == "yes"
+# Tweak Ubuntus invasive privacy settings
+- name: Security Settings - Do not remember files
+  shell: "dbus-launch --exit-with-session gsettings set org.gnome.desktop.privacy remember-recent-files 'false'"
+  become: yes
+  become_user: demouser
+  when: has_GUI == "yes"
+- name: Security Settings - Do not search Internet
+  shell: "dbus-launch --exit-with-session gsettings set com.canonical.Unity.Lenses remote-content-search 'none'"
+  become: yes
+  become_user: demouser
+  when: has_GUI == "yes"
