@@ -14,6 +14,15 @@
 - name: Configure vagrant as a system user in AccountsService
   replace: dest=/var/lib/AccountsService/users/vagrant regexp='^SystemAccount=false$' replace='SystemAccount=true'
   become: True
+- name: Copy the demoserver binary to ~demouser/
+  copy:
+    dest: "/home/demouser/demoserver"
+    src: "/data/demoserver"
+    remote_src: True
+    owner: "demouser"
+    group: "demouser"
+    mode: "0755"
+  become: yes
 # Edit the icons in the unity task bar
 - name: Update the icons docked in the Unity Launcher
   shell: "cp /data/fix-launcher.sh /home/demouser/.fix-launcher.sh && mkdir -p /home/demouser/.config/autostart/ && cp /data/fix-launcher.desktop /home/demouser/.config/autostart/"
