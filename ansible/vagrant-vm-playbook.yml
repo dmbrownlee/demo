@@ -3,10 +3,10 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: vagrant-vm-add-demouser-account
     - role: vagrant-vm-packages
     # - role: vagrant-vm-software-updates
     - role: vagrant-vm-networking
+    - role: vagrant-vm-add-demouser-account
 
 - name: Web server configuration
   hosts: pc-172.16.200.100
