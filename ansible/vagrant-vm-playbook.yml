@@ -8,6 +8,11 @@
     - role: vagrant-vm-nmcli
     - role: vagrant-vm-add-demouser-account
 
+- name: Make vulnerable
+  hosts: pc-192.168.200.101
+  roles:
+    - role: vagrant-vm-make-vulnerable
+
 - name: Kali2
   hosts: Kali2
   roles:
