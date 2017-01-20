@@ -3,7 +3,7 @@
 - name: Create the basebox image
   hosts: localhost
   vars:
-    - vm: "CentOS-7-x86_64-Everything-1611"
+    - vm: "CentOS-7-x86_64-Everything"
   roles:
     - role: vagrantbox-pack
     - role: vagrantbox-install
