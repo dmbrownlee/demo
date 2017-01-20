@@ -4,8 +4,8 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "os_version": "7",
-    "os_spin": "1511",
-    "os_isomd5": "dba29c59117400b111633be2bf2aaf0e",
+    "os_spin": "1611",
+    "os_iso_checksum": "af4969ebbdc479d330de97c5bfbb37eedc64c369f009cb15a97f9553ba441c88",
     "hostname": "centos",
     "kickstart": "ks7.cfg"
   },
@@ -16,8 +16,8 @@
       "{{user `env_home`}}/Downloads/CentOS-{{user `os_version`}}-x86_64-Everything-{{user `os_spin`}}.iso",
       "http://centos.s.uw.edu/centos/{{user `os_version`}}/isos/x86_64/CentOS-{{user `os_version`}}-x86_64-Everything-{{user `os_spin`}}.iso"
     ],
-    "iso_checksum": "{{user `os_isomd5`}}",
-    "iso_checksum_type": "md5",
+    "iso_checksum": "{{user `os_iso_checksum`}}",
+    "iso_checksum_type": "sha256",
     "iso_target_path": "{{user `env_home`}}/Downloads/CentOS-7-x86_64-Everything-1511.iso",
 
     "http_directory" : ".",
