@@ -29,7 +29,7 @@
     "ssh_password": "{{user `ssh_password`}}",
     "ssh_wait_timeout": "20m",
 
-    "vm_name": "CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}",
+    "vm_name": "CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}",
     "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
     "boot_command": [
       "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `kickstart` }}<enter>"
@@ -78,6 +78,6 @@
   "post-processors": [{
     "type": "vagrant",
     "only": ["virtualbox-iso"],
-    "output": "CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.box"
+    "output": "CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}.box"
   }]
 }
