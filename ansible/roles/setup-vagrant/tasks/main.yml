@@ -3,12 +3,18 @@
 - name: Test for the existance of /usr/local/bin/vagrant
   stat: path=/usr/local/bin/vagrant
   register: vagrant_binary
+#- name: Download Vagrant dmg file
+#  get_url:
+#    url: "{{ vagrant_url }}"
+#    dest: "{{ downloads }}/{{ vagrant_dmg }}"
+#  when: vagrant_binary.stat.exists == False
 - name: Download Vagrant dmg file
-  get_url: url="{{ vagrant_url }}"
-           dest="{{ downloads }}/{{ vagrant_dmg }}"
+  command: curl -o {{ downloads }}/{{ vagrant_dmg }} {{ vagrant_url }}
   when: vagrant_binary.stat.exists == False
 - name: Mount Vagrant image
-  command: hdiutil attach "{{ vagrant_dmg }}" chdir="{{ downloads }}"
+  command: hdiutil attach "{{ vagrant_dmg }}"
+  args:
+    chdir: "{{ downloads }}"
   become: yes
   when: vagrant_binary.stat.exists == False
 - name: Install Vagrant pkg
@@ -22,4 +28,7 @@
 - name: Create ~/keys directory
   file: path={{ ansible_user_dir }}/keys state=directory mode=700
 - name: Create key pair in ~/keys for vagrant user
-  command: chdir={{ ansible_user_dir }}/keys creates={{ ansible_user_dir }}/keys/vagrant ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ ansible_user_dir }}/keys"
+    creates: "{{ ansible_user_dir }}/keys/vagrant"
