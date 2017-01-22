@@ -24,6 +24,7 @@
     path: "/Applications/GNS3.app/Contents/Resources/ubridge"
     owner: root
     mode: 4755
+  become: yes
 - name: Configure GNS3
   copy:
     src: gns3_gui.conf
