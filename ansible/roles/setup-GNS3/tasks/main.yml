@@ -4,8 +4,9 @@
   stat: path=/Applications/GNS3.app
   register: gns3_app
 - name: Download GNS3
-  get_url: url="{{ gns3_url }}"
-           dest="{{ downloads }}/{{ gns3_dmg }}"
+  get_url:
+    url: "{{ gns3_url }}"
+    dest: "{{ downloads }}/{{ gns3_dmg }}"
   when: gns3_app.stat.exists == False
 - name: Mount GNS3 image
   command: hdiutil attach {{ gns3_dmg }} chdir={{ downloads }}
