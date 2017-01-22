@@ -27,11 +27,11 @@
 - name: Configure GNS3
   copy:
     src: gns3_gui.conf
-    dest: {{ ansible_user_dir }}/.config/GNS3/gns3_gui.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_gui.conf"
 - name: Configure GNS3
   copy:
     src: gns3_sever.conf
-    dest: {{ ansible_user_dir }}/.config/GNS3/gns3_server.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_server.conf"
 - name: Add GNS3 to Dock
   command: defaults write com.apple.dock persistent-apps -array-add '{
         GUID = 970228434;
