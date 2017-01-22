@@ -19,3 +19,4 @@
         "tile-type" = "file-tile";
     }'
   notify: "Restart the Dock"
+  changed_when: False
