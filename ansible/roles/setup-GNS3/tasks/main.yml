@@ -53,3 +53,9 @@
     }'
   notify: "Restart the Dock"
   changed_when: False
+- name: Adding directory for IOS images
+  file:
+    path: {{ ansible_user_dir }}/GNS3/images/IOS
+    owner: demouser
+    state: directory
+    mode: 0755
