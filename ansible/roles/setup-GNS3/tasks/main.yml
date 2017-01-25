@@ -55,7 +55,20 @@
   changed_when: False
 - name: Adding directory for IOS images
   file:
-    path: {{ ansible_user_dir }}/GNS3/images/IOS
+    path: {{ ansible_user_dir }}/GNS3/images
     owner: demouser
     state: directory
     mode: 0755
+- name: Adding directory for IOS symbols
+  file:
+    path: {{ ansible_user_dir }}/GNS3/symbols
+    owner: demouser
+    state: directory
+    mode: 0755
+- name: Copy SVG icons for VMs
+  copy:
+    src: computer_green.svg
+    dest: {{ ansible_user_dir }}/GNS3/symbols/computer_green.svg
+- copy:
+    src: computer_purple.svg
+    dest: {{ ansible_user_dir }}/GNS3/symbols/computer_purple.svg
