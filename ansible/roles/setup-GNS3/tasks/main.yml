@@ -25,6 +25,14 @@
     owner: root
     mode: 04755
   become: yes
+- name: Create config directory for GNS3
+  file:
+    path: "{{ ansible_user_dir }}/.config/GNS3"
+    state: directory
+    owner: demouser
+    group: staff
+    mode: 0755
+  become: yes
 - name: Configure GNS3
   copy:
     src: gns3_gui.conf
