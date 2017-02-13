@@ -6,4 +6,4 @@
     dest: "{{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova"
     checksum: "sha1:A22978E7DB5DA82A6D013DA51BE227EE2982042D"
 - name: Import the Kali VM OVA file
-  command: vboxmanage import Kali-Linux-2016.2-vbox-amd64.ova chdir={{ ansible_user_directory }}/Downloads
+  command: vboxmanage import Kali-Linux-2016.2-vbox-amd64.ova chdir={{ ansible_user_dir }}/Downloads
