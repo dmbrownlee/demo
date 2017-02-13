@@ -19,6 +19,28 @@
   command: hdiutil detach {{ mount_path }}
   become: yes
   when: gns3_app.stat.exists == False
+- name: Set owner permissions on ubridge
+  file:
+    path: "/Applications/GNS3.app/Contents/Resources/ubridge"
+    owner: root
+    mode: 04755
+  become: yes
+- name: Create config directory for GNS3
+  file:
+    path: "{{ ansible_user_dir }}/.config/GNS3"
+    state: directory
+    owner: demouser
+    group: staff
+    mode: 0755
+  become: yes
+- name: Configure GNS3
+  copy:
+    src: gns3_gui.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_gui.conf"
+- name: Configure GNS3
+  copy:
+    src: gns3_server.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_server.conf"
 - name: Add GNS3 to Dock
   command: defaults write com.apple.dock persistent-apps -array-add '{
         GUID = 970228434;
@@ -38,3 +60,23 @@
         "tile-type" = "file-tile";
     }'
   notify: "Restart the Dock"
+  changed_when: False
+- name: Adding directory for IOS images
+  file:
+    path: "{{ ansible_user_dir }}/GNS3/images"
+    owner: demouser
+    state: directory
+    mode: 0755
+- name: Adding directory for IOS symbols
+  file:
+    path: "{{ ansible_user_dir }}/GNS3/symbols"
+    owner: demouser
+    state: directory
+    mode: 0755
+- name: Copy SVG icons for VMs
+  copy:
+    src: computer_green.svg
+    dest: "{{ ansible_user_dir }}/GNS3/symbols/computer_green.svg"
+- copy:
+    src: computer_purple.svg
+    dest: "{{ ansible_user_dir }}/GNS3/symbols/computer_purple.svg"
