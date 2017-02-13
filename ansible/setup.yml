@@ -3,5 +3,6 @@
   hosts: localhost
   roles:
     - role: setup-vagrant-base-boxes
+    - role: setup-Kali
     - role: setup-demo-image-customizations
     - role: setup-wireshark
