@@ -9,3 +9,5 @@
   command: vboxmanage import Kali-Linux-2016.2-vbox-amd64.ova chdir={{ ansible_user_dir }}/Downloads
 - name: Disable USB settings on the VM as they require extension packs
   command: vboxmanage modifyvm "Kali-Linux-2016.2-vbox-amd64" --usb on --usbehci off --usbxhci off
+- name: Attach NIC to correct internal network
+  command: vboxmanage modifyvm "Kali-Linux-2016.2-vbox-amd64" --nic1 intnet --intnet1 "net1"
