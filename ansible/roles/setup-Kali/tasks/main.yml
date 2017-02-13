@@ -7,3 +7,5 @@
     checksum: "sha1:A22978E7DB5DA82A6D013DA51BE227EE2982042D"
 - name: Import the Kali VM OVA file
   command: vboxmanage import Kali-Linux-2016.2-vbox-amd64.ova chdir={{ ansible_user_dir }}/Downloads
+- name: Disable USB settings on the VM as they require extension packs
+  command: vboxmanage modifyvm "Kali-Linux-2016.2-vbox-amd64" --usb on --usbehci off --usbxhci off
