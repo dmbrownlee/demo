@@ -1,0 +1,9 @@
+---
+# Run packer to build the base box
+- name: Create the Vagrant base box
+  hosts: localhost
+  vars:
+    - vm: "Kali-Linux-2016.2"
+  roles:
+    - role: vagrantbox-kali-pack
+    - role: vagrantbox-install

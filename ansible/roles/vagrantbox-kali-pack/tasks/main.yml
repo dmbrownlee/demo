@@ -1,0 +1,13 @@
+---
+# Create Kali-Linux-2016.2-vbox-amd64 basebox
+- name: Download zip
+  get_url:
+    url: "https://images.offensive-security.com/virtual-images/Kali-Linux-2016.2-vbox-amd64.ova"
+    dest: "{{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova"
+    checksum: "sha1:a22978e7db5da82a6d013da51be227ee2982042d"
+- name: Import the Kali appliance
+  command: VBoxManage import {{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova
+  args:
+    creates: "{{ ansible_user_dir }}/VirtualBox VMs/Kali-Linux-2016.2-vbox-amd64"
+- name: Package the base box
+  command: vagrant package --base Kali-Linux-2016.2-vbox-amd64 --output Kali-Linux-2016.2.box
