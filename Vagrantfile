@@ -53,4 +53,17 @@ Vagrant.configure(2) do |config|
       vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
     end
   end
+
+  # Metasploitable2
+  config.vm.define "Metasploitable2" do |node|
+    node.vm.box = "Metasploitable2"
+    node.vm.hostname = "Metasploitable2"
+    node.vm.network "private_network", ip: "192.168.201.102", virtualbox__intnet: "net1", auto_config: false
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "Metasploitable2"
+      vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+    end
+  end
 end
