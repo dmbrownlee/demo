@@ -1,0 +1,9 @@
+---
+# Run packer to build the base box
+- name: Create the Vagrant base box
+  hosts: localhost
+  vars:
+    - vm: "Metasploitable2"
+  roles:
+    - role: vagrantbox-metasploitable-pack
+    - role: vagrantbox-install
