@@ -7,7 +7,6 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu-16.04.1-desktop-amd64"
   config.vm.boot_timeout = 60
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "data/", "/data"
 
   config.vm.provision :ansible do |ansible|
     ansible.verbose = "vv"
@@ -18,6 +17,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "pc-192.168.201.100" do |node|
     node.vm.hostname = "pc-192-168-201-100"
     node.vm.network "private_network", ip: "192.168.201.100", virtualbox__intnet: "net1", auto_config: false
+    node.vm.synced_folder "data/", "/data"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.201.100"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
@@ -30,6 +30,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "pc-192.168.201.101" do |node|
     node.vm.hostname = "pc-192-168-201-101"
     node.vm.network "private_network", ip: "192.168.201.101", virtualbox__intnet: "net1", auto_config: false
+    node.vm.synced_folder "data/", "/data"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "pc-192.168.201.101"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
@@ -43,6 +44,7 @@ Vagrant.configure(2) do |config|
     node.vm.hostname = "SecurityOnion"
     node.vm.box = "ubuntu-14.04.5-desktop-amd64"
     node.vm.network "private_network", ip: "192.168.201.253", virtualbox__intnet: "net1", auto_config: false
+    node.vm.synced_folder "data/", "/data"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "SecurityOnion"
       vb.memory = 2048
