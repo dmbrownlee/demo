@@ -25,6 +25,6 @@
 - name: Add the SATA controller
   command: VBoxManage storagectl "Metasploitable2" --name "SATA" --add sata --controller IntelAHCI --portcount 1 --bootable on
 - name: Add the Metasploitable drive to the VM
-  command: VBoxManage storageattach "Metasploitable2" --storagectl "SATA" --port 0 --device 0 --type hdd --medium "{{ ansible_user_dir }}/VirtualBox\ VMs/Metasploitable2/Metasploitable.vmdk"
+  command: VBoxManage storageattach "Metasploitable2" --storagectl "SATA" --port 0 --device 0 --type hdd --medium "{{ ansible_user_dir }}/VirtualBox VMs/Metasploitable2/Metasploitable.vmdk"
 - name: Package the base box
   command: vagrant package --base Metasploitable2 --output Metasploitable2.box
