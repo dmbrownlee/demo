@@ -68,7 +68,7 @@ Vagrant.configure(2) do |config|
   # Kali
   config.vm.define "Kali-Linux-2016.2" do |node|
     node.vm.box = "Kali-Linux-2016.2"
-    node.vm.hostname = "Kali-Linux-2016.2"
+    #node.vm.hostname = "Kali-Linux-2016.2"
     node.vm.network "private_network", ip: "192.168.201.103", virtualbox__intnet: "net1", auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Kali-Linux-2016.2"
