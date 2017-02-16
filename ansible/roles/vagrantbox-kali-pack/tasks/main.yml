@@ -9,12 +9,15 @@
   command: VBoxManage import {{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova
   args:
     creates: "{{ ansible_user_dir }}/VirtualBox VMs/Kali-Linux-2016.2-vbox-amd64"
+- name: Change settings we don't like
+  command: VBoxManage modifyvm "Kali-Linux-2016.2-vbox-amd64" --usbehci off
 - name: The following steps have to be completed manually before continuing.
   vars:
     msg: |
          login as root (password: toor)
 
            systemctl enable ssh
+           systemctl start ssh
            useradd -b /home -U -m -s /bin/bash vagrant
            passwd vagrant
            su vagrant -c "mkdir -m 700 /home/vagrant/.ssh"
