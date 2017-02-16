@@ -9,5 +9,22 @@
   command: VBoxManage import {{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova
   args:
     creates: "{{ ansible_user_dir }}/VirtualBox VMs/Kali-Linux-2016.2-vbox-amd64"
+- debug:
+    msg: |
+         The following steps have to be completed manually before continuing.
+         login as root (password: toor)
+         systemctl enable ssh
+         useradd -b /home -U -m -s /bin/bash vagrant
+         passwd vagrant
+         su vagrant -c "mkdir -m 700 /home/vagrant/.ssh"
+         echo 'vagrant	ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant
+         Then, on the host machine, upload the public ssh key for the vagrant user with:
+         scp -P 2201 ~/keys/vagrant.pub vagrant@localhost:/home/vagrant/.ssh/authorized_keys
+- pause:
+    prompt: "Press Ctrl-C when you have completed the steps above."
+- name: Delete any exiting .box file
+  file:
+    path: Kali-Linux-2016.2.box
+    state: absent
 - name: Package the base box
   command: vagrant package --base Kali-Linux-2016.2-vbox-amd64 --output Kali-Linux-2016.2.box
