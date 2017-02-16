@@ -13,10 +13,12 @@
   roles:
     - role: vagrant-vm-make-vulnerable
 
-- name: Kali2
-  hosts: Kali2
+- name: Kali-Linux-2016.2
+  hosts: Kali-Linux-2016.2
   roles:
-    - role: vagrant-vm-nmcli
+    - role: vagrant-vm-update-packages
+    #- role: vagrant-vm-nmcli
+    - role: vagrant-vm-kali
 
 - name: SecurityOnion
   hosts: SecurityOnion
