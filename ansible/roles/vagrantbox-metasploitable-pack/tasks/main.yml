@@ -21,7 +21,7 @@
     dest: "{{ ansible_user_dir }}/VirtualBox VMs/Metasploitable2/Metasploitable.vmdk"
     remote_src: True
 - name: Configure the VirtualBox VM
-  command: VBoxManage modifyvm "Metasploitable2" --ostype Ubuntu --memory 1024 --usb on --usbehci on --mouse usbtablet --audiocodec ad1980 --rtcuseutc on
+  command: VBoxManage modifyvm "Metasploitable2" --ostype Ubuntu --memory 1024 --usb on --mouse usbtablet --audiocodec ad1980 --rtcuseutc on
 - name: Add the SATA controller
   command: VBoxManage storagectl "Metasploitable2" --name "SATA" --add sata --controller IntelAHCI --portcount 1 --bootable on
 - name: Add the Metasploitable drive to the VM
