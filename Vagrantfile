@@ -47,7 +47,7 @@ Vagrant.configure(2) do |config|
     node.vm.synced_folder "data/", "/data"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "SecurityOnion"
-      vb.memory = 2048
+      vb.memory = 4096
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--vrde", "off"]
       vb.customize ["modifyvm", :id, "--vram", "128"]
