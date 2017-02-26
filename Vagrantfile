@@ -13,6 +13,23 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
   end
 
+  # SecurityOnion
+  config.vm.define "SecurityOnion" do |node|
+    node.vm.hostname = "SecurityOnion"
+    node.vm.box = "ubuntu-14.04.5-desktop-amd64"
+    node.vm.network "private_network", ip: "192.168.201.253", virtualbox__intnet: "net1", auto_config: false
+    node.vm.synced_folder "data/", "/data"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "SecurityOnion"
+      vb.memory = 4096
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--vram", "128"]
+      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
+    end
+  end
+
   # First Ubuntu desktop
   config.vm.define "pc-192.168.201.100" do |node|
     node.vm.hostname = "pc-192-168-201-100"
@@ -39,20 +56,14 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  # SecurityOnion
-  config.vm.define "SecurityOnion" do |node|
-    node.vm.hostname = "SecurityOnion"
-    node.vm.box = "ubuntu-14.04.5-desktop-amd64"
-    node.vm.network "private_network", ip: "192.168.201.253", virtualbox__intnet: "net1", auto_config: false
-    node.vm.synced_folder "data/", "/data"
+  # Kali
+  config.vm.define "Kali-Linux-2016.2" do |node|
+    node.vm.box = "Kali-Linux-2016.2"
+    #node.vm.hostname = "Kali-Linux-2016.2"
+    node.vm.network "private_network", ip: "192.168.201.103", virtualbox__intnet: "net1", auto_config: false
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "SecurityOnion"
-      vb.memory = 4096
-      vb.cpus = 2
+      vb.name = "Kali-Linux-2016.2"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
-      vb.customize ["modifyvm", :id, "--vram", "128"]
-      vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
-      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-all"]
     end
   end
 
@@ -63,17 +74,6 @@ Vagrant.configure(2) do |config|
     node.vm.network "private_network", ip: "192.168.201.102", virtualbox__intnet: "net1", auto_config: false
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Metasploitable2"
-      vb.customize ["modifyvm", :id, "--vrde", "off"]
-    end
-  end
-
-  # Kali
-  config.vm.define "Kali-Linux-2016.2" do |node|
-    node.vm.box = "Kali-Linux-2016.2"
-    #node.vm.hostname = "Kali-Linux-2016.2"
-    node.vm.network "private_network", ip: "192.168.201.103", virtualbox__intnet: "net1", auto_config: false
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "Kali-Linux-2016.2"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
     end
   end
