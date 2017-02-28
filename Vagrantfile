@@ -64,6 +64,7 @@ Vagrant.configure(2) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Kali-Linux-2016.2"
       vb.customize ["modifyvm", :id, "--vrde", "off"]
+      vb.customize ["modifyvm", :id, "--nicpromisc2", "allow-vms"]
     end
   end
 
