@@ -4,3 +4,6 @@
 - name: Install apache2 with apt
   apt: name=apache2 state=present
   become: True
+- name: Enable ssl
+  command: a2enmod ssl
+  become: True
