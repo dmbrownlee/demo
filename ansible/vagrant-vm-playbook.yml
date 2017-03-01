@@ -12,6 +12,7 @@
   hosts: pc-192.168.201.101
   roles:
     - role: vagrant-vm-make-vulnerable
+    - role: vagrant-vm-apache
 
 - name: Kali-Linux-2016.2
   hosts: Kali-Linux-2016.2

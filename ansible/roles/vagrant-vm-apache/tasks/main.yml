@@ -1,0 +1,6 @@
+---
+# tasks file for apache
+# Install packages that DO NOT require a GUI
+- name: Install apache2 with apt
+  apt: name=apache2 state=present
+  become: True
