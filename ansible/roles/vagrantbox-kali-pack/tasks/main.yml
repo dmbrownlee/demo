@@ -23,6 +23,7 @@
            su vagrant -c "mkdir -m 700 /home/vagrant/.ssh"
            echo 'vagrant	ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant
            apt-get install -y aptitude
+           echo -e 'auto eth0\niface eth0 inet dhcp' > /etc/network/interfaces.d/eth0
 
          Then, in the VM's settings, add a port forwarding rule from port 2201 on the localhost to
          port 22 on the guest and upload the public ssh key for the vagrant user with:
