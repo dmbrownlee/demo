@@ -4,8 +4,8 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "os_version": "16.04",
-    "os_spin": ".1",
-    "os_isomd5": "d2d939ca0e65816790375f6826e4032f",
+    "os_spin": ".2",
+    "os_isomd5": "2bce60d18248df9980612619ff0b34e6",
     "hostname": "ubuntu-server"
   },
   "builders": [{

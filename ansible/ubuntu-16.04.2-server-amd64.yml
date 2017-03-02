@@ -3,7 +3,7 @@
 - name: Create the Vagrant base box
   hosts: localhost
   vars:
-    - vm: "ubuntu-16.04.1-server-amd64"
+    - vm: "ubuntu-16.04.2-server-amd64"
   roles:
     - role: vagrantbox-pack
     - role: vagrantbox-install
