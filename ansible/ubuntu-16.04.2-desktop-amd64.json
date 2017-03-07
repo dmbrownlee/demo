@@ -5,7 +5,7 @@
     "ssh_password": "vagrant",
     "os_version": "16.04",
     "os_spin": ".2",
-    "os_isomd5": "1400884cec8e40a1a876b2678f81494b",
+    "os_isomd5": "2bce60d18248df9980612619ff0b34e6",
     "hostname": "ubuntu-desktop"
   },
   "builders": [{
@@ -57,7 +57,8 @@
       "<enter><wait>"
     ],
     "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"]
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
+      ["modifyvm", "{{.Name}}", "--memory", "1024"]
     ]
   }],
   "provisioners": [

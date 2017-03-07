@@ -57,7 +57,8 @@
       "<enter><wait>"
     ],
     "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"]
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
+      ["modifyvm", "{{.Name}}", "--memory", "1024"]
     ]
   }],
   "provisioners": [
