@@ -1,0 +1,15 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.ssh.private_key_path= "~/keys/vagrant"
+  config.vm.box = "ubuntu-15.10-desktop-amd64"
+  config.vm.define "test" do |test|
+    test.vm.provider "virtualbox" do |vb|
+      vb.name = "ubuntu-15.10-desktop-amd64-base-box-test"
+    end
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+  SHELL
+end

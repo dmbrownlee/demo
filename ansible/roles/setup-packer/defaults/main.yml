@@ -1,0 +1,6 @@
+---
+# defaults file for packer
+packer_version: 0.12.2
+packer_zip: "packer_{{ packer_version }}_darwin_amd64.zip"
+packer_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
+downloads: "{{ ansible_user_dir }}/Downloads"

@@ -1,0 +1,31 @@
+---
+# tasks file for vagrant
+#- name: Download Vagrant dmg file
+#  get_url:
+#    url: "{{ vagrant_url }}"
+#    dest: "{{ downloads }}/{{ vagrant_dmg }}"
+- name: Download Vagrant dmg file
+  command: curl -o {{ downloads }}/{{ vagrant_dmg }} {{ vagrant_url }}
+  args:
+    creates: "{{ downloads }}/{{ vagrant_dmg }}"
+- name: Mount Vagrant image
+  command: hdiutil attach "{{ vagrant_dmg }}"
+  args:
+    chdir: "{{ downloads }}"
+  become: yes
+  changed_when: False
+- name: Install Vagrant pkg
+  command: installer -package "{{ mount_path }}/Vagrant.pkg" -target /
+  become: yes
+  changed_when: False
+- name: Unmount Vagrant image
+  command: hdiutil detach "{{ mount_path }}"
+  become: yes
+  changed_when: False
+- name: Create ~/keys directory
+  file: path={{ ansible_user_dir }}/keys state=directory mode=700
+- name: Create key pair in ~/keys for vagrant user
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ ansible_user_dir }}/keys"
+    creates: "{{ ansible_user_dir }}/keys/vagrant"

@@ -1,0 +1,7 @@
+---
+# defaults file for vagrant
+vagrant_version: 1.9.1
+vagrant_dmg: "vagrant_{{ vagrant_version }}.dmg"
+vagrant_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_dmg }}"
+downloads: "{{ ansible_user_dir }}/Downloads"
+mount_path: /Volumes/Vagrant

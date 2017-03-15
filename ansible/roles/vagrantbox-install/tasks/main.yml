@@ -1,0 +1,9 @@
+---
+# tasks file for vagrantbox-install
+- name: Remove any existing basebox with the same name
+  command: vagrant box remove "{{ vm }}"
+  register: result
+  failed_when: "result.rc != 0 and 'The box you requested to be removed could not be found.' not in result.stderr"
+  changed_when: result.rc == 0
+- name: Install the new basebox
+  command: vagrant box add --name "{{ vm }}" "{{ vm }}.box"

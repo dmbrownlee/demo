@@ -1,0 +1,8 @@
+.vagrant
+.travis.yml
+*.swp
+.DS_Store
+*.retry
+*.box
+packer_cache
+output-virtualbox-iso
