@@ -1,0 +1,5 @@
+---
+nethost: 2
+netprefix: 10.0.0
+gwhost: 254
+ext_netprefix: 2.2.2

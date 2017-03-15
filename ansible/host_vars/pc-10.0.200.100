@@ -1,0 +1,5 @@
+---
+nethost: 100
+netprefix: 10.0.200
+disable_eth0: no
+has_GUI: "yes"

@@ -1,0 +1,17 @@
+---
+# tasks file for setup-vagrant-base-boxes
+- name: Get the list of installed vagrant base boxes
+  command: "vagrant box list"
+  register: vagrant_box_list
+  ignore_errors: True
+  changed_when: False
+- name: Create ubuntu-16.04.1-desktop-amd64 base box (if missing)
+  command: "ansible-playbook ubuntu-16.04.1-desktop-amd64.yml"
+  args:
+    chdir: "{{ ansible_env.HOME }}/vagrantbox/ansible"
+  when: "'ubuntu-16.04.1-desktop-amd64' not in vagrant_box_list.stdout"
+- name: Create ubuntu-16.04.1-server-amd64 base box (if missing)
+  command: "ansible-playbook ubuntu-16.04.1-server-amd64.yml"
+  args:
+    chdir: "{{ ansible_env.HOME }}/vagrantbox/ansible"
+  when: "'ubuntu-16.04.1-server-amd64' not in vagrant_box_list.stdout"

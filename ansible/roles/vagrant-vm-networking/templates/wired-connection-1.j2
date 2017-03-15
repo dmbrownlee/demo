@@ -1,0 +1,22 @@
+[connection]
+id=Wired connection 1
+uuid={{ nic_uuid.stdout }}
+type=ethernet
+permissions=
+secondaries=
+timestamp=1457540772
+
+[ethernet]
+duplex=full
+mac-address={{ ansible_eth0.macaddress }}
+mac-address-blacklist=
+
+[ipv4]
+dns-search=
+method=auto
+never-default=true
+
+[ipv6]
+dns-search=
+ip6-privacy=0
+method=auto

@@ -1,0 +1,5 @@
+---
+# handlers file for demoimage
+- name: Restart the Dock
+  command: killall Dock
+  changed_when: False
