@@ -1,0 +1,82 @@
+---
+# tasks file for GNS3
+- name: Test for the existance of /Applications/GNS3.app
+  stat: path=/Applications/GNS3.app
+  register: gns3_app
+- name: Download GNS3
+  get_url:
+    url: "{{ gns3_url }}"
+    dest: "{{ downloads }}/{{ gns3_dmg }}"
+  when: gns3_app.stat.exists == False
+- name: Mount GNS3 image
+  command: hdiutil attach {{ gns3_dmg }} chdir={{ downloads }}
+  become: yes
+  when: gns3_app.stat.exists == False
+- name: Copy GNS3.app to Applications directory
+  command: cp -R {{ mount_path }}/GNS3.app /Applications
+  when: gns3_app.stat.exists == False
+- name: Unmount GNS3 image
+  command: hdiutil detach {{ mount_path }}
+  become: yes
+  when: gns3_app.stat.exists == False
+- name: Set owner permissions on ubridge
+  file:
+    path: "/Applications/GNS3.app/Contents/Resources/ubridge"
+    owner: root
+    mode: 04755
+  become: yes
+- name: Create config directory for GNS3
+  file:
+    path: "{{ ansible_user_dir }}/.config/GNS3"
+    state: directory
+    owner: demouser
+    group: staff
+    mode: 0755
+  become: yes
+- name: Configure GNS3
+  copy:
+    src: gns3_gui.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_gui.conf"
+- name: Configure GNS3
+  copy:
+    src: gns3_server.conf
+    dest: "{{ ansible_user_dir }}/.config/GNS3/gns3_server.conf"
+- name: Add GNS3 to Dock
+  command: defaults write com.apple.dock persistent-apps -array-add '{
+        GUID = 970228434;
+        "tile-data" =         {
+            book = <626f6f6b cc020000 00000410 30000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 ec010000 0c000000 01010000 4170706c 69636174 696f6e73 08000000 01010000 474e5333 2e617070 08000000 01060000 04000000 18000000 08000000 04030000 40000000 00000000 08000000 04030000 20180700 00000000 08000000 01060000 38000000 48000000 08000000 00040000 41bc88da df000000 18000000 01020000 02000000 00000000 0f000000 00000000 00000000 00000000 08000000 01090000 66696c65 3a2f2f2f 0a000000 01010000 66746c70 2d696d61 67650000 08000000 04030000 0060465c 3a000000 08000000 00040000 41bc6122 82000000 24000000 01010000 44333133 35323941 2d303745 432d3341 45342d38 3943442d 30433130 41463432 35363345 18000000 01020000 81000000 01000000 ef130000 01000000 00000000 00000000 01000000 01010000 2f000000 00000000 01050000 a7000000 01020000 34613830 33366461 62313062 66633965 34396466 64646362 31363832 33366130 30363439 32623161 3b303030 30303030 303b3030 30303030 30303b30 30303030 30303030 30303030 3032303b 636f6d2e 6170706c 652e6170 702d7361 6e64626f 782e7265 61642d77 72697465 3b303030 30303030 313b3031 30303030 30323b30 30303030 30303030 30303731 3832303b 2f617070 6c696361 74696f6e 732f676e 73332e61 70700000 a8000000 feffffff 01000000 00000000 0d000000 04100000 28000000 00000000 05100000 58000000 00000000 10100000 78000000 00000000 40100000 68000000 00000000 02200000 28010000 00000000 05200000 98000000 00000000 10200000 a8000000 00000000 11200000 dc000000 00000000 12200000 bc000000 00000000 13200000 cc000000 00000000 20200000 08010000 00000000 30200000 34010000 00000000 80f00000 3c010000 00000000>;
+            "bundle-identifier" = "net.gns3";
+            "dock-extra" = 0;
+            "file-data" =             {
+                "_CFURLString" = "file:///Applications/GNS3.app/";
+                "_CFURLStringType" = 15;
+            };
+            "file-label" = GNS3;
+            "file-mod-date" = 3539882975;
+            "file-type" = 41;
+            "parent-mod-date" = 3541364589;
+        };
+        "tile-type" = "file-tile";
+    }'
+  notify: "Restart the Dock"
+  changed_when: False
+- name: Adding directory for IOS images
+  file:
+    path: "{{ ansible_user_dir }}/GNS3/images"
+    owner: demouser
+    state: directory
+    mode: 0755
+- name: Adding directory for IOS symbols
+  file:
+    path: "{{ ansible_user_dir }}/GNS3/symbols"
+    owner: demouser
+    state: directory
+    mode: 0755
+- name: Copy SVG icons for VMs
+  copy:
+    src: computer_green.svg
+    dest: "{{ ansible_user_dir }}/GNS3/symbols/computer_green.svg"
+- copy:
+    src: computer_purple.svg
+    dest: "{{ ansible_user_dir }}/GNS3/symbols/computer_purple.svg"

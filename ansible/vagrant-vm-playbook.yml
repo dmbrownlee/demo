@@ -1,0 +1,25 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Common configuration
+  hosts: all
+  roles:
+    - role: vagrant-vm-packages
+    # - role: vagrant-vm-software-updates
+    - role: vagrant-vm-networking
+    - role: vagrant-vm-add-demouser-account
+
+- name: Web server configuration
+  hosts: pc-172.16.200.100
+  roles:
+    - role: vagrant-vm-apachessl
+
+- name: NAT Gateway config
+  hosts: NAT1 NAT2
+  roles:
+    - role: vagrant-vm-natgw
+
+- name: Internet configuration
+  hosts: Internet
+  roles:
+    - role: vagrant-vm-Internet
+    - role: vagrant-vm-caching-nameserver
