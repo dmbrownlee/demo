@@ -1,0 +1,37 @@
+---
+# tasks file for vagrant-vm-nmcli
+- name: Add eth0 connection to NetworkManager
+  nmcli:
+    conn_name: eth0
+    ifname: eth0
+    type: ethernet
+    ip4: "{{ eth0_ip4 }}"
+    state: present
+  become: yes
+- name: Never use eth0 for default routes
+  lineinfile:
+    line: "never-default=true"
+    dest: "/etc/NetworkManager/system-connections/eth0"
+    state: present
+    insertafter: ".ipv4."
+  become: yes
+- name: Add eth1 connection to NetworkManager
+  nmcli:
+    conn_name: eth1
+    ifname: eth1
+    type: ethernet
+    ip4: "{{ eth1_ip4 }}"
+    gw4: "{{ eth1_gw }}"
+    state: present
+  when: eth1 == "static"
+  become: yes
+- name: Delete default connections
+  file:
+    path: "/etc/NetworkManager/system-connections/Wired connection 1"
+    state: absent
+  become: yes
+- name: Delete default interface config
+  file:
+    path: "/etc/network/interfaces.d/eth0"
+    state: absent
+  become: yes

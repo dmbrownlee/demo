@@ -1,0 +1,33 @@
+---
+# tasks file for vagrant-vm-securityonion
+- name: Configure MySQL not to prompt for root password
+  shell: 'echo "debconf debconf/frontend select noninteractive" | debconf-set-selections'
+  become: yes
+- name: Add security onion repo and packages
+  apt:
+    name: "software-properties-common"
+    update_cache: yes
+  become: yes
+- apt_repository:
+    repo: "ppa:securityonion/stable"
+    update_cache: yes
+  become: yes
+- apt:
+    name: "syslog-ng-core"
+  become: yes
+- apt:
+    name: "securityonion-all"
+  become: yes
+- name: Run the security onion setup
+  command: "sosetup -y -f /data/setupfile"
+  become: yes
+# hide SecurityOnion users from lightdm login
+- name: Remove SecurityOnion users from login
+  copy:
+    dest: "/var/lib/AccountsService/users/sguil"
+    src: "/var/lib/AccountsService/users/vagrant"
+    remote_src: True
+    owner: "root"
+    group: "root"
+    mode: "644"
+  become: yes

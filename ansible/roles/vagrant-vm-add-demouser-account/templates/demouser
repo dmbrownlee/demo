@@ -1,0 +1,15 @@
+[com.canonical.indicator.sound.AccountsService]
+PlayerName=''
+Timestamp=0
+Title=''
+Artist=''
+Album=''
+ArtUrl=''
+PlayerIcon=<('themed', <['application-default-icon', 'application-default', 'application']>)>
+
+[InputSource0]
+xkb=us
+
+[User]
+XSession=ubuntu
+SystemAccount=false

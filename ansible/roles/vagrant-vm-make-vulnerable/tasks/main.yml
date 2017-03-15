@@ -1,0 +1,11 @@
+---
+# tasks file for vagrant-vm-make-vulnerable
+# Install packages needed for vulnerabilities
+- name: Install services that will be configured insecurely
+  apt: name={{ item }} state=present
+  with_items:
+    - xinetd
+    - samba
+  become: True
+  #notify:
+  #  - more config...

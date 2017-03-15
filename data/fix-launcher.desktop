@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=/home/demouser/.fix-launcher.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=settings
+Comment=Settings Configuration Script

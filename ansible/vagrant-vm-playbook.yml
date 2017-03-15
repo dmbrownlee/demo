@@ -1,0 +1,30 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Generic PC configuration
+  hosts: pc-192.168.201.100 pc-192.168.201.101 
+  roles:
+    - role: vagrant-vm-packages
+    # - role: vagrant-vm-software-updates
+    - role: vagrant-vm-nmcli
+    - role: vagrant-vm-add-demouser-account
+
+- name: Make vulnerable
+  hosts: pc-192.168.201.101
+  roles:
+    - role: vagrant-vm-make-vulnerable
+    - role: vagrant-vm-apache
+
+- name: Kali-Linux-2016.2
+  hosts: Kali-Linux-2016.2
+  roles:
+    - role: vagrant-vm-update-packages
+    #- role: vagrant-vm-nmcli
+    - role: vagrant-vm-kali
+
+- name: SecurityOnion
+  hosts: SecurityOnion
+  roles:
+    - role: vagrant-vm-securityonion
+    - role: vagrant-vm-packages
+    - role: vagrant-vm-nmcli-old
+    - role: vagrant-vm-add-demouser-account
