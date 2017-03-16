@@ -15,3 +15,8 @@
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
   when: "'ubuntu-14.04.5-desktop-amd64' not in vagrant_box_list.stdout"
+- name: Create Kali-Linux-2016.2 base box (if missing)
+  command: "ansible-playbook Kali-Linux-2016.2.yml"
+  args:
+    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
+  when: "'Kali-Linux-2016.2' not in vagrant_box_list.stdout"
