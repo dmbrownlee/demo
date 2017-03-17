@@ -20,3 +20,8 @@
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
   when: "'Kali-Linux-2016.2' not in vagrant_box_list.stdout"
+- name: Create Metasploitable2 base box (if missing)
+  command: "ansible-playbook metasploitable-linux-2.0.0.yml"
+  args:
+    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
+  when: "'Metasploitable2' not in vagrant_box_list.stdout"
