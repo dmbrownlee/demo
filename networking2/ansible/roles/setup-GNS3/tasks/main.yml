@@ -13,10 +13,10 @@
   become: yes
   when: gns3_app.stat.exists == False
 - name: Copy GNS3.app to Applications directory
-  command: cp -R {{ mount_path }}/GNS3.app /Applications
+  command: cp -R "{{ mount_path }}/GNS3.app" /Applications
   when: gns3_app.stat.exists == False
 - name: Unmount GNS3 image
-  command: hdiutil detach {{ mount_path }}
+  command: hdiutil detach "{{ mount_path }}"
   become: yes
   when: gns3_app.stat.exists == False
 - name: Set owner permissions on ubridge
