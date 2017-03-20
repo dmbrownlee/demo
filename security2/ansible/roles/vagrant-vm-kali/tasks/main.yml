@@ -15,6 +15,13 @@
 - name: Copy the pcap exercise files
   copy:
     dest: "/root/Desktop/"
-    src: "{{ ansible_user_dir }}/demo/security2/data/exercies"
+    src: "/Users/demouser/demo/security2/data/exercises"
     owner: root
     group: root
+  become: True
+- name: Link the host captures directory on the desktop
+  file:
+    path: /root/Desktop/host_captures
+    state: link
+    src: /capture
+  become: True
