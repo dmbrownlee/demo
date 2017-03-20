@@ -12,3 +12,9 @@
 - name: Autoremove packages no longer needed
   command: apt-get -y autoremove
   become: True
+- name: Copy the pcap exercise files
+  copy:
+    dest: "/root/Desktop/"
+    src: "{{ ansible_user_dir }}/demo/security2/data/exercies"
+    owner: root
+    group: root
