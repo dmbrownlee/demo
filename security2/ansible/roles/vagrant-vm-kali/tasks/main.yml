@@ -1,7 +1,7 @@
 ---
 # Kali specific package changes
 - name: Install packages specific to Kali
-  apt: name={{ item }} state=present
+  apt: name={{ item }} state=present update_cache=yes
   with_items:
     - openvas
     - mitmproxy

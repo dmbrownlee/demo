@@ -17,7 +17,7 @@
 - name: Kali-Linux-2016.2
   hosts: Kali-Linux-2016.2
   roles:
-    - role: vagrant-vm-update-packages
+    #- role: vagrant-vm-update-packages
     #- role: vagrant-vm-nmcli
     - role: vagrant-vm-kali
 
