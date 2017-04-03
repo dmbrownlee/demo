@@ -8,6 +8,20 @@
   become: True
   notify:
     - OpenVAS setup
+- name: Test for demouser account in OpenVAS
+  shell: "echo 'select name from users where name is \"demouser\";' | sqlite3 /var/lib/openvas/mgr/tasks.db | grep -q demouser"
+  register: demouser_check
+  failed_when: False
+  changed_when: False
+  become: True
+- name: Add demouser account to OpenVAS
+  shell: "/usr/sbin/openvasmd --create-user demouser"
+  when: demouser_check.rc == 1
+  become: True
+-name: Set password for OpenVAS demouser
+  shell: "/usr/sbin/openvasmd --user demouser --new-password demouser"
+  when: demouser_check.rc == 1
+  become: True
 # Revmove packages installed as dependencies for packages we removed
 # Note: "name: bash" is only there to workaround a bug
 #       see: https://github.com/ansible/ansible/issues/21472
