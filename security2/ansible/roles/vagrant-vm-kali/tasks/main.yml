@@ -18,7 +18,7 @@
   shell: "/usr/sbin/openvasmd --create-user demouser"
   when: demouser_check.rc == 1
   become: True
--name: Set password for OpenVAS demouser
+- name: Set password for OpenVAS demouser
   shell: "/usr/sbin/openvasmd --user demouser --new-password demouser"
   when: demouser_check.rc == 1
   become: True
