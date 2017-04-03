@@ -5,3 +5,9 @@
   args:
     creates: /var/lib/openvas/plugins/plugin_feed_info.inc
   become: yes
+- name: Add demouser to openvas
+  shell: "/usr/sbin/openvasmd --create-user demouser"
+  become: yes
+- name: Set password for OpenVAS demouser
+  shell: "/usr/sbin/openvasmd --user demouser --new-password demouser"
+  become: yes
