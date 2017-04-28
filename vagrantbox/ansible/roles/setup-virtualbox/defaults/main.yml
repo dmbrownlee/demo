@@ -1,7 +1,7 @@
 ---
 # defaults file for virtualbox
-virtualbox_version: 5.1.18
-virtualbox_build: 114002
+virtualbox_version: 5.1.20
+virtualbox_build: 114629
 virtualbox_dmg: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-OSX.dmg"
 virtualbox_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_dmg }}"
 downloads: "{{ ansible_user_dir }}/Downloads"
