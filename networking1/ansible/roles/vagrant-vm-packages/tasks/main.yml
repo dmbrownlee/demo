@@ -57,7 +57,12 @@
   apt: name=network-manager state=absent purge=yes
   when: ansible_distribution == "Ubuntu"
   become: True
+# Revmove packages installed as dependencies for packages we removed
+# Note: "name: bash" is only there to workaround a bug
+#       see: https://github.com/ansible/ansible/issues/21472
 - name: Autoremove packages no longer needed
-  command: apt-get -y autoremove
+   apt:
+     name: bash
+     autoremove: yes
   when: ansible_distribution == "Ubuntu"
   become: True

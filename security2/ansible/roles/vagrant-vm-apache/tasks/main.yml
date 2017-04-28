@@ -7,3 +7,6 @@
 - name: Enable ssl
   command: a2enmod ssl
   become: True
+- name: Enable default ssl site
+  command: a2ensite default-ssl.conf
+  become: True
