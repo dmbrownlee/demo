@@ -81,6 +81,11 @@
     src: computer_purple.svg
     dest: "{{ ansible_user_dir }}/GNS3/symbols/computer_purple.svg"
 - name: Install breakfix exercises
+  file:
+    path: "{{ ansible_user_dir }}/GNS3/projects/"
+    owner: demouser
+    state: directory
+    mode: 0755
   unarchive:
     src: "{{ ansible_user_dir }}/demo/networking2/data/nw2breakfixBONUS.zip"
     dest: "{{ ansible_user_dir }}/GNS3/projects/"
