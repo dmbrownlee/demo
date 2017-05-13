@@ -65,8 +65,8 @@
 # Note: "name: bash" is only there to workaround a bug
 #       see: https://github.com/ansible/ansible/issues/21472
 - name: Autoremove packages no longer needed
-   apt:
-     name: bash
-     autoremove: yes
+  apt:
+    name: bash
+    autoremove: yes
   when: ansible_distribution == "Ubuntu"
   become: True
