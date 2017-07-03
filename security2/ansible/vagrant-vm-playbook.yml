@@ -28,3 +28,8 @@
     - role: vagrant-vm-packages
     - role: vagrant-vm-nmcli-old
     - role: vagrant-vm-add-demouser-account
+
+- name: Metasploitable2
+  hosts: Metasploitable2
+  roles:
+    - role: vagrant-vm-metasploitable2
