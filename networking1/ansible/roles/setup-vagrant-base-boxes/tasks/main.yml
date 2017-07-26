@@ -8,10 +8,10 @@
 - name: Create ubuntu-16.04.2-desktop-amd64 base box (if missing)
   command: "ansible-playbook ubuntu-16.04.2-desktop-amd64.yml"
   args:
-    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
+    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-16.04.2-desktop-amd64' not in vagrant_box_list.stdout"
 - name: Create ubuntu-16.04.2-server-amd64 base box (if missing)
   command: "ansible-playbook ubuntu-16.04.2-server-amd64.yml"
   args:
-    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/ansible"
+    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-16.04.2-server-amd64' not in vagrant_box_list.stdout"
