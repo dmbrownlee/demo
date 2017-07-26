@@ -1,6 +1,6 @@
 ---
 # defaults file for wireshark
-wireshark_version: "2.0.11 Intel 64"
+wireshark_version: "2.4.0 Intel 64"
 wireshark_dmg: "Wireshark {{ wireshark_version }}.dmg"
 wireshark_url: "https://1.na.dl.wireshark.org/osx/{{ wireshark_dmg }}"
 downloads: "{{ ansible_user_dir }}/Downloads"

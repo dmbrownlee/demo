@@ -1,6 +1,6 @@
 ---
 # defaults file for GNS3
-gns3_version: "1.5.3"
+gns3_version: "2.0.3"
 gns3_dmg: "GNS3-{{ gns3_version }}.dmg"
 gns3_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3_dmg }}"
 downloads: "{{ ansible_user_dir }}/Downloads"
