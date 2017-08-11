@@ -80,7 +80,7 @@
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",
-                   "./VBoxLinuxAdditions.run"]
+                   "./VBoxLinuxAdditions.run || /bin/true"]
     },
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
