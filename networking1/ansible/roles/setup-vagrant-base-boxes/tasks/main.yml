@@ -6,12 +6,12 @@
   ignore_errors: True
   changed_when: False
 - name: Create ubuntu-16.04.3-desktop-amd64 base box (if missing)
-  command: "ansible-playbook ubuntu-16.04.3-desktop-amd64.yml"
+  command: "ansible-playbook ../ansible/ubuntu-16.04.3-desktop-amd64.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-16.04.3-desktop-amd64' not in vagrant_box_list.stdout"
 - name: Create ubuntu-16.04.3-server-amd64 base box (if missing)
-  command: "ansible-playbook ubuntu-16.04.3-server-amd64.yml"
+  command: "ansible-playbook ../ansible/ubuntu-16.04.3-server-amd64.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-16.04.3-server-amd64' not in vagrant_box_list.stdout"
