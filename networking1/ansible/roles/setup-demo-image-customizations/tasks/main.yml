@@ -22,7 +22,7 @@
 - name: Show percentage battery
   osx_defaults:
     domain: com.apple.menuextra.battery
-    key: ShowPercentage
+    key: ShowPercent
     type: bool
     value: true
     state: present
