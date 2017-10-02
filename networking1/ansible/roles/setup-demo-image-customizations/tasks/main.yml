@@ -26,4 +26,16 @@
     type: bool
     value: true
     state: present
-
+- name: Disable the “reopen windows when logging back in” option
+  osx_defaults:
+    domain: com.apple.loginwindow
+    key: TALLogoutSavesState
+    type: bool
+    value: false
+    state: present
+  osx_defaults:
+    domain: com.apple.loginwindow
+    key: LoginwindowLaunchesRelaunchApps
+    type: bool
+    value: false
+    state: present
