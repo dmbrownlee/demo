@@ -19,3 +19,11 @@
         "tile-type" = "file-tile";
     }'
   notify: "Restart the Dock"
+- name: Show percentage battery
+  osx_defaults:
+    domain: com.apple.menuextra.battery
+    key: ShowPercentage
+    type: bool
+    value: true
+    state: present
+
