@@ -39,4 +39,4 @@
     path: "{{ vm }}.box"
     state: absent
 - name: Package the base box
-  command: vagrant package --base {{ vm }}-vbox-amd64 --output {{ vm }}.box
+  command: vagrant package --base {{ vmcase }}-vbox-amd64 --output {{ vm }}.box
