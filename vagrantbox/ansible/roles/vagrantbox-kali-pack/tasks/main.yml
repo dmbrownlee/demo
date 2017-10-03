@@ -4,7 +4,7 @@
   get_url:
     url: "https://images.offensive-security.com/virtual-images/{{ vm }}-vbox-amd64.ova"
     dest: "{{ ansible_user_dir }}/Downloads/{{ vm }}-vbox-amd64.ova"
-    checksum: "sha1:a22978e7db5da82a6d013da51be227ee2982042d"
+    checksum: "sha256:1b5756ead81f0ac86bf97961c75d7904d56a1462e512a6ff0263826eee898a25"
 - name: Import the Kali appliance
   command: VBoxManage import {{ ansible_user_dir }}/Downloads/{{ vm }}-vbox-amd64.ova
   args:
