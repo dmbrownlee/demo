@@ -10,7 +10,7 @@
   args:
     creates: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}-vbox-amd64"
 - name: Change settings we don't like
-  command: VBoxManage modifyvm "{{ vm }}-vbox-amd64" --usbehci off
+  command: VBoxManage modifyvm "{{ vmcased }}-vbox-amd64" --usbehci off
 - name: The following steps have to be completed manually before continuing.
   vars:
     msg: |

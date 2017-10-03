@@ -4,6 +4,7 @@
   hosts: localhost
   vars:
     - vm: "kali-linux-2017.2"
+    - vmcased: "Kali-Linux-2017.2"
   roles:
     - role: vagrantbox-kali-pack
     - role: vagrantbox-install
