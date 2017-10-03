@@ -3,7 +3,7 @@
 - name: Create the Vagrant base box
   hosts: localhost
   vars:
-    - vm: "Kali-Linux-2017.2"
+    - vm: "kali-linux-2017.2"
   roles:
     - role: vagrantbox-kali-pack
     - role: vagrantbox-install
