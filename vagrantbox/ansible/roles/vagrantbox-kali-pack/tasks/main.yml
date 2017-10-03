@@ -1,16 +1,16 @@
 ---
-# Create Kali-Linux-2016.2-vbox-amd64 basebox
+# Create Kali Linux basebox
 - name: Download zip
   get_url:
-    url: "https://images.offensive-security.com/virtual-images/Kali-Linux-2016.2-vbox-amd64.ova"
-    dest: "{{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova"
+    url: "https://images.offensive-security.com/virtual-images/{{ vm }}-vbox-amd64.ova"
+    dest: "{{ ansible_user_dir }}/Downloads/{{ vm }}-vbox-amd64.ova"
     checksum: "sha1:a22978e7db5da82a6d013da51be227ee2982042d"
 - name: Import the Kali appliance
-  command: VBoxManage import {{ ansible_user_dir }}/Downloads/Kali-Linux-2016.2-vbox-amd64.ova
+  command: VBoxManage import {{ ansible_user_dir }}/Downloads/{{ vm }}-vbox-amd64.ova
   args:
-    creates: "{{ ansible_user_dir }}/VirtualBox VMs/Kali-Linux-2016.2-vbox-amd64"
+    creates: "{{ ansible_user_dir }}/VirtualBox VMs/{{ vm }}-vbox-amd64"
 - name: Change settings we don't like
-  command: VBoxManage modifyvm "Kali-Linux-2016.2-vbox-amd64" --usbehci off
+  command: VBoxManage modifyvm "{{ vm }}-vbox-amd64" --usbehci off
 - name: The following steps have to be completed manually before continuing.
   vars:
     msg: |
@@ -36,7 +36,7 @@
     prompt: "Press Ctrl-C when you have completed the steps above."
 - name: Delete any exiting .box file
   file:
-    path: Kali-Linux-2016.2.box
+    path: "{{ vm }}.box"
     state: absent
 - name: Package the base box
-  command: vagrant package --base Kali-Linux-2016.2-vbox-amd64 --output Kali-Linux-2016.2.box
+  command: vagrant package --base {{ vm }}-vbox-amd64 --output {{ vm }}.box
