@@ -6,22 +6,22 @@
   ignore_errors: True
   changed_when: False
 - name: Create ubuntu-16.04.3-desktop-amd64 base box (if missing)
-  command: "ansible-playbook ubuntu-16.04.3-desktop-amd64.yml"
+  command: "ansible-playbook ../ansible/ubuntu-16.04.3-desktop-amd64.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-16.04.3-desktop-amd64' not in vagrant_box_list.stdout"
 - name: Create ubuntu-14.04.5-desktop-amd64 base box (if missing)
-  command: "ansible-playbook ubuntu-14.04.5-desktop-amd64.yml"
+  command: "ansible-playbook ../ansible/ubuntu-14.04.5-desktop-amd64.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-14.04.5-desktop-amd64' not in vagrant_box_list.stdout"
 - name: Create Kali-Linux-2016.2 base box (if missing)
-  command: "ansible-playbook Kali-Linux-2016.2.yml"
+  command: "ansible-playbook ../ansible/Kali-Linux-2016.2.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'Kali-Linux-2016.2' not in vagrant_box_list.stdout"
 - name: Create Metasploitable2 base box (if missing)
-  command: "ansible-playbook metasploitable-linux-2.0.0.yml"
+  command: "ansible-playbook ../ansible/metasploitable-linux-2.0.0.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'Metasploitable2' not in vagrant_box_list.stdout"
