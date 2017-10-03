@@ -15,11 +15,11 @@
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
   when: "'ubuntu-14.04.5-desktop-amd64' not in vagrant_box_list.stdout"
-- name: Create Kali-Linux-2017.2 base box (if missing)
-  command: "ansible-playbook ../ansible/Kali-Linux-2017.2.yml"
+- name: Create kali-linux-2017.2 base box (if missing)
+  command: "ansible-playbook ../ansible/kali-linux-2017.2.yml"
   args:
     chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
-  when: "'Kali-Linux-2017.2' not in vagrant_box_list.stdout"
+  when: "'kali-linux-2017.2' not in vagrant_box_list.stdout"
 - name: Create Metasploitable2 base box (if missing)
   command: "ansible-playbook ../ansible/metasploitable-linux-2.0.0.yml"
   args:
