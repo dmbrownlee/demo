@@ -48,7 +48,7 @@
     prompt: "Press Ctrl-C when you have completed the steps above."
 - name: Delete any exiting .box file
   file:
-    path: Metasploitable2.box
+    path: "{{ ansible_user_dir }}/demo/vagrantbox/packer/Metasploitable2.box"
     state: absent
 - name: Package the base box
-  command: vagrant package --base Metasploitable2 --output Metasploitable2.box
+  command: vagrant package --base Metasploitable2 --output "{{ ansible_user_dir }}/demo/vagrantbox/packer/Metasploitable2.box"
