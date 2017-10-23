@@ -36,7 +36,7 @@
     prompt: "Press Ctrl-C when you have completed the steps above."
 - name: Delete any exiting .box file
   file:
-    path: "{{ vm }}.box"
+    path: "{{ ansible_user_dir }}/demo/vagrantbox/packer/{{ vm }}.box"
     state: absent
 - name: Package the base box
-  command: vagrant package --base {{ vmcase }}-vbox-amd64 --output {{ vm }}.box
+  command: vagrant package --base {{ vmcased }}-vbox-amd64 --output {{ ansible_user_dir }}/demo/vagrantbox/packer/{{ vm }}.box
