@@ -18,7 +18,7 @@
   hosts: kali-linux-2017.2
   roles:
     #- role: vagrant-vm-update-packages
-    #- role: vagrant-vm-nmcli
+    - role: vagrant-vm-nmcli
     - role: vagrant-vm-kali
 
 - name: SecurityOnion
