@@ -7,3 +7,4 @@
     state: present
     insertafter: ".ipv4."
   become: yes
+  when: disable_eth0_route

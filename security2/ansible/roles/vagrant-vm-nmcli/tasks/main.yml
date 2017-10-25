@@ -8,13 +8,14 @@
     ip4: "{{ eth0_ip4 }}"
     state: present
   become: yes
-- name: Never use eth0 for default routes
+- name: Disable default route on eth0
   lineinfile:
     line: "never-default=true"
     dest: "/etc/NetworkManager/system-connections/eth0"
     state: present
     insertafter: ".ipv4."
   become: yes
+  when: disable_eth0_route
 - name: Add eth1 connection to NetworkManager
   nmcli:
     conn_name: eth1
