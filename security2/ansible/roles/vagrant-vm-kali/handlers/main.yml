@@ -5,3 +5,4 @@
   args:
     creates: /var/lib/openvas/plugins/plugin_feed_info.inc
   become: yes
+  when: setup_openvas
