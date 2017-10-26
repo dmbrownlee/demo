@@ -43,3 +43,6 @@
     state: link
     src: /capture
   become: True
+- name: Ensure the correct version of typing is installed for mitmproxy
+  command: pip install typing==3.5.2.2
+  become: True
