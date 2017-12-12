@@ -6,15 +6,17 @@
     ifname: eth0
     type: ethernet
     ip4: "{{ eth0_ip4 }}"
+    gw4: "{{ eth0_gw }}"
     state: present
   become: yes
-- name: Never use eth0 for default routes
+- name: Disable default route on eth0
   lineinfile:
     line: "never-default=true"
     dest: "/etc/NetworkManager/system-connections/eth0"
     state: present
     insertafter: ".ipv4."
   become: yes
+  when: disable_eth0_route
 - name: Add eth1 connection to NetworkManager
   nmcli:
     conn_name: eth1
@@ -25,6 +27,14 @@
     state: present
   when: eth1 == "static"
   become: yes
+- name: Disable default route on eth1
+  lineinfile:
+    line: "never-default=true"
+    dest: "/etc/NetworkManager/system-connections/eth1"
+    state: present
+    insertafter: ".ipv4."
+  become: yes
+  when: disable_eth1_route
 - name: Delete default connections
   file:
     path: "/etc/NetworkManager/system-connections/Wired connection 1"

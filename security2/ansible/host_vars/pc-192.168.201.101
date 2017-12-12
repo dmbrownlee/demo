@@ -4,3 +4,6 @@ eth1: "static"
 eth1_ip4: 192.168.201.101/24
 eth1_gw: 192.168.201.254
 eth0_ip4: 10.0.2.15/24
+eth0_gw: 10.0.2.2
+disable_eth0_route: True
+disable_eth1_route: False
