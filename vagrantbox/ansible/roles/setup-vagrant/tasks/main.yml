@@ -15,7 +15,7 @@
   become: yes
   changed_when: False
 - name: Install Vagrant pkg
-  command: installer -package "{{ mount_path }}/Vagrant.pkg" -target /
+  command: installer -allowUntrusted -pkg "{{ mount_path }}/Vagrant.pkg" -target /
   become: yes
   changed_when: False
 - name: Unmount Vagrant image
