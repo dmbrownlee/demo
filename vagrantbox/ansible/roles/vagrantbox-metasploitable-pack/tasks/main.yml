@@ -37,10 +37,10 @@
            echo 'vagrant	ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
            echo -e 'auto eth1\niface eth1 inet static\naddress 192.168.201.102\nnetmask 255.255.255.0' >> /etc/network/interfaces
 
-         Then, in the VM's settings, add a port forwarding rule from port 2201 on the localhost to
+         Then, in the VM's settings, add a port forwarding rule from port 2102 on the localhost to
          port 22 on the guest and upload the public ssh key for the vagrant user with:
 
-           scp -P 2201 ~/keys/vagrant.pub vagrant@localhost:/home/vagrant/.ssh/authorized_keys
+           scp -P 2102 ~/keys/vagrant.pub vagrant@localhost:/home/vagrant/.ssh/authorized_keys
 
   debug:
     msg: "{{ msg.split('\n') }}"
