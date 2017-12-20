@@ -22,6 +22,7 @@
            passwd vagrant
            su vagrant -c "mkdir -m 700 /home/vagrant/.ssh"
            echo 'vagrant	ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant
+           apt-get update
            apt-get install -y aptitude
            echo -e 'auto eth0\niface eth0 inet dhcp' > /etc/network/interfaces.d/eth0
 
