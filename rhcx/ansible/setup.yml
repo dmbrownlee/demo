@@ -1,0 +1,5 @@
+---
+- name: Setup the VirtualBox environment
+  hosts: localhost
+  roles:
+    - role: setup-vagrant-base-boxes

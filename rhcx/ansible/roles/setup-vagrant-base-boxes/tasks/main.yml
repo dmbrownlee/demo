@@ -1,0 +1,12 @@
+---
+# tasks file for setup-vagrant-base-boxes
+- name: Get the list of installed vagrant base boxes
+  command: "vagrant box list"
+  register: vagrant_box_list
+  ignore_errors: True
+  changed_when: False
+- name: Create CentOS-7-x86_64-Minimal base box (if missing)
+  command: "ansible-playbook ../ansible/CentOS-7-x86_64-Minimal.yml"
+  args:
+    chdir: "{{ ansible_env.HOME }}/demo/vagrantbox/packer"
+  when: "'CentOS-7-x86_64-Minimal' not in vagrant_box_list.stdout"
