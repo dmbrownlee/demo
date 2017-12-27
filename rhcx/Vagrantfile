@@ -5,16 +5,20 @@ Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "~/keys/vagrant"
   config.vm.box = "CentOS-7-x86_64-Minimal"
   config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "data/", "/data"
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "ansible/vagrant-vm-playbook.yml"
+  end
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
+    vb.memory = "1024"
     vb.gui = true
     vb.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-    vb.customize ["modifyvm", :id, "--nic2", "intnet",
-                                   "--intnet2", "internal",
-                                   "--nicpromisc2", "allow-vms",
+    vb.customize ["modifyvm", :id, "--nic2", "natnetwork",
+                                   "--nictype2", "82540EM",
                                    "--cableconnected2", "on",
-                                   "--nictype2", "82540EM"]
+                                   "--nicpromisc2", "allow-vms",
+                                   "--nat-network2", "RHCxNetwork"]
     vb.customize ["modifyvm", :id, "--boot1", "dvd"]
     vb.customize ["modifyvm", :id, "--boot2", "disk"]
     vb.customize ["modifyvm", :id, "--boot3", "none"]
@@ -28,12 +32,23 @@ Vagrant.configure("2") do |config|
                                         "--medium", "emptydrive"]
   end
   
-  config.vm.define "workstation" do |node|
-    node.vm.network "private_network", ip: "10.0.0.100",
-                                       virtualbox__null: true,
-                                       auto_config: false
+  config.vm.define "server1" do |node|
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "workstation"
+      vb.name = "server1"
+      # SCSI Controller
+        # sda 8GB
+          # sda1 500MB /boot xfs
+          # sda2 7.5GB LVM PV
+            # vg "centos"
+              # lv swap 820MB
+              # lv root grow xfs
+        # sdb 1GB
+    end
+  end 
+  
+  config.vm.define "server2" do |node|
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "server2"
     end
   end 
 end
