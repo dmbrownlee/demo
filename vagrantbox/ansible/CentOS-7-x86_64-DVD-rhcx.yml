@@ -1,0 +1,9 @@
+---
+# Package and install the VM as a Vagrant basebox
+- name: Create the basebox image
+  hosts: localhost
+  vars:
+    - vm: "CentOS-7-x86_64-DVD-rhcx"
+  roles:
+    - role: vagrantbox-pack
+    - role: vagrantbox-install
