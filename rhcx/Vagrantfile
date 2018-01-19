@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+  # These are the VM configuration defaults when not overridden
   config.ssh.private_key_path = "~/keys/vagrant"
   config.vm.box = "CentOS-7-x86_64-Minimal"
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -32,7 +33,9 @@ Vagrant.configure("2") do |config|
                                         "--medium", "emptydrive"]
   end
   
+  #=== server1 ===
   config.vm.define "server1" do |node|
+    node.vm.box = "CentOS-7-x86_64-DVD-rhcx"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "server1"
       # SCSI Controller
@@ -46,9 +49,11 @@ Vagrant.configure("2") do |config|
     end
   end 
   
+  #=== server1 ===
   config.vm.define "server2" do |node|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "server2"
     end
-  end 
+  end
+
 end
