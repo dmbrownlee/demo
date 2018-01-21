@@ -1,2 +1,3 @@
 ---
+- include: install_common_packages.yml
 - include: add_lab_user.yml
