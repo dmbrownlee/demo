@@ -5,17 +5,17 @@
   roles:
     - role: vagrant-vm-all
 
-- name: server1 specific configuration
-  hosts: server1
-  roles:
-    - role: vagrant-vm-server1
+#- name: server1 specific configuration
+#  hosts: server1
+#  roles:
+#    - role: vagrant-vm-server1
 
-- name: server2 specific configuration
-  hosts: server2
-  roles:
-    - role: vagrant-vm-server2
+#- name: server2 specific configuration
+#  hosts: server2
+#  roles:
+#    - role: vagrant-vm-server2
 
-- name: labipa specific configuration
-  hosts: labipa
-  roles:
-    - role: vagrant-vm-labipa
+#- name: labipa specific configuration
+#  hosts: labipa
+#  roles:
+#    - role: vagrant-vm-labipa
