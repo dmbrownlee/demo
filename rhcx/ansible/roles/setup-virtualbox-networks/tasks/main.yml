@@ -1,0 +1,10 @@
+---
+# tasks file for setup-virtualbox-networks
+- name: Get the list of virtualbox networks
+  command: "VBoxManage natnetwork list"
+  register: virtualbox_network_list
+  ignore_errors: True
+  changed_when: False
+- name: Ensure RHCxNetwork is configured in VirtualBox
+  command: 'VBoxManage natnetwork add --netname RHCxNetwork --network "192.168.4.0/24" --enable --dhcp on --ipv6 off'
+  when: "'RHCxNetwork' not in virtualbox_network_list.stdout"
