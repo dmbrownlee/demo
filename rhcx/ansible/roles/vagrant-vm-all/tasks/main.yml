@@ -5,5 +5,5 @@
     dest: /var/lib/AccountsService/users
     mode: 0644
   become: yes
-- include: install_common_packages.yml
-- include: add_lab_user.yml
+- import_tasks: install_common_packages.yml
+- import_tasks: add_lab_user.yml
