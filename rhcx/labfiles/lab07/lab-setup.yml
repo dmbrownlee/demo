@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  tasks:
+  - group:
+      name: eng
+      state: present
+  - user:
+      name: patrick
+      groups: eng
+      state: present
+  - user:
+      name: percilla
+      groups: eng
+      state: present
