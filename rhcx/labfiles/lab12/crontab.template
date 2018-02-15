@@ -1,0 +1,11 @@
+# use /bin/bash to run commands, instead of the default /bin/sh
+SHELL=/bin/bash
+# this variable is unnecessary since this is user's crontab
+MAILTO=user
+
+#     _____ minute (0-59)
+#    / ____ hour   (0-23)
+#   / / ___ date   (1-31)
+#  / / / __ month  (1-12 or use three letter name)
+# / / / / _ day    (0-7 or use three letter name. Both 0 and 7 are Sun)
+#/ / / / /	command (% character is special. man -S 5 crontab)
