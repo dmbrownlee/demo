@@ -1,0 +1,5 @@
+---
+iface_int: enp0s3
+iface_ext: enp0s8
+iface_ext_address: 192.168.4.220/24
+iface_ext_gateway: 192.168.4.1

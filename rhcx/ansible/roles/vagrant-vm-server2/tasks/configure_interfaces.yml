@@ -1,0 +1,22 @@
+---
+- name: Ensure NetworkManager is started and enabled at boot
+  service:
+    name: NetworkManager
+    state: started
+    enabled: yes
+  become: yes
+- name: Remove default connection
+  command: nmcli c del "Wired connection 1"
+  become: yes
+- name: Ensure a connection for {{ iface_ext }} exists
+  command: nmcli c add con-name {{ iface_ext }} type ethernet ifname {{ iface_ext }} ip4 {{ iface_ext_address }} gw4 {{ iface_ext_gateway }}
+  become: yes
+- name: Disable IPv6 on interfaces
+  command: nmcli c mod "{{ item }}" ipv6.method ignore
+  with_items:
+    - "{{ iface_int }}"
+    - "{{ iface_ext }}"
+  become: yes
+- name: Disable default routes on {{ iface_int }}
+  command: nmcli c mod {{ iface_int }} ipv4.never-default yes
+  become: yes
