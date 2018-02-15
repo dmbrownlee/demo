@@ -1,0 +1,85 @@
+{
+  "variables": {
+    "env_home": "{{env `HOME` }}",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "os_version": "7",
+    "os_spin": "1708",
+    "os_iso_checksum": "ec7500d4b006702af6af023b1f8f1b890b6c7ee54400bb98cef968b883cd6546",
+    "os_iso_type": "DVD",
+    "boxname": "ServerWithGui",
+    "hostname": "centos",
+    "kickstart": "ServerWithGui-ks.cfg"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_urls": [
+      "{{user `env_home`}}/Downloads/CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso",
+      "http://centos.s.uw.edu/centos/{{user `os_version`}}/isos/x86_64/CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso"
+    ],
+    "iso_checksum": "{{user `os_iso_checksum`}}",
+    "iso_checksum_type": "sha256",
+    "iso_target_path": "{{user `env_home`}}/Downloads/CentOS-7-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_password": "{{user `ssh_password`}}",
+    "ssh_wait_timeout": "20m",
+    "disk_size" : 20480,
+
+    "vm_name": "CentOS-{{user `os_version`}}-x86_64-{{user `boxname`}}",
+    "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
+    "boot_command": [
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `kickstart` }}<enter>"
+    ]
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{user `env_home`}}/keys/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
+                  "chmod 0440 /etc/sudoers.d/vagrant"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y update"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install bzip2 dkms kernel-devel"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "reboot"],
+       "expect_disconnect": true,
+       "pause_before": "10s"
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "only": ["virtualbox-iso"],
+    "output": "CentOS-{{user `os_version`}}-x86_64-{{user `boxname`}}.box"
+  }]
+}
