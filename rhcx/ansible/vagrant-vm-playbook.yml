@@ -5,10 +5,10 @@
   roles:
     - role: vagrant-vm-all
 
-#- name: server1 specific configuration
-#  hosts: server1
-#  roles:
-#    - role: vagrant-vm-server1
+- name: server1 specific configuration
+  hosts: server1
+  roles:
+    - role: vagrant-vm-server1
 
 #- name: server2 specific configuration
 #  hosts: server2

@@ -1,40 +1,22 @@
 ---
-#- name: Ensure network manager libs are installed
-#  package:
-#    name: '{{ item }}'
-#    state: installed
-#  with_items:
-#    - NetworkManager-glib
-#  become: yes
 - name: Ensure NetworkManager is started and enabled at boot
   service:
     name: NetworkManager
     state: started
     enabled: yes
   become: yes
-- name: Ensure internal interface uses static gateway address
-  nmcli:
-    ifname: "{{ iface_int }}"
-    type: ethernet
-    conn_name: "{{ iface_int }}"
-    ip4: "{{ iface_int_address }}/{{ iface_int_prefix }}"
-    state: present
-    autoconnect: yes
+- name: Remove default connection
+  command: nmcli c del "Wired connection 1"
   become: yes
-- name: Do not use IPv6
+- name: Ensure a connection for {{ iface_ext }} exists
+  command: nmcli c add con-name {{ iface_ext }} type ethernet ifname {{ iface_ext }} ip4 {{ iface_ext_address }} gw4 {{ iface_ext_gateway }}
+  become: yes
+- name: Disable IPv6 on interfaces
   command: nmcli c mod "{{ item }}" ipv6.method ignore
   with_items:
     - "{{ iface_int }}"
     - "{{ iface_ext }}"
   become: yes
-- name: Use NetworkManager to configure zone for internal interface
-  command: nmcli c mod "{{ iface_int }}" connection.zone internal
-  become: yes
-- name: Use NetworkManager to configure zone for external interface
-  command: nmcli c mod "{{ iface_ext }}" connection.zone external
-  become: yes
-- name: Enable NetworkManager
-  service:
-    name: NetworkManager
-    state: restarted
+- name: Disable default routes on {{ iface_int }}
+  command: nmcli c mod {{ iface_int }} ipv4.never-default yes
   become: yes
