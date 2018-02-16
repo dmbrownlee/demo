@@ -5,9 +5,14 @@
     state: started
     enabled: yes
   become: yes
-- name: Remove default connection
+- name: Get list of connections
+  command: nmcli c show
+  register: connection_list
+  changed_when: False
+- name: Ensure default connection has been removed
   command: nmcli c del "Wired connection 1"
   become: yes
+  when: "'Wired connection 1' in connection_list.stdout"
 - name: Ensure a connection for {{ iface_ext }} exists
   command: nmcli c add con-name {{ iface_ext }} type ethernet ifname {{ iface_ext }} ip4 {{ iface_ext_address }} gw4 {{ iface_ext_gateway }}
   become: yes
