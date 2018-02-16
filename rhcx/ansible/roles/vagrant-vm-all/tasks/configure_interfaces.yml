@@ -1,4 +1,19 @@
 ---
+# The nmcli module is broken in ansible 2.4. This is supposedly fixed in
+# the 2.5 devel branch.  https://github.com/ansible/ansible/pull/34577. I will
+# revisit this when it is fixed in production.
+#
+#- name: install needed network manager libs
+#  yum:
+#    name: '{{ item }}'
+#    state: installed
+#  with_items:
+#    - NetworkManager-glib
+#  become: yes
+#- name: Ensure default connection has been removed
+#  nmcli:
+#    conn_name: 'Wired connection 1'
+#    state: absent
 - name: Ensure NetworkManager is started and enabled at boot
   service:
     name: NetworkManager
