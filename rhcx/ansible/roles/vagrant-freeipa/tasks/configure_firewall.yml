@@ -1,0 +1,64 @@
+---
+# Every Ansible task file needing to manipulate the firewall must make sure
+# software requirements for Ansible to manipulate the firewall are installed
+# and the firewall service in enabled and started.
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - python-firewall
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
+# Assume the default is a host with a single interface on an internal network.
+# Make sure the default zone to which rules are applied and the system uses is
+# the "internal" zone. The default will be to allow inbound ssh in the internal
+# zone and any other service requirements need to be handled by the service
+# playbooks. Also make sure any task manipulating the firewall notifies the
+# "reload firewall" handler.
+- name: Ensure the default zone is internal
+  command: firewall-cmd --set-default-zone=internal
+  become: yes
+- name: Ensure unwanted firewall defaults are disabled
+  firewalld:
+    service: "{{ item.service }}"
+    state: disabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  with_items:
+    - { zone: dmz, service: ssh }
+    - { zone: home, service: dhcpv6-client }
+    - { zone: home, service: mdns }
+    - { zone: home, service: samba-client }
+    - { zone: home, service: ssh }
+    - { zone: internal, service: samba-client }
+    - { zone: public, service: dhcpv6-client }
+    - { zone: public, service: ssh }
+    - { zone: work, service: dhcpv6-client }
+    - { zone: work, service: ssh }
+  become: yes
+- name: Ensure certain inbound traffic is allowed
+  firewalld:
+    service: "{{ item.service }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  with_items:
+    - { zone: internal, service: ssh }
+    - { zone: internal, service: http }
+    - { zone: internal, service: https }
+    - { zone: internal, service: ldap }
+    - { zone: internal, service: ldaps }
+    - { zone: internal, service: kerberos }
+    - { zone: internal, service: dns }
+    - { zone: internal, service: ntp }
+    - { zone: internal, service: ssh }
+    - { zone: internal, service: ftp }
+  become: yes

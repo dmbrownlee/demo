@@ -5,7 +5,7 @@
   roles:
     - role: vagrant-vm-all
 
-#- name: Configure FreeIPA hosts
-#  hosts: labipa
-#  roles:
-#    - role: vagrant-freeipa
+- name: Configure FreeIPA hosts
+  hosts: labipa
+  roles:
+    - role: vagrant-freeipa
