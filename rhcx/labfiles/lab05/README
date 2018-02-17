@@ -1,0 +1,15 @@
+LAB 05: Password-less SSH
+
+=== SETUP
+DO NOT LOOK AT server2-labsetup.yml AS IT CONTAINS SPOILERS.
+Log into server2 as the root user and run:
+
+  ansible-playbook /labfiles/lab05/server2-labsetup.yml
+
+The lab is now configured.
+
+=== OBJECTIVE
+Login to server1 as the user, "user".  In this lab, you would like to create a
+key pair so you can log into server2 without a password.  Along the way, you
+may encounter problems.  Troubleshoot any issues until you can login to server2
+without a password.

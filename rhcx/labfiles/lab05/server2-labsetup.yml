@@ -1,0 +1,28 @@
+---
+#==============================================================================
+#
+#   DO NOT LOOK AT THIS FILE UNLESS YOU HAVE ALREADY COMPLETED THE LAB
+#
+#==============================================================================
+- hosts: localhost
+  tasks:
+  - name: Doing something...
+    file:
+      path: /home/user/.ssh
+      owner: user
+      group: user
+      mode: 0777
+      state: directory
+    become: yes
+  - name: Doing something...
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: '^#PubkeyAuthentication yes$'
+      line: 'PubkeyAuthentication no'
+    become: yes
+  - name: Doing something...
+    systemd:
+      name: sshd
+      state: reloaded
+      daemon_reload: yes
+    become: yes
