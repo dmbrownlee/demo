@@ -20,6 +20,12 @@
     state: started
     enabled: yes
   become: yes
+- name: Ensure libvirtd is stopped and disabled at boot
+  service:
+    name: libvirtd
+    state: stopped
+    enabled: no
+  become: yes
 - name: Get list of connections
   command: nmcli c show
   register: connection_list
