@@ -4,7 +4,7 @@ LAB 15: Add storage space for data
 On the host machine (not in a VM) run:
 
   vagrant halt server2
-  ansible-playbook /labfiles/lab15/host-labsetup.yml
+  ansible-playbook ./host-labsetup.yml
 
 This playbook will add a second hard drive to server2.
 
