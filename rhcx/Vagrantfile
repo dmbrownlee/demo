@@ -52,6 +52,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "labipa" do |node|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "labipa"
+      vb.memory = 2048
     end
   end
 end
