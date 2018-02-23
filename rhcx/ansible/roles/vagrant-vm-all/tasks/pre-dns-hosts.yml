@@ -5,6 +5,6 @@
     line: "{{ item }}"
   become: yes
   with_items:
-    - "192.168.4.200 ipa.example.com ipa"
+    - "192.168.4.200 labipa.example.com ipa"
     - "192.168.4.210 server1.example.com server1"
     - "192.168.4.220 server2.example.com server2"
