@@ -1,22 +1,5 @@
 ---
 # tasks file for setup-vagrant-base-boxes
-- name: Ensure {{ ansible_user_dir }}/.bashrc exists
-  file:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    state: touch
-- name: Ensure convenience functions are defined
-  blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    block: |
-      build () {
-        vagrant up $1 &&
-        vagrant reload $1
-      }
-      rebuild () {
-        vagrant destroy -f $1 &&
-        vagrant up $1 &&
-        vagrant reload $1
-      }
 - name: Get the list of installed vagrant base boxes
   command: "vagrant box list"
   register: vagrant_box_list

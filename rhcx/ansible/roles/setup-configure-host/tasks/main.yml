@@ -1,0 +1,30 @@
+---
+# tasks file for setup-vagrant-base-boxes
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: touch
+- name: Ensure convenience functions are defined
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: |
+      build () {
+        vagrant up $1 &&
+        vagrant reload $1
+      }
+      rebuild () {
+        vagrant destroy -f $1 &&
+        vagrant up $1 &&
+        vagrant reload $1
+      }
+- name: Ensure {{ ansible_user_dir }}/.bash_profile exists
+  file:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    state: touch
+- name: Ensure convenience functions are defined
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bash_profile"
+    block: |
+      if [[ -f ~/.bashrc ]]; then
+        . ~/.bashrc
+      fi
