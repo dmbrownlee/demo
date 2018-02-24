@@ -57,6 +57,7 @@
     - { zone: internal, service: ldap }
     - { zone: internal, service: ldaps }
     - { zone: internal, service: kerberos }
+    - { zone: internal, service: kpasswd }
     - { zone: internal, service: dns }
     - { zone: internal, service: ntp }
     - { zone: internal, service: ssh }
