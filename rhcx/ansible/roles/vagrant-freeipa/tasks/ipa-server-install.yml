@@ -15,3 +15,18 @@
 - name: Ensure local DNS server is used
   command: nmcli c mod enp0s8 ipv4.dns 192.168.4.200
   become: yes
+- name: Ensure vsftpd is enabled and started
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
+  become: yes
+- name: Ensure cacert.p12 file is available via FTP
+  copy:
+    src: /root/cacert.p12
+    dest: /var/ftp/pub/cacert.p12
+    remote_src: yes
+    owner: pkiuser
+    group: pkiuser
+    mode: 0644
+  become: yes
