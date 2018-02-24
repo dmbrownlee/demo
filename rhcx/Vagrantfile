@@ -33,6 +33,14 @@ Vagrant.configure("2") do |config|
                                         "--medium", "emptydrive"]
   end
   
+  #=== labipa ===
+  config.vm.define "labipa" do |node|
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "labipa"
+      vb.memory = 2048
+    end
+  end
+
   #=== server1 ===
   config.vm.define "server1" do |node|
     node.vm.provider "virtualbox" do |vb|
@@ -45,14 +53,6 @@ Vagrant.configure("2") do |config|
     node.vm.box = "CentOS-7-x86_64-Minimal"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "server2"
-    end
-  end
-
-  #=== labipa ===
-  config.vm.define "labipa" do |node|
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "labipa"
-      vb.memory = 2048
     end
   end
 end
