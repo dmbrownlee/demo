@@ -1,3 +1,4 @@
+#!/bin/bash
 PASSWORD=password
 echo $PASSWORD | kinit admin
 for u in ldapuser1 ldapuser2 ldapuser3 ldapuser4 ldapuser5 isabelle; do
