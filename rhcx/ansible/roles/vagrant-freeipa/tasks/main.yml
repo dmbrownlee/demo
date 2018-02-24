@@ -2,3 +2,4 @@
 - import_tasks: install_packages.yml
 - import_tasks: configure_selinux.yml
 - import_tasks: configure_firewall.yml
+- import_tasks: ipa-server-install.yml
