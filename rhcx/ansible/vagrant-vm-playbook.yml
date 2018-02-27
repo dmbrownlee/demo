@@ -9,3 +9,4 @@
   hosts: labipa
   roles:
     - role: vagrant-freeipa
+    - role: vagrant-freeipa-users
