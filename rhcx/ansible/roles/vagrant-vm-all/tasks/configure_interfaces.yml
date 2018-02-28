@@ -49,8 +49,8 @@
     - "{{ iface_int }}"
     - "{{ iface_ext }}"
   become: yes
-- name: Ensure we use Google's public DNS service
-  command: nmcli c mod "{{ iface_ext }}" ipv4.dns 8.8.8.8
+- name: Ensure we use our local ipa-server as DNS
+  command: nmcli c mod "{{ iface_ext }}" ipv4.dns 192.168.4.200
   become: yes
 - name: Ensure we don't create default routes on {{ iface_int }} 
   command: nmcli c mod {{ iface_int }} ipv4.never-default yes
