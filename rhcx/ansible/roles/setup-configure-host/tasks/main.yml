@@ -9,13 +9,11 @@
     path: "{{ ansible_user_dir }}/.bashrc"
     block: |
       build () {
-        vagrant up $1 &&
-        vagrant reload $1
+        vagrant up $1
       }
       rebuild () {
         vagrant destroy -f $1 &&
-        vagrant up $1 &&
-        vagrant reload $1
+        vagrant up $1
       }
 - name: Ensure {{ ansible_user_dir }}/.bash_profile exists
   file:

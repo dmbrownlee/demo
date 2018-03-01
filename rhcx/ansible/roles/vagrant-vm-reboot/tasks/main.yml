@@ -1,0 +1,9 @@
+---
+- name: Ensure VM is rebooted
+  command: /sbin/shutdown -r +1
+  async: 0
+  poll: 0
+  ignore_errors: true
+  become: yes
+- name: Ensure VM has restarted before continuing
+  local_action: wait_for_connection host={{ inventory_hostname }} delay=30

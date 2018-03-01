@@ -4,6 +4,7 @@
   hosts: ipa-client
   roles:
     - role: vagrant-vm-all
+    - role: vagrant-vm-reboot
 
 - name: Configure FreeIPA hosts
   hosts: ipa-server
@@ -11,3 +12,4 @@
     - role: vagrant-vm-all
     - role: vagrant-freeipa
     - role: vagrant-freeipa-users
+    - role: vagrant-vm-reboot
