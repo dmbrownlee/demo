@@ -18,4 +18,5 @@
     - bind-utils
     - ansible
     - vim
+    - screen
   become: yes
