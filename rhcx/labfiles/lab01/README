@@ -1,22 +1,23 @@
-LAB 01: Spin up VMs using vagrant
-
-=== SETUP
-On the host machine (not in a VM) run:
-
-  cd ~/demo/rhcx && build
-
-"build" is a shell function, defined in your ~/.bashrc, that will use
-Vagrant to create the three VMs used in labs.  Vagrant makes it easy to
-build an destroy VMs so you can focus on the lab topics and can start
-over with a cleanly installed VM any time.  Vagrant and Ansible are tools
-for our convenience and are not on the RHCSA/RHCE exams.
-
-The lab is now configured.
-
-=== OBJECTIVE
+=== LAB 01-1: Learn to use Vagrant to create VMs
+OBJECTIVE
 Learn to use Vagrant
 
-=== Steps
+SETUP
+Before beginning the lab, follow these steps to prepare the hosts indicated
+(these steps assume a cleanly installed host OS and VMs):
+
+  Host OS:
+    On the host machine (not in a VM) run:
+      cd ~/demo/rhcx && build
+    "build" is a shell function, defined in your ~/.bashrc, that will use
+    Vagrant to create the three VMs used in labs.  Vagrant makes it easy to
+    build an destroy VMs so you can focus on the lab topics and can start
+    over with a cleanly installed VM any time.  Vagrant and Ansible are tools
+    for our convenience and are not on the RHCSA/RHCE exams.
+
+    The lab is now configured.
+
+STEPS
 For all the steps below, you must be in the ~/demo/rhcx directory.  This
 directory contains a file named Vagrantfile which defines the VMs Vagrant
 will be managing.  The setup above should have left you with three running

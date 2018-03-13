@@ -1,0 +1,27 @@
+=== LAB 11: (Unfinished)
+OBJECTIVE
+In this lab, you will...
+
+SETUP
+Before beginning the lab, follow these steps to prepare the hosts indicated
+(these steps assume a cleanly installed host OS and VMs):
+
+  Host OS:
+
+  server1:
+
+  server2:
+
+  labipa:
+
+STEPS
+
+
+SOURCES
+SPECS
+
+lab11//SOURCES:
+hello.c
+
+lab11//SPECS:
+hello.spec

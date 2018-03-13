@@ -1,0 +1,34 @@
+=== LAB 07: (Unfinished)
+OBJECTIVE
+In this lab, you will...
+
+SETUP
+Before beginning the lab, follow these steps to prepare the hosts indicated
+(these steps assume a cleanly installed host OS and VMs):
+
+  Host OS:
+
+  server1:
+
+  server2:
+
+  labipa:
+
+STEPS
+
+
+
+---
+- hosts: localhost
+  tasks:
+  - group:
+      name: eng
+      state: present
+  - user:
+      name: patrick
+      groups: eng
+      state: present
+  - user:
+      name: percilla
+      groups: eng
+      state: present

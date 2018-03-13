@@ -15,6 +15,9 @@
         vagrant destroy -f $1 &&
         vagrant up $1
       }
+      showlabs () {
+        find ~/demo/rhcx/labfiles/lab* -name "README*" -exec head -1 \{\} \;
+      }
 - name: Ensure {{ ansible_user_dir }}/.bash_profile exists
   file:
     path: "{{ ansible_user_dir }}/.bash_profile"
