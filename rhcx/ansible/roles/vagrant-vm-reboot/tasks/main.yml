@@ -1,6 +1,6 @@
 ---
 - name: Ensure VM is rebooted
-  command: /sbin/shutdown -r +1
+  command: /sbin/shutdown -r +1 --no-wall
   async: 0
   poll: 0
   ignore_errors: true
