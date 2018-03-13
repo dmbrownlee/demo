@@ -5,3 +5,4 @@
 - import_tasks: add_labfiles_mount.yml
 - import_tasks: pre-dns-hosts.yml
 - import_tasks: configure_interfaces.yml
+- import_tasks: configure_ansible.yml
