@@ -1,0 +1,14 @@
+=== LAB 18: Change the default "runlevel"
+OBJECTIVE
+In this lab, you will practice changing the state you want the machine to
+boot to by default.
+
+SETUP
+No setup is necessary but you should start with a cleanly installed server2 VM.
+
+STEPS
+Server2 starts with a "Minimal" server installation of CentOS 7.  If you
+install the "Server With GUI" environment, you will notice that it 
+still does not boot into a graphical interface when rebooted.  Change that.
+1.  Install the "Server With GUI" package group.
+2.  Change the default systemd target
