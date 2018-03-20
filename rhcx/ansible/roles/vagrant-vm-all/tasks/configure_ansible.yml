@@ -1,5 +1,4 @@
 ---
-# tasks file for configure_ansible
 - name: Ensure this host recognizes its own hostname as local
   lineinfile:
     path: /etc/ansible/hosts

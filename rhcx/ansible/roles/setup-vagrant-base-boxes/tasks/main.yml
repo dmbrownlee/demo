@@ -1,5 +1,4 @@
 ---
-# tasks file for setup-vagrant-base-boxes
 - name: Get the list of installed vagrant base boxes
   command: "vagrant box list"
   register: vagrant_box_list

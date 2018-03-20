@@ -1,5 +1,4 @@
 ---
-# tasks file for setup-virtualbox-networks
 - name: Get the list of virtualbox networks
   command: "VBoxManage natnetwork list"
   register: virtualbox_network_list

@@ -1,5 +1,4 @@
 ---
-# tasks file for add_lab_user
 - name: Adding user account
   user: name='user'
     comment='user' 
