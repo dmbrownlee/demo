@@ -36,6 +36,29 @@
     state: started
     enabled: yes
   become: yes
+- name: Ensure SAMBA server and client is installed
+  yum:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - samba
+    - samba-client
+- name: Ensure CIFS shares are configured
+  blockinfile:
+    path: /etc/samba/smb.conf
+    content: |
+
+      [data]
+      	comment = data share
+      	path = /srv/samba
+  become: yes
+- name: Ensure SAMBA is started and enabled at boot
+  service:
+    name: smb
+    state: started
+    enabled: yes
+  become: yes
 # Every Ansible task file needing to manipulate the firewall must make sure
 # software requirements for Ansible to manipulate the firewall are installed
 # and the firewall service in enabled and started.
@@ -52,7 +75,7 @@
     state: started
     enabled: yes
   become: yes
-- name: Ensure NFS traffic is allowed
+- name: Ensure NFS and SMB traffic is allowed
   firewalld:
     service: "{{ item.service }}"
     state: enabled
@@ -61,4 +84,6 @@
     zone: "{{ item.zone }}"
   with_items:
     - { zone: internal, service: nfs }
+    - { zone: internal, service: samba }
+    - { zone: internal, service: samba-client }
   become: yes
