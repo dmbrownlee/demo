@@ -1,8 +1,0 @@
----
-# handlers file for packages
-- name: OpenVAS setup
-  shell: "/usr/bin/openvas-setup"
-  args:
-    creates: /var/lib/openvas/plugins/plugin_feed_info.inc
-  become: yes
-  when: setup_openvas

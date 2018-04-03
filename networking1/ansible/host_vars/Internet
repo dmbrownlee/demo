@@ -1,6 +1,0 @@
----
-nethost: 254
-netprefix: 1.1.1
-netprefix2: 2.2.2
-disable_eth0: no
-eth2: True

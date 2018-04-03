@@ -1,6 +1,0 @@
----
-- name: Update installed packages
-  apt:
-    upgrade: safe
-    update_cache: yes
-  become: yes
