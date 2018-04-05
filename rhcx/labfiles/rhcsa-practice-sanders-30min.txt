@@ -1,0 +1,17 @@
+• Create a symbolic link to the /etc/hosts file named /tmp/myhosts
+• Set these system defaults for all newly created users:
+  • Set passwords for all new users to expire after 90 days. 3 days before
+    expiration the user should get an expiration warning
+  • Newly created users should start with an empty file in the home directory
+    named "myfile"
+• Save a list of all files on the system bigger than 100M to a file named
+  /tmp/bigfiles
+• Create a 500MiB logical volume with the name lv500
+  • Format lv500 with an Ext3 file system and give it the label "myvolume"
+  • Make sure the lv500 volume is mounted persistently on /myvol using the label
+• Install the package that includes the seinfo program
+• Create the user anna and make her a member of the profs group
+• Create the directory /data/profs and ensure members of the group profs have
+  read and write access
+  • Make sure only anna can delete all the files in the /data/profs directory
+• At the top of the hour, write the message "one more hour" to /var/log/messages
