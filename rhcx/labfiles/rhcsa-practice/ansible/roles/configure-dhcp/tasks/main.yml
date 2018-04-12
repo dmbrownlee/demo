@@ -1,0 +1,28 @@
+---
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - dnsmasq
+  become: yes
+- name: Ensure dnsmasq is configured
+  template:
+    dest: /etc/dnsmasq.conf
+    src: dnsmasq.conf.js
+    backup: yes
+  become: yes
+  notify: restart_dnsmasq
+#- name: Ensure our own hostname is in the /etc/hosts so dnsmasq can resolve it
+#  lineinfile:
+#    path: /etc/hosts
+#    line: 192.168.5.2 pxeserver.example.com pxeserver installserver.example.com installserver
+#  become: yes
+- name: Ensure dnsmasq is started and enabled at boot
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - dnsmasq
+  become: yes

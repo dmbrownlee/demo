@@ -1,0 +1,10 @@
+---
+- name: Ensure /labfiles will be remounted in the case of a reboot
+  mount:
+    path: /labfiles
+    src: labfiles
+    fstype: vboxsf
+    state: mounted
+    passno: 0
+    dump: 0
+  become: yes

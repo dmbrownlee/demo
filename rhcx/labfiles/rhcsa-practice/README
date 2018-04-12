@@ -1,0 +1,32 @@
+=== RHCSA Practice
+SETUP
+This is a practice exam that provides a couple of VMs and a scenario that
+requires practical knowledge similar to what is required to pass the RHCSA.
+
+  Host OS:
+    Run ./setup.sh in the current directory to create two new VMs that
+    will run on their own NAT network.  They will not interact with the VMs
+    we using in our other labs (labipa, server1 and server2) but you may
+    want to shut them down so you have more available RAM.
+
+SCENARIO
+Your company is setting up an install (PXE) server so users can reinstall their CentOS workstations at will.  It's a small company so the same server will be used for DHCP and TFTP of the PXE boot image.  The DHCP server has already been configured to hand out 192.168.5.x/24 addresses and DHCP options needed for PXE (e.g. "nextserver" is the DHCP parameter containing the IP address the PXE firmware contacts via TFTP to download a bootable image).  However, the admin who was setting up the server just won the lottery and promptly quit, leaving only her unfinished todo list behind.  Please use this list to finish setting up the server.  Note, the previous admin has already done a lot of work creating config files in /root and configuring DHCP so, if you run into problems (she mentioned leaving a going away "present" for her replacement), you will want to fix them rather than reinstall and lose all her work.  Rumor has it the previous admin is relaxing on her own private beach somewhere so we have not been able to confirm whether or not this list is complete so there may be steps that need to be done in addtion to those listed below.  These are the requirements (after the Installation server has been rebooted):
+
+- The installation server gets software from http://mirror.centos.org/centos/7/os/x86-64/
+- The installation server gets updates from http://mirror.centos.org/centos/7/updates/x86-64/
+- The workstation can configure its networking via DHCP
+- The workstation can download the files hosted by tftp 
+
+ToDo List (x = finished)
+x Install dnsmasq (handles both DNS and DHCP services)
+x Configure DNS/DHCP settings in dnsmasq.conf to hand out correct network info including PXE boot options
+x Configure dnsmasq to start on boot
+x Create the PXE boot menu (default and graphics.conf are in ~)
+x Create a kickstart file to automate the install of the workstations (~/ks/ks.cfg)
+x install tftpd and make sure the it's enabled at boot
+- create the /var/lib/tftpboot/pxelinux/pxelinux.cfg directory
+- copy /usr/share/syslinux/pxelinux.0 to /var/lib/tftpboot/pxelinux
+- copy /usr/share/syslinux/menu.c32 to /var/lib/tftpboot/pxelinux/
+- copy ~/default and ~/graphics.conf to /var/lib/tftpboot/pxelinux/pxelinux.cfg
+- install httpd
+- Move the ~/ks directory to the httpd document root

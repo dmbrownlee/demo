@@ -1,0 +1,6 @@
+---
+iface_vagrant: enp0s3
+iface_local: enp0s8
+iface_local_address: 192.168.5.2/24
+iface_local_gateway: 192.168.5.1
+iface_local_method: manual

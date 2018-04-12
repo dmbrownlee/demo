@@ -1,0 +1,22 @@
+---
+- name: Ensure we accept the GPG keys
+  rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/{{ item }}
+  with_items:
+    - RPM-GPG-KEY-CentOS-7
+    - RPM-GPG-KEY-EPEL-7
+  become: yes
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nss-pam-ldapd
+    - ipa-client
+    - tcpdump
+    - bind-utils
+    - ansible
+    - vim
+    - screen
+  become: yes

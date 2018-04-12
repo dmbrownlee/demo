@@ -1,0 +1,14 @@
+---
+- name: Ensure VM is rebooted
+  shell: sleep 2 && /sbin/shutdown -r now --no-wall
+  async: 1
+  poll: 0
+  ignore_errors: true
+  become: yes
+  changed_when: false
+- name: Ensure VM has restarted before continuing
+  local_action: wait_for_connection
+  args:
+    host: "{{ inventory_hostname }}"
+    delay: 30
+    timeout: 300

@@ -1,0 +1,14 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Configure installserver
+  hosts: installserver
+  roles:
+    - role: configure-dhcp
+    - role: configure-tftp
+    - role: breakage
+
+- name: Common configuration
+  hosts: all
+  roles:
+    - role: common
+    - role: reboot
