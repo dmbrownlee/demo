@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
     node.vm.hostname = "workstation.example.com"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "workstation"
-      #vb.memory = 2048
+      vb.memory = 2048
     end
   end
 end
