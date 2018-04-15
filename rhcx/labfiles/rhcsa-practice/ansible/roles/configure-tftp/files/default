@@ -26,23 +26,17 @@ MENU AUTOBOOT Booting from local system in # seconds
 # Move custom colors, etc. to a separate file to avoid clutter here
 MENU INCLUDE pxelinux.cfg/graphics.conf
 
-# Use the ks.cfg kickstart file to install a generic server over the network
-LABEL server
-	MENU LABEL Install Generic ^Server (no GUI)
-	kernel vmlinuz
-	append initrd=initrd.img inst.repo=http://repomirror.example.com/centos/7/os/x86_64 inst.ks=http://pxeserver.example.com/ks/ks.cfg ip=dhcp
-
 # Use the workstation-ks.cfg kickstart file to install a generic workstation over the network
 LABEL workstation
 	MENU LABEL Install Generic ^Workstation (GUI)
 	kernel vmlinuz
-	append initrd=initrd.img inst.repo=http://repomirror.example.com/centos/7/os/x86_64 inst.ks=http://pxeserver.example.com/ks/workstation-ks.cfg ip=dhcp
+	append initrd=initrd.img inst.repo=http://mirror.centos.org/centos/7/os/x86_64 inst.ks=http://pxeserver.example.com/ks/ks.cfg ip=dhcp
 
 # Specify “rescue” on the kernel line to tell the installer to boot a rescue image over the network
 LABEL rescue
 	MENU LABEL Boot a ^rescue image over the ^network
 	kernel vmlinuz
-	append initrd=initrd.img inst.repo=http://repomirror.example.com/centos/7/os/x86_64 ip=dhcp rescue ip=dhcp
+	append initrd=initrd.img inst.repo=http://mirror.centos.org/centos/7/os/x86_64 ip=dhcp rescue ip=dhcp
 
 # This option boots from the local system disk
 LABEL local
