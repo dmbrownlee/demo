@@ -16,7 +16,7 @@ dhcp-option=28,{{ broadcast_address }}
 dhcp-option=66,{{ pxeserver_address }}
 
 # PXE Configuration
-dhcp-boot=pxelinux/pxelinux.0,pxeserver
+dhcp-boot=pxelinux/pxelinux.0,pxeserver,{{ pxeserver_address }}
 
 # Example Static IP address reservations
 #dhcp-host=08:00:27:00:00:a1,workstation,192.168.5.100

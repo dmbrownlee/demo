@@ -4,9 +4,9 @@ dhcp_range_bottom: 192.168.5.100
 dhcp_range_top: 192.168.5.200
 dhcp_range_mask: 255.255.255.0
 dhcp_lease_duration: 1h
-nameserver_address: 192.168.5.2
+nameserver_address: 192.168.5.20
 nameserver2_address: 8.8.8.8
-pxeserver_address: 192.168.5.2
+pxeserver_address: 192.168.5.20
 gateway_address: 192.168.5.1
 broadcast_address: 192.168.5.255
 network_address: 192.168.5.0
