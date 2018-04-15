@@ -38,21 +38,21 @@ Vagrant.configure("2") do |config|
                                         "--medium", "emptydrive"]
   end
   
-  #=== workstation ===
-  config.vm.define "workstation" do |node|
-    node.vm.hostname = "workstation.example.com"
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "workstation"
-      #vb.memory = 2048
-    end
-  end
-
   #=== installserver ===
   config.vm.define "installserver" do |node|
     node.vm.box = "CentOS-7-x86_64-Minimal"
     node.vm.hostname = "installserver.example.com"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "installserver"
+    end
+  end
+
+  #=== workstation ===
+  config.vm.define "workstation" do |node|
+    node.vm.hostname = "workstation.example.com"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "workstation"
+      #vb.memory = 2048
     end
   end
 end
