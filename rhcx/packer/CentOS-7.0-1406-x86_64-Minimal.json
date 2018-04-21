@@ -52,30 +52,6 @@
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
                   "chmod 0440 /etc/sudoers.d/vagrant"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "yum -y update"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "yum -y install epel-release"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "yum -y install bzip2 dkms kernel-devel"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "reboot"],
-       "expect_disconnect": true,
-       "pause_before": "10s"
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
-                   "cd /mnt",
-                   "./VBoxLinuxAdditions.run"]
     }
   ],
   "post-processors": [{
