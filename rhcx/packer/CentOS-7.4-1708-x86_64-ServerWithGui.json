@@ -5,8 +5,8 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "url_base": "http://centos.eecs.wsu.edu/7.4.1708/isos/x86_64/",
-    "iso_name": "CentOS-7-x86_64-Everything-1708.iso"
-    "iso_checksum": "ec7500d4b006702af6af023b1f8f1b890b6c7ee54400bb98cef968b883cd6546",
+    "iso_name": "CentOS-7-x86_64-Everything-1708.iso",
+    "iso_checksum": "8593f5a1631ebfb7581193a7b4ef96d44f500d3ceb49cc4cfbfd71d5698e4173",
     "iso_checksum_type": "sha256",
     "inst_name": "CentOS-7.4-1708-x86_64-ServerWithGui",
     "inst_kickstart": "ServerWithGui-ks.cfg",
