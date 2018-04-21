@@ -1,26 +1,27 @@
 {
   "variables": {
-    "env_home": "{{env `HOME` }}",
+    "dir_downloads": "{{env `HOME` }}/Downloads",
+    "dir_keys": "{{env `HOME` }}/keys",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
-    "os_version": "7",
-    "os_spin": "1708",
-    "os_iso_checksum": "ec7500d4b006702af6af023b1f8f1b890b6c7ee54400bb98cef968b883cd6546",
-    "os_iso_type": "DVD",
-    "boxname": "Minimal",
-    "hostname": "centos",
-    "kickstart": "Minimal-ks.cfg"
+    "url_base": "http://centos.eecs.wsu.edu/7.4.1708/isos/x86_64/",
+    "iso_name": "CentOS-7-x86_64-Everything-1708.iso"
+    "iso_checksum": "ec7500d4b006702af6af023b1f8f1b890b6c7ee54400bb98cef968b883cd6546",
+    "iso_checksum_type": "sha256",
+    "inst_name": "CentOS-7.4-1708-x86_64-Minimal",
+    "inst_kickstart": "Minimal-ks.cfg",
+    "inst_disk_size": "20480"
   },
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "RedHat_64",
     "iso_urls": [
-      "{{user `env_home`}}/Downloads/CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso",
-      "http://centos.s.uw.edu/centos/{{user `os_version`}}/isos/x86_64/CentOS-{{user `os_version`}}-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso"
+      "{{user `dir_downloads`}}/{{user `iso_name`}}",
+      "{{user `url_base`}}/{{user `iso_name`}}"
     ],
-    "iso_checksum": "{{user `os_iso_checksum`}}",
-    "iso_checksum_type": "sha256",
-    "iso_target_path": "{{user `env_home`}}/Downloads/CentOS-7-x86_64-{{user `os_iso_type`}}-{{user `os_spin`}}.iso",
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_target_path": "{{user `dir_downloads`}}/{{user `iso_name`}}",
 
     "http_directory" : ".",
     "http_port_min" : 9001,
@@ -29,17 +30,17 @@
     "ssh_username": "{{user `ssh_username`}}",
     "ssh_password": "{{user `ssh_password`}}",
     "ssh_wait_timeout": "20m",
-    "disk_size" : 20480,
+    "disk_size" : "{{user `inst_disk_size`}}",
 
-    "vm_name": "CentOS-{{user `os_version`}}-x86_64-{{user `boxname`}}",
+    "vm_name": "{{user `inst_name`}}",
     "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
     "boot_command": [
-      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `kickstart` }}<enter>"
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `inst_kickstart` }}<enter>"
     ]
   }],
   "provisioners": [
     {  "type": "file",
-       "source": "{{user `env_home`}}/keys/vagrant.pub",
+       "source": "{{user `dir_keys`}}/vagrant.pub",
        "destination": "/tmp/vagrant.pub"
     },
     {  "type": "shell",
@@ -80,6 +81,6 @@
   "post-processors": [{
     "type": "vagrant",
     "only": ["virtualbox-iso"],
-    "output": "CentOS-{{user `os_version`}}-x86_64-{{user `boxname`}}.box"
+    "output": "{{user `inst_name`}}.box"
   }]
 }
