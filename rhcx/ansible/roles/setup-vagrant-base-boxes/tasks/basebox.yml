@@ -1,0 +1,23 @@
+---
+- name: Check if {{ inst_name }} is alreedy installed
+  shell: vagrant box list | grep -q {{ inst_name }}
+  register: vagrant_box_list
+  failed_when: False
+  changed_when: False
+- name: Check if {{ inst_name }} box has been built
+  stat:
+    path: "{{ ansible_user_dir }}/demo/rhcx/packer/{{ inst_name }}.box"
+  register: minimal_box
+  changed_when: False
+  when: vagrant_box_list.rc != 0
+- name: Build {{ inst_name }} base box if needed
+  command: packer build {{ inst_name }}.json
+  args:
+    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
+    creates: "{{ ansible_user_dir }}/demo/rhcx/packer/{{ inst_name }}.box"
+  when: "vagrant_box_list.rc != 0 and minimal_box.stat.isreg is not defined"
+- name: Install {{ inst_name }} base box if needed
+  command: vagrant box add --name {{ inst_name }} {{ inst_name }}.box
+  args:
+    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
+  when: vagrant_box_list.rc != 0

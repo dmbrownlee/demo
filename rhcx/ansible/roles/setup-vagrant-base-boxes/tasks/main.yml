@@ -1,40 +1,13 @@
 ---
-- name: Get the list of installed vagrant base boxes
-  command: "vagrant box list"
-  register: vagrant_box_list
-  ignore_errors: True
-  changed_when: False
-- name: Check if CentOS-7-x86_64-Minimal box has been built
-  stat:
-    path: "{{ ansible_user_dir }}/demo/rhcx/packer/CentOS-7-x86_64-Minimal.box"
-  register: minimal_box
-  changed_when: False
-  when: "'CentOS-7-x86_64-Minimal' not in vagrant_box_list.stdout"
-- name: Create CentOS-7-x86_64-Minimal base box (if missing)
-  command: packer build CentOS-7-x86_64-Minimal.json
-  args:
-    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
-    creates: "{{ ansible_user_dir }}/demo/rhcx/packer/CentOS-7-x86_64-Minimal.box"
-  when: "'CentOS-7-x86_64-Minimal' not in vagrant_box_list.stdout and minimal_box.stat.isreg is not defined"
-- name: Ensure CentOS-7-x86_64-Minimal base box has been installed
-  command: vagrant box add --name CentOS-7-x86_64-Minimal CentOS-7-x86_64-Minimal.box
-  args:
-    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
-  when: "'CentOS-7-x86_64-Minimal' not in vagrant_box_list.stdout"
-- name: Check if CentOS-7-x86_64-ServerWithGUI box has been built
-  stat:
-    path: "{{ ansible_user_dir }}/demo/rhcx/packer/CentOS-7-x86_64-ServerWithGUI.box"
-  register: server_with_gui_box
-  changed_when: False
-  when: "'CentOS-7-x86_64-ServerWithGUI' not in vagrant_box_list.stdout"
-- name: Create CentOS-7-x86_64-ServerWithGUI base box (if missing)
-  command: packer build CentOS-7-x86_64-ServerWithGUI.json
-  args:
-    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
-    creates: "{{ ansible_user_dir }}/demo/rhcx/packer/CentOS-7-x86_64-ServerWithGUI.box"
-  when: "'CentOS-7-x86_64-ServerWithGUI' not in vagrant_box_list.stdout and server_with_gui_box.stat.isreg is not defined"
-- name: Ensure CentOS-7-x86_64-ServerWithGUI base box has been installed
-  command: vagrant box add --name CentOS-7-x86_64-ServerWithGUI CentOS-7-x86_64-ServerWithGUI.box
-  args:
-    chdir: "{{ ansible_env.HOME }}/demo/rhcx/packer"
-  when: "'CentOS-7-x86_64-ServerWithGUI' not in vagrant_box_list.stdout"
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-7.0-1406-x86_64-Minimal
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-7.0-1406-x86_64-ServerWithGui
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-7.4-1708-x86_64-Minimal
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-7.4-1708-x86_64-ServerWithGui
