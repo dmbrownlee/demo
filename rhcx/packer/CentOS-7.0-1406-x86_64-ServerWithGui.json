@@ -1,0 +1,86 @@
+{
+  "variables": {
+    "dir_downloads": "{{env `HOME` }}/Downloads",
+    "dir_keys": "{{env `HOME` }}/keys",
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "url_base": "http://archive.kernel.org/centos-vault/7.0.1406/isos/x86_64/",
+    "iso_name": "CentOS-7.0-1406-x86_64-Everything.iso",
+    "iso_checksum": "745a0a4a02147d8371b87dd09d402c7dc5fddc609caa7af44bc7b004de78c58a",
+    "iso_checksum_type": "sha256",
+    "inst_name": "CentOS-7.0-1406-x86_64-ServerWithGui",
+    "inst_kickstart": "ServerWithGui-ks.cfg",
+    "inst_disk_size": "20480"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_urls": [
+      "{{user `dir_downloads`}}/{{user `iso_name`}}",
+      "{{user `url_base`}}/{{user `iso_name`}}"
+    ],
+    "iso_checksum": "{{user `iso_checksum`}}",
+    "iso_checksum_type": "{{user `iso_checksum_type`}}",
+    "iso_target_path": "{{user `dir_downloads`}}/{{user `iso_name`}}",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_password": "{{user `ssh_password`}}",
+    "ssh_wait_timeout": "20m",
+    "disk_size" : "{{user `inst_disk_size`}}",
+
+    "vm_name": "{{user `inst_name`}}",
+    "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
+    "boot_command": [
+      "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `inst_kickstart` }}<enter>"
+    ]
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{user `dir_keys`}}/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
+                  "chmod 0440 /etc/sudoers.d/vagrant"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y update"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install bzip2 dkms kernel-devel"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "reboot"],
+       "expect_disconnect": true,
+       "pause_before": "10s"
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "only": ["virtualbox-iso"],
+    "output": "{{user `inst_name`}}.box"
+  }]
+}
