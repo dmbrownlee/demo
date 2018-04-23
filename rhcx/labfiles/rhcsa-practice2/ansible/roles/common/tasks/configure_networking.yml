@@ -1,0 +1,76 @@
+---
+- name: Ensure nmcli module dependencies are installed
+  yum:
+    name: NetworkManager-glib
+    state: present
+  become: yes
+- name: Ensure NetworkManager is started and enabled at boot
+  service:
+    name: NetworkManager
+    state: started
+    enabled: yes
+  become: yes
+- name: Ensure libvirtd is stopped and disabled if we do not want it
+  service:
+    name: libvirtd
+    state: stopped
+    enabled: no
+  become: yes
+  when: disable_libvirtd is defined and disable_libvirtd == True
+- name: Get a list of existing interfaces
+  shell: nmcli c show | awk '!/^NAME/ { for (i=1;i<=NF-3;i++) if (i!=NF-3) printf "%s ",$i; else printf "%s\n",$i; }'
+  become: yes
+  changed_when: False
+  register: interface_list
+- name: Remove all existing interfaces
+  command: nmcli c del '{{ item }}'
+  become: yes
+  when: 'item != "enp0s3"'
+  with_items:
+    - '{{ interface_list.stdout_lines }}'
+- name: Ensure auto interfaces are configured
+  nmcli:
+    type: '{{ item.type }}'
+    conn_name: '{{ item.conn_name }}'
+    state: present
+    autoconnect: yes
+  with_items:
+    - '{{ auto_interfaces }}'
+  when: 'auto_interfaces is defined'
+  become: yes
+- name: Ensure manual interfaces are configured
+  nmcli:
+    type: '{{ item.type }}'
+    conn_name: '{{ item.conn_name }}'
+    ip4: '{{ item.ip4 }}'
+    state: present
+    autoconnect: yes
+  with_items:
+    - '{{ manual_interfaces }}'
+  when: 'manual_interfaces is defined'
+  become: yes
+- command: nmcli c mod '{{ item.conn_name }}' ipv4.method manual
+  with_items:
+    - '{{ manual_interfaces }}'
+  when: 'manual_interfaces is defined'
+  become: yes
+- name: Confure default routing
+  command: nmcli c mod '{{ item.conn_name }}' ipv4.never-default '{{ item.ipv4_never_default }}'
+  become: yes
+  when: 'auto_interfaces is defined'
+  with_items:
+    - '{{ auto_interfaces }}'
+- command: nmcli c mod '{{ item.conn_name }}' ipv4.never-default '{{ item.ipv4_never_default }}'
+  become: yes
+  when: 'manual_interfaces is defined'
+  with_items:
+    - '{{ manual_interfaces }}'
+#
+#- name: Ensure IPv6 is disabled on all interfaces
+#  command: nmcli c mod "{{ item }}" ipv6.method ignore
+#- name: Ensure DNS configuration from DHCP is ignored
+#  command: nmcli c mod "{{ item }}" ipv4.ignore-auto-dns yes
+#- name: Ensure we use our local ipa-server as DNS
+#  command: nmcli c mod "{{ iface_local }}" ipv4.dns 8.8.8.8
+#- name: Ensure we don't create default routes on {{ iface_vagrant }} 
+#  command: nmcli c mod {{ iface_vagrant }} ipv4.never-default yes

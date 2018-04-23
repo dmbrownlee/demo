@@ -1,0 +1,32 @@
+=== RHCSA Practice
+SETUP
+This is a practice exam that provides a couple of VMs and a scenario that
+requires practical knowledge similar to what is required to pass the RHCSA.
+
+  Host OS:
+    Run ./setup.sh in the current directory to create two new VMs that
+    will run on their own NAT networks.  They will not interact with the VMs
+    we have been using in our other labs (labipa, server1 and server2) but you
+    may want to shut them down so you have more available RAM.
+
+SCENARIO
+You have two networks and each of these networks has a server.  Configure the
+servers with the network settings shown below such that, after rebooting both
+servers, they are able to ping each other and you can ssh between them as root
+without a password.  The gateway between the networks and DNS server has
+already been configured so you just have to focus on the two servers.
+
+hostname: rhcsa1.example.com
+IP: 192.168.5.100/24
+Gateway: 192.168.5.254
+DNS: 192.168.5.1
+
+hostname: rhcsa2.example.com
+IP: 172.16.2.100/24
+Gateway: 172.16.2.254
+DNS: 192.168.5.1
+
+- Configure each server with the network settings above, including the
+  hostname, such that the settings will persist after a reboot
+- Ensure you can ssh between the servers, in both directions, without using
+  a password

@@ -1,0 +1,17 @@
+---
+auto_interfaces:
+  - conn_name: enp0s3
+    type: ethernet
+    ifname: enp0s3
+    ipv4_never_default: yes
+manual_interfaces:
+  - conn_name: enp0s8
+    type: ethernet
+    ifname: enp0s8
+    ip4: '192.168.5.254/24'
+    ipv4_never_default: yes
+  - conn_name: enp0s9
+    type: ethernet
+    ifname: enp0s9
+    ip4: '172.16.2.254/24'
+    ipv4_never_default: yes

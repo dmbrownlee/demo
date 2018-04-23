@@ -1,0 +1,11 @@
+You should know how to...
+* Generate manpage search keyword (optional - if needed)
+* Reset root password
+* Set default run level
+* Add repositories
+* Find what software to install (syslinux, httpd)
+* Install software
+* Configure the firewall to accept traffic (dhcp, tftp)
+* General shell commands (cd, ls, mkdir, mv, chown, chmod, etc.)
+* Test functionality of your services (tftp, httpd)
+* Resolve any issues with SELinux
