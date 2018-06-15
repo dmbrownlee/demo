@@ -2,7 +2,7 @@
 - name: Ensure {{ ansible_user_dir }}/.bashrc exists
   file:
     path: "{{ ansible_user_dir }}/.bashrc"
-    state: touch
+    state: file
 - name: Ensure convenience functions are defined
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
@@ -17,14 +17,3 @@
       showlabs () {
         find ~/demo/rhcx/labfiles/lab* -name "README*" -exec head -1 \{\} \;
       }
-- name: Ensure {{ ansible_user_dir }}/.bash_profile exists
-  file:
-    path: "{{ ansible_user_dir }}/.bash_profile"
-    state: touch
-- name: Ensure convenience functions are defined
-  blockinfile:
-    path: "{{ ansible_user_dir }}/.bash_profile"
-    block: |
-      if [[ -f ~/.bashrc ]]; then
-        . ~/.bashrc
-      fi

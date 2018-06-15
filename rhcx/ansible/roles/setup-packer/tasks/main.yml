@@ -1,27 +1,17 @@
 ---
 # tasks file for packer
-#- name: Download zipped binary of packer
-#  get_url:
-#    url: "{{ packer_url }}"
-#    dest: "{{ downloads }}/{{ packer_zip }}"
-#    checksum: "sha256:eef803cd43adc3b67593fd277f94b14ef266fe7124eb247d620beb29ebb4ec85"
 - name: Download zipped binary of packer
-  command: curl -o {{ downloads }}/{{ packer_zip }} {{ packer_url }}
-  args:
-    creates: "{{ downloads }}/{{ packer_zip }}"
-#- name: Install Packer
-#  unarchive:
-#    src: "{{ downloads }}/{{ packer_zip }}"
-#    dest: "/usr/local/bin"
-#    remote_src: yes
-#    creates: "/usr/local/bin/packer"
-#    owner: "root"
-#    group: "admin"
-#    mode: 0755
-#  become: yes
+  get_url:
+    url: "{{ packer_url }}"
+    dest: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
+    checksum: "sha256:258d1baa23498932baede9b40f2eca4ac363b86b32487b36f48f5102630e9fbb"
 - name: Install Packer
-  command: unzip {{ downloads }}/{{ packer_zip }}
-  args:
-    chdir: /usr/local/bin
-    creates: /usr/local/bin/packer
+  unarchive:
+    src: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
+    dest: "/usr/local/bin"
+    remote_src: yes
+    creates: "/usr/local/bin/packer"
+    owner: "root"
+    group: "root"
+    mode: 0755
   become: yes
