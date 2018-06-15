@@ -2,7 +2,7 @@
 - name: Ensure {{ ansible_user_dir }}/.bashrc exists
   file:
     path: "{{ ansible_user_dir }}/.bashrc"
-    state: touch
+    state: file
 - name: Ensure convenience functions are defined
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
