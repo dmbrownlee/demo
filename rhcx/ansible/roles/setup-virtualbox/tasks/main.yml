@@ -1,29 +1,24 @@
 ---
-# tasks file for virtualbox
-- name: Test if VirtualBox is already installed
-  stat:
-    path: /Applications/VirtualBox.app/Contents/Info.plist
-  register: virtualbox_installation
-  changed_when: False
-- name: Check the version of the installed VirtualBox
-  shell: grep CFBundleVersion /Applications/VirtualBox.app/Contents/Info.plist | grep -q {{ virtualbox_version }}
-  when: virtualbox_installation.stat.isreg is defined
-  register: vbversionok
-  changed_when: False
-  failed_when: False
-- name: Download VirtualBox image
-  get_url: url="{{ virtualbox_url }}"
-           dest="{{ downloads }}/{{ virtualbox_dmg }}"
-  when: virtualbox_installation.stat.isreg is not defined or vbversionok.rc != 0
-- name: Mount VirtualBox image
-  command: hdiutil attach {{ downloads }}/{{ virtualbox_dmg }}
-  when: virtualbox_installation.stat.isreg is not defined or vbversionok.rc != 0
-  changed_when: False
-- name: Install VirtualBox.pkg
-  command: installer -pkg "{{ mount_path }}/VirtualBox.pkg" -target /
-  become: yes
-  when: virtualbox_installation.stat.isreg is not defined or vbversionok.rc != 0
-- name: Unmount VirtualBox image
-  command: hdiutil detach "{{ mount_path }}"
-  when: virtualbox_installation.stat.isreg is not defined or vbversionok.rc != 0
-  changed_when: False
+# Installing KVM 
+- name Installing Kvm packages
+  sudo:true
+  -yum
+   -install 
+      - qemu-kvm
+      - virt-manager
+      - libvirt
+      - libguestfs-tools
+      - libvirt-python
+      - python-virtinst
+      - libvirt-client
+      - qemu-img
+      - qemu-guest-agent
+      - qemu-kvm-tools
+
+# Group install
+
+   - groupinstall "Virtualization Tools"
+   - groupinstall "Virtualization Platform"
+   - groupinstall "Virtualzation Client"
+   - groupinstall "Virtualization"
+  notify:enable_service
