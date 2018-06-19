@@ -28,7 +28,7 @@
 
     "ssh_username": "{{user `ssh_username`}}",
     "ssh_password": "{{user `ssh_password`}}",
-    "ssh_wait_timeout": "40m",
+    "ssh_wait_timeout": "60m",
     "disk_size" : "{{user `inst_disk_size`}}",
     "format": "qcow2",
     "accelerator": "kvm",
