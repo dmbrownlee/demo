@@ -1,4 +1,0 @@
----
-# tasks file for directories
-- name: Create ~/keys
-  file: path={{ ansible_user_dir }}/keys state=directory
