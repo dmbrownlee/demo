@@ -1,0 +1,13 @@
+---
+# Installing KVM 
+- name: install kvm 
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+     - "@virtualization-hypervisor"
+     - "@virtualization-client"
+     - "@virtualization-platform"
+     - "@virtualization-tools"
+     - qemu-system-x86.x86_64
+  become: true
