@@ -3,10 +3,9 @@
   hosts: localhost
   roles:
     - role: setup-directories
-    - role: setup-sshpass
     - role: setup-packer
     - role: setup-vagrant
     - role: setup-kvm
     - role: setup-configure-host
-    - role: setup-virtualbox-networks
+    - role: setup-virtual-networks
     - role: setup-vagrant-base-boxes
