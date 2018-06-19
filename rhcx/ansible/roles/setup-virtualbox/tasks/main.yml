@@ -1,24 +1,12 @@
 ---
 # Installing KVM 
-- name Installing Kvm packages
-  sudo:true
-  -yum
-   -install 
-      - qemu-kvm
-      - virt-manager
-      - libvirt
-      - libguestfs-tools
-      - libvirt-python
-      - python-virtinst
-      - libvirt-client
-      - qemu-img
-      - qemu-guest-agent
-      - qemu-kvm-tools
-
-# Group install
-
-   - groupinstall "Virtualization Tools"
-   - groupinstall "Virtualization Platform"
-   - groupinstall "Virtualzation Client"
-   - groupinstall "Virtualization"
-  notify:enable_service
+- name: install kvm 
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+     - "@virtualization-hypervisor"
+     - "@virtualization-client"
+     - "@virtualization-platform"
+     - "@virtualization-tools" 
+  become: true
