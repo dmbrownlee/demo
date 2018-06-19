@@ -8,5 +8,6 @@
      - "@virtualization-hypervisor"
      - "@virtualization-client"
      - "@virtualization-platform"
-     - "@virtualization-tools" 
+     - "@virtualization-tools"
+     - qemu-system-x86.x86_64
   become: true
