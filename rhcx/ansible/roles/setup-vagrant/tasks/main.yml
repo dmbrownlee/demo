@@ -15,7 +15,7 @@
   file:
     path: "{{ ansible_user_dir }}/keys"
     state: directory
-    mode: 700
+    mode: 0700
 - name: Test if {{ ansible_user_dir }}/keys/vagrant already installed
   stat:
     path: "{{ ansible_user_dir }}/keys/vagrant"

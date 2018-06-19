@@ -13,8 +13,7 @@
     "inst_disk_size": "20480"
   },
   "builders": [{
-    "type": "virtualbox-iso",
-    "guest_os_type": "RedHat_64",
+    "type": "qemu",
     "iso_urls": [
       "{{user `dir_downloads`}}/{{user `iso_name`}}",
       "{{user `url_base`}}/{{user `iso_name`}}"
@@ -29,10 +28,15 @@
 
     "ssh_username": "{{user `ssh_username`}}",
     "ssh_password": "{{user `ssh_password`}}",
-    "ssh_wait_timeout": "20m",
+    "ssh_wait_timeout": "40m",
     "disk_size" : "{{user `inst_disk_size`}}",
+    "format": "qcow2",
+    "accelerator": "kvm",
 
     "vm_name": "{{user `inst_name`}}",
+    "net_device": "virtio-net",
+    "disk_interface": "virtio",
+
     "shutdown_command": "echo {{user `ssh_password`}} | sudo -S shutdown -P now",
     "boot_command": [
       "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort}}/{{ user `inst_kickstart` }}<enter>"
@@ -60,27 +64,11 @@
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "yum -y install epel-release"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "yum -y install bzip2 dkms kernel-devel"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "reboot"],
-       "expect_disconnect": true,
-       "pause_before": "10s"
-    },
-    {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
-                   "cd /mnt",
-                   "./VBoxLinuxAdditions.run"]
     }
   ],
   "post-processors": [{
     "type": "vagrant",
-    "only": ["virtualbox-iso"],
+    "only": ["qemu"],
     "output": "{{user `inst_name`}}.box"
   }]
 }
