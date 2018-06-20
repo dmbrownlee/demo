@@ -43,3 +43,33 @@
     chdir: "{{ ansible_user_dir }}/keys"
     creates: "{{ ansible_user_dir }}/keys/vagrant"
   when: keys_installation.stat.isreg is not defined
+- name: NFS services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - firewalld
+    - rpcbind
+    - nfs
+  become: yes
+- name: Ensure virbr1-nic is in the internal firewall zone
+  firewalld:
+    zone: internal
+    interface: virbr1-nic
+    state: enabled
+    permanent: yes
+    immediate: yes
+  become: yes
+- name: Ensure NFS is allowed through firewall on internal interfaces
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: internal
+  with_items:
+    - rpc-bind
+    - mountd
+    - nfs
+  become: yes
