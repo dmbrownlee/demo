@@ -1,9 +1,0 @@
----
-# Run packer to build the base box
-- name: Create the Vagrant base box
-  hosts: localhost
-  vars:
-    - vm: "ubuntu-16.04.3-server-amd64"
-  roles:
-    - role: vagrantbox-pack
-    - role: vagrantbox-install
