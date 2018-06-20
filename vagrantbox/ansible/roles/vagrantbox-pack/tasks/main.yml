@@ -1,7 +1,0 @@
----
-# tasks file for vagrantbox-pack
-- name: Use packer to build the base box if it does not already exists
-  shell: packer build {{ vm }}.json
-  args:
-    chdir: "{{ ansible_user_dir }}/demo/vagrantbox/packer"
-    creates: "{{ ansible_user_dir }}/demo/vagrantbox/packer/{{ vm }}.box"
