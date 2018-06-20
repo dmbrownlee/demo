@@ -7,5 +7,5 @@
     - role: setup-vagrant
     - role: setup-kvm
     - role: setup-configure-host
-    - role: setup-virtual-networks
+#    - role: setup-virtual-networks
     - role: setup-vagrant-base-boxes
