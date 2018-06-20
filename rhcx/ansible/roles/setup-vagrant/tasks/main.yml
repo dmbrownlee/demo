@@ -11,6 +11,22 @@
     state: present
   when: vagrant_installation.stat.isreg is not defined
   become: yes
+- name: Test if vagrant-libvirt plugin is already installed
+  shell: "vagrant plugin list | grep vagrant-libvirt"
+  register: vagrant_plugin_installed
+  changed_when: False
+- name: Ensure gcc is installed in order to build the vagrant plugin
+  yum:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - gcc
+    - libvirt-devel
+  when: vagrant_plugin_installed.rc == 0
+- name: Install vagrant-libvirt plugin
+  command: "vagrant plugin install vagrant-libvirt"
+  when: vagrant_plugin_installed.rc == 0
 - name: Ensure {{ ansible_user_dir }}/keys directory exists
   file:
     path: "{{ ansible_user_dir }}/keys"
@@ -27,3 +43,33 @@
     chdir: "{{ ansible_user_dir }}/keys"
     creates: "{{ ansible_user_dir }}/keys/vagrant"
   when: keys_installation.stat.isreg is not defined
+- name: NFS services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - firewalld
+    - rpcbind
+    - nfs
+  become: yes
+- name: Ensure virbr1-nic is in the internal firewall zone
+  firewalld:
+    zone: internal
+    interface: virbr1-nic
+    state: enabled
+    permanent: yes
+    immediate: yes
+  become: yes
+- name: Ensure NFS is allowed through firewall on internal interfaces
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: internal
+  with_items:
+    - rpc-bind
+    - mountd
+    - nfs
+  become: yes
