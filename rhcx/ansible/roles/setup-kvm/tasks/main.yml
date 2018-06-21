@@ -1,13 +1,18 @@
 ---
 # Installing KVM 
+- name: Ensure epel-release is installed
+  yum:
+    name: epel-release
+    state: latest
+  become: true
 - name: install kvm 
   yum:
     name: "{{ item }}"
     state: present
-  loop:
+  with_items:
      - "@virtualization-hypervisor"
      - "@virtualization-client"
      - "@virtualization-platform"
      - "@virtualization-tools"
-     - qemu-system-x86.x86_64
+     - qemu-system-x86
   become: true
