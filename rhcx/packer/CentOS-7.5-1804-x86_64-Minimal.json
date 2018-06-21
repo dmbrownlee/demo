@@ -26,6 +26,8 @@
     "http_port_min" : 9001,
     "http_port_max" : 9001,
 
+    "headless": true,
+
     "ssh_username": "{{user `ssh_username`}}",
     "ssh_password": "{{user `ssh_password`}}",
     "ssh_wait_timeout": "40m",

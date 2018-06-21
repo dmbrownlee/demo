@@ -12,7 +12,7 @@
   when: vagrant_installation.stat.isreg is not defined
   become: yes
 - name: Test if vagrant-libvirt plugin is already installed
-  shell: "vagrant plugin list | grep vagrant-libvirt"
+  command: "vagrant plugin list"
   register: vagrant_plugin_installed
   changed_when: False
 - name: Ensure gcc is installed in order to build the vagrant plugin
@@ -23,10 +23,10 @@
   with_items:
     - gcc
     - libvirt-devel
-  when: vagrant_plugin_installed.rc == 0
+  when: "'vagrant-libvirt' in vagrant_plugin_installed.stdout"
 - name: Install vagrant-libvirt plugin
   command: "vagrant plugin install vagrant-libvirt"
-  when: vagrant_plugin_installed.rc == 0
+  when: "'vagrant-libvirt' in vagrant_plugin_installed.stdout"
 - name: Ensure {{ ansible_user_dir }}/keys directory exists
   file:
     path: "{{ ansible_user_dir }}/keys"
