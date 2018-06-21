@@ -23,10 +23,10 @@
   with_items:
     - gcc
     - libvirt-devel
-  when: "'vagrant-libvirt' in vagrant_plugin_installed.stdout"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
 - name: Install vagrant-libvirt plugin
   command: "vagrant plugin install vagrant-libvirt"
-  when: "'vagrant-libvirt' in vagrant_plugin_installed.stdout"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
 - name: Ensure {{ ansible_user_dir }}/keys directory exists
   file:
     path: "{{ ansible_user_dir }}/keys"
