@@ -11,7 +11,8 @@ Vagrant.configure("2") do |config|
                           type: "nfs",
                           nfs_version: 4,
                           nfs_udp: false,
-                          mount_options: ["rw", "vers=4", "tcp", "_netdev", "noatime"]
+                          nfs: true,
+                          mount_options: ["rw", "vers=4", "tcp", "async", "_netdev", "noatime"]
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.groups = {
@@ -19,9 +20,19 @@ Vagrant.configure("2") do |config|
       "ipa-server" => ["labipa"]
     }
   end
-#  config.vm.provider "virtualbox" do |vb|
-#    vb.memory = "1024"
-#    vb.gui = true
+  config.vm.provider "qemu" do |vb|
+    vb.memory = "1024"
+    vb.gui = true
+    vb.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "RHCxNetwork",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
 #    vb.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
 #    vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
 #    vb.customize ["modifyvm", :id, "--nic2", "natnetwork",
@@ -42,13 +53,14 @@ Vagrant.configure("2") do |config|
 #                                        "--device", 1,
 #                                        "--type", "dvddrive",
 #                                        "--medium", "emptydrive"]
-#  end
+  end
   
   #=== labipa ===
   config.vm.define "labipa" do |node|
     node.vm.provider "qemu" do |vb|
       vb.name = "labipa"
       vb.memory = 2048
+      vb.gui = true
     end
   end
 
