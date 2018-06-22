@@ -12,9 +12,6 @@
   command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U 
   become: yes
   when: ipastatus.rc == 4
-- name: Ensure local DNS server is used
-  command: nmcli c mod enp0s8 ipv4.dns 192.168.4.200
-  become: yes
 - name: Ensure vsftpd is enabled and started
   service:
     name: vsftpd

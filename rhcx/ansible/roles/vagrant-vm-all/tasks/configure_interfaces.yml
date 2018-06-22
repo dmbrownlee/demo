@@ -40,9 +40,10 @@
   command: nmcli c mod "Wired connection 1" connection.id {{ iface_int }}
   become: yes
   when: "'Wired connection 1' in connection_list.stdout"
-- name: Ensure a connection for {{ iface_ext }} exists
-  command: nmcli c add con-name {{ iface_ext }} type ethernet ifname {{ iface_ext }} ip4 {{ iface_ext_address }} gw4 {{ iface_ext_gateway }}
+- name: Ensure "System eth1" is renamed to {{ iface_ext }}
+  command: nmcli c mod "System eth1" connection.id {{ iface_ext }}
   become: yes
+  when: "'System eth1' in connection_list.stdout"
 - name: Ensure IPv6 is disabled on all interfaces
   command: nmcli c mod "{{ item }}" ipv6.method ignore
   with_items:
