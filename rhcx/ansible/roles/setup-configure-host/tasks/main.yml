@@ -12,7 +12,7 @@
         vagrant up --no-parallel $1
       }
       rebuild () {
-        vagrant destroy -f $1 &&
+        vagrant destroy -f $1
         vagrant up --no-parallel $1
       }
       showlabs () {
