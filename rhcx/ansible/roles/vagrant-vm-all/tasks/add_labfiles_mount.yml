@@ -1,5 +1,7 @@
 ---
 - name: Ensure /labfiles will be remounted in the case of a reboot
+  tags:
+    - disabled
   mount:
     path: /labfiles
     src: labfiles
