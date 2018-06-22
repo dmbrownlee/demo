@@ -1,13 +1,32 @@
 ---
 - name: Get the list of virtual networks
+  tags:
+    - test
   command: "virsh net-list --all --name"
   register: netlist
   ignore_errors: True
   changed_when: False
   register: netlist
-- name: Ensure RHCxNetwork network exists
+  become: yes
+- name: Ensure RHCxNetwork network is defined
+  tags:
+    - test
+  virt_net:
+    command: define
+    name: "vagrant-private-dhcp"
+    xml: '{{ lookup("file", "RHCxNetwork.xml") }}'
+  when: "'vagrant-private-dhcp' not in netlist.stdout"
+- name: Ensure RHCxNetwork network is created
+  tags:
+    - test
+  virt_net:
+    command: create
+    name: "vagrant-private-dhcp"
+  when: "'vagrant-private-dhcp' not in netlist.stdout"
+- name: Ensure RHCxNetwork network is started
+  tags:
+    - test
   virt_net:
     name: "vagrant-private-dhcp"
     state: active
-    xml: '{{ lookup("file", "RHCxNetwork.xml") }}'
   when: "'vagrant-private-dhcp' not in netlist.stdout"
