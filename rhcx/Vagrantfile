@@ -6,13 +6,13 @@ Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "~/keys/vagrant"
   config.vm.box = "CentOS-7.5-1804-x86_64-ServerWithGui"
   config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.synced_folder "labfiles/",
-                          "/labfiles",
-                          type: "nfs",
-                          nfs_version: 4,
-                          nfs_udp: false,
-                          nfs: true,
-                          mount_options: ["rw", "vers=4", "tcp", "async", "_netdev", "noatime"]
+#  config.vm.synced_folder "labfiles/",
+#                          "/labfiles",
+#                          type: "nfs",
+#                          nfs_version: 4,
+#                          nfs_udp: false,
+#                          nfs: true,
+#                          mount_options: ["rw", "vers=4", "tcp", "async", "_netdev", "noatime"]
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.groups = {
