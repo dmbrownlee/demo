@@ -4,6 +4,7 @@
 Vagrant.configure("2") do |config|
   # These are the VM configuration defaults when not overridden
   config.ssh.private_key_path = "~/keys/vagrant"
+
   config.vm.box = "CentOS-7.5-1804-x86_64-ServerWithGui"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 #  config.vm.synced_folder "labfiles/",
@@ -20,12 +21,19 @@ Vagrant.configure("2") do |config|
       "ipa-server" => ["labipa"]
     }
   end
-  config.vm.provider "qemu" do |vb|
-    vb.memory = "1024"
-    vb.gui = true
-    vb.network :private_network,
+
+  #config.vm.provider "qemu" do |vb|
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.host = "localhost"
+    libvirt.uri = 'qemu:///system'
+  end
+  
+  #=== labipa ===
+  config.vm.define "labipa" do |node|
+    node.vm.network :private_network,
       :type => "dhcp",
-      :libvirt__network_name => "RHCxNetwork",
+      :libvirt__network_name => "vagrant-private-dhcp",
       :libvirt__domain_name => "example.com",
       :libvirt__network_address => "192.168.4.0",
       :libvirt__netmask => "255.255.255.0",
@@ -33,30 +41,6 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-#    vb.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
-#    vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
-#    vb.customize ["modifyvm", :id, "--nic2", "natnetwork",
-#                                   "--nictype2", "82540EM",
-#                                   "--cableconnected2", "on",
-#                                   "--nicpromisc2", "allow-vms",
-#                                   "--nat-network2", "RHCxNetwork"]
-#    vb.customize ["modifyvm", :id, "--boot1", "dvd"]
-#    vb.customize ["modifyvm", :id, "--boot2", "disk"]
-#    vb.customize ["modifyvm", :id, "--boot3", "none"]
-#    vb.customize ["modifyvm", :id, "--boot4", "none"]
-#    vb.customize ["modifyvm", :id, "--vram", "16"]
-#    vb.customize ["modifyvm", :id, "--rtcuseutc", "on"]
-#    vb.customize ["modifyvm", :id, "--vrde", "off"]
-#    vb.customize ["modifyvm", :id, "--usb", "on"]
-#    vb.customize ["storageattach", :id, "--storagectl", "IDE Controller",
-#                                        "--port", 0,
-#                                        "--device", 1,
-#                                        "--type", "dvddrive",
-#                                        "--medium", "emptydrive"]
-  end
-  
-  #=== labipa ===
-  config.vm.define "labipa" do |node|
     node.vm.provider "qemu" do |vb|
       vb.name = "labipa"
       vb.memory = 2048
