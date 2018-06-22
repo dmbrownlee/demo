@@ -1,9 +1,13 @@
 ---
-- name: Get the list of virtualbox networks
-  command: "VBoxManage natnetwork list"
-  register: virtualbox_network_list
+- name: Get the list of virtual networks
+  command: "virsh net-list --all --name"
+  register: netlist
   ignore_errors: True
   changed_when: False
-- name: Ensure RHCxNetwork is configured in VirtualBox
-  command: 'VBoxManage natnetwork add --netname RHCxNetwork --network "192.168.4.0/24" --enable --dhcp on --ipv6 off'
-  when: "'RHCxNetwork' not in virtualbox_network_list.stdout"
+  register: netlist
+- name: Ensure RHCxNetwork network exists
+  virt_net:
+    name: "vagrant-private-dhcp"
+    state: active
+    xml: '{{ lookup("file", "RHCxNetwork.xml") }}'
+  when: "'vagrant-private-dhcp' not in netlist.stdout"
