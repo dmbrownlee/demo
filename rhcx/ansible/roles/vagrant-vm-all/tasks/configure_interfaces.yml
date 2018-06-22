@@ -36,8 +36,8 @@
   command: nmcli c show
   register: connection_list
   changed_when: False
-- name: Ensure default connection has been removed
-  command: nmcli c del "Wired connection 1"
+- name: Ensure "Wired connection 1" is renamed to {{ iface_int }}
+  command: nmcli c mod "Wired connection 1" connection.id {{ iface_int }}
   become: yes
   when: "'Wired connection 1' in connection_list.stdout"
 - name: Ensure a connection for {{ iface_ext }} exists
