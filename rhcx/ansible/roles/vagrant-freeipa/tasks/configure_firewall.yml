@@ -61,5 +61,5 @@
     - { zone: internal, service: dns }
     - { zone: internal, service: ntp }
     - { zone: internal, service: ssh }
-    - { zone: internal, service: ftp }
+#    - { zone: internal, service: ftp }
   become: yes
