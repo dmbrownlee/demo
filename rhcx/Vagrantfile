@@ -51,6 +51,16 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1" do |node|
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
     node.vm.provider "qemu" do |vb|
       vb.name = "server1"
     end
@@ -58,6 +68,16 @@ Vagrant.configure("2") do |config|
   
   #=== server2 ===
   config.vm.define "server2" do |node|
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
     node.vm.box = "CentOS-7.5-1804-x86_64-Minimal"
     node.vm.provider "qemu" do |vb|
       vb.name = "server2"
