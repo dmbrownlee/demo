@@ -1,4 +1,10 @@
 ---
+- name: Ensure {{ ansible_user_id }} is a member of the libvirt group
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: libvirt
+    append: yes
+  become: yes
 - name: Get the list of virtual networks
   command: "virsh net-list --all --name"
   register: netlist
