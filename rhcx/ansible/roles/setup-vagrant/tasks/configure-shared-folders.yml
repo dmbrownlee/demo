@@ -1,0 +1,40 @@
+---
+- name: NFS services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - firewalld
+    - rpcbind
+    - nfs
+  become: yes
+- name: Ensure virbr1-nic is in the internal firewall zone
+  firewalld:
+    zone: internal
+    interface: virbr1-nic
+    state: enabled
+    permanent: yes
+    immediate: yes
+  become: yes
+- name: Ensure NFS is allowed through firewall on internal interfaces
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: internal
+  with_items:
+    - rpc-bind
+    - mountd
+    - nfs
+  become: yes
+- name: Ensure shared folders are exported
+  copy:
+    dest: /etc/exports.d/vagrant-shared-folders.exports
+    content: "{{ ansible_user_dir }}/demo/rhcx/labfiles 192.168.4.*(rw)"
+  become: yes
+- name: Re-export shared folders
+  command: exportfs -ra
+  changed_when: false
+  become: yes
