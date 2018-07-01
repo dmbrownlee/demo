@@ -1,0 +1,28 @@
+---
+- name: Test if vagrant is already installed
+  stat:
+    path: /usr/bin/vagrant
+  register: vagrant_installation
+  changed_when: False
+- name: Download and install Vagrant rpm file
+  yum:
+    name: "{{ vagrant_url }}"
+    state: present
+  when: vagrant_installation.stat.isreg is not defined
+  become: yes
+- name: Test if vagrant-libvirt plugin is already installed
+  command: "vagrant plugin list"
+  register: vagrant_plugin_installed
+  changed_when: False
+- name: Ensure gcc is installed in order to build the vagrant plugin
+  yum:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - gcc
+    - libvirt-devel
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
+- name: Install vagrant-libvirt plugin
+  command: "vagrant plugin install vagrant-libvirt"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
