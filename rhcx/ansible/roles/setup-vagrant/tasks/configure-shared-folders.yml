@@ -9,14 +9,18 @@
     - rpcbind
     - nfs
   become: yes
-- name: Ensure virbr1-nic is in the internal firewall zone
+- name: Ensure bridge interfaces are in the internal firewall zone
   firewalld:
     zone: internal
-    interface: virbr1-nic
+    interface: "{{ item }}"
     state: enabled
     permanent: yes
     immediate: yes
   become: yes
+  with_items:
+    - virbr0
+    - virbr1
+    - virbr2
 - name: Ensure NFS is allowed through firewall on internal interfaces
   firewalld:
     service: "{{ item }}"
