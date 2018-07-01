@@ -9,7 +9,7 @@
     - rpcbind
     - nfs
   become: yes
-- name: Ensure bridge interfaces are in the internal firewall zone
+- name: Ensure bridges are in the internal firewall zone
   firewalld:
     zone: internal
     interface: "{{ item }}"
