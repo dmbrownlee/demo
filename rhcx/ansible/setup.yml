@@ -1,5 +1,5 @@
 ---
-- name: Setup the VirtualBox environment
+- name: Setup the KVM demo environment
   hosts: localhost
   roles:
     - role: setup-directories
