@@ -28,6 +28,7 @@ Vagrant.configure("2") do |config|
     libvirt.driver = "kvm"
     libvirt.host = "localhost"
     libvirt.uri = 'qemu:///system'
+    libvirt.memory = 1024
   end
   
   #=== labipa ===
@@ -42,10 +43,8 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-    node.vm.provider "qemu" do |vb|
-      vb.name = "labipa"
+    node.vm.provider :libvirt do |vb|
       vb.memory = 2048
-      vb.gui = true
     end
   end
 
@@ -61,13 +60,11 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-    node.vm.provider "qemu" do |vb|
-      vb.name = "server1"
-    end
   end 
   
   #=== server2 ===
   config.vm.define "server2" do |node|
+    node.vm.box = "CentOS-7.5-1804-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -78,9 +75,7 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-    node.vm.box = "CentOS-7.5-1804-x86_64-Minimal"
-    node.vm.provider "qemu" do |vb|
-      vb.name = "server2"
+#    node.vm.provider :libvirt do |vb|
 #      vb.customize ["modifyvm", :id, "--nic3", "natnetwork",
 #                                     "--nictype3", "82540EM",
 #                                     "--cableconnected3", "on",
@@ -91,14 +86,11 @@ Vagrant.configure("2") do |config|
 #                                     "--cableconnected4", "on",
 #                                     "--nicpromisc4", "allow-vms",
 #                                     "--nat-network4", "RHCxNetwork"]
-    end
+#    end
   end
   
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
     node.vm.box = "CentOS-7.0-1406-x86_64-Minimal"
-    node.vm.provider "qemu" do |vb|
-      vb.name = "testnetinstall"
-    end
   end
 end
