@@ -1,7 +1,5 @@
 ---
 - name: Ensure IPA lab users have been created
-  tags:
-  - disabled
   shell: echo password | kinit admin; ipa user-find {{ item }} || echo | ipa user-add --first {{ item }} --last {{ item }} --homedir /home/ldap/{{ item }} {{ item }}
   with_items:
     - ldapuser1
@@ -11,8 +9,6 @@
     - ldapuser5
     - isabelle
 - name: Ensure password has been set for IPA lab users
-  tags:
-  - disabled
   shell: echo password | kinit admin; ipa user-find {{ item }} || echo -e "password\npassword" | ipa passwd {{ item }}
   with_items:
     - ldapuser1
@@ -22,8 +18,6 @@
     - ldapuser5
     - isabelle
 - name: Ensure homedirs exist for the LDAP users
-  tags:
-  - disabled
   file:
     path: /home/ldap/{{ item }}
     state: directory
