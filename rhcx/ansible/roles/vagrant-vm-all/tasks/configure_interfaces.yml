@@ -32,6 +32,14 @@
     enabled: no
   become: yes
   when: libvirtd.stat.isreg is defined
+- name: Get a list of inactive default connections
+  shell: nmcli -t -f uuid,active c show | sed -n '/:no$/s/:no$//p'
+  register: inactive_connections
+  become: root
+- name: Ensure any inactive connections are removed
+  command: nmcli c delete {{ item }}
+  loop: "{{ inactive_connections.stdout_lines }}"
+  become: yes
 - name: Get list of connections
   command: nmcli c show
   register: connection_list
