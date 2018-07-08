@@ -13,9 +13,9 @@ Do all these steps on server1.
 2. Add an empty file in the template directory called .firstlogin.
 3. Add the following to the end of the .bashrc file in the skeleton directory:
 
-   if [[ -f "$HOME/.firstlogin ]]; then
+   if [[ -f "$HOME/.firstlogin" ]]; then
      echo "You can place your own personal scripts in $HOME/.local/bin"
-     rm "$HOME/.firstlogin"
+     rm -f "$HOME/.firstlogin"
    fi
 
 4. Add a regular user named "patrick" and set the password to "password".
