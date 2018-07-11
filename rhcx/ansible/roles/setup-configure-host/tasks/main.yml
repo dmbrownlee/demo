@@ -9,11 +9,11 @@
     block: |
       export VAGRANT_DEFAULT_PROVIDER=libvirt
       build () {
-        vagrant up $1
+        vagrant up --no-parallel $1
       }
       rebuild () {
-        vagrant destroy -f $1 &&
-        vagrant up $1
+        vagrant destroy -f $1
+        vagrant up --no-parallel $1
       }
       showlabs () {
         find ~/demo/rhcx/labfiles/lab* -name "README*" -exec head -1 \{\} \;
