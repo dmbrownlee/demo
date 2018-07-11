@@ -2,8 +2,9 @@
 - name: Ensure /labfiles will be remounted in the case of a reboot
   mount:
     path: /labfiles
-    src: labfiles
-    fstype: vboxsf
+    src: 192.168.4.1:/home/user/demo/rhcx/labfiles
+    fstype: nfs
+    opts: tcp,ro,async,noatime,_netdev
     state: mounted
     passno: 0
     dump: 0

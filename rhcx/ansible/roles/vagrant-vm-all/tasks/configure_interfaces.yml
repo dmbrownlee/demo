@@ -3,17 +3,6 @@
 # the 2.5 devel branch.  https://github.com/ansible/ansible/pull/34577. I will
 # revisit this when it is fixed in production.
 #
-#- name: install needed network manager libs
-#  yum:
-#    name: '{{ item }}'
-#    state: installed
-#  with_items:
-#    - NetworkManager-glib
-#  become: yes
-#- name: Ensure default connection has been removed
-#  nmcli:
-#    conn_name: 'Wired connection 1'
-#    state: absent
 - name: Ensure NetworkManager is started and enabled at boot
   service:
     name: NetworkManager
@@ -32,32 +21,26 @@
     enabled: no
   become: yes
   when: libvirtd.stat.isreg is defined
-- name: Get list of connections
-  command: nmcli c show
-  register: connection_list
+- name: Get a list of inactive default connections
+  shell: nmcli -t -f uuid,active c show | sed -n '/:no$/s/:no$//p'
+  register: inactive_connections
   changed_when: False
-- name: Ensure default connection has been removed
-  command: nmcli c del "Wired connection 1"
+  become: root
+- name: Ensure any inactive connections are removed
+  command: nmcli c delete {{ item }}
+  loop: "{{ inactive_connections.stdout_lines }}"
   become: yes
-  when: "'Wired connection 1' in connection_list.stdout"
-- name: Ensure a connection for {{ iface_ext }} exists
-  command: nmcli c add con-name {{ iface_ext }} type ethernet ifname {{ iface_ext }} ip4 {{ iface_ext_address }} gw4 {{ iface_ext_gateway }}
+  when: inactive_connections.stdout_lines|length > 0
+- name: Get a list of active interfaces and associated connections
+  command: nmcli -t -f device,uuid c show --active
+  register: active_connections
+  changed_when: False
+  become: root
+- name: Ensure active connections are named after their interfaces
+  command: "nmcli c mod {{ item|regex_replace('^.*:','') }} connection.id {{ item|regex_replace(':.*$','') }}"
   become: yes
-- name: Ensure IPv6 is disabled on all interfaces
-  command: nmcli c mod "{{ item }}" ipv6.method ignore
-  with_items:
-    - "{{ iface_int }}"
-    - "{{ iface_ext }}"
+  loop: "{{ active_connections.stdout_lines }}"
+- name: Ensure active connections have correct configuration
+  command: nmcli c mod "{{ item.key }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
   become: yes
-- name: Ensure DNS configuration from DHCP is ignored
-  command: nmcli c mod "{{ item }}" ipv4.ignore-auto-dns yes
-  with_items:
-    - "{{ iface_int }}"
-    - "{{ iface_ext }}"
-  become: yes
-- name: Ensure we use our local ipa-server as DNS
-  command: nmcli c mod "{{ iface_ext }}" ipv4.dns 192.168.4.200
-  become: yes
-- name: Ensure we don't create default routes on {{ iface_int }} 
-  command: nmcli c mod {{ iface_int }} ipv4.never-default yes
-  become: yes
+  with_dict: "{{ nmcon }}"
