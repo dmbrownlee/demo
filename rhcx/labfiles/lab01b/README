@@ -1,0 +1,21 @@
+=== LAB xx: (Unfinished)
+OBJECTIVE
+In this lab, you will practice to set up your own centos machine. You will be using Virtual Machine Manager to set up a new virtual machine with a centos image.
+
+SETUP
+Before beginning the lab, follow these steps to prepare the hosts indicated
+(these steps assume a cleanly installed host OS and VMs):
+
+  Host OS: Open Virtual Machine Manager.
+
+  server1:
+
+  server2:
+
+  labipa:
+
+STEPS:
+
+ 	1. Open Virtual Machine Manager on ( Application > System Tools > Virtual Machine Manager )
+	2. Create a new Virtual Manager Using the ISO image on the downloads folder on your host machine.
+
