@@ -1,6 +1,6 @@
-=== LAB xx: (Unfinished)
+=== LAB 05: (Unfinished)
 OBJECTIVE
-In this lab, you will...
+In this lab, you will practice to generate ssh keys and working on different virtual consoles.
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
@@ -14,4 +14,13 @@ Before beginning the lab, follow these steps to prepare the hosts indicated
 
   labipa:
 
-STEPS
+STEPS: 
+
+  # Working with ssh and Virtual Terminal
+
+	1. Create two different virtual console and on the first one log in as root, The second as user, The third as user anna.
+	2. Switch between the root and anna
+	3. On user create ssh key and use it on anna.
+	4. ssh to anna from user.
+	5. Create a directory from the ssh then switch to third virtual console and ls and see if you can see the directory you just made.
+
