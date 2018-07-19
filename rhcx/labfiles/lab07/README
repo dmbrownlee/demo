@@ -1,21 +1,15 @@
-=== LAB 07: (Unfinished)
+=== LAB 07: (Review)
 OBJECTIVE
-In this lab, you will...
+In this lab, you will practice to set Ownership 
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+(these steps assume a cleanly installed host OS and VMs): 
 
-  Host OS:
+STEPS:
 
-  server1:
 
-  server2:
-
-  labipa:
-
-STEPS
-
+  # Creating groups and granting them ownership to documents.
 
 
 ---
@@ -23,6 +17,9 @@ STEPS
   tasks:
   - group:
       name: eng
+      state: present
+  - group:
+      name: swa
       state: present
   - user:
       name: patrick
@@ -32,3 +29,11 @@ STEPS
       name: percilla
       groups: eng
       state: present
+  - user:
+       name: paul
+       groups: swa
+       state: present 
+	
+	1. User paul can view and execute the directory english in the eng group.
+	2. Users of the eng group can also view and execute the directory swahili on swa group.
+	3. Create an empty file nouns in english directory and only the user who created the file is allowed to delete this file. 
