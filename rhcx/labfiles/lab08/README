@@ -1,17 +1,17 @@
-=== LAB xx: (Unfinished)
+=== LAB 08: (Unfinished)
 OBJECTIVE
-In this lab, you will...
+In this lab, you will practice configuring networks and modifying existing ones.
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
+  server1:yes
 
-  server1:
+STEPS:
 
-  server2:
+  # practice using Network managing tools
 
-  labipa:
-
-STEPS
+	1. Show how many connection that are active on your machine.
+	2. create a new connection "dns"with IPV4 address 192.168.0.4/24 Gate way of 192.168.0.1
+	3. 
