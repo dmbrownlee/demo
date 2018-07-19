@@ -1,6 +1,6 @@
-=== LAB xx: (Unfinished)
+=== LAB 09: (Unfinished - Review)
 OBJECTIVE
-In this lab, you will...
+In this lab, you will practice using the different commands to manage processes on your machine.
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
@@ -14,4 +14,6 @@ Before beginning the lab, follow these steps to prepare the hosts indicated
 
   labipa:
 
-STEPS
+STEPS: 
+
+  # Make sure you go through the different exercises on the book in 
