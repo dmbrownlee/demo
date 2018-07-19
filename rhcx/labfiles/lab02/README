@@ -1,4 +1,4 @@
-=== LAB 02: (Unfinished)
+=== LAB 02: (Review)
 OBJECTIVE
 In this lab, you will help you practice what you just learnt on Chapter Two.
 
@@ -7,13 +7,7 @@ SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
-
-  server1:
-
-  server2:
-
-  labipa:
+You can use the Server 1.
 
 STEPS:
     #This will help you practice your vim 
