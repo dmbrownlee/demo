@@ -1,4 +1,4 @@
-=== LAB 09: (Unfinished - Review)
+=== LAB 09:  (Review)
 OBJECTIVE
 In this lab, you will practice using the different commands to manage processes on your machine.
 
@@ -6,14 +6,11 @@ SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
+   Server1:Use
 
-  server1:
+ STEPS: 
 
-  server2:
+  # Make sure you go through the different exercises on the book and the video.
 
-  labipa:
-
-STEPS: 
-
-  # Make sure you go through the different exercises on the book in 
+ 	1.Run on your terminal  "  (while true; do ls -LR / > /dev/null 2>&1 ; done) &  ".
+ 	2. Figure out where most of your cpu is being used and terminate the process.
