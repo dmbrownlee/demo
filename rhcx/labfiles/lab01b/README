@@ -7,8 +7,7 @@ In this lab, you will practice to set up your own centos machine.
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
-If you want pictures with steps you will have to read a head on chapter 10, Since the author skips it on
-   the videos but you can just read a head in order to know how to use virt-manager. 
+If you want pictures with steps you will have to read a head on chapter 10 on the book and chapter 11 on the videos on Safari. 
 
   Host OS: Open Virtual Machine Manager
 
