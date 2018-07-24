@@ -4,6 +4,9 @@
   - group:
       name: eng
       state: present
+  - group:
+      name: swa
+      state: present
   - user:
       name: patrick
       groups: eng
@@ -12,3 +15,8 @@
       name: percilla
       groups: eng
       state: present
+  - user:
+       name: paul
+       groups: swa
+       state: present 
+
