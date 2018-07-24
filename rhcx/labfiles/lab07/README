@@ -34,6 +34,6 @@ STEPS:
        groups: swa
        state: present 
 	
-	1. User paul can view and execute the directory english in the eng group.
-	2. Users of the eng group can also view and execute the directory swahili on swa group.
+	1. Group swa can view and execute the directory /lang/english in the eng group.
+	2. Group eng can also view and execute the directory /lang/swahili on swa group.
 	3. Create an empty file nouns in english directory and only the user who created the file is allowed to delete this file. 
