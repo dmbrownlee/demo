@@ -1,4 +1,4 @@
-=== LAB 05: (Unfinished)
+=== LAB 05: (Review)
 OBJECTIVE
 In this lab, you will practice to generate ssh keys and working on different virtual consoles.
 
@@ -6,13 +6,9 @@ SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
-
-  server1:
-
-  server2:
-
-  labipa:
+  HostOS: Yes
+  server2: Yes
+  server1: Yes
 
 STEPS: 
 
@@ -23,4 +19,10 @@ STEPS:
 	3. On user create ssh key and use it on anna.
 	4. ssh to anna from user.
 	5. Create a directory from the ssh then switch to third virtual console and ls and see if you can see the directory you just made.
+
+   # Working with SSH Between virtual machine and Host.
+
+	1. Create ssh key and share it with server1 and server2 from the host machine.
+	2. Create ssh key on server1 and share it with server2.
+	3. touch a file named hey.txt in server2 and copy it to the home directory of the host machine.
 
