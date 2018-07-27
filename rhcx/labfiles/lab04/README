@@ -1,17 +1,26 @@
-=== LAB xx: (Unfinished)
+=== LAB 04: (Review)
 OBJECTIVE
-In this lab, you will...
+In this lab, you will practice using searching and working with text files.
+ 
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
+  Server1:Yes
 
-  server1:
+STEPS:
+  
+ # Working with text files then searching for words in documents.
 
-  server2:
+	1. Change all e to E using the tr command on the training.txt file
+	2. Change all characters to lower case on the training.txt
+	3. Restore the previous character setting on the training.txt
+	4. Using the find the word passwd on the man page of useradd
+	5. Create an empty file wow.txt then echo the words "This file is going to be deleted"
+	6. Change the location of the file to the new directory delete.
+	7. Delete the file delete together with its content.
+	8. use the wc to find out the word count on the tr* file. 
 
-  labipa:
 
-STEPS
+	 
