@@ -1,6 +1,6 @@
 === LAB 02: (Review)
 OBJECTIVE
-In this lab, you will help you practice what you just learnt on Chapter Two.
+In this lab, you will practice what you just learnt in Chapter Two.
 
 
 SETUP
@@ -10,24 +10,26 @@ Before beginning the lab, follow these steps to prepare the hosts indicated
 You can use the Server 1.
 
 STEPS:
-    #This will help you practice your vim 
+This will help you practice your vim 
 
-	1. Create a vim file named training.txt
-	2. Type the following:
-		Food
-		Water
-		Exercise
-		Work
-		Movies
-		Eat
-		Sleep
-		Study
-	3. Replace the word "Work" with "Shower"
-	4. Then Delete the Word "Study"
+  1. Create a vim file named training.txt
+  2. Type the following:
+    Food
+    Water
+    Exercise
+    Work
+    Movies
+    Eat
+    Sleep
+    Study
+  3. Replace the word "Work" with "Shower"
+  4. Then Delete the Word "Study"
 
    # This will help you practice searching for help/information.
 
-	1. Find the manual page for time and the different options that you could use.
-	2. You will notice that you unable to view the man page when you run "man -k help" 
-	3. For this you will need update your man page.
-	4. After the update you will be able to run man -k "anything" and you will find the right man page for it. 
+  1. Find the manual page for time and the different options that you could use.
+  2. You will notice that you unable to view the man page when you run
+     "man -k help" 
+  3. For this you will need update your man page.
+  4. After the update you will be able to run man -k "anything" and you will
+     find the right man page for it. 
