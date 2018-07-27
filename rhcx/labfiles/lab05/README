@@ -14,15 +14,15 @@ STEPS:
 
   # Working with ssh and Virtual Terminal
 
-	1. Create two different virtual console and on the first one log in as root, The second as user, The third as user anna.
-	2. Switch between the root and anna
-	3. On user create ssh key and use it on anna.
-	4. ssh to anna from user.
-	5. Create a directory from the ssh then switch to third virtual console and ls and see if you can see the directory you just made.
+  1. Create two different virtual console and on the first one log in as root, The second as user, The third as user anna.
+  2. Switch between the root and anna
+  3. On user create ssh key and use it on anna.
+  4. ssh to anna from user.
+  5. Create a directory from the ssh then switch to third virtual console and ls and see if you can see the directory you just made.
 
    # Working with SSH Between virtual machine and Host.
 
-	1. Create ssh key and share it with server1 and server2 from the host machine.
-	2. Create ssh key on server1 and share it with server2.
-	3. touch a file named hey.txt in server2 and copy it to the home directory of the host machine.
+  1. Create ssh key and share it with server1 and server2 from the host machine.
+  2. Create ssh key on server1 and share it with server2.
+  3. touch a file named hey.txt in server2 and copy it to the home directory of the host machine.
 
