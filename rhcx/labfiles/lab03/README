@@ -1,4 +1,4 @@
-=== LAB xx: (Unfinished)
+=== LAB 03: (Review)
 OBJECTIVE
 In this lab, you will practice some of the commands that you learnt on chapter 3. But make sure that you go through the exercises on the book and the lab on the video.
 
@@ -7,13 +7,7 @@ SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume a cleanly installed host OS and VMs):
 
-  Host OS:
-
-  server1:
-
-  server2:
-
-  labipa:
+  server1:Yes
 
 STEPS:
 
