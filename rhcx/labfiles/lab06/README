@@ -12,22 +12,22 @@ SETUP:
 STEPS:
  
 
-	1. Add a .local/bin subdirectory to the template directory (you should know
-   		which directory that is).
-	2. Add an empty file in the template directory called .firstlogin.
-	3. Add the following to the end of the .bashrc file in the skeleton directory:
+  1. Add a .local/bin subdirectory to the template directory (you should know
+       which directory that is).
+  2. Add an empty file in the template directory called .firstlogin.
+  3. Add the following to the end of the .bashrc file in the skeleton directory:
 
-   		if [[ -f "$HOME/.firstlogin" ]]; then
-     		  echo "You can place your own personal scripts in $HOME/.local/bin"
-     		  rm -f "$HOME/.firstlogin"
-   		fi
+       if [[ -f "$HOME/.firstlogin" ]]; then
+           echo "You can place your own personal scripts in $HOME/.local/bin"
+           rm -f "$HOME/.firstlogin"
+       fi
 
-	4. Add a regular user named "patrick" and set the password to "password".
-	5. Login as patrick and verify you get the message above.
-	6. Logout and back in again to verify you don't see the message again.
-	7. Create ~/.local/bin/hello with the following contents and make it executable:
+  4. Add a regular user named "patrick" and set the password to "password".
+  5. Login as patrick and verify you get the message above.
+  6. Logout and back in again to verify you don't see the message again.
+  7. Create ~/.local/bin/hello with the following contents and make it executable:
 
-   		#!/bin/bash
-   		echo "Hello world!"
+       #!/bin/bash
+       echo "Hello world!"
 
-	8. Verify you can run "hello" from anywhere
+  8. Verify you can run "hello" from anywhere
