@@ -1,20 +1,11 @@
-=== LAB 12: (Unfinished)
-OBJECTIVE
-In this lab, you will...
+=== LAB 12: (Schedule Tasks/Unfinished)
 
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+OBJECTIVE:
 
-  Host OS:
+In this lab, you will practice scheduling different process to happen at an 
+ assigned time.
 
-  server1:
+STEPS:
 
-  server2:
-
-  labipa:
-
-STEPS
-
-
+Log in to one of your virtual machine
 crontab.template
