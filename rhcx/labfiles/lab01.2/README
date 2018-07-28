@@ -1,0 +1,28 @@
+=== LAB 01b: (Installing Centos/Review)
+
+OBJECTIVE:
+
+In this lab, you will practice to set up your own centos machine.
+You will be using Virtual Machine Manager to set up a new virtual machine
+ with a centos image.
+
+
+SETUP:
+
+Before beginning the lab, Please read ahead on Chapter 10 on the book and 
+ Chapter 11 on the videos on Safari Online.
+
+STEPS:
+
+Log in to your Host Machine
+  1. Open Virtual Machine Manager ( Type " virt-manager " on terminal ).
+  2. Create a new Virtual Manager Using the ISO image on the downloads folder 
+     on your host machine and use the default settings on it.
+    
+Instructions for creating a virtual machine on virt-manager
+
+  1. Run " virt-manager " on your terminal
+  2. Click file > New Virtual Machine > Forward > Browse > Browse Local >
+     Under Home > User > Downloads > Centos > Choose Volume 
+  3. Use the default settings.
+

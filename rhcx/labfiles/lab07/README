@@ -1,15 +1,17 @@
-=== LAB 07: (Review)
-OBJECTIVE
-In this lab, you will practice to set Ownership 
+=== LAB 07: (Confirguring Permissions/Review)
 
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs): 
+OBJECTIVE:
+
+In this lab, you will practice to:~
+   Create Groups
+   Create Users
+   Grant permission to both Groups and Users
+     
 
 STEPS:
 
-
-  # Creating groups and granting them ownership to documents.
+Log in to server1
+Creating groups and granting them ownership to documents.
 
 
 ---
@@ -33,7 +35,10 @@ STEPS:
        name: paul
        groups: swa
        state: present 
-	
-	1. Group swa can view and execute the directory /lang/english in the eng group.
-	2. Group eng can also view and execute the directory /lang/swahili on swa group.
-	3. Create an empty file nouns in english directory and only the user who created the file is allowed to delete this file. 
+  
+  1. Group swa can view and execute the directory /lang/english in the
+     eng group.
+  2. Group eng can also view and execute the directory /lang/swahili on
+     swa group.
+  3. Create an empty file nouns in english directory and only the user who
+     created the file is allowed to delete this file. 
