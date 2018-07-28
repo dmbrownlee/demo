@@ -1,17 +1,14 @@
-=== LAB xx: (Unfinished)
-OBJECTIVE
-In this lab, you will...
+=== LAB 10: (Working With Virtual Machines/unfinished)
 
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+OBJECTIVE:
 
-  Host OS:
+In this lab, you will practice using Virtual Machine MAnager.
 
-  server1:
+STEPS:
 
-  server2:
+Log in to your Host Machine
 
-  labipa:
-
-STEPS
+  1. Create a virtual machine with a Centos image
+  2. List how many machines that you have active.
+  3. Delete the virtual machine you just created.
+  4. Create a clone for server1
