@@ -11,6 +11,8 @@ Log in to server2
   1. Run lab11main.yml.
   2. Create your own yum repository
 
+If this does not work you can run rm -f /etc/yum.repo.d/CentOS-Base.repo
+
 Make sure that you can see it in your repolist.
 
 
