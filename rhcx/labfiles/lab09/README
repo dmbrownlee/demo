@@ -1,16 +1,16 @@
-=== LAB 09:  (Review)
-OBJECTIVE
-In this lab, you will practice using the different commands to manage processes on your machine.
+=== LAB 09:  (Managing Process/Review)
 
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+OBJECTIVE:
 
-   server2:Yes
+In this lab, you will practice using the different commands to manage processes
+ on your machine.
 
- STEPS: 
+STEPS: 
 
-  # Make sure you go through the different exercises on the book and the video.
+Log in to server2
+Make sure you go through the different exercises on the book and the video.
 
- 	1.Run on your terminal  "  (while true; do ls -LR / > /dev/null 2>&1 ; done) &  ".
- 	2. Figure out where most of your cpu is being used and terminate the process.
+  1.Run on your terminal 
+    (while true; do ls -LR / > /dev/null 2>&1 ; done) & 
+  2. Figure out where most of your cpu is being used and terminate the process.
+

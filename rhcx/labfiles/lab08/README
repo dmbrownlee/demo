@@ -1,18 +1,16 @@
-=== LAB 08: (Unfinished/Review)
-OBJECTIVE
+=== LAB 08: (Configuring Permissions/Unfinished)
+
+OBJECTIVE:
+
 In this lab, you will practice configuring networks and modifying existing ones.
-Make sure that you understand the output from the different commands you are runnning (ip a s) (nmcli con show)
-
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
-
-  server1:yes
+Make sure that you understand the output from the different commands you are 
+ runnning (ip a s) (nmcli con show)
 
 STEPS:
 
-  # practice using Network managing tools
+Practice using Network managing tools
 
-	1. Show how many connection that are active on your machine.
-	2. Create a new ethernet connection "dns" 8.8.8.8 with IPV4 address 192.168.0.4/24 Gate way of 192.168.0.1
-	3. 
+  1. Show how many connection that are active on your machine.
+  2. Create a new ethernet connection "dns" 8.8.8.8 with 
+     IPV4 address 192.168.0.4/24 Gate way of 192.168.0.1
+ 
