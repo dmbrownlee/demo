@@ -1,17 +1,17 @@
-== LAB 11: (Unfinished/Review)
-OBJECTIVE
-In this lab, you will Practice Using KVM.
+=== LAB 11: (Managing Software/Unfinished)
 
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+OBJECTIVE:
 
-  Server2:Yes
-
+In this lab, you will Practice Creating your own repositories.
 
 STEPS:
 
-	
+Log in to server2
+
+  1. Run lab11main.yml.
+  2. Create your own yum repository
+
+Make sure that you can see it in your repolist.
 
 
 
