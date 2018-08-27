@@ -4,7 +4,8 @@ Learn to use Vagrant
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
+(these steps assume you have followed the installation instructions and have
+rebooted the host):
 
   Host OS:
     On the host machine (not in a VM) run:
@@ -27,9 +28,11 @@ Shutdown all the VMs cleanly without destroying them:
 
   vagrant halt
 
-Startup all the VMs again:
+Startup all the VMs again ( --no-parallel is needed to ensure the labipa
+VM is started before the others since it is the DHCP server for the virtual
+network):
 
-  vagrant up
+  vagrant up --no-parallel
 
 Shutdown one VM by name (when you don't specify a VM by name, the command
 runs on all VMs defined in Vagrantfile):
