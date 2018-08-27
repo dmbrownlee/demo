@@ -1,9 +1,9 @@
-=== LAB 02: (Using Essential Tools/Review)
+=== LAB 02: Using Essential Tools - Vim
 
 OBJECTIVE:
 
-In this lab, You will practice using vim in normal,insert,visual and
-command mode to:~
+In this lab, you will practice using vim to do the following:
+
   Replace text
   Exit without saving
   Saving the file with out exiting
@@ -17,11 +17,11 @@ command mode to:~
 
 STEPS:
 
-Log in to server1.
-This will help you practice your vim 
+You can do this lab on the host or in any of the VMs.
 
-  1. Create a vim file named training.txt
-  2. Type the following:
+  1. Create a file in vim named training.txt
+  2. Add the following lines to the file:
+
       Food
       Water
       Exercise
@@ -30,14 +30,10 @@ This will help you practice your vim
       Eat
       Sleep
       Study
+
   3. Replace the word "Work" with "Shower"
-  4. Then Delete the Word "Study"
+  4. Delete the word "Study"
 
-This will help you practice searching for help/information.
-
-  1. Find the manual page for time and the different options that you could use.
-  2. You will notice that you unable to view the man page when you run
-     "man -k help" 
-  3. For this you will need update your man page.
-  4. After the update you will be able to run man -k "anything" and you will
-     find the right man page for it. 
+For additional practice, run "vimtutor" on the command line instead of vim.
+That will open a practice doc in vim that you can read and edit simultaneously.
+It will take around 30 minutes to complete.
