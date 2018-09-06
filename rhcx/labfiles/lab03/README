@@ -1,38 +1,24 @@
-=== LAB 03: (Essential File Manager Tools/Review)
+=== LAB 03: Essential Tools - links
 
 OBJECTIVE:
 
-In this lab, you will practice creating links:~
-  Symbolic links
-  Hard links
+In this lab, you will practice creating symbolic and hard links.
 
 STEPS:
 
-log in to server1
+These steps can be completed on the host or any of the virtual machines.
 
-Practice to check the different mounts on the machine, checking the volume/ 
- space on the connected devices.
-Using Links and copying and moving files.
-
-  1. Create directory with the name bar and inside the directory create an empty
-     file drinks.
-  2. Create another directory that is not inside bar named club.
-  3. Create another empty file name it uber not inside bar or club.
-  4. Create a Symbolic link on bar and club.
-  5. Create a Hard link on uber and ~/bar/uber.
-  6. vim into uber and  add the text " Hey, get ready. ".
-  7. Create a file inside club named music.
-  8. In the bar directory vim into uber and add the text " Safe driving inside."
-     and save & exit.
-  9. using tar compress the file bar to a new compresses file bar.tar.
-  10. View the contents on bar.tar without unzipping.
-
- Make sure that your double check to see if the links work. You can use ls -il 
-  to view the list including the inode number of the stuff on your current
-  location. Make sure that uber and ~/bar/uber have the same inode number and
-  in the bar directory, you can view the line that was added to uber when you 
-  vim ~/bar/uber, and also in bar you can not see the new file that you created
-  in club.
-
-
+  1. Create directory with the name "foo"
+  2. Without changing into the foo directory, create a file named "file1"
+     inside the foo directory
+  3. Create a link to the directory foo named "bar"
+  4. Change into the directory bar and create a hard link to file1 named file2
+  5. Create a symbolic link to foo named "link"
+  6. Do a long listing in the directory to see how the links differ
+  7. Use "ls -il" and take notice of the inode numbers of the files
+  8. Change the permissions on link with "chmod 777 link"
+  9. Do another long listing to observe what actually happened
+  10. Remove file1
+  11. Do another long listing to observe what actually happened
+  12. Recreate file1 in a single command to recreate it as it was
 

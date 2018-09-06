@@ -1,4 +1,4 @@
-=== LAB 06:(Users and Group Management/Review)
+=== LAB 06: Users and Group Management
 
 OBJECTIVE:
 
@@ -10,7 +10,7 @@ STEPS:
 Login to server2
 
   1. Add a .local/bin subdirectory to the template directory (you should know
-       which directory that is).
+     which directory that is).
   2. Add an empty file in the template directory called .firstlogin.
   3. Add the following to the end of the .bashrc file in the skeleton directory:
 
@@ -29,5 +29,4 @@ Login to server2
         echo "Hello world!"
 
   8. Verify you can run "hello" from anywhere.
-
 
