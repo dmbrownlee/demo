@@ -1,16 +1,40 @@
-=== LAB 09:  (Managing Process/Review)
+=== LAB 09: Managing Process
 
 OBJECTIVE:
 
-In this lab, you will practice using the different commands to manage processes
- on your machine.
+In this lab, you will practice finding poorly behaving processes and shut them
+down.
 
 STEPS: 
 
-Log in to server2
-Make sure you go through the different exercises on the book and the video.
+You can do these steps on the host or any virtual machine.
 
-  1.Run on your terminal 
-    (while true; do ls -LR / > /dev/null 2>&1 ; done) & 
-  2. Figure out where most of your cpu is being used and terminate the process.
+  1. Open a terminal and run:
 
+       while true; do echo "Are we there yet?"; sleep 2; done
+
+     The previous command will echo a message to the screen every two seconds.
+
+  2. Stop the previous command without closing the terminal
+  3. Now run this in your terminal:
+
+      (while true; do ls -LR / > /dev/null 2>&1 ; done) &
+
+     You should get a prompt back right away.
+
+  4. Figure out which process is using most of your CPU and terminate the process.
+  5. Read the man page for "ps" to find out how to change the output so that only
+     this information is displayed about every process:
+
+       The user running the process
+       The process ID
+       The percent of CPU the process is using
+       The percent of memory the process is using
+       The command line used to start the process,pid
+
+  6. How would you order the output of ps by total CPU time the process has used?
+  7. What do you think this command is showing you:
+
+       echo $$
+
+  8. How do you get help with changing the output of "top"?
