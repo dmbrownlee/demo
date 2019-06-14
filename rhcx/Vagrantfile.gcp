@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "google/gce"
+  config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
+
+  config.vm.provider :google do |google, override|
+    google.google_project_id = "total-platform-241001"
+    google.google_json_key_location = "/home/david_m_brownlee/.ssh/key.json"
+    
+    google.image_family = 'centos-7'
+    
+    override.ssh.username = "david_m_brownlee"
+    override.ssh.private_key_path = "~/.ssh/google_compute_engine"
+  end
+
+end
