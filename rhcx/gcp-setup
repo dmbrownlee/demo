@@ -43,34 +43,39 @@ vagrant plugin list | grep -q vagrant-google
 if [[ $? -ne 0 ]]; then
   vagrant plugin install vagrant-google
 fi
-if [[ ! -f Vagrantfile.gcp ]]; then
-  cat > Vagrantfile.gcp <<DONE
-Vagrant.configure("2") do |config|
-  config.vm.box = "google/gce"
-  config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
-
-  config.vm.provider :google do |google, override|
-    google.google_project_id = "$GOOGLE_CLOUD_PROJECT"
-    google.google_json_key_location = "$HOME/.ssh/key.json"
-    
-    google.image_family = 'centos-7'
-    
-    override.ssh.username = "$USER"
-    override.ssh.private_key_path = "~/.ssh/google_compute_engine"
-  end
-
-end
-DONE
-fi
-cat <<DONE
+if [[ -e Vagrantfile ]]; then
+  if [[ $(readlink Vagrantfile) == 'Vagrantfile.gcp' ]]; then
+    cat <<DONE
 ============================
 =    Setup is complete.    =
 ============================
-First, make sure Vagrantfile is a symbolic link to Vagrantfile.gcp.
-Then you can run:
+DONE
+  else
+    cat <<DONE
+===================================
+=    Setup is ALMOST complete.    =
+===================================
+You still need to make sure Vagrantfile is a symbolic link to
+Vagrantfile.gcp with:
+
+  ln -sf Vagrantfile.gcp Vagrantfile
+
+I would have done this for you but Vagrantfile already exists
+and I didn't want to overwrite something that might be important.
+
+DONE
+  fi
+else
+  ln -s Vagrantfile.gcp Vagrantfile
+  cat <<DONE
+============================
+=    Setup is complete.    =
+============================
+DONE
+fi
+cat <<DONE
+To create the training environment virtual machines, run:
 
   vagrant up
-
-to create the virtual machines in GCP.
 
 DONE
