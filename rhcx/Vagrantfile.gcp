@@ -2,14 +2,73 @@ Vagrant.configure("2") do |config|
   config.vm.box = "google/gce"
   config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
 
-  config.vm.provider :google do |google, override|
-    google.google_project_id = "total-platform-241001"
-    google.google_json_key_location = "/home/david_m_brownlee/.ssh/key.json"
-    
-    google.image_family = 'centos-7'
-    
-    override.ssh.username = "david_m_brownlee"
-    override.ssh.private_key_path = "~/.ssh/google_compute_engine"
+  config.vm.define :labipa do |node|
+    node.vm.provider :google do |google, override|
+      google.google_project_id = "vagrantproject"
+      google.google_json_key_location = "/home/andrewlax313/.ssh/key.json"
+      google.zone = "us-central1-f"
+   
+      google.image_family = 'centos-7'
+      
+      override.ssh.username = "andrewlax313"
+      override.ssh.private_key_path = "~/.ssh/google_compute_engine" 
+  
+  
+     
+      google.zone_config "us-central1-f" do |zone1| 
+        zone1.name = "labipa"
+       # zone1.image = "centos-7"
+       # zone1.machine_type = "n1-standard-1"
+       # zone1.zone = "us-central1-f" 
+       # zone1.metadata {"zone" => "US Central1 F"}
+      end
+    end
   end
-
 end
+
+
+Vagrant.configure("2") do |config|
+  config.vm.define :server do |node|
+    node.vm.provider :google do |google, override|
+      google.google_project_id = "vagrantproject"
+      google.google_json_key_location = "/home/andrewlax313/.ssh/key.json"
+      google.zone = "us-central1-f"
+   
+      google.image_family = 'centos-7'
+      
+      override.ssh.username = "andrewlax313"
+      override.ssh.private_key_path = "~/.ssh/google_compute_engine" 
+  
+  
+     
+      google.zone_config "us-central1-f" do |zone2| 
+        zone2.name = "server"
+
+      end
+    end
+   end
+end
+
+
+Vagrant.configure("2") do |config|
+  config.vm.define :server2 do |node|
+    node.vm.provider :google do |google, override|
+      google.google_project_id = "vagrantproject"
+      google.google_json_key_location = "/home/andrewlax313/.ssh/key.json"
+      google.zone = "us-central1-f"
+   
+      google.image_family = 'centos-7'
+      
+      override.ssh.username = "andrewlax313"
+      override.ssh.private_key_path = "~/.ssh/google_compute_engine" 
+  
+  
+     
+      google.zone_config "us-central1-f" do |zone3| 
+        zone3.name = "server2"
+
+      end
+    end
+   end
+end
+
