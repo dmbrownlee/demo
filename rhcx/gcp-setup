@@ -43,25 +43,6 @@ vagrant plugin list | grep -q vagrant-google
 if [[ $? -ne 0 ]]; then
   vagrant plugin install vagrant-google
 fi
-if [[ ! -f Vagrantfile.gcp ]]; then
-  cat > Vagrantfile.gcp <<DONE
-Vagrant.configure("2") do |config|
-  config.vm.box = "google/gce"
-  config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
-
-  config.vm.provider :google do |google, override|
-    google.google_project_id = "$GOOGLE_CLOUD_PROJECT"
-    google.google_json_key_location = "$HOME/.ssh/key.json"
-    
-    google.image_family = 'centos-7'
-    
-    override.ssh.username = "$USER"
-    override.ssh.private_key_path = "~/.ssh/google_compute_engine"
-  end
-
-end
-DONE
-fi
 if [[ -e Vagrantfile ]]; then
   if [[ $(readlink Vagrantfile) == 'Vagrantfile.gcp' ]]; then
     cat <<DONE
