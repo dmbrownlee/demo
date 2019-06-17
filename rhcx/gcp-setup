@@ -34,8 +34,8 @@ if [[ ! -x /usr/bin/rsync ]]; then
   sudo apt-get install -y rsync
 fi
 if [[ ! -f /usr/bin/vagrant ]]; then
-  if [[ ! -f vagrant_${VAGRANT_VERSION}_x86_64.deb ]]; then
-    wget https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_${VAGRANT_VERSION}_x86_64.deb
+  if [[ ! -f "$HOME/vagrant_${VAGRANT_VERSION}_x86_64.deb" ]]; then
+    curl https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_${VAGRANT_VERSION}_x86_64.deb > "$HOME/vagrant_${VAGRANT_VERSION}_x86_64.deb"
   fi
   sudo dpkg -i vagrant_${VAGRANT_VERSION}_x86_64.deb
 fi
