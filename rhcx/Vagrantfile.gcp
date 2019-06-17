@@ -2,14 +2,54 @@ Vagrant.configure("2") do |config|
   config.vm.box = "google/gce"
   config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
 
-  config.vm.provider :google do |google, override|
-    google.google_project_id = "total-platform-241001"
-    google.google_json_key_location = "/home/david_m_brownlee/.ssh/key.json"
-    
-    google.image_family = 'centos-7'
-    
-    override.ssh.username = "david_m_brownlee"
-    override.ssh.private_key_path = "~/.ssh/google_compute_engine"
+  config.vm.define :server1 do |this_vm|
+    this_vm.vm.provider :google do |google, override|
+      google.google_project_id = ENV['GOOGLE_CLOUD_PROJECT']
+      google.google_json_key_location = ENV['HOME'] + '/.ssh/key.json'
+      override.ssh.username = ENV['USER']
+      override.ssh.private_key_path = ENV['HOME'] + '/.ssh/google_compute_engine'
+
+      google.zone = "us-west1-b"
+      google.zone_config "us-west1-b" do |in_this_zone|
+        in_this_zone.name = "server1"
+        in_this_zone.image_family = "centos-7"
+        in_this_zone.machine_type = "g1-small"
+        in_this_zone.zone = "us-west1-b"
+      end
+    end
   end
 
+  config.vm.define :server2 do |this_vm|
+    this_vm.vm.provider :google do |google, override|
+      google.google_project_id = ENV['GOOGLE_CLOUD_PROJECT']
+      google.google_json_key_location = ENV['HOME'] + '/.ssh/key.json'
+      override.ssh.username = ENV['USER']
+      override.ssh.private_key_path = ENV['HOME'] + '/.ssh/google_compute_engine'
+
+      google.zone = "us-west1-b"
+      google.zone_config "us-west1-b" do |in_this_zone|
+        in_this_zone.name = "server2"
+        in_this_zone.image_family = "centos-7"
+        in_this_zone.machine_type = "g1-small"
+        in_this_zone.zone = "us-west1-b"
+      end
+    end
+  end
+
+  config.vm.define :labipa do |this_vm|
+    this_vm.vm.provider :google do |google, override|
+      google.google_project_id = ENV['GOOGLE_CLOUD_PROJECT']
+      google.google_json_key_location = ENV['HOME'] + '/.ssh/key.json'
+      override.ssh.username = ENV['USER']
+      override.ssh.private_key_path = ENV['HOME'] + '/.ssh/google_compute_engine'
+
+      google.zone = "us-west1-b"
+      google.zone_config "us-west1-b" do |in_this_zone|
+        in_this_zone.name = "labipa"
+        in_this_zone.image_family = "centos-7"
+        in_this_zone.machine_type = "g1-small"
+        in_this_zone.zone = "us-west1-b"
+      end
+    end
+  end
 end
