@@ -37,7 +37,7 @@ if [[ ! -f /usr/bin/vagrant ]]; then
   if [[ ! -f "$HOME/vagrant_${VAGRANT_VERSION}_x86_64.deb" ]]; then
     curl https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_${VAGRANT_VERSION}_x86_64.deb > "$HOME/vagrant_${VAGRANT_VERSION}_x86_64.deb"
   fi
-  sudo dpkg -i vagrant_${VAGRANT_VERSION}_x86_64.deb
+  sudo dpkg -i "$HOME/vagrant_${VAGRANT_VERSION}_x86_64.deb"
 fi
 vagrant plugin list | grep -q vagrant-google
 if [[ $? -ne 0 ]]; then
