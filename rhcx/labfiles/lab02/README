@@ -4,17 +4,17 @@ OBJECTIVE:
 
 In this lab, you will practice using vim to do the following:
 
-  -Replace text
-  -Move to a specific line
-  -Copy text
-  -Paste text
-  -Changing the file name
-  -Undoing and Redoing commands
-  -Deleting a line of text
-  -Deleteing one character at a time
-  -Save without exiting
-  -Exit without saving
-  -Saving and exiting   
+  - Replace text
+  - Move to a specific line
+  - Copy text
+  - Paste text
+  - Changing the file name
+  - Undoing and Redoing commands
+  - Deleting a line of text
+  - Deleteing one character at a time
+  - Save without exiting
+  - Exit without saving
+  - Saving and exiting   
    
    
 
