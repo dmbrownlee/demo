@@ -45,5 +45,5 @@ You can do this lab on the host or in any of the VMs.
   10. Save and exit vim.
 
 For additional practice, run "vimtutor" on the command line instead of vim.
-That will open a practice doc in vim that you can read and edit simultaneously.
+This will open a practice doc in vim that you can read and edit simultaneously.
 It will take around 30 minutes to complete.
