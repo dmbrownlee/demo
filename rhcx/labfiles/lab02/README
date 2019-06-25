@@ -4,16 +4,19 @@ OBJECTIVE:
 
 In this lab, you will practice using vim to do the following:
 
-  Replace text
-  Exit without saving
-  Saving the file with out exiting
-  Exit and save the file
-  Move to a specific line
-  Delete entire line
-  Delete the character a time
-  Coping text 
-  Pasting text
-
+  - Replace text
+  - Move to a specific line
+  - Copy text
+  - Paste text
+  - Changing the file name
+  - Undoing and Redoing commands
+  - Deleting a line of text
+  - Deleteing one character at a time
+  - Save without exiting
+  - Exit without saving
+  - Saving and exiting   
+   
+   
 
 STEPS:
 
@@ -21,19 +24,26 @@ You can do this lab on the host or in any of the VMs.
 
   1. Create a file in vim named training.txt
   2. Add the following lines to the file:
+        
+        Strawberry
+        Banana      
 
-      Food
-      Water
-      Exercise
-      Work
-      Movies
-      Eat
-      Sleep
-      Study
-
-  3. Replace the word "Work" with "Shower"
-  4. Delete the word "Study"
+  3. Exit vim without saving. If you take a look at your files, training.txt should not appear since we didn't save the file.
+  4. Create training.txt using vim again.
+  5. Add the following lines to the file:
+        
+        Strawberry
+        Banana
+        Raspberry
+        Coco
+        Blueberries
+        
+  6. Replace 'Coco' with 'Coconut'.
+  7. Delete 'Blueberries'.
+  8. Undo the deletion of 'Blueberries'
+  9. Save the contents to a new file named 'Smoothie.txt'
+  10. Save and exit vim.
 
 For additional practice, run "vimtutor" on the command line instead of vim.
-That will open a practice doc in vim that you can read and edit simultaneously.
+This will open a practice doc in vim that you can read and edit simultaneously.
 It will take around 30 minutes to complete.
