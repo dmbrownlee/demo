@@ -2,12 +2,13 @@
 
 OBJECTIVE:
 
-In this lab, you will practice using text files by:
+In this lab, you will practice using text files and searching by:
 
   - Creating empty files
   - Editing files
   - Displaying contents of the file
-  - Displaying more/less of a file
+  - Searching in a man page.
+  - Searching with grep, sed, or awk and using the pipe command.
   - View processes running
   
 
