@@ -1,24 +1,27 @@
-=== LAB 04: (Working With Text Files/Review)
+=== LAB 04: (Working With Text Files)
 
 OBJECTIVE:
 
-In this lab, you will practice using text files by:~
-  Creating empty files
-  Editing files
-  Modifing the contents of the files
+In this lab, you will practice using text files by:
+
+  - Creating empty files
+  - Editing files
+  - Displaying contents of the file
+  - Displaying more/less of a file
+  - View processes running
+  
 
 STEPS:
 
-Log in into server1
-Working with text files then searching for words in documents.
+[Working step] Log into GCP and spin up CentOS.
 
-  1. Change all e to E using the tr command on the training.txt file
-  2. Change all characters to lower case on the training.txt
-  3. Restore the previous character setting on the training.txt
-  4. Using the find the word passwd on the man page of useradd
-  5. Create an empty file wow.txt then echo the words "This file is going to be
-     deleted"
-  6. Change the location of the file to the new directory delete.
-  7. Delete the file delete together with its content.
-  8. use the wc to find out the word count on the tr* file. 
+  1. Open up the man page for the 'cat' command using the less command.
+  2. Search for GNU.
+  3. Exit the man page.
+  4. Now search for GNU without opening up the man page first. (Hint: A pipe is used here).
+  5. Using the same method as Step 4, search for anything with a G in it.
+  6. Create an empty file named List.txt and echo "404: Text not found."
+  7. Create a new directory named Grocery and move List.txt into the new directory.
+  8. Delete the directory with the file in it. Do NOT delete List.txt first.
+  9. Display the processes that are running on the terminal.
 
