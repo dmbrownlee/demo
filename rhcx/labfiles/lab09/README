@@ -32,7 +32,7 @@ You can do these steps on the host or any virtual machine.
        The percent of memory the process is using
        The command line used to start the process,pid
 
-  6. How would you order the output of ps by total CPU time the process has used?
+  6. How would you sort the output of ps by total CPU time the process has used?
   7. What do you think this command is showing you:
 
        echo $$
