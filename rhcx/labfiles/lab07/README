@@ -1,4 +1,4 @@
-=== LAB 07: Confirguring Permissions
+=== LAB 07: Configuring Permissions
 
 OBJECTIVE:
 
@@ -9,7 +9,7 @@ In this lab, you will practice:
 
 STEPS:
 
-On server1, ceate the following groups and grant them ownership to the
+On server1, create the following groups and grant them ownership to the
 documents as described below:
 
 - Create group "eng" and group "swa"
