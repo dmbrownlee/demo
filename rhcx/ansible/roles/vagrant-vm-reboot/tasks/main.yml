@@ -9,6 +9,5 @@
 - name: Ensure VM has restarted before continuing
   local_action: wait_for_connection
   args:
-    host: "{{ inventory_hostname }}"
     delay: 30
     timeout: 300
