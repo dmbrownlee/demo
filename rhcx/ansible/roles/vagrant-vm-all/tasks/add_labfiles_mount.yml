@@ -6,6 +6,6 @@
     fstype: nfs
     opts: tcp,ro,async,noatime,_netdev
     state: mounted
-    passno: 0
-    dump: 0
+    passno: "0"
+    dump: "0"
   become: yes
