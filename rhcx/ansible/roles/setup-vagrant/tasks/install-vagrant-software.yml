@@ -5,7 +5,7 @@
   register: vagrant_installation
   changed_when: False
 - name: Download and install Vagrant rpm file
-  yum:
+  package:
     name: "{{ vagrant_url }}"
     state: present
   when: vagrant_installation.stat.isreg is not defined
@@ -15,7 +15,7 @@
   register: vagrant_plugin_installed
   changed_when: False
 - name: Ensure gcc is installed in order to build the vagrant plugin
-  yum:
+  package:
     name: "{{ item }}"
     state: present
   become: yes
