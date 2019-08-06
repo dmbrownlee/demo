@@ -21,16 +21,16 @@
     enabled: no
   become: yes
   when: libvirtd.stat.isreg is defined
-- name: Get a list of inactive default connections
-  shell: nmcli -t -f uuid,active c show | sed -n '/:no$/s/:no$//p'
-  register: inactive_connections
-  changed_when: False
-  become: root
-- name: Ensure any inactive connections are removed
-  command: nmcli c delete {{ item }}
-  loop: "{{ inactive_connections.stdout_lines }}"
-  become: yes
-  when: inactive_connections.stdout_lines|length > 0
+#- name: Get a list of inactive default connections
+#  shell: nmcli -t -f uuid,active c show | sed -n '/:no$/s/:no$//p'
+#  register: inactive_connections
+#  changed_when: False
+#  become: root
+#- name: Ensure any inactive connections are removed
+#  command: nmcli c delete {{ item }}
+#  loop: "{{ inactive_connections.stdout_lines }}"
+#  become: yes
+#  when: inactive_connections.stdout_lines|length > 0
 - name: Get a list of active interfaces and associated connections
   command: nmcli -t -f device,uuid c show --active
   register: active_connections
