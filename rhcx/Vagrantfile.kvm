@@ -18,8 +18,8 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "ipa-client" => ["server1","server2","testnetinstall"],
-      "ipa-server" => ["labipa"]
+      "ipa_client" => ["server1","server2","testnetinstall"],
+      "ipa_server" => ["labipa"]
     }
   end
 
