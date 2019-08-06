@@ -1,13 +1,13 @@
 ---
 # This playbook configures the guest OS as Vagrant creates the VMs.
 - name: Common configuration
-  hosts: ipa-client
+  hosts: ipa_client
   roles:
     - role: vagrant-vm-all
     - role: vagrant-vm-reboot
 
 - name: Configure FreeIPA hosts
-  hosts: ipa-server
+  hosts: ipa_server
   roles:
     - role: vagrant-vm-all
     - role: vagrant-freeipa
