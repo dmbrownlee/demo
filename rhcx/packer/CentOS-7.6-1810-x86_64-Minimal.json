@@ -4,7 +4,7 @@
     "dir_keys": "{{env `HOME` }}/keys",
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
-    "url_base": "http://centos.s.uw.edu/centos/7/isos/x86_64/",
+    "url_base": "http://centos.s.uw.edu/centos/7/isos/x86_64",
     "iso_name": "CentOS-7-x86_64-Everything-1810.iso",
     "iso_checksum": "918975cdf947e858c9a0c77d6b90a9a56d9977f3a4496a56437f46f46200cf71",
     "iso_checksum_type": "sha256",
