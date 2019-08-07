@@ -7,7 +7,6 @@
   become: yes
 - name: Get the list of virtual networks
   command: "virsh net-list --all --name"
-  register: netlist
   ignore_errors: True
   changed_when: False
   register: netlist
