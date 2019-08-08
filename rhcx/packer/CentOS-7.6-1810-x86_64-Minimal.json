@@ -34,7 +34,7 @@
     "disk_size" : "{{user `inst_disk_size`}}",
     "format": "qcow2",
     "accelerator": "kvm",
-
+    "memory": 1024,
     "vm_name": "{{user `inst_name`}}",
     "net_device": "virtio-net",
     "disk_interface": "virtio",
