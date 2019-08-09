@@ -14,7 +14,7 @@ In this lab, you will practice using text files and searching by:
 
 STEPS:
 
-[Working step] Log into GCP and spin up CentOS.
+[Working step] Log into server 1 and server 2.
 
   1. Open up the man page for the 'cat' command using the less command.
   2. Search for GNU.
