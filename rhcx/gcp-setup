@@ -1,5 +1,5 @@
 #!/bin/bash
-VAGRANT_VERSION=2.2.4
+VAGRANT_VERSION=2.2.5
 if [[ ! -d "$HOME/.ssh" ]]; then
   mkdir -m 700 "$HOME/.ssh"
 fi

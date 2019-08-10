@@ -4,7 +4,7 @@
   get_url:
     url: "{{ packer_url }}"
     dest: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
-    checksum: "sha256:258d1baa23498932baede9b40f2eca4ac363b86b32487b36f48f5102630e9fbb"
+    checksum: "{{ packer_checksum }}"
 - name: Install Packer
   unarchive:
     src: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
