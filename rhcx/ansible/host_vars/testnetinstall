@@ -1,6 +1,38 @@
 ---
-hostname: testnetinstall
-iface_int: eth0
-iface_ext: eth1
-iface_ext_address: 192.168.4.230/24
-iface_ext_gateway: 192.168.4.1
+hostname: server2
+nmcon: {
+  "eth0": {
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "auto",
+      "dns": "192.168.4.200",
+      "addresses": "",
+      "gateway": "",
+      "ignore_auto_dns": "yes",
+      "never_default": "yes"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  },
+  "eth1": {
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "manual",
+      "dns": "192.168.4.200",
+      "addresses": "192.168.4.230/24",
+      "gateway": "192.168.4.1",
+      "ignore_auto_dns": "yes",
+      "never_default": "no"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  }
+}
