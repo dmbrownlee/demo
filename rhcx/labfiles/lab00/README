@@ -1,4 +1,4 @@
-=== LAB 01: Learn to use Vagrant to create VMs
+=== LAB 00: Learn to use Vagrant to create VMs
 OBJECTIVE
 Learn to use Vagrant
 
@@ -70,3 +70,8 @@ name as an argument or be run without arguments to effect all VMs.
 Destroy and recreate all your VMs:
 
   rebuild
+
+There is one more VM configured in the Vagrantfile which does not get created
+automatically.  You must explicitly use its name when you whan to create it:
+
+  vagrant up testnetinstall
