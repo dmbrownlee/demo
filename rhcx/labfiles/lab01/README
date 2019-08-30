@@ -11,7 +11,10 @@ SETUP:
 
 Before beginning the lab, you may want to skim Chapter 10 of the study guide
 and/or watch the videos in Chapter 11 of the video series on Safari Online for
-additional background on virtual machines.
+additional background on virtual machines.  You will also need to navigate to
+https://centos.org and download the current .iso image you wish to install
+with (I recommend the "Everthing" iso image if you don't know why you would
+choose one of the others).
 
 STEPS:
 
@@ -25,11 +28,11 @@ On the host machine:
      c. Select "Use ISO image" and click "Browse..."
      d. Click "Browse Local"
      e. Navigate to the Downloads directory,
-        select CentOS-7-x86_64-Everything-1708.iso, and click "Open"
+        select CentOS .iso file you downloaded, and click "Open"
      f. Click "Forward". If prompted with a message about fixing permissions,
         click "Yes"
      g. Set Memory to 1024 and CPUs to 1 and click "Forward"
-     h. Specify at least 9.0 GB for storage and click "Forward"
+     h. Specify at least 10.0 GB for storage and click "Forward"
      i. Choose a name for the virtual machine and click "Finish"
 
 The virtual machine will launch and boot from the virtual CDROM drive.  The
