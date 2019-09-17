@@ -1,19 +1,13 @@
 ---
 #- import_tasks: basebox.yml
 #  vars:
-#    inst_name: CentOS-7.0-1406-x86_64-Minimal
+#    inst_name: CentOS-7.6-1810-x86_64-Minimal
 #- import_tasks: basebox.yml
 #  vars:
-#    inst_name: CentOS-7.0-1406-x86_64-ServerWithGui
-#- import_tasks: basebox.yml
-#  vars:
-#    inst_name: CentOS-7.4-1708-x86_64-Minimal
-#- import_tasks: basebox.yml
-#  vars:
-#    inst_name: CentOS-7.4-1708-x86_64-ServerWithGui
+#    inst_name: CentOS-7.6-1810-x86_64-ServerWithGui
 - import_tasks: basebox.yml
   vars:
-    inst_name: CentOS-7.6-1810-x86_64-Minimal
+    inst_name: CentOS-7.7-1908-x86_64-Minimal
 - import_tasks: basebox.yml
   vars:
-    inst_name: CentOS-7.6-1810-x86_64-ServerWithGui
+    inst_name: CentOS-7.7-1908-x86_64-ServerWithGui
