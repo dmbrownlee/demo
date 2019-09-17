@@ -8,7 +8,7 @@
     "iso_name": "CentOS-7-x86_64-Everything-1908.iso",
     "iso_checksum": "bd5e6ca18386e8a8e0b5a9e906297b5610095e375e4d02342f07f32022b13acf",
     "iso_checksum_type": "sha256",
-    "inst_name": "CentOS-7.6-1908-x86_64-ServerWithGui",
+    "inst_name": "CentOS-7.7-1908-x86_64-ServerWithGui",
     "inst_kickstart": "ServerWithGui-ks.cfg",
     "inst_disk_size": "20480"
   },
