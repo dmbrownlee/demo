@@ -36,3 +36,39 @@ nmcon: {
     }
   }
 }
+nmcon8: {
+  "ens5": {
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "auto",
+      "dns": "192.168.4.200",
+      "addresses": "",
+      "gateway": "",
+      "ignore_auto_dns": "yes",
+      "never_default": "yes"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  },
+  "ens6": {
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "manual",
+      "dns": "192.168.4.200",
+      "addresses": "192.168.4.220/24",
+      "gateway": "192.168.4.1",
+      "ignore_auto_dns": "yes",
+      "never_default": "no"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  }
+}

@@ -4,8 +4,6 @@
 Vagrant.configure("2") do |config|
   # These are the VM configuration defaults when not overridden
   config.ssh.private_key_path = "~/keys/vagrant"
-
-  config.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 #  config.vm.synced_folder "labfiles/",
 #                          "/labfiles",
@@ -33,6 +31,8 @@ Vagrant.configure("2") do |config|
   
   #=== labipa ===
   config.vm.define "labipa" do |node|
+    node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
+    #node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -50,6 +50,8 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1" do |node|
+    node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
+    #node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -65,6 +67,7 @@ Vagrant.configure("2") do |config|
   #=== server2 ===
   config.vm.define "server2" do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
+    #node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -92,6 +95,7 @@ Vagrant.configure("2") do |config|
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
+    #node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",

@@ -40,7 +40,13 @@
   command: "nmcli c mod {{ item|regex_replace('^.*:','') }} connection.id {{ item|regex_replace(':.*$','') }}"
   become: yes
   loop: "{{ active_connections.stdout_lines }}"
-- name: Ensure active connections have correct configuration
+- name: Ensure active connections have correct configuration (CentOS 7)
   command: nmcli c mod "{{ item.key }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
   become: yes
   with_dict: "{{ nmcon }}"
+  when: ansible_distribution_major_version == "7"
+- name: Ensure active connections have correct configuration (CentOS 8)
+  command: nmcli c mod "{{ item.key }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+  become: yes
+  with_dict: "{{ nmcon8 }}"
+  when: ansible_distribution_major_version == "8"
