@@ -29,3 +29,27 @@
     - vim
     - screen
   become: yes
+- name: Ensure ansible is installed (CentOS 7)
+  package:
+    name: ansible
+    state: present
+  become: yes
+  when: ansible_distribution_major_version == "7"
+- name: Ensure python3-pip is installed (CentOS 8)
+  package:
+    name: python3-pip
+    state: present
+  become: yes
+  when: ansible_distribution_major_version == "8"
+- name: Ensure ansible is installed (CentOS 8)
+  command: python3 -m pip install ansible
+  become: yes
+  when: ansible_distribution_major_version == "8"
+- name: Ensure ansible config directory exists
+  file:
+    path: /etc/ansible
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
