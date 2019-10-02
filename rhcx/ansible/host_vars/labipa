@@ -1,6 +1,7 @@
 ---
 hostname: labipa
-iface_ext: ens6
+iface_ext: eth1
+c8_iface_ext: ens6
 nmcon: {
   "eth0": {
     "connection": {
