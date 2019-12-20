@@ -54,6 +54,7 @@
   with_items:
     - samba
     - samba-client
+    - samba-common-tools
 - name: Ensure SAMBA is configured
   copy:
     dest: /etc/samba/smb.conf

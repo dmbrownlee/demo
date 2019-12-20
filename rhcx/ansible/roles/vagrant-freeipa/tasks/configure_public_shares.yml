@@ -1,0 +1,34 @@
+---
+# Every Ansible task file needing to manipulate the firewall must make sure
+# software requirements for Ansible to manipulate the firewall are installed
+# and the firewall service in enabled and started.
+- name: Ensure public data directory exists
+  file:
+    path: '/data'
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+  become: yes
+- name: Ensure public data directory has correct SELinux fcontext
+  sefcontext:
+    tartget: '/data(/.*)?'
+    setype: public_content_rw_t
+    state: present
+  become: yes
+- name: Ensure there is data in the /data directory
+  file:
+    path: /data/{{ item }}
+    state: touch
+  with_items:
+    - datafile1
+    - datafile2
+  become: yes
+- name: Ensure data directory is exported via NFS
+  copy:
+    content: '/data *(rw)'
+    dest: /etc/exports.d/data.exports
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
