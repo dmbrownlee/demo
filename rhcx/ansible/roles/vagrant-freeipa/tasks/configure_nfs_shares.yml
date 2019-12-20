@@ -24,37 +24,54 @@
     zone: "{{ item.zone }}"
   with_items:
     - { zone: internal, service: nfs }
+    - { zone: internal, service: mountd }
+    - { zone: internal, service: rpc-bind }
   become: yes
-- name: Ensure export directories exists
+- name: Ensure /srv/nfsexport directory exists
   file:
-    path: "{{ item.path }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
+    path: '/srv/nfsexport'
+    owner: root
+    group: root
+    mode: '0755'
     state: directory
-  with_items:
-    - { path: '/srv', owner: 'root', group: 'root', mode: '0755' }
-    - { path: '/srv/nfs', owner: 'root', group: 'root', mode: '0755' }
-    - { path: '/home/ldap', owner: 'root', group: 'root', mode: '0755' }
-    - { path: '/data', owner: 'root', group: 'root', mode: '0755' }
   become: yes
-- name: Ensure there is data in the /data directory
+- name: Ensure NFS share has correct SELinux fcontext
+  sefcontext:
+    tartget: '/srv/nfsexport(/.*)?'
+    setype: nfs_t
+    state: present
+  become: yes
+- name: Ensure NFS share is exported
+  copy:
+    dest: /etc/exports.d/nfsexport.exports
+    content: "/srv/nfsexport *(rw)"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+# NFS Home Directories
+- name: Ensure NFS home directories exist
   file:
-    path: /data/{{ item }}
-    state: touch
-  with_items:
-    - datafile1
-    - datafile2
+    path: '/home/ldap'
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
   become: yes
-- name: Ensure NFS shares are configured
-  lineinfile:
-    path: /etc/exports
-    line: "{{ item }}"
+- name: Ensure NFS home directories have correct SELinux fcontext
+  sefcontext:
+    tartget: '/home/ldap(/.*)?'
+    setype: nfs_t
+    state: present
   become: yes
-  with_items:
-    - "/srv/nfs	*(rw)"
-    - "/data	*(rw)"
-    - "/home/ldap	*(rw)"
+- name: Ensure NFS home directories are exported
+  copy:
+    dest: /etc/exports.d/nfshome.exports
+    content: "/home/ldap	*(rw)"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
 - name: Ensure nfs-server is started and enabled at boot
   service:
     name: nfs-server
