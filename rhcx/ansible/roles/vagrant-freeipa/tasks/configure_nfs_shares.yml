@@ -37,7 +37,7 @@
   become: yes
 - name: Ensure NFS share has correct SELinux fcontext
   sefcontext:
-    tartget: '/srv/nfsexport(/.*)?'
+    target: '/srv/nfsexport(/.*)?'
     setype: nfs_t
     state: present
   become: yes
@@ -60,7 +60,7 @@
   become: yes
 - name: Ensure NFS home directories have correct SELinux fcontext
   sefcontext:
-    tartget: '/home/ldap(/.*)?'
+    target: '/home/ldap(/.*)?'
     setype: nfs_t
     state: present
   become: yes

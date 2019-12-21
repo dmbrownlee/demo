@@ -12,7 +12,7 @@
   become: yes
 - name: Ensure public data directory has correct SELinux fcontext
   sefcontext:
-    tartget: '/data(/.*)?'
+    target: '/data(/.*)?'
     setype: public_content_rw_t
     state: present
   become: yes
