@@ -35,11 +35,14 @@
     mode: '0755'
     state: directory
   become: yes
-- name: Ensure NFS share has correct SELinux fcontext
+- name: Ensure NFS share has correct SELinux fcontext in policy
   sefcontext:
     target: '/srv/nfsexport(/.*)?'
     setype: nfs_t
     state: present
+  become: yes
+- name: Ensure SELinux fcontext in policy has been applied
+  command: restorecon -irv /srv/nfsexport
   become: yes
 - name: Ensure NFS share is exported
   copy:
@@ -58,11 +61,14 @@
     mode: '0755'
     state: directory
   become: yes
-- name: Ensure NFS home directories have correct SELinux fcontext
+- name: Ensure NFS home directories have correct SELinux fcontext in policy
   sefcontext:
     target: '/home/ldap(/.*)?'
     setype: nfs_t
     state: present
+  become: yes
+- name: Ensure SELinux fcontext in policy has been applied
+  command: restorecon -irv /home/ldap
   become: yes
 - name: Ensure NFS home directories are exported
   copy:
