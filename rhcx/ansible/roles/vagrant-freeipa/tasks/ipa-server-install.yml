@@ -13,19 +13,3 @@
   command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U 
   become: yes
   when: ipastatus.rc == 4
-- name: Ensure vsftpd is enabled and started
-  service:
-    name: vsftpd
-    state: started
-    enabled: yes
-  become: yes
-- name: Ensure cacert.p12 file is available via FTP
-  copy:
-    src: /root/cacert.p12
-    dest: /var/ftp/pub/cacert.p12
-    remote_src: yes
-    owner: pkiuser
-    group: pkiuser
-    mode: 0644
-  become: yes
-  when: ipastatus.rc == 4

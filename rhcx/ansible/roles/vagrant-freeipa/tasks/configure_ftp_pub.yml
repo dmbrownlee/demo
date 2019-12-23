@@ -1,0 +1,50 @@
+---
+# Every Ansible task file needing to manipulate the firewall must make sure
+# software requirements for Ansible to manipulate the firewall are installed
+# and the firewall service in enabled and started.
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - python-firewall
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
+- name: Ensure FTP share has correct SELinux fcontext in policy
+  sefcontext:
+    target: '/var/ftp(/.*)?'
+    setype: public_content_t
+    state: present
+  become: yes
+- name: Ensure SELinux fcontext in policy has been applied
+  command: restorecon -irv /var/ftp
+  become: yes
+- name: Ensure cacert.p12 file is available via FTP
+  copy:
+    src: /root/cacert.p12
+    dest: /var/ftp/pub/cacert.p12
+    remote_src: yes
+    owner: pkiuser
+    group: pkiuser
+    mode: 0644
+  become: yes
+  when: ipastatus.rc == 4
+- name: Ensure vsftpd is enabled and started
+  service:
+    name: vsftpd
+    state: started
+    enabled: yes
+  become: yes
+- name: Ensure FTP traffic is allowed through firewall
+  firewalld:
+    service: ftp
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: internal
+  become: yes
