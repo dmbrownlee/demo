@@ -7,3 +7,4 @@
 - import_tasks: configure_nfs_shares.yml
 - import_tasks: configure_samba_shares.yml
 - import_tasks: ipa-server-install.yml
+- import_tasks: configure_ftp_pub.yml
