@@ -1,9 +1,11 @@
 ---
 hostname: labipa
-iface_ext: eth1
+iface_ext: example_com
 c8_iface_ext: ens6
 nmcon: {
-  "eth0": {
+  "vagrant": {
+    type: ethernet,
+    ifname: eth0,
     "connection": {
       "autoconnect": "yes",
       "zone": "internal"
@@ -13,14 +15,16 @@ nmcon: {
       "dns": "192.168.4.200",
       "addresses": "",
       "gateway": "",
-      "ignore_auto_dns": "yes",
+      "ignore_auto_dns": "no",
       "never_default": "yes"
     },
     "ipv6": {
       "method": "ignore"
     }
   },
-  "eth1": {
+  "example_com": {
+    type: ethernet,
+    ifname: eth1,
     "connection": {
       "autoconnect": "yes",
       "zone": "internal"

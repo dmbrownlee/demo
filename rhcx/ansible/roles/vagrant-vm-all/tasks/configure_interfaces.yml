@@ -21,32 +21,34 @@
     enabled: no
   become: yes
   when: libvirtd.stat.isreg is defined
-#- name: Get a list of inactive default connections
-#  shell: nmcli -t -f uuid,active c show | sed -n '/:no$/s/:no$//p'
-#  register: inactive_connections
-#  changed_when: False
-#  become: root
-#- name: Ensure any inactive connections are removed
-#  command: nmcli c delete {{ item }}
-#  loop: "{{ inactive_connections.stdout_lines }}"
-#  become: yes
-#  when: inactive_connections.stdout_lines|length > 0
-- name: Get a list of active interfaces and associated connections
-  command: nmcli -t -f device,uuid c show --active
+- name: Get a list of existing connections
+  command: nmcli -t -f name c show
+  register: existing_connections
+  changed_when: False
+  become: root
+- name: Ensure vagrant and example_com connections exist (CentOS 7)
+  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+  become: yes
+  with_dict: "{{ nmcon }}"
+  when: ansible_distribution_major_version == "7" and item.key not in existing_connections.stdout_lines
+- name: Get a list of active connections
+  command: nmcli -t -f name c show --active
   register: active_connections
   changed_when: False
   become: root
-- name: Ensure active connections are named after their interfaces
-  command: "nmcli c mod {{ item|regex_replace('^.*:','') }} connection.id {{ item|regex_replace(':.*$','') }}"
-  become: yes
-  loop: "{{ active_connections.stdout_lines }}"
-- name: Ensure active connections have correct configuration (CentOS 7)
-  command: nmcli c mod "{{ item.key }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+- name: Ensure vagrant and example_com connections are up (CentOS 7)
+  command: nmcli c up "{{ item.key }}"
   become: yes
   with_dict: "{{ nmcon }}"
-  when: ansible_distribution_major_version == "7"
-- name: Ensure active connections have correct configuration (CentOS 8)
-  command: nmcli c mod "{{ item.key }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+  when: ansible_distribution_major_version == "7" and item.key not in active_connections.stdout_lines
+- name: Ensure inactive connections are removed
+  shell: "nmcli c del \"{{ item }}\""
   become: yes
-  with_dict: "{{ nmcon8 }}"
-  when: ansible_distribution_major_version == "8"
+  loop: "{{ existing_connections.stdout_lines }}"
+  when: item not in nmcon
+# Don't know why this isn't getting deleted but we can use the heavy handed approach
+- name: Remove ifcfg-eth1 if it is still hanging around
+  file:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth1
+    state: absent
+  become: yes

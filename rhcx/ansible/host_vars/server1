@@ -1,7 +1,9 @@
 ---
 hostname: server1
 nmcon: {
-  "eth0": {
+  "vagrant": {
+    type: ethernet,
+    ifname: eth0,
     "connection": {
       "autoconnect": "yes",
       "zone": "internal"
@@ -18,7 +20,9 @@ nmcon: {
       "method": "ignore"
     }
   },
-  "eth1": {
+  "example_com": {
+    type: ethernet,
+    ifname: eth1,
     "connection": {
       "autoconnect": "yes",
       "zone": "internal"
