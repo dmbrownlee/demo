@@ -13,17 +13,26 @@
   command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U 
   become: yes
   when: ipastatus.rc == 4
+- name: Ensure nfs/labipa.example.com principal exists in IPA
+  shell: echo password | kinit admin; ipa service-find nfs/labipa.example.com || echo | ipa service-add nfs/labipa.example.com
+- name: Ensure nfs/labipa.example.com principal is added to host keytab
+  shell: echo password | kinit admin; ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab
+  become: yes
+- name: Ensure nfs-secure service is enabled and running
+  service:
+    name: nfs-secure
+    state: started
+    enabled: yes
+  become: yes
 - name: Ensure A records for hosts exist
   shell: echo password | kinit admin; ipa dnsrecord-find {{ item.azone }} {{ item.ptr }} || echo | ipa dnsrecord-add {{ item.azone }} {{ item.ptr }} --a-ip-address 192.168.4.{{ item.a }}
   with_items:
-    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'labipa', a: '200' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
 - name: Ensure PTR records for hosts exist
   shell: echo password | kinit admin; ipa dnsrecord-find {{ item.ptrzone }} {{ item.a }} || echo | ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
   with_items:
-    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'labipa', a: '200' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }

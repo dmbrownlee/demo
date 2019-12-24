@@ -73,7 +73,7 @@
 - name: Ensure NFS home directories are exported
   copy:
     dest: /etc/exports.d/nfshome.exports
-    content: "/home/ldap	*(rw)"
+    content: "/home/ldap	*(rw,sec=krb5p)"
     owner: root
     group: root
     mode: '0644'

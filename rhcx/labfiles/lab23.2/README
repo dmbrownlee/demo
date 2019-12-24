@@ -1,0 +1,37 @@
+=== LAB 23.2: Mount NFS shares using Kerberos Security
+OBJECTIVE
+Get hands on practice mounting NFS exports using Kerberos security.  Page 520
+of the study guide describes how to mount NFS exports using Kerberos security
+but does not describe the steps needed to create the Kerberos keytabs needed
+to test this since it is outside of the scope of the RHCSA.  The setup of this
+lab will walk you through that so you can using Kerberos security with NFS.
+
+SETUP
+Ensure all VMs are running (clean VMs are assumed).
+
+On server1 and server2:
+  1. Run (as root) "/labfiles/lab23.2/setup.sh"
+
+On labipa:
+  2. Run (as root) "/labfiles/lab23.2/setup.sh" (this has to be run after running
+     this script on the other two VMs first)
+
+On server1:
+  3. Run "ipa-getkeytab -s labipa.example.com -p nfs/server1.example.com -k
+     /etc/krb5.keytab" to add the NFS principle to the host's keytab file.
+
+On server2:
+  4. Run "ipa-getkeytab -s labipa.example.com -p nfs/server2.example.com -k
+     /etc/krb5.keytab" to add the NFS principle to the host's keytab file.
+
+STEPS
+1.  Login to either server1 or server2 and use "showmount -e labipa.example.com"
+    to confirm labipa.example.com is exporting /home/ldap
+2.  On both server1 and server2, ensure the requirements for Kerberos as listed
+    on p.520 are met:
+    a.  Ensure the host keytab contains the NFS principal with:
+        ipa-getkeytab -p nfs/$(hostname --fqdn) -k /etc/krb5.keytab
+    b.  Enable and start the nfs-secure service
+3.  Test mount /home/ldap to /mnt and verify it is using krb5p as the security
+    method
+4.  Unmount /mnt and configure /home/ldap as an autofs mount
