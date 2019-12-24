@@ -21,7 +21,7 @@
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
 - name: Ensure PTR records for hosts exist
-  shell: echo password | kinit admin; ipa dnsrecord-find {{ item.ptrzone }} {{ item.a }} || echo | ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}
+  shell: echo password | kinit admin; ipa dnsrecord-find {{ item.ptrzone }} {{ item.a }} || echo | ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
   with_items:
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'labipa', a: '200' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
