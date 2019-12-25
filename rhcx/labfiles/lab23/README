@@ -8,5 +8,11 @@ SETUP
 No setup is necessary but cleanly installed VMs are assumed.
 
 STEPS
-1.  Login to server2 as root and run "showmount -e labipa.example.com"
-2.  Fix the firewall rules so the showmount command works
+1.  Login to server2 as root and run "showmount -e labipa.example.com" to find
+    that it actually does work
+2.  Login to labipa and check the status of the firewall to verify it is, in
+    fact, running
+3.  View the firewall rules to see if you can figure out why showmount works
+    when the book suggests it should be broken
+4.  If you think if found the answer, change the firewall rules temporarily to
+    test your hypothesis

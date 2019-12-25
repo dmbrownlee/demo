@@ -37,5 +37,7 @@ STEPS
     b.  Enable and start the nfs-secure service
 3.  Test mount /home/ldap to /mnt and verify it is using krb5p as the security
     method
+4.  Try using the NFS4 root mount option to mount all of labipa's exports under
+    /mnt and observe the results of having different security levels 
 4.  Unmount /mnt and configure /home/ldap as an autofs mount as per the usual
     method
