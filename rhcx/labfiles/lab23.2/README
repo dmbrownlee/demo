@@ -29,9 +29,13 @@ STEPS
     to confirm labipa.example.com is exporting /home/ldap
 2.  On both server1 and server2, ensure the requirements for Kerberos as listed
     on p.520 are met:
-    a.  Ensure the host keytab contains the NFS principal with:
+    a.  Ensure the host keytab contains the NFS principal with (password for
+        kinit is "password"):
+        kinit admin &&
         ipa-getkeytab -p nfs/$(hostname --fqdn) -k /etc/krb5.keytab
+        # hint: If you get "Failed to add key to the keytab", ask yourself why.
     b.  Enable and start the nfs-secure service
 3.  Test mount /home/ldap to /mnt and verify it is using krb5p as the security
     method
-4.  Unmount /mnt and configure /home/ldap as an autofs mount
+4.  Unmount /mnt and configure /home/ldap as an autofs mount as per the usual
+    method
