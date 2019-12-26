@@ -1,0 +1,15 @@
+---
+- name: Ensure SAMBA server and client is installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - samba
+    - samba-client
+    - samba-common-tools
+- name: Ensure SAMBA is configured
+  copy:
+    dest: /etc/samba/smb.conf
+    src: smb.conf
+  become: yes

@@ -1,0 +1,23 @@
+---
+- name: Ensure Samba users have corresponding Linux users
+  user:
+    name: "{{ item }}"
+    shell: /sbin/nologin
+  become: yes
+  with_items:
+    - sambauser
+    - sambauser1
+    - sambauser2
+    - sambauser3
+    - sambauser4
+    - sambauser5
+- name: Ensure Samba users exist in tdbsam database 
+  shell: echo -e "password\npassword" | smbpasswd -sa {{ item }}
+  become: yes
+  with_items:
+    - sambauser
+    - sambauser1
+    - sambauser2
+    - sambauser3
+    - sambauser4
+    - sambauser5
