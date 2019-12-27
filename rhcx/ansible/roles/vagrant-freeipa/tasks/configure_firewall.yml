@@ -21,9 +21,15 @@
 # zone and any other service requirements need to be handled by the service
 # playbooks. Also make sure any task manipulating the firewall notifies the
 # "reload firewall" handler.
+- name: Get default firewall zone
+  command: firewall-cmd --get-default
+  changed_when: false
+  become: yes
+  register: default_fw_zone
 - name: Ensure the default zone is internal
   command: firewall-cmd --set-default-zone=internal
   become: yes
+  when: "'internal' not in default_fw_zone.stdout_lines"
 - name: Ensure unwanted firewall defaults are disabled
   firewalld:
     service: "{{ item.service }}"

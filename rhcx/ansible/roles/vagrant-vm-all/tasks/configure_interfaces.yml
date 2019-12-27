@@ -42,7 +42,7 @@
   with_dict: "{{ nmcon }}"
   when: ansible_distribution_major_version == "7" and item.key not in active_connections.stdout_lines
 - name: Ensure inactive connections are removed
-  shell: "nmcli c del \"{{ item }}\""
+  command: "nmcli c del \"{{ item }}\""
   become: yes
   loop: "{{ existing_connections.stdout_lines }}"
   when: item not in nmcon

@@ -11,14 +11,6 @@
     - { path: '/srv/samba', owner: 'root', group: 'root', mode: '0755' }
     - { path: '/data', owner: 'root', group: 'root', mode: '0755' }
   become: yes
-- name: Ensure there is data in the /data directory
-  file:
-    path: /data/{{ item }}
-    state: touch
-  with_items:
-    - datafile1
-    - datafile2
-  become: yes
 - name: Ensure SAMBA server and client is installed
   package:
     name: "{{ item }}"

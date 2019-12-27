@@ -1,6 +1,13 @@
 ---
+- name: Get a list of current IPA user accounts
+  shell: "echo password | kinit admin; ipa user-find | sed -n 's/^  User login: //p'"
+  changed_when: false
+  register: ipa_user_find
+- debug:
+    msg: ipa_user_find
 - name: Ensure IPA lab users have been created
-  shell: echo password | kinit admin; ipa user-find {{ item }} || echo | ipa user-add --first {{ item }} --last {{ item }} --homedir /home/ldap/{{ item }} {{ item }}
+  shell: echo password | kinit admin; ipa user-add --first {{ item }} --last {{ item }} --homedir /home/ldap/{{ item }} {{ item }}
+  when: item not in ipa_user_find.stdout_lines
   with_items:
     - ldapuser1
     - ldapuser2
@@ -8,8 +15,9 @@
     - ldapuser4
     - ldapuser5
     - isabelle
-- name: Ensure password has been set for IPA lab users
-  shell: echo password | kinit admin; ipa user-find {{ item }} && echo -e "password\npassword" | ipa passwd {{ item }}
+- name: Ensure password has been set for IPA lab users just created
+  shell: echo password | kinit admin; echo -e "password\npassword" | ipa passwd {{ item }}
+  when: item not in ipa_user_find.stdout_lines
   with_items:
     - ldapuser1
     - ldapuser2

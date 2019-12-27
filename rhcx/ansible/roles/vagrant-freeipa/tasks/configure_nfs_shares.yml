@@ -41,9 +41,7 @@
     setype: nfs_t
     state: present
   become: yes
-- name: Ensure SELinux fcontext in policy has been applied
-  command: restorecon -irv /srv/nfsexport
-  become: yes
+  notify: selinux_policy_change
 - name: Ensure NFS share is exported
   copy:
     dest: /etc/exports.d/nfsexport.exports
@@ -67,9 +65,7 @@
     setype: nfs_t
     state: present
   become: yes
-- name: Ensure SELinux fcontext in policy has been applied
-  command: restorecon -irv /home/ldap
-  become: yes
+  notify: selinux_policy_change
 - name: Ensure NFS home directories are exported
   copy:
     dest: /etc/exports.d/nfshome.exports

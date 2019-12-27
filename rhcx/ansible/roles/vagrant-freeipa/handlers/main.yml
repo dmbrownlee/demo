@@ -1,0 +1,2 @@
+---
+- import_tasks: selinux_policy_change.yml

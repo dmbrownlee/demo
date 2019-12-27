@@ -10,28 +10,53 @@
   failed_when: False
   become: yes
 - name: Ensure IPA server is configured (takes several minutes if it isn't)
-  command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U 
+  command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U
   become: yes
   when: ipastatus.rc == 4
+- name: Check if nfs/labipa.example.com principal exists in IPA
+  shell: echo password | kinit admin; ipa service-find nfs/labipa.example.com
+  changed_when: false
+  failed_when: false
+  register: find_nfs_principal_ipa
 - name: Ensure nfs/labipa.example.com principal exists in IPA
-  shell: echo password | kinit admin; ipa service-find nfs/labipa.example.com || echo | ipa service-add nfs/labipa.example.com
+  shell: echo password | kinit admin; ipa service-add nfs/labipa.example.com
+  when: find_nfs_principal_ipa.rc != 0
+- name: Check if nfs/labipa.example.com principal exists in host keytab
+  shell: klist -k | grep -q nfs/labipa.example.com
+  changed_when: false
+  failed_when: false
+  become: yes
+  register: find_nfs_principal_keytab
 - name: Ensure nfs/labipa.example.com principal is added to host keytab
   shell: echo password | kinit admin; ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab
   become: yes
+  when: find_nfs_principal_keytab.rc != 0
 - name: Ensure nfs-secure service is enabled and running
   service:
     name: nfs-secure
     state: started
     enabled: yes
   become: yes
+- name: Get existing A records from IPA DNS
+  shell: "echo password | kinit admin; ipa dnsrecord-find example.com | sed -n 's/  Record name: //p'"
+  changed_when: false
+  failed_when: false
+  register: ipa_dns_a_records
 - name: Ensure A records for hosts exist
-  shell: echo password | kinit admin; ipa dnsrecord-find {{ item.azone }} {{ item.ptr }} || echo | ipa dnsrecord-add {{ item.azone }} {{ item.ptr }} --a-ip-address 192.168.4.{{ item.a }}
+  shell: echo password | kinit admin; ipa dnsrecord-add {{ item.azone }} {{ item.ptr }} --a-ip-address 192.168.4.{{ item.a }}
+  when: item.ptr not in ipa_dns_a_records.stdout_lines
   with_items:
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
+- name: Get existing PTR records from IPA DNS
+  shell: "echo password | kinit admin; ipa dnsrecord-find 4.168.192.in-addr.arpa | sed -n 's/  Record name: //p'"
+  changed_when: false
+  failed_when: false
+  register: ipa_dns_ptr_records
 - name: Ensure PTR records for hosts exist
-  shell: echo password | kinit admin; ipa dnsrecord-find {{ item.ptrzone }} {{ item.a }} || echo | ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
+  shell: echo password | kinit admin; ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
+  when: item.a not in ipa_dns_ptr_records.stdout_lines
   with_items:
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }

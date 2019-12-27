@@ -21,9 +21,7 @@
     setype: public_content_t
     state: present
   become: yes
-- name: Ensure SELinux fcontext in policy has been applied
-  command: restorecon -irv /var/ftp
-  become: yes
+  notify: selinux_policy_change
 - name: Ensure cacert.p12 file is available via FTP
   copy:
     src: /root/cacert.p12

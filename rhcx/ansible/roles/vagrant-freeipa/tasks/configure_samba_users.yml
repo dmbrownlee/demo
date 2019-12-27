@@ -11,12 +11,12 @@
     - sambauser3
     - sambauser4
     - sambauser5
-- name: Get a list of Samba users that already exist in tdbsam database 
+- name: Get a list of Samba users that already exist in tdbsam database
   shell: pdbedit -L | cut -f1 -d':'
   become: yes
   register: pdbedit
   changed_when: false
-- name: Ensure Samba users exist in tdbsam database 
+- name: Ensure Samba users exist in tdbsam database
   shell: echo -e "password\npassword" | smbpasswd -sa {{ item }}
   when: item not in pdbedit.stdout
   become: yes

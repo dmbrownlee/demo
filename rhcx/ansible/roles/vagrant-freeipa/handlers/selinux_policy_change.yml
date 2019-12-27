@@ -1,0 +1,13 @@
+---
+- name: Ensure SELinux policy is applied to existing files on reboot
+  listen: "selinux_policy_change"
+  file:
+    path: /.autorelabel
+    state: touch
+  become: yes
+- name: Ensure file signaling reboot needed exists
+  listen: "selinux_policy_change"
+  file:
+    path: /root/.reboot_needed
+    state: touch
+  become: yes
