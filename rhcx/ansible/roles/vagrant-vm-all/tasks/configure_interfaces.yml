@@ -13,7 +13,7 @@
   stat:
     path: /usr/lib/systemd/system/libvirtd.service
   register: libvirtd
-  changed_when: False
+  changed_when: false
 - name: Ensure libvirtd is stopped and disabled at boot
   service:
     name: libvirtd
@@ -24,7 +24,7 @@
 - name: Get a list of existing connections
   command: nmcli -t -f name c show
   register: existing_connections
-  changed_when: False
+  changed_when: false
   become: root
 - name: Ensure vagrant and example_com connections exist (CentOS 7)
   command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
@@ -34,7 +34,7 @@
 - name: Get a list of active connections
   command: nmcli -t -f name c show --active
   register: active_connections
-  changed_when: False
+  changed_when: false
   become: root
 - name: Ensure vagrant and example_com connections are up (CentOS 7)
   command: nmcli c up "{{ item.key }}"
