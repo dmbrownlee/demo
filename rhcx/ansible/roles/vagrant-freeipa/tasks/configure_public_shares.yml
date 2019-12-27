@@ -1,7 +1,11 @@
 ---
-# Every Ansible task file needing to manipulate the firewall must make sure
-# software requirements for Ansible to manipulate the firewall are installed
-# and the firewall service in enabled and started.
+- name: Ensure the SELinux policy for the public directory exists
+  sefcontext:
+    target: '/data(/.*)?'
+    setype: public_content_rw_t
+    state: present
+  become: yes
+  notify: serestore_data
 - name: Ensure public data directory exists
   file:
     path: '/data'
@@ -9,12 +13,6 @@
     group: root
     mode: '0755'
     state: directory
-  become: yes
-- name: Ensure public data directory has correct SELinux fcontext
-  sefcontext:
-    target: '/data(/.*)?'
-    setype: public_content_rw_t
-    state: present
   become: yes
 - name: Ensure there is data in the /data directory
   file:

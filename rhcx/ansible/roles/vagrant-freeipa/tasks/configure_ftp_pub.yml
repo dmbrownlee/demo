@@ -1,4 +1,11 @@
 ---
+- name: Ensure FTP share has correct SELinux fcontext in policy
+  sefcontext:
+    target: '/var/ftp(/.*)?'
+    setype: public_content_t
+    state: present
+  become: yes
+  notify: serestore_ftp
 # Every Ansible task file needing to manipulate the firewall must make sure
 # software requirements for Ansible to manipulate the firewall are installed
 # and the firewall service in enabled and started.
@@ -15,13 +22,6 @@
     state: started
     enabled: yes
   become: yes
-- name: Ensure FTP share has correct SELinux fcontext in policy
-  sefcontext:
-    target: '/var/ftp(/.*)?'
-    setype: public_content_t
-    state: present
-  become: yes
-  notify: selinux_policy_change
 - name: Ensure cacert.p12 file is available via FTP
   copy:
     src: /root/cacert.p12
@@ -30,6 +30,7 @@
     owner: pkiuser
     group: pkiuser
     mode: 0644
+    setype: public_content_t
   become: yes
   when: ipastatus.rc == 4
 - name: Ensure vsftpd is enabled and started

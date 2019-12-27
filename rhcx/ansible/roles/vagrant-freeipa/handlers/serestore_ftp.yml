@@ -1,0 +1,5 @@
+---
+- name: Ensure selinux policy is applied to the FTP directory
+  listen: "serestore_ftp"
+  command: restorecon -ir /var/ftp
+  become: yes
