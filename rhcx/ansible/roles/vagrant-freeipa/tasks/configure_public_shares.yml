@@ -20,6 +20,8 @@
   file:
     path: /data/{{ item }}
     state: touch
+    access_time: preserve
+    modification_time: preserve
   with_items:
     - datafile1
     - datafile2

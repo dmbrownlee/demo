@@ -1,5 +1,7 @@
 ---
-- name: Ensure VM is rebooted
-  reboot:
-    reboot_timeout: 300
+- name: Ensure reboot flag does not exist
+  file:
+    path: /root/.reboot_needed
+    state: absent
   become: yes
+  notify: reboot
