@@ -1,12 +1,12 @@
 ---
-- name: Ensure NFS share has correct SELinux fcontext in policy
+- name: Ensure example NFS share for labs has correct SELinux fcontext in policy
   sefcontext:
     target: '/srv/nfsexport(/.*)?'
     setype: nfs_t
     state: present
   become: yes
   notify: serestore_nfs
-- name: Ensure /srv/nfsexport directory exists
+- name: Ensure /srv/nfsexport example directory exists
   file:
     path: '/srv/nfsexport'
     owner: root
@@ -15,34 +15,10 @@
     state: directory
     setype: nfs_t
   become: yes
-- name: Ensure NFS share is exported
+- name: Ensure example NFS share for labs is exported
   copy:
     dest: /etc/exports.d/nfsexport.exports
     content: "/srv/nfsexport *(rw)"
-    owner: root
-    group: root
-    mode: '0644'
-  become: yes
-# NFS Home Directories
-- name: Ensure NFS home directories have correct SELinux fcontext in policy
-  sefcontext:
-    target: '/home/ldap(/.*)?'
-    setype: nfs_t
-    state: present
-  become: yes
-  notify: serestore_homedirs
-- name: Ensure NFS home directories exist
-  file:
-    path: '/home/ldap'
-    owner: root
-    group: root
-    mode: '0755'
-    state: directory
-  become: yes
-- name: Ensure NFS home directories are exported
-  copy:
-    dest: /etc/exports.d/nfshome.exports
-    content: "/home/ldap	*(rw,sec=krb5p)"
     owner: root
     group: root
     mode: '0644'
