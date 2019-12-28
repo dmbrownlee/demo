@@ -6,13 +6,6 @@
   become: yes
   register: selinux
   notify: reboot
-- name: Ensure necessary packages are installed
-  package:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  with_items:
-    - python-firewall
 - name: Ensure firewalld is started and enabled at boot
   service:
     name: firewalld
