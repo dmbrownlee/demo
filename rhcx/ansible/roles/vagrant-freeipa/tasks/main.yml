@@ -5,7 +5,8 @@
 - import_tasks: configure_firewall.yml
 - import_tasks: configure_public_shares.yml
 - import_tasks: configure_ftp_pub.yml
-- import_tasks: configure_nfs_shares.yml
+- import_tasks: datadir_nfsexport.yml
+- import_tasks: datadir_ldaphomedir.yml
 - import_tasks: configure_samba_users.yml
 - import_tasks: configure_samba_shares.yml
 - import_tasks: enable_nfs_service.yml
