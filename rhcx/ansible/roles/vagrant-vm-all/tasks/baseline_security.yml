@@ -5,7 +5,7 @@
     state: enforcing
   become: yes
   register: selinux
-  notify: selinux_reboot
+  notify: reboot
 - name: Ensure necessary packages are installed
   package:
     name: "{{ item }}"
