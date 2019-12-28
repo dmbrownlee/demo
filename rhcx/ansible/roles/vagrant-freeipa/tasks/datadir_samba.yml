@@ -1,15 +1,11 @@
 ---
 - name: Ensure export directories exists
   file:
-    path: "{{ item.path }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
+    path: /srv/samba
+    owner: root
+    group: root
+    mode: '0755'
     state: directory
-  with_items:
-    - { path: '/srv', owner: 'root', group: 'root', mode: '0755' }
-    - { path: '/srv/samba', owner: 'root', group: 'root', mode: '0755' }
-    - { path: '/data', owner: 'root', group: 'root', mode: '0755' }
   become: yes
 - name: Ensure Samba is configured
   copy:
