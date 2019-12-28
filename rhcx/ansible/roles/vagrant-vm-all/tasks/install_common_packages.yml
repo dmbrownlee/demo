@@ -28,6 +28,9 @@
     - bind-utils
     - vim
     - screen
+    - net-tools
+    - nfs-utils
+    - git
   become: yes
 - name: Ensure ansible is installed (CentOS 7)
   package:
