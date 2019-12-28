@@ -1,11 +1,11 @@
 ---
-- name: Ensure SAMBA is started and enabled at boot
+- name: Ensure Samba is started and enabled at boot
   service:
     name: smb
     state: started
     enabled: yes
   become: yes
-- name: Ensure SMB traffic is allowed
+- name: Ensure Samba traffic is allowed
   firewalld:
     service: "{{ item.service }}"
     state: enabled
