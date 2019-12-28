@@ -1,4 +1,5 @@
 ---
+- import_tasks: baseline_security.yml
 - import_tasks: hide_vagrant_user.yml
 - import_tasks: install_common_packages.yml
 - import_tasks: add_lab_user.yml

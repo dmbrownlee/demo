@@ -1,0 +1,7 @@
+---
+- name: Ensure the host is rebooted if required by SELinux changes
+  listen: selinux_reboot
+  reboot:
+    reboot_timeout: 300
+  become: yes
+  when: selinux.reboot_required
