@@ -1,7 +1,6 @@
 ---
 - import_tasks: configure_static_interface.yml
 - import_tasks: install_packages.yml
-- import_tasks: configure_selinux.yml
 - import_tasks: configure_firewall.yml
 - import_tasks: configure_public_shares.yml
 - import_tasks: configure_nfs_shares.yml

@@ -1,0 +1,21 @@
+---
+- name: Ensure SELinux is in enforcing mode
+  selinux:
+    policy: targeted
+    state: enforcing
+  become: yes
+  register: selinux
+  notify: selinux_reboot
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - python-firewall
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes

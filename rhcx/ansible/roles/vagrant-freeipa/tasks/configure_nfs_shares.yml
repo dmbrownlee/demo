@@ -47,19 +47,10 @@
     group: root
     mode: '0644'
   become: yes
-# Every Ansible task file needing to manipulate the firewall must make sure
-# software requirements for Ansible to manipulate the firewall are installed
-# and the firewall service in enabled and started.
-- name: Ensure necessary packages are installed
-  package:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  with_items:
-    - python-firewall
-- name: Ensure firewalld is started and enabled at boot
+# Enable NFS service
+- name: Ensure nfs-server is started and enabled at boot
   service:
-    name: firewalld
+    name: nfs-server
     state: started
     enabled: yes
   become: yes
@@ -74,10 +65,4 @@
     - { zone: internal, service: nfs }
     - { zone: internal, service: mountd }
     - { zone: internal, service: rpc-bind }
-  become: yes
-- name: Ensure nfs-server is started and enabled at boot
-  service:
-    name: nfs-server
-    state: started
-    enabled: yes
   become: yes

@@ -1,6 +1,0 @@
----
-- name: Ensure SELinux is in permissive mode
-  selinux:
-    policy: targeted
-    state: permissive
-  become: yes
