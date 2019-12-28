@@ -5,7 +5,8 @@
     src: 192.168.4.1:/home/user/demo/rhcx/labfiles
     fstype: nfs
     opts: tcp,ro,async,noatime,_netdev
-    state: mounted
+    state: present
     passno: "0"
     dump: "0"
   become: yes
+  notify: reboot
