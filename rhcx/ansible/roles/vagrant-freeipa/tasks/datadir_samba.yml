@@ -7,8 +7,13 @@
     mode: '0755'
     state: directory
   become: yes
-- name: Ensure Samba is configured
-  copy:
-    dest: /etc/samba/smb.conf
-    src: smb.conf
+- name: Ensure example Samba share exists in Samba config file
+  blockinfile:
+    path: /etc/samba/smb.conf
+    marker: '# {mark} ANSIBLE MANAGED BLOCK: Samba share'
+    block: |
+      [samba]
+        comment = data share
+        path = /srv/samba
+        guest ok = yes
   become: yes

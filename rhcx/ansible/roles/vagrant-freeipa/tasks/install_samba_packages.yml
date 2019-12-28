@@ -8,7 +8,7 @@
     - samba
     - samba-client
     - samba-common-tools
-- name: Ensure Samba is configured
+- name: Ensure Samba has initial smb.conf
   copy:
     dest: /etc/samba/smb.conf
     src: smb.conf
