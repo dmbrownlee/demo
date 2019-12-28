@@ -28,11 +28,14 @@ Vagrant.configure("2") do |config|
     libvirt.uri = 'qemu:///system'
     libvirt.memory = 1024
   end
-  
+
+  #==================
+  #==  CentOS 7.x  ==
+  #==================
   #=== labipa ===
   config.vm.define "labipa" do |node|
+    #node.vm.hostname = "labipa.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
-    #node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -50,8 +53,8 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1" do |node|
+    #node.vm.hostname = "server1.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
-    #node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -66,8 +69,8 @@ Vagrant.configure("2") do |config|
   
   #=== server2 ===
   config.vm.define "server2" do |node|
+    #node.vm.hostname = "server2.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
-    #node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
@@ -94,8 +97,90 @@ Vagrant.configure("2") do |config|
   
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
+    #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
-    #node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+  end
+
+  #==================
+  #==  CentOS 8.x  ==
+  #==================
+  #=== labipa ===
+  config.vm.define "labipa-8", autostart: false  do |node|
+    #node.vm.hostname = "labipa.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+    node.vm.provider :libvirt do |vb|
+      vb.memory = 2048
+    end
+  end
+
+  #=== server1 ===
+  config.vm.define "server1-8", autostart: false  do |node|
+    #node.vm.hostname = "server1.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+  end 
+  
+  #=== server2 ===
+  config.vm.define "server2-8", autostart: false  do |node|
+    #node.vm.hostname = "server2.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+#    node.vm.provider :libvirt do |vb|
+#      vb.customize ["modifyvm", :id, "--nic3", "natnetwork",
+#                                     "--nictype3", "82540EM",
+#                                     "--cableconnected3", "on",
+#                                     "--nicpromisc3", "allow-vms",
+#                                     "--nat-network3", "RHCxNetwork"]
+#      vb.customize ["modifyvm", :id, "--nic4", "natnetwork",
+#                                     "--nictype4", "82540EM",
+#                                     "--cableconnected4", "on",
+#                                     "--nicpromisc4", "allow-vms",
+#                                     "--nat-network4", "RHCxNetwork"]
+#    end
+  end
+  
+  #=== testnetinstall ===
+  config.vm.define "testnetinstall-8", autostart: false do |node|
+    #node.vm.hostname = "testnetinstall.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
