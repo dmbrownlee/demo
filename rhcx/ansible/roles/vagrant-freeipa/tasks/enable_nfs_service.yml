@@ -1,0 +1,19 @@
+---
+- name: Ensure nfs-server is started and enabled at boot
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+  become: yes
+- name: Ensure NFS traffic is allowed
+  firewalld:
+    service: "{{ item.service }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  with_items:
+    - { zone: internal, service: nfs }
+    - { zone: internal, service: mountd }
+    - { zone: internal, service: rpc-bind }
+  become: yes

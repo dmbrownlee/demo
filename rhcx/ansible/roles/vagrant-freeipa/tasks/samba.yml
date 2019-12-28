@@ -1,6 +1,0 @@
----
-- import_tasks: install_samba_server.yml
-- import_tasks: configure_samba_users.yml
-- import_tasks: configure_samba_shares.yml
-- import_tasks: enable_samba_server.yml
-
