@@ -11,15 +11,6 @@
     - { path: '/srv/samba', owner: 'root', group: 'root', mode: '0755' }
     - { path: '/data', owner: 'root', group: 'root', mode: '0755' }
   become: yes
-- name: Ensure SAMBA server and client is installed
-  package:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  with_items:
-    - samba
-    - samba-client
-    - samba-common-tools
 - name: Ensure SAMBA is configured
   copy:
     dest: /etc/samba/smb.conf
