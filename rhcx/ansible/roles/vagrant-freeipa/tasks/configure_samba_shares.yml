@@ -11,7 +11,7 @@
     - { path: '/srv/samba', owner: 'root', group: 'root', mode: '0755' }
     - { path: '/data', owner: 'root', group: 'root', mode: '0755' }
   become: yes
-- name: Ensure SAMBA is configured
+- name: Ensure Samba is configured
   copy:
     dest: /etc/samba/smb.conf
     src: smb.conf
