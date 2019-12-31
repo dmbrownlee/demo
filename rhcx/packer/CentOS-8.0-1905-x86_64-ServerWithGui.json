@@ -67,6 +67,11 @@
     {  "type": "shell",
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "sed -i -e 's/ens3/ens5/' /etc/sysconfig/network-scripts/ifcfg-ens3",
+                  "mv /etc/sysconfig/network-scripts/ifcfg-ens3 /etc/sysconfig/network-scripts/ifcfg-ens5"]
     }
   ],
   "post-processors": [{
