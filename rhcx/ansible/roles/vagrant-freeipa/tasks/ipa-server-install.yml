@@ -42,12 +42,6 @@
   shell: echo password | kinit admin; ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab
   become: yes
   when: find_nfs_principal_keytab.rc != 0
-- name: Ensure nfs-secure service is enabled and running
-  service:
-    name: nfs-secure
-    state: started
-    enabled: yes
-  become: yes
 - name: Get existing A records from IPA DNS
   shell: "echo password | kinit admin; ipa dnsrecord-find example.com | sed -n 's/  Record name: //p'"
   changed_when: false

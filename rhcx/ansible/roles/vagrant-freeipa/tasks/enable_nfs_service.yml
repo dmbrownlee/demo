@@ -1,4 +1,11 @@
 ---
+- name: Ensure nfs-secure is started and enabled at boot (CentOS 7)
+  service:
+    name: nfs-secure
+    state: started
+    enabled: yes
+  become: yes
+  when: ansible_distribution_major_version == "7"
 - name: Ensure nfs-server is started and enabled at boot
   service:
     name: nfs-server
