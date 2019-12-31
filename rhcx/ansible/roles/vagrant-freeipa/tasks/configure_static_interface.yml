@@ -1,9 +1,4 @@
 ---
 - name: Ensure the interface is reloaded
-  command: nmcli c reload "{{ iface_ext }}"
+  command: nmcli c reload example_com
   become: yes
-  when: ansible_distribution_major_version == "7"
-- name: Ensure the interface is reloaded
-  command: nmcli c reload "{{ c8_iface_ext }}"
-  become: yes
-  when: ansible_distribution_major_version == "8"

@@ -31,24 +31,36 @@
   become: yes
   with_dict: "{{ nmcon }}"
   when: ansible_distribution_major_version == "7" and item.key not in existing_connections.stdout_lines
+- name: Ensure vagrant and example_com connections exist (CentOS 8)
+  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname8 }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+  become: yes
+  with_dict: "{{ nmcon }}"
+  when: ansible_distribution_major_version == "8" and item.key not in existing_connections.stdout_lines
 - name: Get a list of active connections
   command: nmcli -t -f name c show --active
   register: active_connections
   changed_when: false
   become: root
-- name: Ensure vagrant and example_com connections are up (CentOS 7)
+- name: Ensure vagrant and example_com connections are up
   command: nmcli c up "{{ item.key }}"
   become: yes
   with_dict: "{{ nmcon }}"
-  when: ansible_distribution_major_version == "7" and item.key not in active_connections.stdout_lines
+  when: item.key not in active_connections.stdout_lines
 - name: Ensure inactive connections are removed
   command: "nmcli c del \"{{ item }}\""
   become: yes
   loop: "{{ existing_connections.stdout_lines }}"
   when: item not in nmcon
 # Don't know why this isn't getting deleted but we can use the heavy handed approach
-- name: Remove ifcfg-eth1 if it is still hanging around
+- name: Remove ifcfg-{{ nmcon.example_com.ifname }} if it is still hanging around
   file:
-    path: /etc/sysconfig/network-scripts/ifcfg-eth1
+    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname }}
     state: absent
   become: yes
+  when: ansible_distribution_major_version == "7"
+- name: Remove ifcfg-{{ nmcon.example_com.ifname8 }} if it is still hanging around
+  file:
+    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname8 }}
+    state: absent
+  become: yes
+  when: ansible_distribution_major_version == "8"
