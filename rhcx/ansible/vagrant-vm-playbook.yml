@@ -8,7 +8,7 @@
 - name: Lab configuration
   hosts: labhost
   roles:
-    - role: vagrant-vm-all
+    - role: labhost
 
 - name: Configure FreeIPA hosts
   hosts: ipa_server
