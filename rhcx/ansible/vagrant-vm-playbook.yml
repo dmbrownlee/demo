@@ -1,5 +1,10 @@
 ---
 # This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Common configuration
+  hosts: all
+  roles:
+    - role: vagrant-host
+
 - name: Lab configuration
   hosts: labhost
   roles:

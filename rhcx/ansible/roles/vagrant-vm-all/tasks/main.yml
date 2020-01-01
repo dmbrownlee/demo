@@ -1,9 +1,7 @@
 ---
 - import_tasks: baseline_security.yml
 - import_tasks: install_common_packages.yml
-- import_tasks: hide_vagrant_user.yml
 - import_tasks: add_lab_user.yml
 - import_tasks: add_labfiles_mount.yml
-- import_tasks: pre-dns-hosts.yml
-- import_tasks: configure_interfaces.yml
+- import_tasks: configure_lab_network.yml
 - import_tasks: configure_ansible.yml

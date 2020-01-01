@@ -1,4 +1,14 @@
 ---
+- name: Ensure /etc/hosts includes all hosts prior to configuring DNS
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item }}"
+  become: yes
+  with_items:
+    - "192.168.4.200 labipa.example.com ipa"
+    - "192.168.4.210 server1.example.com server1"
+    - "192.168.4.220 server2.example.com server2"
+    - "192.168.4.230 testnetinstall.example.com testnetinstall"
 # The nmcli module is broken in ansible 2.4. This is supposedly fixed in
 # the 2.5 devel branch.  https://github.com/ansible/ansible/pull/34577. I will
 # revisit this when it is fixed in production.
@@ -50,7 +60,7 @@
   command: "nmcli c del \"{{ item }}\""
   become: yes
   loop: "{{ existing_connections.stdout_lines }}"
-  when: item not in nmcon
+  when: item not in nmcon and item != host_vagrant_net_conn_name
 # Don't know why this isn't getting deleted but we can use the heavy handed approach
 - name: Remove ifcfg-{{ nmcon.example_com.ifname }} if it is still hanging around
   file:
