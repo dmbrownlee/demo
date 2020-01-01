@@ -1,0 +1,44 @@
+---
+hostname: exam1
+nmcon: {
+  "vagrant": {
+    type: ethernet,
+    ifname: eth0,
+    ifname8: ens5,
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "auto",
+      "dns": "8.8.8.8",
+      "addresses": "",
+      "gateway": "",
+      "ignore_auto_dns": "yes",
+      "never_default": "yes"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  },
+  "example_com": {
+    type: ethernet,
+    ifname: eth1,
+    ifname8: ens6,
+    "connection": {
+      "autoconnect": "yes",
+      "zone": "internal"
+    },
+    "ipv4": {
+      "method": "manual",
+      "dns": "8.8.8.8",
+      "addresses": "10.1.1.1/24",
+      "gateway": "10.1.1.254",
+      "ignore_auto_dns": "yes",
+      "never_default": "no"
+    },
+    "ipv6": {
+      "method": "ignore"
+    }
+  }
+}

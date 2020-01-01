@@ -16,8 +16,20 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "ipa_client" => ["server1","server1-8","server2","server2-8","testnetinstall","testnetinstall-8"],
-      "ipa_server" => ["labipa","labipa-8"]
+      "labhost" => [
+        "labipa-7","server1-7","server2-7",
+        "labipa-8","server1-8","server2-8",
+        "testnetinstall"
+      ],
+      "ipa_client" => [
+        "server1-7","server2-7",
+        "server1-8","server2-8",
+        "testnetinstall"
+      ],
+      "ipa_server" => [
+        "labipa-7",
+        "labipa-8"
+      ]
     }
   end
 
@@ -145,6 +157,41 @@ Vagrant.configure("2") do |config|
   # irrelevant as you will install over it.
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
+    #node.vm.hostname = "testnetinstall.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+  end
+
+  #===================================
+  #==  Machines for practice exams  ==
+  #===================================
+  #=== exam1 ===
+  config.vm.define "exam1", autostart: false do |node|
+    #node.vm.hostname = "testnetinstall.example.com"
+    node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
+    node.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+  end
+
+  #=== exam2 ===
+  config.vm.define "exam2", autostart: false do |node|
     #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
