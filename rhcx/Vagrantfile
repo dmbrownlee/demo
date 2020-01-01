@@ -29,11 +29,11 @@ Vagrant.configure("2") do |config|
     libvirt.memory = 1024
   end
 
-  #==================
-  #==  CentOS 7.x  ==
-  #==================
+  #==============================
+  #==  CentOS 7.x Lab Machines ==
+  #==============================
   #=== labipa ===
-  config.vm.define "labipa" do |node|
+  config.vm.define "labipa-7", autostart: false do |node|
     #node.vm.hostname = "labipa.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
     node.vm.network :private_network,
@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
   end
 
   #=== server1 ===
-  config.vm.define "server1" do |node|
+  config.vm.define "server1-7", autostart: false do |node|
     #node.vm.hostname = "server1.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
     node.vm.network :private_network,
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
   end 
   
   #=== server2 ===
-  config.vm.define "server2" do |node|
+  config.vm.define "server2-7", autostart: false do |node|
     #node.vm.hostname = "server2.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
     node.vm.network :private_network,
@@ -81,41 +81,13 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-#    node.vm.provider :libvirt do |vb|
-#      vb.customize ["modifyvm", :id, "--nic3", "natnetwork",
-#                                     "--nictype3", "82540EM",
-#                                     "--cableconnected3", "on",
-#                                     "--nicpromisc3", "allow-vms",
-#                                     "--nat-network3", "RHCxNetwork"]
-#      vb.customize ["modifyvm", :id, "--nic4", "natnetwork",
-#                                     "--nictype4", "82540EM",
-#                                     "--cableconnected4", "on",
-#                                     "--nicpromisc4", "allow-vms",
-#                                     "--nat-network4", "RHCxNetwork"]
-#    end
   end
   
-  #=== testnetinstall ===
-  config.vm.define "testnetinstall", autostart: false do |node|
-    #node.vm.hostname = "testnetinstall.example.com"
-    node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
-  end
-
-  #==================
-  #==  CentOS 8.x  ==
-  #==================
+  #==============================
+  #==  CentOS 8.x Lab Machines ==
+  #==============================
   #=== labipa ===
-  config.vm.define "labipa-8", autostart: false  do |node|
+  config.vm.define "labipa-8" do |node|
     #node.vm.hostname = "labipa.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
@@ -134,7 +106,7 @@ Vagrant.configure("2") do |config|
   end
 
   #=== server1 ===
-  config.vm.define "server1-8", autostart: false  do |node|
+  config.vm.define "server1-8" do |node|
     #node.vm.hostname = "server1.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
@@ -150,7 +122,7 @@ Vagrant.configure("2") do |config|
   end 
   
   #=== server2 ===
-  config.vm.define "server2-8", autostart: false  do |node|
+  config.vm.define "server2-8" do |node|
     #node.vm.hostname = "server2.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
@@ -163,22 +135,16 @@ Vagrant.configure("2") do |config|
       :libvirt__host_ip => "192.168.4.1",
       :libvirt__dhcp_start => "192.168.4.2",
       :libvirt__dhcp_stop => "192.168.4.99"
-#    node.vm.provider :libvirt do |vb|
-#      vb.customize ["modifyvm", :id, "--nic3", "natnetwork",
-#                                     "--nictype3", "82540EM",
-#                                     "--cableconnected3", "on",
-#                                     "--nicpromisc3", "allow-vms",
-#                                     "--nat-network3", "RHCxNetwork"]
-#      vb.customize ["modifyvm", :id, "--nic4", "natnetwork",
-#                                     "--nictype4", "82540EM",
-#                                     "--cableconnected4", "on",
-#                                     "--nicpromisc4", "allow-vms",
-#                                     "--nat-network4", "RHCxNetwork"]
-#    end
   end
   
+  #==============================
+  #==  Additional Lab Machines ==
+  #==============================
+  # You can use this maching to practice installing from installation media.
+  # The Vagrant box image needs to exist to spin up the VM but is otherwise
+  # irrelevant as you will install over it.
   #=== testnetinstall ===
-  config.vm.define "testnetinstall-8", autostart: false do |node|
+  config.vm.define "testnetinstall", autostart: false do |node|
     #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
