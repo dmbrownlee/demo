@@ -171,6 +171,28 @@ Vagrant.configure("2") do |config|
       :libvirt__dhcp_stop => "192.168.4.99"
   end
 
+  #=== pxeclient ===
+  config.vm.define :pxeclient do |pxeclient|
+    pxeclient.vm.network :private_network,
+      :type => "dhcp",
+      :libvirt__network_name => "vagrant-private-dhcp",
+      :libvirt__domain_name => "example.com",
+      :libvirt__network_address => "192.168.4.0",
+      :libvirt__netmask => "255.255.255.0",
+      :libvirt__dhcp_enabled => true,
+      :libvirt__host_ip => "192.168.4.1",
+      :libvirt__dhcp_start => "192.168.4.2",
+      :libvirt__dhcp_stop => "192.168.4.99"
+
+    pxeclient.vm.provider :libvirt do |domain|
+      domain.memory = 1000
+      boot_network = {'network' => 'vagrant-private-dhcp'}
+      domain.storage :file, :size => '10G', :type => 'qcow2'
+      domain.boot boot_network
+      domain.boot 'hd'
+    end
+  end
+
   #===================================
   #==  Machines for practice exams  ==
   #===================================
