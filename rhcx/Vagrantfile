@@ -5,13 +5,6 @@ Vagrant.configure("2") do |config|
   # These are the VM configuration defaults when not overridden
   config.ssh.private_key_path = "~/keys/vagrant"
   config.vm.synced_folder ".", "/vagrant", disabled: true
-#  config.vm.synced_folder "labfiles/",
-#                          "/labfiles",
-#                          type: "nfs",
-#                          nfs_version: 4,
-#                          nfs_udp: false,
-#                          nfs: true,
-#                          mount_options: ["rw", "vers=4", "tcp", "async", "_netdev", "noatime"]
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
@@ -46,7 +39,6 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== labipa ===
   config.vm.define "labipa-7", autostart: false do |node|
-    #node.vm.hostname = "labipa.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -65,7 +57,6 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1-7", autostart: false do |node|
-    #node.vm.hostname = "server1.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -81,7 +72,6 @@ Vagrant.configure("2") do |config|
   
   #=== server2 ===
   config.vm.define "server2-7", autostart: false do |node|
-    #node.vm.hostname = "server2.example.com"
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -100,7 +90,6 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== labipa ===
   config.vm.define "labipa-8" do |node|
-    #node.vm.hostname = "labipa.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -119,7 +108,6 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1-8" do |node|
-    #node.vm.hostname = "server1.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -135,7 +123,6 @@ Vagrant.configure("2") do |config|
   
   #=== server2 ===
   config.vm.define "server2-8" do |node|
-    #node.vm.hostname = "server2.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -157,7 +144,6 @@ Vagrant.configure("2") do |config|
   # irrelevant as you will install over it.
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
-    #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -198,7 +184,6 @@ Vagrant.configure("2") do |config|
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
-    #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
@@ -214,7 +199,6 @@ Vagrant.configure("2") do |config|
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
-    #node.vm.hostname = "testnetinstall.example.com"
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
     node.vm.network :private_network,
       :type => "dhcp",
