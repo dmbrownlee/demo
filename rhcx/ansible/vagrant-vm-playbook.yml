@@ -1,7 +1,7 @@
 ---
 # This playbook configures the guest OS as Vagrant creates the VMs.
-- name: Common configuration
-  hosts: all
+- name: Lab configuration
+  hosts: labhost
   roles:
     - role: vagrant-vm-all
 
@@ -10,6 +10,11 @@
   roles:
     - role: vagrant-freeipa
     - role: vagrant-freeipa-users
+
+- name: Exam hosts
+  hosts: exam1 exam2
+  roles:
+    - role: examhost
 
 - name: Reboot
   hosts: all
