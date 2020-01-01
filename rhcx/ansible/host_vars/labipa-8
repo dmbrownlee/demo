@@ -1,26 +1,8 @@
 ---
 hostname: labipa
+host_vagrant_net_iface: ens5
+host_vagrant_net_conn_name: vagrant
 nmcon: {
-  "vagrant": {
-    type: ethernet,
-    ifname: eth0,
-    ifname8: ens5,
-    "connection": {
-      "autoconnect": "yes",
-      "zone": "internal"
-    },
-    "ipv4": {
-      "method": "auto",
-      "dns": "192.168.4.200",
-      "addresses": "",
-      "gateway": "",
-      "ignore_auto_dns": "no",
-      "never_default": "yes"
-    },
-    "ipv6": {
-      "method": "ignore"
-    }
-  },
   "example_com": {
     type: ethernet,
     ifname: eth1,
