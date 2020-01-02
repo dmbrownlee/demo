@@ -1,26 +1,7 @@
 ---
 hostname: server2
-host_vagrant_net_iface: ens5
 host_vagrant_net_conn_name: vagrant
-nmcon: {
-  "example_com": {
-    type: ethernet,
-    ifname: eth1,
-    ifname8: ens6,
-    "connection": {
-      "autoconnect": "yes",
-      "zone": "internal"
-    },
-    "ipv4": {
-      "method": "manual",
-      "dns": "192.168.4.200",
-      "addresses": "192.168.4.220/24",
-      "gateway": "192.168.4.1",
-      "ignore_auto_dns": "yes",
-      "never_default": "no"
-    },
-    "ipv6": {
-      "method": "ignore"
-    }
-  }
-}
+host_vagrant_net_iface: ens5
+host_lab_net_conn_name: example_com                                              
+host_lab_net_iface: ens6                                                    
+host_lab_net_ipv4_addresses: "192.168.4.220/24" 

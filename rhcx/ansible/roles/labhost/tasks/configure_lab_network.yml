@@ -36,41 +36,32 @@
   register: existing_connections
   changed_when: false
   become: root
-- name: Ensure vagrant and example_com connections exist (CentOS 7)
-  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
+- name: Ensure lab connection exists
+  command: nmcli c add con-name "{{ host_lab_net_conn_name }}" type "{{ lab_net_type }}" ifname "{{ host_lab_net_iface }}" connection.autoconnect "{{ lab_net_autoconnect }}" connection.zone "{{ lab_net_zone }}" ipv4.method "{{ lab_net_ipv4_method }}" ipv4.dns "{{ lab_net_ipv4_dns }}" ipv4.addresses "{{ host_lab_net_ipv4_addresses }}" ipv4.gateway "{{ lab_net_ipv4_gateway }}" ipv4.ignore-auto-dns "{{ lab_net_ipv4_ignore_auto_dns }}" ipv4.never-default "{{ lab_net_ipv4_never_default }}" ipv6.method "{{ lab_net_ipv6_method }}"
   become: yes
-  with_dict: "{{ nmcon }}"
-  when: ansible_distribution_major_version == "7" and item.key not in existing_connections.stdout_lines
-- name: Ensure vagrant and example_com connections exist (CentOS 8)
-  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname8 }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
-  become: yes
-  with_dict: "{{ nmcon }}"
-  when: ansible_distribution_major_version == "8" and item.key not in existing_connections.stdout_lines
+  when: host_lab_net_conn_name not in existing_connections.stdout_lines
 - name: Get a list of active connections
   command: nmcli -t -f name c show --active
   register: active_connections
   changed_when: false
   become: root
-- name: Ensure vagrant and example_com connections are up
-  command: nmcli c up "{{ item.key }}"
+- name: Ensure the lab connection is up
+  command: nmcli c up "{{ host_lab_net_conn_name }}"
   become: yes
-  with_dict: "{{ nmcon }}"
-  when: item.key not in active_connections.stdout_lines
+  when: host_lab_net_conn_name not in active_connections.stdout_lines
+- name: Ensure all other connections are disabled
+  command: "nmcli c mod \"{{ item }}\" connection.autoconnect no"
+  become: yes
+  loop: "{{ existing_connections.stdout_lines }}"
+  when: item != host_vagrant_net_conn_name and item != host_lab_net_conn_name
 - name: Ensure inactive connections are removed
   command: "nmcli c del \"{{ item }}\""
   become: yes
   loop: "{{ existing_connections.stdout_lines }}"
-  when: item not in nmcon and item != host_vagrant_net_conn_name
+  when: item != host_lab_net_conn_name and item != host_vagrant_net_conn_name
 # Don't know why this isn't getting deleted but we can use the heavy handed approach
-- name: Remove ifcfg-{{ nmcon.example_com.ifname }} if it is still hanging around
+- name: Remove ifcfg-{{ host_lab_net_iface }} if it is still hanging around
   file:
-    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname }}
+    path: /etc/sysconfig/network-scripts/ifcfg-{{ host_lab_net_iface }}
     state: absent
   become: yes
-  when: ansible_distribution_major_version == "7"
-- name: Remove ifcfg-{{ nmcon.example_com.ifname8 }} if it is still hanging around
-  file:
-    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname8 }}
-    state: absent
-  become: yes
-  when: ansible_distribution_major_version == "8"
