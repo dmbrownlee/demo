@@ -26,17 +26,7 @@
   register: existing_connections
   changed_when: false
   become: root
-- name: Ensure vagrant connection exists (CentOS 7)
-  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
-  become: yes
-  with_dict: "{{ nmcon }}"
-  when: ansible_distribution_major_version == "7" and item.key not in existing_connections.stdout_lines and item.key == "vagrant"
-#- name: Ensure vagrant connection exists (CentOS 8)
-#  command: nmcli c add con-name "{{ item.key }}" type "{{ item.value.type }}" ifname "{{ item.value.ifname8 }}" connection.autoconnect "{{ item.value.connection.autoconnect }}" connection.zone "{{ item.value.connection.zone }}" ipv4.method "{{ item.value.ipv4.method }}" ipv4.dns "{{ item.value.ipv4.dns }}" ipv4.addresses "{{ item.value.ipv4.addresses }}" ipv4.gateway "{{ item.value.ipv4.gateway }}" ipv4.ignore-auto-dns "{{ item.value.ipv4.ignore_auto_dns }}" ipv4.never-default "{{ item.value.ipv4.never_default }}" ipv6.method "{{ item.value.ipv6.method }}"
-#  become: yes
-#  with_dict: "{{ nmcon }}"
-#  when: ansible_distribution_major_version == "8" and item.key not in existing_connections.stdout_lines and item.key == "vagrant"
-- name: Ensure vagrant connection exists (CentOS 8)
+- name: Ensure vagrant connection exists
   command: nmcli c add con-name "{{ host_vagrant_net_conn_name }}" type "{{ vagrant_net_type }}" ifname "{{ host_vagrant_net_iface }}" connection.autoconnect "{{ vagrant_net_autoconnect }}" connection.zone "{{ vagrant_net_zone }}" ipv4.method "{{ vagrant_net_ipv4_method }}" ipv4.never-default "{{ vagrant_net_ipv4_never_default }}" ipv6.method "{{ vagrant_net_ipv6_method }}"
   become: yes
   when: host_vagrant_net_conn_name not in existing_connections.stdout_lines
@@ -55,15 +45,8 @@
   loop: "{{ existing_connections.stdout_lines }}"
   when: item != host_vagrant_net_conn_name
 # Don't know why this isn't getting deleted but we can use the heavy handed approach
-#- name: Remove ifcfg-{{ nmcon.example_com.ifname }} if it is still hanging around
+#- name: Remove ifcfg-{{ host_vagrant_net_iface }} if it is still hanging around
 #  file:
-#    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname }}
+#    path: /etc/sysconfig/network-scripts/ifcfg-{{ host_vagrant_net_iface }}
 #    state: absent
 #  become: yes
-#  when: ansible_distribution_major_version == "7"
-#- name: Remove ifcfg-{{ nmcon.example_com.ifname8 }} if it is still hanging around
-#  file:
-#    path: /etc/sysconfig/network-scripts/ifcfg-{{ nmcon.example_com.ifname8 }}
-#    state: absent
-#  become: yes
-#  when: ansible_distribution_major_version == "8"
