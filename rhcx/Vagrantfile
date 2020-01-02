@@ -158,7 +158,7 @@ Vagrant.configure("2") do |config|
   end
 
   #=== pxeclient ===
-  config.vm.define :pxeclient do |pxeclient|
+  config.vm.define :pxeclient, autostart: false do |pxeclient|
     pxeclient.vm.network :private_network,
       :type => "dhcp",
       :libvirt__network_name => "vagrant-private-dhcp",
