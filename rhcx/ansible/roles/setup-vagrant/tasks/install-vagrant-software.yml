@@ -22,6 +22,7 @@
   with_items:
     - gcc
     - libvirt-devel
+    - make
   when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
 - name: Install vagrant-libvirt plugin
   command: "vagrant plugin install vagrant-libvirt"
