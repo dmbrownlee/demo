@@ -1,9 +1,4 @@
 ---
-- name: Ensure tigervnc is installed (helpful when debugging packer builds).
-  package:
-    name: tigervnc
-    state: present
-  become: yes
 - name: Check if {{ inst_name }} is alreedy installed
   shell: vagrant box list | grep -q {{ inst_name }}
   register: vagrant_box_list

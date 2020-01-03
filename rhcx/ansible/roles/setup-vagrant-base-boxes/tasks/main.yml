@@ -1,5 +1,10 @@
 ---
 #- import_tasks: basebox.yml
+- name: Ensure tigervnc is installed (helpful when debugging packer builds).
+  package:
+    name: tigervnc
+    state: present
+  become: yes
 - import_tasks: basebox.yml
   vars:
     inst_name: CentOS-7.7-1908-x86_64-Minimal
