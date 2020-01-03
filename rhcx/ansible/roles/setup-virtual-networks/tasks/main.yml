@@ -10,7 +10,7 @@
     name: python3-lxml
     state: latest
   become: true
-  when: ansible_distribution_major_version == 8
+  when: ansible_distribution_major_version == "8"
 - name: Get the list of virtual networks
   command: "virsh net-list --all --name"
   ignore_errors: True
