@@ -7,7 +7,7 @@
   with_items:
     - firewalld
     - rpcbind
-    - nfs
+    - nfs-server
   become: yes
 - name: Ensure bridges are in the internal firewall zone
   firewalld:
