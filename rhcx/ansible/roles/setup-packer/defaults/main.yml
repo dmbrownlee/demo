@@ -1,6 +1,6 @@
 ---
 # defaults file for packer
-packer_version: 1.5.1
+packer_version: 1.4.5
 packer_zip: "packer_{{ packer_version }}_linux_amd64.zip"
-packer_checksum: "sha256:3305ede8886bc3fd83ec0640fb87418cc2a702b2cb1567b48c8cb9315e80047d"
+packer_checksum: "sha256:30da8dab9c526a6d15b037e2234f6f12cf3accfad77eb2c130738ec1a54cab6d"
 packer_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
