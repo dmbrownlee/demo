@@ -1,4 +1,12 @@
 ---
+- name: Ensure /labfiles mount point exists
+  file:
+    path: /labfiles
+    state: directory
+    owner: root
+    group: root
+    mode: '0775'
+  become: yes
 - name: Ensure /labfiles will be remounted in the case of a reboot
   mount:
     path: /labfiles
