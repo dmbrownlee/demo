@@ -9,19 +9,33 @@
     - rpcbind
     - nfs-server
   become: yes
-#- name: Ensure bridges are in the internal firewall zone
-#  firewalld:
-#    zone: internal
-#    interface: "{{ item }}"
-#    state: enabled
-#    permanent: yes
-#    immediate: yes
-#  become: yes
-#  with_items:
-#    - virbr0
-#    - virbr1
-#    - virbr2
-- name: Ensure NFS is allowed through firewall on internal interfaces
+- name: Ensure bridges are in the internal firewall zone (CentOS 7)
+  firewalld:
+    zone: internal
+    interface: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  become: yes
+  with_items:
+    - virbr0
+    - virbr1
+    - virbr2
+  when: ansible_distribution_major_version == "7"
+- name: Ensure NFS is allowed through firewall on internal interfaces (CentOS 7)
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: internal
+  with_items:
+    - rpc-bind
+    - mountd
+    - nfs
+  become: yes
+  when: ansible_distribution_major_version == "7"
+- name: Ensure NFS is allowed through firewall on libvirt interfaces (CentOS 8)
   firewalld:
     service: "{{ item }}"
     state: enabled
@@ -33,6 +47,7 @@
     - mountd
     - nfs
   become: yes
+  when: ansible_distribution_major_version == "8"
 - name: Ensure shared folders are exported
   copy:
     dest: /etc/exports.d/vagrant-shared-folders.exports
