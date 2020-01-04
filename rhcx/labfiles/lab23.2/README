@@ -31,7 +31,8 @@ STEPS
     security method
 4.  Use the NFS4 root mount option to mount all of labipa's exports under
     /mnt without specifying a security level and then use "mount -t nfs4" to
-    observe the results
+    observe the results before and after changing into the /mnt/home/ldap
+    directory (note also the sec option on each mount)
 5.  On server2, create a /home/ldap directory and add a line to /etc/fstab to
     mount the /home/ldap directory on labipa using krb5p security (make sure to
     reboot to verify it works)
