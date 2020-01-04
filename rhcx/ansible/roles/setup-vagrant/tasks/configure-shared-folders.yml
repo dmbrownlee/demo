@@ -9,25 +9,25 @@
     - rpcbind
     - nfs-server
   become: yes
-- name: Ensure bridges are in the internal firewall zone
-  firewalld:
-    zone: internal
-    interface: "{{ item }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
-  become: yes
-  with_items:
-    - virbr0
-    - virbr1
-    - virbr2
+#- name: Ensure bridges are in the internal firewall zone
+#  firewalld:
+#    zone: internal
+#    interface: "{{ item }}"
+#    state: enabled
+#    permanent: yes
+#    immediate: yes
+#  become: yes
+#  with_items:
+#    - virbr0
+#    - virbr1
+#    - virbr2
 - name: Ensure NFS is allowed through firewall on internal interfaces
   firewalld:
     service: "{{ item }}"
     state: enabled
     permanent: yes
     immediate: yes
-    zone: internal
+    zone: libvirt
   with_items:
     - rpc-bind
     - mountd
