@@ -27,8 +27,8 @@ STEPS
         ipa-getkeytab -p nfs/$(hostname --fqdn) -k /etc/krb5.keytab
         # hint: If you get "Failed to add key to the keytab", ask yourself why.
     b.  Enable and start the nfs-secure service
-3.  Test mount /home/ldap to /mnt and verify it is using krb5p as the security
-    method
+3.  Test mount labipa:/home/ldap to /mnt and verify it is using krb5p as the
+    security method
 4.  Use the NFS4 root mount option to mount all of labipa's exports under
     /mnt without specifying a security level and then use "mount -t nfs4" to
     observe the results
