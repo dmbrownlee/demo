@@ -16,14 +16,6 @@ On labipa:
   2. Run (as root) "/labfiles/lab23.2/setup.sh" (this has to be run after running
      this script on the other two VMs first)
 
-On server1:
-  3. Run "ipa-getkeytab -s labipa.example.com -p nfs/server1.example.com -k
-     /etc/krb5.keytab" to add the NFS principle to the host's keytab file.
-
-On server2:
-  4. Run "ipa-getkeytab -s labipa.example.com -p nfs/server2.example.com -k
-     /etc/krb5.keytab" to add the NFS principle to the host's keytab file.
-
 STEPS
 1.  Login to either server1 or server2 and use "showmount -e labipa.example.com"
     to confirm labipa.example.com is exporting /home/ldap
