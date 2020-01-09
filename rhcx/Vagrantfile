@@ -4,7 +4,24 @@
 Vagrant.configure("2") do |config|
   # These are the VM configuration defaults when not overridden
   config.ssh.private_key_path = "~/keys/vagrant"
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.network :private_network,
+    :type => "dhcp",
+    :libvirt__network_name => "vagrant-private-dhcp",
+    :libvirt__domain_name => "example.com",
+    :libvirt__network_address => "192.168.4.0",
+    :libvirt__netmask => "255.255.255.0",
+    :libvirt__dhcp_enabled => true,
+    :libvirt__host_ip => "192.168.4.1",
+    :libvirt__dhcp_start => "192.168.4.2",
+    :libvirt__dhcp_stop => "192.168.4.99",
+    :libvirt__dhcp_bootp_file => "pxelinux/pxelinux.0",
+    :libvirt__dhcp_bootp_server => "192.168.4.102"
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.host = "localhost"
+    libvirt.uri = 'qemu:///system'
+    libvirt.memory = 1024
+  end
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
@@ -25,14 +42,7 @@ Vagrant.configure("2") do |config|
       ]
     }
   end
-
-  #config.vm.provider "qemu" do |vb|
-  config.vm.provider :libvirt do |libvirt|
-    libvirt.driver = "kvm"
-    libvirt.host = "localhost"
-    libvirt.uri = 'qemu:///system'
-    libvirt.memory = 1024
-  end
+  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   #==============================
   #==  CentOS 7.x Lab Machines ==
@@ -40,16 +50,6 @@ Vagrant.configure("2") do |config|
   #=== labipa ===
   config.vm.define "labipa-7", autostart: false do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
     node.vm.provider :libvirt do |vb|
       vb.memory = 2048
     end
@@ -58,31 +58,11 @@ Vagrant.configure("2") do |config|
   #=== server1 ===
   config.vm.define "server1-7", autostart: false do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end 
   
   #=== server2 ===
   config.vm.define "server2-7", autostart: false do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end
   
   #==============================
@@ -91,16 +71,6 @@ Vagrant.configure("2") do |config|
   #=== labipa ===
   config.vm.define "labipa-8" do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
     node.vm.provider :libvirt do |vb|
       vb.memory = 2048
     end
@@ -109,31 +79,11 @@ Vagrant.configure("2") do |config|
   #=== server1 ===
   config.vm.define "server1-8" do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-ServerWithGui"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end 
   
   #=== server2 ===
   config.vm.define "server2-8" do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end
   
   #==============================
@@ -145,36 +95,15 @@ Vagrant.configure("2") do |config|
   #=== testnetinstall ===
   config.vm.define "testnetinstall", autostart: false do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end
 
   #=== pxeclient ===
   config.vm.define :pxeclient, autostart: false do |pxeclient|
-    pxeclient.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
-
     pxeclient.vm.provider :libvirt do |domain|
-      domain.memory = 1000
-      boot_network = {'network' => 'vagrant-private-dhcp'}
+      #boot_network = {'network' => 'vagrant-private-dhcp'}
       domain.storage :file, :size => '10G', :type => 'qcow2'
-      domain.boot boot_network
+      #domain.boot boot_network
+      domain.boot 'network'
       domain.boot 'hd'
     end
   end
@@ -185,30 +114,10 @@ Vagrant.configure("2") do |config|
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
     node.vm.box = "CentOS-8.0-1905-x86_64-Minimal"
-    node.vm.network :private_network,
-      :type => "dhcp",
-      :libvirt__network_name => "vagrant-private-dhcp",
-      :libvirt__domain_name => "example.com",
-      :libvirt__network_address => "192.168.4.0",
-      :libvirt__netmask => "255.255.255.0",
-      :libvirt__dhcp_enabled => true,
-      :libvirt__host_ip => "192.168.4.1",
-      :libvirt__dhcp_start => "192.168.4.2",
-      :libvirt__dhcp_stop => "192.168.4.99"
   end
 end
