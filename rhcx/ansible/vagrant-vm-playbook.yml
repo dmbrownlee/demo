@@ -3,11 +3,13 @@
 - name: Common configuration
   hosts: all
   roles:
+    - role: all
     - role: vagranthost
 
 - name: Lab configuration
   hosts: labhost
   roles:
+    - role: netconfig-lab
     - role: labhost
 
 - name: Configure FreeIPA hosts
@@ -19,6 +21,7 @@
 - name: Exam hosts
   hosts: exam1 exam2
   roles:
+    - role: netconfig-lab
     - role: examhost
 
 - name: Reboot
