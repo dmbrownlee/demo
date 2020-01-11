@@ -51,6 +51,8 @@
   shell: echo password | kinit admin; ipa dnsrecord-add {{ item.azone }} {{ item.ptr }} --a-ip-address 192.168.4.{{ item.a }}
   when: item.ptr not in ipa_dns_a_records.stdout_lines
   with_items:
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
@@ -63,6 +65,8 @@
   shell: echo password | kinit admin; ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
   when: item.a not in ipa_dns_ptr_records.stdout_lines
   with_items:
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
