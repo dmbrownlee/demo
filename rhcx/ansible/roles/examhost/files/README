@@ -6,6 +6,11 @@
   format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
   the system is booted
 
+- Your yum repo for BaseOS should use this mirrorlist URL:                       
+  http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra
+  (Tip: After this, reinstall the centos-release package to reenable the         
+  other default yum repositories)                                               
+
 - Install the syslinux package, the Apache server, xinetd, and a TFTP server
 
 - Ensure the Apache web server, xinetd, and tftp are started when the system 

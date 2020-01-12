@@ -21,3 +21,14 @@
   with_items:
     - README
     - pxeconf.tar
+#- name: Remove yum repo files
+#  file:
+#    state: "{{ item }}"
+#    path: "/etc/yum.repos.d"
+#    owner: 0
+#    group: 0
+#    mode: '0755'
+#  become: yes
+#  with_items:
+#    - absent
+#    - directory
