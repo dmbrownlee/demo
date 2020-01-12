@@ -1,0 +1,24 @@
+- Make sure SELinux is set to enforcing
+
+- Make sure the firewall is enabled
+
+- Create a 4GB logical volume named tftpboot in the existing volume group,
+  format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
+  the system is booted
+
+- Install the syslinux package, the Apache server, xinetd, and a TFTP server
+
+- Ensure the Apache web server, xinetd, and tftp are started when the system 
+  boots and are accessible through the firewall
+
+- Extract the files in /root/pxeconf.tar relative to the /var directory
+
+- Copy the following files from /usr/share/syslinux to /var/lib/tftpboot/pxelinux:
+  - pxelinux.0
+  - ldlinux.c32
+  - menu.c32
+  - libutil.c32
+
+- Download vmlinuz and initrd.img from
+  http://mirror.centos.org/centos/8/BaseOS/x86_64/os/isolinux/ them in
+  /var/lib/tftpboot/pxelinux/
