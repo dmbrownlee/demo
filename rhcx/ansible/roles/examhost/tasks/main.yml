@@ -1,3 +1,3 @@
 ---
-- debug:
-    msg: "Running exam host tasks"
+- import_tasks: break_exam1.yml
+  when: exam_config == "exam1"

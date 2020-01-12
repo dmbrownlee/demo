@@ -5,4 +5,5 @@ host_vagrant_net_conn_name: "vagrant"
 host_lab_net_conn_name: example_com
 host_lab_net_iface: ens6
 host_lab_net_ipv4_addresses: "192.168.4.101/24"
+host_iface_netconfig_disabled: ens6
 exam_config: exam1
