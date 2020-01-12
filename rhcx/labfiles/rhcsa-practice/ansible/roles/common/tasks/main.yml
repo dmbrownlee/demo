@@ -1,4 +1,0 @@
----
-- import_tasks: hide_vagrant_user.yml
-- import_tasks: add_lab_user.yml
-- import_tasks: configure_interfaces.yml
