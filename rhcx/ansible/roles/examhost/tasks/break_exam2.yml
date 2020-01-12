@@ -13,3 +13,11 @@
     state: stopped
     enabled: no
   become: yes
+- name: Copy exam files to root's homedir
+  copy:
+    dest: /root
+    src: "{{ item }}"
+  become: yes
+  with_items:
+    - README
+    - pxeconf.tar
