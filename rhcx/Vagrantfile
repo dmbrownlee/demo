@@ -100,10 +100,10 @@ Vagrant.configure("2") do |config|
   #=== pxeclient ===
   config.vm.define :pxeclient, autostart: false do |pxeclient|
     pxeclient.vm.provider :libvirt do |domain|
-      #boot_network = {'network' => 'vagrant-private-dhcp'}
       domain.storage :file, :size => '10G', :type => 'qcow2'
-      #domain.boot boot_network
-      domain.boot 'network'
+      domain.memory = 2048
+      boot_network = {'network' => 'vagrant-private-dhcp'}
+      domain.boot boot_network
       domain.boot 'hd'
     end
   end
