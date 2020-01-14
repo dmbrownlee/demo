@@ -51,3 +51,8 @@ complete the tasks may make the exam esier or harder).
   these two groups should have access (other than root).  Also ensure members
   of accounting can delete only the files belonging to them.
 
+- Ensure all newly created users (including xavier, jed, and hastin) see the
+  following message on every login:
+  "Welcome to $(hostname --fqdn)!  Use of this private system is subject to
+   corporate policy."
+
