@@ -32,3 +32,12 @@
   with_items:
     - absent
     - directory
+- name: Ensure root cannot login on console
+  lineinfile:
+    path: /etc/pam.d/login
+    line: auth [user_unknown=ignore success=ok ignore=ignore default=bad] pam_securetty.so
+  become: yes
+- file:
+    path: /etc/securetty
+    state: touch
+  become: yes
