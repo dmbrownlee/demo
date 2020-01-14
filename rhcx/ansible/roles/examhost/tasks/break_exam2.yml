@@ -19,8 +19,8 @@
     src: "{{ item }}"
   become: yes
   with_items:
-    - README
-    - pxeconf.tar
+    - exam2/README
+    - exam2/pxeconf.tar
 #- name: Remove yum repo files
 #  file:
 #    state: "{{ item }}"
