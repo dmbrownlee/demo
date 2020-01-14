@@ -13,3 +13,8 @@
   become: yes
   with_items:
     - exam1/README
+- name: Lock the root user's password
+  user:
+    name: root
+    password: '!'
+  become: yes
