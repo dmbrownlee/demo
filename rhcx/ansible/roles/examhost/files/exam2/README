@@ -56,3 +56,21 @@ complete the tasks may make the exam esier or harder).
   "Welcome to $(hostname --fqdn)!  Use of this private system is subject to
    corporate policy."
 
+=================
+==  Finished!  ==
+=================
+The practice exam objectives above include the steps necessary to configure
+an server to support network installs of PXE clients.  You can check if you
+completed at least those steps correctly by attempting to install another VM
+over the virtual network:
+
+On the host machine, ensure you are connected to the Internet, verify at least
+labipa and exam2 are running, and then do the following:
+
+  cd ~/demo/rhcx &&
+  vagrant up pxeclient
+
+If you open the consule window on the pxeclient machine, you should see it is
+attempting to boot from the network.  You should see a blue menu which allows
+you to install by selecting the first option.
+
