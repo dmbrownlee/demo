@@ -6,3 +6,10 @@
 - name: Ensure unconfigured connection is configured for practice
   command: "nmcli c mod {{ iface_connection.stdout | replace('GENERAL.CONNECTION:','') }} connection.id unconfigured connection.autoconnect no ipv4.addresses '10.1.1.1/24' ipv4.dns '' ipv4.gateway '' ipv4.never-default 'yes'"
   become: yes
+- name: Copy exam files to root's homedir
+  copy:
+    dest: /root
+    src: "{{ item }}"
+  become: yes
+  with_items:
+    - exam1/README

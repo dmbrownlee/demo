@@ -1,0 +1,13 @@
+Follow these steps in order:
+
+1. Configure the unconfigured network interface to use the following settings:
+     IP Address: 192.168.4.101
+     Netmask: 255.255.255.0
+     Gateway: 192.168.4.1
+     DNS: 192.168.4.200
+
+2. SSH to exam2.example.com as root and complete the tasks in /root/README
+
+Note: you will not be able to login to the console on exam2 so you must get
+      network configuration above correct to continue.
+
