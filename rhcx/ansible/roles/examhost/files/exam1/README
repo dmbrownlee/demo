@@ -5,6 +5,7 @@ Follow these steps in order:
      Netmask: 255.255.255.0
      Gateway: 192.168.4.1
      DNS: 192.168.4.200
+     (HINT: If you reboot, the hostname should be set correctly)
 
 2. SSH to exam2.example.com as root and complete the tasks in /root/README
    (password: password)
