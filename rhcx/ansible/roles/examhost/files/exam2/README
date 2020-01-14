@@ -1,6 +1,11 @@
+Complete the tasks below in any order you like (However, the order in which you
+complete the tasks may make the exam esier or harder).
+
 - Make sure SELinux is set to enforcing
 
 - Make sure the firewall is enabled
+
+- Configure sshd to listen to port 2022 and disable password authentication
 
 - Create a 4GB logical volume named tftpboot in the existing volume group,
   format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
