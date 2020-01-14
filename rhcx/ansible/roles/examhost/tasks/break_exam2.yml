@@ -21,14 +21,14 @@
   with_items:
     - exam2/README
     - exam2/pxeconf.tar
-#- name: Remove yum repo files
-#  file:
-#    state: "{{ item }}"
-#    path: "/etc/yum.repos.d"
-#    owner: 0
-#    group: 0
-#    mode: '0755'
-#  become: yes
-#  with_items:
-#    - absent
-#    - directory
+- name: Remove yum repo files
+  file:
+    state: "{{ item }}"
+    path: "/etc/yum.repos.d"
+    owner: 0
+    group: 0
+    mode: '0755'
+  become: yes
+  with_items:
+    - absent
+    - directory
