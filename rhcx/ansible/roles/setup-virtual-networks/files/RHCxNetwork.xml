@@ -5,6 +5,7 @@
   <ip address="192.168.4.1" netmask="255.255.255.0">
     <dhcp>
       <range start="192.168.4.2" end="192.168.4.254"/>
+      <bootp server="192.168.4.102" file="pxelinux/pxelinux.0"/>
     </dhcp>
   </ip>
 </network>
