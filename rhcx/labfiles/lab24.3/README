@@ -1,4 +1,4 @@
-=== LAB 23.3: Automount Kerberized NFS home directories
+=== LAB 24.3: Automount Kerberized NFS home directories
 OBJECTIVE
 Get hands on practice setting up autofs to mount user home directories on
 demand.  Kerberized NFS exports are used to ensure security.

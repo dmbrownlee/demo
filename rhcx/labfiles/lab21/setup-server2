@@ -33,3 +33,7 @@
         <body><h1>Welcome to testweb</body>
         </html>
     become: yes
+  - name: Disable SELinux
+    selinux:
+      policy: targeted
+      state: permissive

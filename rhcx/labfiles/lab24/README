@@ -1,24 +1,18 @@
-=== LAB 24: Convert epoch timestamps to human readable timestamps
+=== LAB 24: Firewalls and NFS RPCs (showmount and rpcinfo)
 OBJECTIVE
-In this lab, you will practice translating epoch time into human readable time.
+The warning at the bottom of p521 says firewalls can break the showmount
+command and that is the case with our machines.  In this lab, you will learn
+to fix that.
 
 SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
-
-  Host OS:
-
-  server1:
-
-  server2:
-    The grubby utility is used to update the grub boot menu.  When it is run,
-    it logs to /var/log/grubby_prune_debug using epoch timestamps in square
-    brackets. Check the size of /var/log/grubby_prune_debug to verify it exists
-    and has data. If it doesn't, run as root:
-        grubby --update-kernel=ALL --remove-args quiet
-
-  labipa:
+No setup is necessary but cleanly installed VMs are assumed.
 
 STEPS
-1. Get the epoch timestamp from the last line and convert it to a human readable
-   timestamp so you can see when grubby last completed a run.
+1.  Login to server2 as root and run "showmount -e labipa.example.com" to find
+    that it actually does work
+2.  Login to labipa and check the status of the firewall to verify it is, in
+    fact, running
+3.  View the firewall rules to see if you can figure out why showmount works
+    when the book suggests it should be broken
+4.  If you think if found the answer, change the firewall rules temporarily to
+    test your hypothesis

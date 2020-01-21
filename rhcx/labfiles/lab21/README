@@ -1,11 +1,10 @@
-=== LAB 21: Apache VirtualHost (w/SELinux)
+=== LAB 21: Apache VirtualHost
 
 OBJECTIVE
-In this lab, you repeat lab17 by configuring an Apache VirtualHost and test
-it from another machine.  However, this time you also have to configure SELinux
-(it was disabled for you in the previous lab).  You will know you can have
-completed the lab successfully when you can use Firefox on server1 to see the
-PHP information page at http://testweb.example.com/phpinfo.php.
+In this lab, you will prove you can configure an Apache VirtualHost and test
+it from another machine.  You will know you can have completed the lab
+successfully when you can use Firefox on server1 to see the PHP information
+page at http://testweb.example.com/phpinfo.php.
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
@@ -13,7 +12,7 @@ Before beginning the lab, follow these steps to prepare the hosts indicated
 
   server2:
     Log into server2 as root and run:
-      ansible-playbook /labfiles/lab21/setup-server2
+      ansible-playbook /labfiles/lab17/setup-server2
     This will install Apache with PHP support, create the virtual host's
     web content, and disable SELinux.
 

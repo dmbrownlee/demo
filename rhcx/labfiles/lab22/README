@@ -1,7 +1,11 @@
-=== LAB 22: Firewall configuration
+=== LAB 22: Apache VirtualHost (w/SELinux)
+
 OBJECTIVE
-In this lab, you will practice configuring the firewall on server2 using 
-firewall-cmd.  The firewall is already configured but you can make it better.
+In this lab, you repeat lab17 by configuring an Apache VirtualHost and test
+it from another machine.  However, this time you also have to configure SELinux
+(it was disabled for you in the previous lab).  You will know you can have
+completed the lab successfully when you can use Firefox on server1 to see the
+PHP information page at http://testweb.example.com/phpinfo.php.
 
 SETUP
 Before beginning the lab, follow these steps to prepare the hosts indicated
@@ -9,17 +13,17 @@ Before beginning the lab, follow these steps to prepare the hosts indicated
 
   server2:
     Log into server2 as root and run:
-      ansible-playbook /labfiles/lab22/setup-server2-DONT_LOOK
+      ansible-playbook /labfiles/lab21/setup-server2
+    This will install Apache with PHP support, create the virtual host's
+    web content, and disable SELinux.
 
 STEPS
-Note, the VMs have two network interfaces.  One of the network interfaces is
-on a private network that vagrant uses to manage the VMs from the host OS.
-This network only needs to allow SSH connections.  The other network interface
-is what the VM uses to communicate with the Internet.  Identify which interface
-is which before beginning.
-1.  Assign the private interface vagrant uses to the "trusted" zone
-2.  Make sure the trusted interface above accepts inbound SSH connections
-3.  Assign the other interface to the "internal" zone
-4.  Make sure the internal interface also accepts inbound SSH
-5.  Make "internal" the default zone
-6.  Make all your changes permanent and verify after rebooting
+1. Login to server1 as user, open Firefox, and confirm the URL
+   http://testweb.example.com/phpinfo.php does not currently work.
+2. Login to server2 as root and configure a name-based VirtualHost with
+   testweb.example.com as the virtual hostname and /var/www-testweb as
+   the DocumentRoot
+3. Troubleshoot until you can view the PHP info page in Firefox at
+   http://testweb.example.com/phpinfo.php (if you get stuck, there is a
+   HINTS file in this directory).
+
