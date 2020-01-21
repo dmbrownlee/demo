@@ -1,18 +1,25 @@
-=== LAB 23: Firewalls and NFS RPCs (showmount and rpcinfo)
+=== LAB 23: Firewall configuration
 OBJECTIVE
-The warning at the bottom of p521 says firewalls can break the showmount
-command and that is the case with our machines.  In this lab, you will learn
-to fix that.
+In this lab, you will practice configuring the firewall on server2 using 
+firewall-cmd.  The firewall is already configured but you can make it better.
 
 SETUP
-No setup is necessary but cleanly installed VMs are assumed.
+Before beginning the lab, follow these steps to prepare the hosts indicated
+(these steps assume a cleanly installed host OS and VMs):
+
+  server2:
+    Log into server2 as root and run:
+      ansible-playbook /labfiles/lab22/setup-server2-DONT_LOOK
 
 STEPS
-1.  Login to server2 as root and run "showmount -e labipa.example.com" to find
-    that it actually does work
-2.  Login to labipa and check the status of the firewall to verify it is, in
-    fact, running
-3.  View the firewall rules to see if you can figure out why showmount works
-    when the book suggests it should be broken
-4.  If you think if found the answer, change the firewall rules temporarily to
-    test your hypothesis
+Note, the VMs have two network interfaces.  One of the network interfaces is
+on a private network that vagrant uses to manage the VMs from the host OS.
+This network only needs to allow SSH connections.  The other network interface
+is what the VM uses to communicate with the Internet.  Identify which interface
+is which before beginning.
+1.  Assign the private interface vagrant uses to the "trusted" zone
+2.  Make sure the trusted interface above accepts inbound SSH connections
+3.  Assign the other interface to the "internal" zone
+4.  Make sure the internal interface also accepts inbound SSH
+5.  Make "internal" the default zone
+6.  Make all your changes permanent and verify after rebooting
