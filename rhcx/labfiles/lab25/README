@@ -3,22 +3,15 @@ OBJECTIVE
 In this lab, you will practice translating epoch time into human readable time.
 
 SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
-
-  Host OS:
-
-  server1:
-
-  server2:
-    The grubby utility is used to update the grub boot menu.  When it is run,
-    it logs to /var/log/grubby_prune_debug using epoch timestamps in square
-    brackets. Check the size of /var/log/grubby_prune_debug to verify it exists
-    and has data. If it doesn't, run as root:
-        grubby --update-kernel=ALL --remove-args quiet
-
   labipa:
 
 STEPS
-1. Get the epoch timestamp from the last line and convert it to a human readable
-   timestamp so you can see when grubby last completed a run.
+1. As root, run the following command to get the timestamps of all the system
+   boots and user logins from the audit log:
+
+   awk '/type=(SYSTEM_BOOT|USER_LOGIN)/ { print $1, $2 }' \
+     /var/log/audit/audit.log
+
+2. Convert the epoch timestamps to human readable timestamps.
+3. Run the "last" command to verify you were able to convert the timestamps
+   correctly.
