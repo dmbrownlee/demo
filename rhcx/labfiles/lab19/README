@@ -1,4 +1,4 @@
-=== LAB 20: Bash Shell Scripting
+=== LAB 19: Bash Shell Scripting
 OBJECTIVE
 In this lab, you will practice creating a shell script that takes arguments and
 generates a DNS zone file.
