@@ -50,8 +50,8 @@ Vagrant.configure("2") do |config|
   #=== labipa ===
   config.vm.define "labipa-7", autostart: false do |node|
     node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
-    node.vm.provider :libvirt do |vb|
-      vb.memory = 2048
+    node.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
     end
   end
 
@@ -71,8 +71,8 @@ Vagrant.configure("2") do |config|
   #=== labipa ===
   config.vm.define "labipa" do |node|
     node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
-    node.vm.provider :libvirt do |vb|
-      vb.memory = 2048
+    node.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
     end
   end
 
