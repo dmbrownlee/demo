@@ -9,7 +9,7 @@ The goal is to learn Linux on Linux.  CentOS is a freely available Red Hat Enter
 If you already have CentOS 7 or later installed on your machine, that should work (although, as of this writing, I have moved on to CentOS 8.1 and don't tend to go backwards to test older releases).  You will need git and ansible installed to get started.  You can find instructions for installing ansible using pip elsewhere but I would recommend just using yum to install the ansible package from the EPEL repository.  Install the epel-release package to make packages in that repository available.
 
 ### Want to start fresh?
-**WARNING: The kickstart files provided will install Linux and remove any current drive contents**
+**WARNING: The kickstart files provided will install Linux and remove any current drive contents**  
 If you have not installed Linux yet or would like to start with a clean installation, the ks directory contains kickstart files for installing CentOS 8 on host machines with different drive types.  First, create a bootable flash drive with the lastest (currently 8.1) version of CentOS following the [instructions on the CentOS site](https://docs.centos.org/en-US/8-docs/standard-install/assembly_preparing-for-your-installation/#making-media_preparing-for-your-installation).  Make sure you download the ISO file ending in "-x86_64-dvd1.iso".  The "x86_64" designates the image as being for Intel compatible CPUs and the "dvd1" designates the image as the DVD image which contains the software package the kickstart files try to install.
 
 Once you have the installation media created, boot from it, use the cursor keys to highlight the menu option to install CentOS, and press 'e' __instead of pressing return__ so you can edit the menu option (the keys to press are displayed at the bottom of the screen in case you forget).  Use the cursor keys to go down to the line beginning with "linux" and use Ctrl-e to jump to the end of that line.  Once there, add the following to the end of the line:
@@ -61,6 +61,6 @@ You can start the Virtual Machine Manager application to interact with the virtu
 # Happy Learning!
 
 ## Resources
-[Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition](https://www.amazon.com/gp/product/0135938139 "This project updated to match this source material")
-[Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7 (EX200 and EX300) (Certification Guide) 1st Edition](https://www.amazon.com/RHCSA-RHCE-Cert-Guide-Certification/dp/0789754053 "Older book is still useful for the older RHCE material")
-If you have an account, you can also find these books and their corresponding video series, as well as other material from the same author, on [O'Reilly](https://learning.oreilly.com/home/).
+- [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition](https://www.amazon.com/gp/product/0135938139 "This project updated to match this source material")
+- [Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7 (EX200 and EX300) (Certification Guide) 1st Edition](https://www.amazon.com/RHCSA-RHCE-Cert-Guide-Certification/dp/0789754053 "Older book is still useful for the older RHCE material")
+- If you have an account, you can also find these books and their corresponding video series, as well as other material from the same author, on [O'Reilly](https://learning.oreilly.com/home/).
