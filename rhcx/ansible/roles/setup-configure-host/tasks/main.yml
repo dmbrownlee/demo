@@ -20,7 +20,7 @@
       }
       updateall () {
         cd $HOME/demo/rhcx &&
-        vagrant destroy -f &&
+        vagrant destroy -f || [ $? -eq 2 ] &&
         git pull &&
         ./setup &&
         vagrant up --no-parallel
