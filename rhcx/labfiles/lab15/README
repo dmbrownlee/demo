@@ -1,17 +1,9 @@
 === LAB 15: Practice LVM
+
 OBJECTIVE
+
 Practice using LVM and configuring logical volumes mounted on boot using a
 second disk.
-
-SETUP
-Before beginning the lab, follow these steps to prepare the hosts indicated
-(these steps assume a cleanly installed host OS and VMs):
-
-  Host OS:
-    On the host machine (not in a VM) run:
-      vagrant halt server2
-      ansible-playbook ./setup-host
-    This playbook will add a second hard drive to server2.
 
 STEPS
 1.  Login to server2 as root
