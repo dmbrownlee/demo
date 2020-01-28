@@ -18,3 +18,10 @@
       showlabs () {
         find ~/demo/rhcx/labfiles/lab* -name "README*" -exec head -1 \{\} \;
       }
+      updateall () {
+        cd $HOME/demo/rhcx &&
+        vagrant destroy -f &&
+        git pull &&
+        ./setup &&
+        vagrant up --no-parallel
+      }
