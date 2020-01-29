@@ -8,10 +8,8 @@ including a shell script.  In this lab, we use the "logger" command to generate
 system log messages so we can verify the command is getting executed as
 intended.
 
-SETUP:
-  No setup is needed for this lab.
-
 STEPS:
+
 1.  On the host machine or in any VM, add a cronjob to run the following
     command every minute (you might find using the crontab.template file in
     the same directory as this README is a good starting point):
