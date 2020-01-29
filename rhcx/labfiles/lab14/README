@@ -1,12 +1,11 @@
 === LAB 14: Managing Partitions
 
 OBJECTIVE
+
 In this lab, you will practice using disk partitioning tools.
 
-SETUP
-  No setup is needed for this lab but you will need to use server2.
-
 STEPS
+
 - Locate the currently unused disk on server2
 - Create two partitions on the unused drive, a 2GB partition, and a partition
   containing the rest of the disk

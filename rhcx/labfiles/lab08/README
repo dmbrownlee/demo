@@ -19,4 +19,3 @@ Practice the following commands on server1.
 - Create a new connection named "Wired Home Network" that uses ethernet with 
   an IPv4 address 192.168.0.4/24, a gateway of 192.168.0.1, and a DNS name
   server of 8.8.8.8
- 

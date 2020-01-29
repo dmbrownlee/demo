@@ -1,8 +1,11 @@
 === LAB 00: Learn to use Vagrant to create VMs
+
 OBJECTIVE
+
 Learn to use Vagrant
 
 SETUP
+
 Before beginning the lab, follow these steps to prepare the hosts indicated
 (these steps assume you have followed the installation instructions and have
 rebooted the host):
@@ -19,6 +22,7 @@ rebooted the host):
     The lab is now configured.
 
 STEPS
+
 For all the steps below, you must be in the ~/demo/rhcx directory.  This
 directory contains a file named Vagrantfile which defines the VMs Vagrant
 will be managing.  The setup above should have left you with three running
