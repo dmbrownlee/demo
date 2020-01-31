@@ -24,6 +24,6 @@ documents as described below:
      delete it
 10.  Make sure nobody outside of either of these groups, besides root, has any
      access to the directories
-11.  Ensure newly created files are owned but the group owning the parent
-     directory
+11.  Ensure newly created files are owned by the group owning the directory
+     they are in
 12.  Create files in both directories to test your work

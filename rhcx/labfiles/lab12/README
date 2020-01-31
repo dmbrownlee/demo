@@ -21,9 +21,12 @@ STEPS:
 
     sudo tail -f /var/log/messages | grep MY_CRON_TEST
 
-3.  Imaging you logger command is actually a script to do end of month
+3.  Imagine your logger command is actually a script to do "end of month"
     processing of sales data.  Change the cronjob so it "runs the monthly
     report (logs a message)" after each month.  Unless you are on the last day
     of the month and can wait until tomorrow, you won't be able to verify this
     (unless you change the system time).  Either way, make sure you don't leave
     the cronjob you created in step one running.
+
+EXTRA CREDIT: How would you schedule a job to run the first and third Friday
+              of the month?
