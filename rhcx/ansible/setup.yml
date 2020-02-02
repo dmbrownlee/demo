@@ -2,7 +2,7 @@
 - name: Setup the KVM demo environment
   hosts: localhost
   roles:
-    - role: setup-directories
+    - role: vmhost
     - role: setup-packer
     - role: setup-vagrant
     - role: setup-kvm
