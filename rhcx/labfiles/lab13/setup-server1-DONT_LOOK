@@ -14,15 +14,15 @@
       mode: 0777
       state: directory
     become: yes
-  - name: Doing something...
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      regexp: '^#PubkeyAuthentication yes$'
-      line: 'PubkeyAuthentication no'
-    become: yes
-  - name: Doing something...
-    systemd:
-      name: sshd
-      state: reloaded
-      daemon_reload: yes
-    become: yes
+#  - name: Doing something...
+#    lineinfile:
+#      path: /etc/ssh/sshd_config
+#      regexp: '^#PubkeyAuthentication yes$'
+#      line: 'PubkeyAuthentication no'
+#    become: yes
+#  - name: Doing something...
+#    systemd:
+#      name: sshd
+#      state: reloaded
+#      daemon_reload: yes
+#    become: yes
