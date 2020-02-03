@@ -16,12 +16,6 @@
      - "@virtualization-tools"
      - qemu-kvm
   become: true
-- name: Ensure qemu is installed (CentOS 7)
-  package:
-    name: qemu-system-x86
-    state: present
-  become: yes
-  when: ansible_distribution_major_version == "7"
 - name: Ensure qemu is installed (CentOS 8)
   package:
     name: qemu-kvm
