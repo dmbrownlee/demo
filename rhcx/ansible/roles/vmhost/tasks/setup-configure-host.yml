@@ -8,10 +8,9 @@
     path: "{{ ansible_user_dir }}/.bashrc"
     block: |
       export VAGRANT_DEFAULT_PROVIDER=libvirt
-      build () {
-        vagrant up --no-parallel $1
-      }
       rebuild () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
         vagrant destroy -f $1
         vagrant up --no-parallel $1
       }
@@ -19,6 +18,8 @@
         find ~/demo/rhcx/labfiles/lab* -name "README*" -exec head -1 \{\} \;
       }
       updateall () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
         cd $HOME/demo/rhcx &&
         vagrant destroy -f || [ $? -eq 2 ] &&
         git pull &&

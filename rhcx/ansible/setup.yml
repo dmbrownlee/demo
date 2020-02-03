@@ -1,11 +1,5 @@
 ---
-- name: Setup the KVM demo environment
+- name: Setup the KVM virtual machine lab environment
   hosts: localhost
   roles:
-    - role: setup-directories
-    - role: setup-packer
-    - role: setup-vagrant
-    - role: setup-kvm
-    - role: setup-configure-host
-    - role: setup-virtual-networks
-    - role: setup-vagrant-base-boxes
+    - role: vmhost

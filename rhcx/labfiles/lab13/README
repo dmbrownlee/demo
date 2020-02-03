@@ -7,14 +7,13 @@ password and use the logs to troubleshoot the issues encountered.
 
 SETUP
 
-Log into server2 as the root user and run:
+Log into server1 as the root user and run:
     
-  ansible-playbook /labfiles/lab05/setup-server2-DONT_LOOK
+  ansible-playbook /labfiles/lab13/setup-server1-DONT_LOOK
     
-Do not look at setup-server2-DONT_LOOK as it contains spoilers.
+Do not look at setup-server1-DONT_LOOK as it contains spoilers.
 
 STEPS
 
 1.  Login to server1 as the user, "user" and generate a keypair
-2.  Configure server2 for passwordless SSH logins
-3.  Use the logs to help troubleshoot any issues encountered
+2.  Troubleshoot any issues encountered
