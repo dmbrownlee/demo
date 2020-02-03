@@ -1,4 +1,8 @@
 ---
-# tasks file for directories
-- name: Create ~/keys
-  file: path={{ ansible_user_dir }}/keys state=directory
+- include_tasks: setup-directories.yml
+- include_tasks: setup-packer.yml
+- include_tasks: setup-vagrant.yml
+- include_tasks: setup-kvm.yml
+- include_tasks: setup-configure-host.yml
+- include_tasks: setup-virtual-networks.yml
+- include_tasks: setup-vagrant-base-boxes.yml

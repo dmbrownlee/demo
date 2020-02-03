@@ -1,4 +1,0 @@
----
-- include: install-vagrant-software.yml
-- include: install-vagrant-keys.yml
-- include: configure-shared-folders.yml

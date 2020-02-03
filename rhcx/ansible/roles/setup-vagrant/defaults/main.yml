@@ -1,5 +1,0 @@
----
-# defaults file for vagrant
-vagrant_version: 2.2.6
-vagrant_rpm: "vagrant_{{ vagrant_version }}_x86_64.rpm"
-vagrant_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_rpm }}"
