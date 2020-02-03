@@ -1,5 +1,5 @@
 #!/bin/bash
-VAGRANT_VERSION=2.2.5
+VAGRANT_VERSION=2.2.7
 if [[ ! -d "$HOME/.ssh" ]]; then
   mkdir -m 700 "$HOME/.ssh"
 fi
@@ -43,37 +43,10 @@ vagrant plugin list | grep -q vagrant-google
 if [[ $? -ne 0 ]]; then
   vagrant plugin install vagrant-google
 fi
-if [[ -e Vagrantfile ]]; then
-  if [[ $(readlink Vagrantfile) == 'Vagrantfile.gcp' ]]; then
-    cat <<DONE
-============================
-=    Setup is complete.    =
-============================
-DONE
-  else
-    cat <<DONE
-===================================
-=    Setup is ALMOST complete.    =
-===================================
-You still need to make sure Vagrantfile is a symbolic link to
-Vagrantfile.gcp with:
-
-  ln -sf Vagrantfile.gcp Vagrantfile
-
-I would have done this for you but Vagrantfile already exists
-and I didn't want to overwrite something that might be important.
-
-DONE
-  fi
-else
-  ln -s Vagrantfile.gcp Vagrantfile
-  cat <<DONE
-============================
-=    Setup is complete.    =
-============================
-DONE
-fi
 cat <<DONE
+============================
+=    Setup is complete.    =
+============================
 To create the training environment virtual machines, run:
 
   vagrant up
