@@ -13,8 +13,8 @@ complete the tasks may make the exam esier or harder).
 
 - Your yum repo for BaseOS should use this mirrorlist URL:                       
   http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra
-  (Tip: After this, reinstall the centos-release package to reenable the         
-  other default yum repositories).
+  (Tip: After this, reinstall the centos-release (or centos-repos in 8.1)
+  package to reenable the other default yum repositories).
 
 - Install the syslinux package, the Apache server, xinetd, and a TFTP server.
 
@@ -53,8 +53,8 @@ complete the tasks may make the exam esier or harder).
 
 - Ensure all newly created users (including xavier, jed, and hastin) see the
   following message on every login:
-  "Welcome to $(hostname --fqdn)!  Use of this private system is subject to
-   corporate policy."
+  "Welcome to FQDN!  Use of this private system is subject to
+   corporate policy." (replace FQDN with the full name of the host)
 
 =================
 ==  Finished!  ==
