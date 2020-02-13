@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "google/gce"
-  config.vm.synced_folder "labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
+  config.vm.synced_folder "../labfiles/", "/labfiles", type: "rsync", rsync__exclude: ".git/"
 
   config.vm.define :server1 do |this_vm|
     this_vm.vm.provider :google do |google, override|
@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
       google.zone = "us-west1-b"
       google.zone_config "us-west1-b" do |in_this_zone|
         in_this_zone.name = "server1"
-        in_this_zone.image_family = "centos-7"
+        in_this_zone.image_family = "centos-8"
         in_this_zone.machine_type = "g1-small"
         in_this_zone.zone = "us-west1-b"
       end
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
       google.zone = "us-west1-b"
       google.zone_config "us-west1-b" do |in_this_zone|
         in_this_zone.name = "server2"
-        in_this_zone.image_family = "centos-7"
+        in_this_zone.image_family = "centos-8"
         in_this_zone.machine_type = "g1-small"
         in_this_zone.zone = "us-west1-b"
       end
@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
       google.zone = "us-west1-b"
       google.zone_config "us-west1-b" do |in_this_zone|
         in_this_zone.name = "labipa"
-        in_this_zone.image_family = "centos-7"
+        in_this_zone.image_family = "centos-8"
         in_this_zone.machine_type = "g1-small"
         in_this_zone.zone = "us-west1-b"
       end
