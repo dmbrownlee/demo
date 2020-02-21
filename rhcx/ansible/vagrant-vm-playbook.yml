@@ -3,7 +3,7 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: all
+    - role: base
     - role: vagranthost
 
 - name: Lab configuration
