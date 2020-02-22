@@ -26,19 +26,23 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "labhost" => [
-        "labipa-7","server1-7","server2-7",
-        "labipa","server1","server2",
-        "testnetinstall"
-      ],
       "ipa_client" => [
         "server1-7","server2-7",
         "server1","server2",
-        "testnetinstall"
       ],
       "ipa_server" => [
         "labipa-7",
         "labipa"
+      ],
+      "rhcsa7" => [
+        "labipa-7",
+        "server1-7",
+        "server2-7"
+      ],
+      "rhcsa8" => [
+        "labipa",
+        "server1",
+        "server2"
       ],
       "rhcsa8" => [
         "labipa",
@@ -107,14 +111,6 @@ Vagrant.configure("2") do |config|
   #==============================
   #==  Additional Lab Machines ==
   #==============================
-  # You can use this maching to practice installing from installation media.
-  # The Vagrant box image needs to exist to spin up the VM but is otherwise
-  # irrelevant as you will install over it.
-  #=== testnetinstall ===
-  config.vm.define "testnetinstall", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
   #=== pxeclient ===
   config.vm.define :pxeclient, autostart: false do |pxeclient|
     pxeclient.vm.provider :libvirt do |domain|
