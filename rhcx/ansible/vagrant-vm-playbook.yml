@@ -11,7 +11,7 @@
     - { role: rhel-system-roles.network, become: yes }
 
 - name: RHCSA VM Configuration
-  hosts: rhcsa7:rhcsa8
+  hosts: rhcsa8
   roles:
     - role: vagranthost
     - role: netconfig-lab
