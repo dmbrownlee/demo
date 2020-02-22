@@ -1,0 +1,29 @@
+---
+network_provider: nm
+network_connections:
+- name: example_com
+  type: ethernet
+  interface_name: ens6
+  autoconnect: yes
+  ip:
+    dhcp4: yes
+  persistent_state: present
+  state: up
+- name: vagrant
+  type: ethernet
+  interface_name: ens5
+  autoconnect: yes
+  ip:
+    dhcp4: yes
+  persistent_state: present
+  state: up
+- name: "Wired connection 1"
+  persistent_state: absent
+- name: "Wired connection 2"
+  persistent_state: absent
+- name: "System ens3"
+  persistent_state: absent
+- name: "System ens5"
+  persistent_state: absent
+- name: "System ens6"
+  persistent_state: absent
