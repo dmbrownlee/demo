@@ -4,11 +4,16 @@
   hosts: all
   roles:
     - role: base
-    - role: vagranthost
+
+- name: RHCE network configuration
+  hosts: rhce8
+  roles:
+    - { role: rhel-system-roles.network, become: yes }
 
 - name: Lab configuration
   hosts: labhost
   roles:
+    - role: vagranthost
     - role: netconfig-lab
     - role: labhost
 

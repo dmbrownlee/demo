@@ -39,6 +39,18 @@ Vagrant.configure("2") do |config|
       "ipa_server" => [
         "labipa-7",
         "labipa"
+      ],
+      "rhcsa8" => [
+        "labipa",
+        "server1",
+        "server2"
+      ],
+      "rhce8" => [
+        "control",
+        "ansible1",
+        "ansible2",
+        "ansible3",
+        "ansible4"
       ]
     }
   end
