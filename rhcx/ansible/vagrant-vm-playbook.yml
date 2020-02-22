@@ -24,7 +24,7 @@
     - role: vagrant-freeipa-users
 
 - name: Exam hosts
-  hosts: exam1 exam2
+  hosts: examhost
   roles:
     - role: netconfig-lab
     - role: examhost
