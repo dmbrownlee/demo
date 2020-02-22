@@ -3,40 +3,20 @@
   shell: "echo password | kinit admin; ipa user-find | sed -n 's/^  User login: //p'"
   changed_when: false
   register: ipa_user_find
-- debug:
-    msg: ipa_user_find
 - name: Ensure IPA lab users have been created
-  shell: echo password | kinit admin; ipa user-add --first {{ item }} --last {{ item }} --homedir /home/ldap/{{ item }} {{ item }}
-  when: item not in ipa_user_find.stdout_lines
-  with_items:
-    - ldapuser1
-    - ldapuser2
-    - ldapuser3
-    - ldapuser4
-    - ldapuser5
-    - isabelle
+  shell: echo password | kinit admin; ipa user-add --first {{ item.username }} --last {{ item.username }} --homedir {{ item.homedir }} {{ item.username }}
+  when: item.username not in ipa_user_find.stdout_lines
+  loop: "{{ ldap_users }}"
 - name: Ensure password has been set for IPA lab users just created
-  shell: echo password | kinit admin; echo -e "password\npassword" | ipa passwd {{ item }}
-  when: item not in ipa_user_find.stdout_lines
-  with_items:
-    - ldapuser1
-    - ldapuser2
-    - ldapuser3
-    - ldapuser4
-    - ldapuser5
-    - isabelle
+  shell: echo password | kinit admin; echo -e "{{ item.pw }}\n{{ item.pw }}" | ipa passwd {{ item.username }}
+  when: item.username not in ipa_user_find.stdout_lines
+  loop: "{{ ldap_users }}"
 - name: Ensure homedirs exist for the LDAP users
   file:
-    path: /home/ldap/{{ item }}
+    path: "{{ item.homedir }}"
     state: directory
-    owner: "{{ item }}"
-    group: "{{ item }}"
+    owner: "{{ item.username }}"
+    group: "{{ item.username }}"
     mode: 0755
   become: yes
-  with_items:
-    - ldapuser1
-    - ldapuser2
-    - ldapuser3
-    - ldapuser4
-    - ldapuser5
-    - isabelle
+  loop: "{{ ldap_users }}"
