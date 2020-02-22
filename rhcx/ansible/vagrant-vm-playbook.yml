@@ -5,11 +5,6 @@
   roles:
     - role: base
 
-- name: RHCE VM Configuration
-  hosts: rhce8
-  roles:
-    - { role: rhel-system-roles.network, become: yes }
-
 - name: RHCSA VM Configuration
   hosts: rhcsa8
   roles:

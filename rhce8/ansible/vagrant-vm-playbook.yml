@@ -1,0 +1,12 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Configure RHCE 8 VMs
+  hosts: rhce8_vms
+  roles:
+    - { role: rhel-system-roles.network, become: yes }
+
+#- name: Configure FreeIPA servers
+#  hosts: ipa_servers
+#  roles:
+#    - role: freeipa-server
+#    - role: freeipa-server-lab-data
