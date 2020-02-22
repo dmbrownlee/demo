@@ -30,47 +30,36 @@ Vagrant.configure("2") do |config|
         "server1","server2",
       ],
       "ipa_server" => [
-        "labipa"
+        "labipa",
       ],
-      "rhcsa8" => [
+      "rhcsa7" => [
         "labipa",
         "server1",
         "server2"
-      ],
-      "rhce8" => [
-        "control",
-        "ansible1",
-        "ansible2",
-        "ansible3",
-        "ansible4"
-      ],
-      "examhost" => [
-        "exam1",
-        "exam2"
       ]
     }
   end
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
   #==============================
-  #==  CentOS 8.x Lab Machines ==
+  #==  CentOS 7.x Lab Machines ==
   #==============================
   #=== labipa ===
-  config.vm.define "labipa" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+  config.vm.define "labipa", autostart: false do |node|
+    node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
     node.vm.provider :libvirt do |libvirt|
       libvirt.memory = 2048
     end
   end
 
   #=== server1 ===
-  config.vm.define "server1" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+  config.vm.define "server1", autostart: false do |node|
+    node.vm.box = "CentOS-7.7-1908-x86_64-ServerWithGui"
   end 
   
   #=== server2 ===
-  config.vm.define "server2" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+  config.vm.define "server2", autostart: false do |node|
+    node.vm.box = "CentOS-7.7-1908-x86_64-Minimal"
     node.vm.provider :libvirt do |libvirt|
       libvirt.storage :file, :bus => :sata
     end
@@ -90,44 +79,4 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  #===================================
-  #==  Machines for practice exams  ==
-  #===================================
-  #=== exam1 ===
-  config.vm.define "exam1", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=== exam2 ===
-  config.vm.define "exam2", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=============================================
-  #==  Machines for practice RHCE 8 practice  ==
-  #=============================================
-  #=== control ===
-  config.vm.define "control", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=== ansible1 ===
-  config.vm.define "ansible1", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=== ansible2 ===
-  config.vm.define "ansible2", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=== ansible3 ===
-  config.vm.define "ansible3", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
-
-  #=== ansible4 ===
-  config.vm.define "ansible4", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-  end
 end

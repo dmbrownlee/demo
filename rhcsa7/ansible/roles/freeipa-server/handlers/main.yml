@@ -1,0 +1,5 @@
+---
+- import_tasks: serestore_data.yml
+- import_tasks: serestore_homedirs.yml
+- import_tasks: serestore_nfs.yml
+- import_tasks: serestore_samba.yml
