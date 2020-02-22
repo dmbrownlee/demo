@@ -1,28 +1,16 @@
 ---
 # This playbook configures the guest OS as Vagrant creates the VMs.
-- name: Common configuration
-  hosts: all
+- name: Configure RHCSA 7 VMs
+  hosts: rhcsa7_vms
   roles:
     - role: base-config
-
-- name: RHCSA VM Configuration
-  hosts: rhcsa7
-  roles:
     - role: vagrant-vm
     - role: nm-con-vagrant
     - role: nm-con-lab
     - role: lab-vm
 
-- name: Configure FreeIPA hosts
-  hosts: ipa_server
+- name: Configure FreeIPA servers
+  hosts: ipa_servers
   roles:
     - role: freeipa-server
     - role: freeipa-server-lab-data
-
-- name: Reboot
-  hosts: all
-  tasks:
-    - name: Ensure the host is rebooted
-      reboot:
-        reboot_timeout: 300
-      become: yes
