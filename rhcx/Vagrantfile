@@ -50,6 +50,10 @@ Vagrant.configure("2") do |config|
         "ansible2",
         "ansible3",
         "ansible4"
+      ],
+      "examhost" => [
+        "exam1",
+        "exam2"
       ]
     }
   end
