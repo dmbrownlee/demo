@@ -4,6 +4,7 @@ network_connections:
 - name: example_com
   type: ethernet
   interface_name: ens6
+  zone: internal
   autoconnect: yes
   ip:
     dhcp4: no
@@ -19,6 +20,7 @@ network_connections:
 - name: vagrant
   type: ethernet
   interface_name: ens5
+  zone: internal
   autoconnect: yes
   ip:
     dhcp4: yes

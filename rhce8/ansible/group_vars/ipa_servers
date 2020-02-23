@@ -1,0 +1,40 @@
+ipa_packages:
+  - ipa-server
+  - bind-dyndb-ldap
+  - ipa-server-dns
+  - vsftpd
+ipa_firewall_service_enable:
+  - { zone: internal, service: ssh }
+  - { zone: internal, service: http }
+  - { zone: internal, service: https }
+  - { zone: internal, service: ldap }
+  - { zone: internal, service: ldaps }
+  - { zone: internal, service: kerberos }
+  - { zone: internal, service: kpasswd }
+  - { zone: internal, service: dns }
+  - { zone: internal, service: ntp }
+  - { zone: internal, service: ftp }
+dns:
+  domain: "example.com"
+  reverse_zone: "4.168.192.in-addr.arpa."
+  forwarder: "8.8.8.8"
+  rr:
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
+passwords:
+  directory_manager: "password"
+  ipa_admin: "password"
+  krb5_admin: "password"
+ipa_server:
+  ip: "192.168.4.200"
+  fqdn: "labipa.example.com"
+krb5:
+  realm: "EXAMPLE.COM"
+  principals:
+    host:
+      - "labipa.example.com"
+    nfs:
+      - "labipa.example.com"

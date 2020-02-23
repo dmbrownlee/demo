@@ -26,9 +26,6 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "ipa_servers" => [
-        "labipa"
-      ],
       "rhce8_vms" => [
         "labipa",
         "control",
@@ -36,6 +33,12 @@ Vagrant.configure("2") do |config|
         "ansible2",
         "ansible3",
         "ansible4"
+      ],
+      "ipa_servers" => [
+        "labipa"
+      ],
+      "krb5_clients" => [
+        "labipa"
       ]
     }
   end
