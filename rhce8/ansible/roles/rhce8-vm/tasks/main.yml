@@ -57,15 +57,22 @@
 - name: Ensure local users are present
   user:
     name: "{{ item.username }}"
-    comment: "{{ item.comment }}"
-    createhome: yes
-    append: yes
-    state: present
-    password: "{{ item.pw }}"
-    system: no
+    append: "{{ item.append | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    password: "{{ item.pw | default(omit) }}"
+    password_lock: "{{ item.password_lock | default(omit) }}"
+    remove: "{{ item.remmove | default(omit) }}"
+    shell: "{{ item.shell | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
   become: yes
-  when: local_users is defined
-  loop: "{{ local_users }}"
+  when: users.local is defined
+  loop: "{{ users.local }}"
 - name: "Ensure {{ item.mountpoint.path }} mount point exists"
   file:
     path: "{{ item.mountpoint.path }}"
