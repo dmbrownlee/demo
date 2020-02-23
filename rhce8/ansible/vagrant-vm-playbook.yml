@@ -8,8 +8,13 @@
     - role: rhce8-vm
       become: yes
 
-#- name: Configure FreeIPA servers
-#  hosts: ipa_servers
-#  roles:
-#    - role: freeipa-server
+- name: Configure FreeIPA servers
+  hosts: ipa_servers
+  roles:
+    - role: freeipa-server
 #    - role: freeipa-server-lab-data
+
+- name: Configure Kerberos clients
+  hosts: krb5_clients
+  roles:
+    - role: krb5_client

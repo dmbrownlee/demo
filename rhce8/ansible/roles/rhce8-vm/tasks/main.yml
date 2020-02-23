@@ -18,6 +18,24 @@
     state: started
     enabled: yes
   become: yes
+- name: "Ensure firewall blocks {{ item.service }} in zone {{ item.zone }}"
+  firewalld:
+    service: "{{ item.service }}"
+    state: disabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  loop: "{{ firewall_service_disable }}"
+  become: yes
+- name: "Ensure firewall allows {{ item.service }} in zone {{ item.zone }}"
+  firewalld:
+    service: "{{ item.service }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  loop: "{{ firewall_service_enable }}"
+  become: yes
 - name: Check if AccountsService is present
   stat:
     path: /var/lib/AccountsService

@@ -14,9 +14,26 @@ common_packages:
 remote_filesystems:
   - mountpoint:
       path: "/labfiles"
-      owner: "root"
-      group: "root"
-      mode: "0755"
+      owner: "vagrant"
+      group: "vagrant"
+      mode: "0775"
     src: "192.168.4.1:/home/user/demo/rhcx/labfiles"
     fstype: "nfs"
     opts: "tcp,ro,async,noatime,_netdev"
+firewall_service_disable:
+  - { zone: dmz, service: ssh }
+  - { zone: external, service: ssh }
+  - { zone: home, service: cockpit }
+  - { zone: home, service: dhcpv6-client }
+  - { zone: home, service: mdns }
+  - { zone: home, service: samba-client }
+  - { zone: home, service: ssh }
+  - { zone: internal, service: samba-client }
+  - { zone: public, service: cockpit }
+  - { zone: public, service: dhcpv6-client }
+  - { zone: public, service: ssh }
+  - { zone: work, service: cockpit }
+  - { zone: work, service: dhcpv6-client }
+  - { zone: work, service: ssh }
+firewall_service_enable:
+  - { zone: internal, service: ssh }
