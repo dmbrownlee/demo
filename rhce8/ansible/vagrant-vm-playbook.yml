@@ -18,3 +18,8 @@
   hosts: krb5_clients
   roles:
     - role: krb5_client
+
+- name: Configure Samba servers
+  hosts: samba_servers
+  roles:
+    - role: samba-server
