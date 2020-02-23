@@ -34,3 +34,7 @@ network_connections:
   persistent_state: absent
 - name: "System ens6"
   persistent_state: absent
+local_users:
+- username: "user"
+  comment: "J Doe"
+  pw: '$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'

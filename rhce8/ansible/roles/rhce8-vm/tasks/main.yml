@@ -1,0 +1,72 @@
+---
+- name: Ensure we accept distro GPG keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  become: yes
+  loop: "{{ distro_gpg_keys }}"
+- name: Ensure SELinux is in enforcing mode
+  selinux:
+    policy: targeted
+    state: enforcing
+  become: yes
+  register: selinux
+  notify: reboot
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
+- name: Check if AccountsService is present
+  stat:
+    path: /var/lib/AccountsService
+  register: accounts_service
+  changed_when: False
+- name: Ensure vagrant user is hidden from gdm login screen
+  copy:
+    src: vagrant
+    dest: /var/lib/AccountsService/users
+    mode: 0644
+  become: yes
+  when: accounts_service.stat.isdir is defined
+- name: Ensure packages common to lab VMs are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ common_packages }}"
+  become: yes
+- name: Ensure local users are present
+  user:
+    name: "{{ item.username }}"
+    comment: "{{ item.comment }}"
+    createhome: yes
+    append: yes
+    state: present
+    password: "{{ item.pw }}"
+    system: no
+  become: yes
+  when: local_users is defined
+  loop: "{{ local_users }}"
+- name: "Ensure {{ item.mountpoint.path }} mount point exists"
+  file:
+    path: "{{ item.mountpoint.path }}"
+    state: directory
+    owner: "{{ item.mountpoint.owner }}"
+    group: "{{ item.mountpoint.group }}"
+    mode: "{{ item.mountpoint.mode }}"
+  become: yes
+  when: remote_filesystems is defined
+  loop: "{{ remote_filesystems }}"
+- name: "Ensure {{ item.mountpoint.path }} will be remounted at boot"
+  mount:
+    path: "{{ item.mountpoint.path }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts }}"
+    state: present
+    passno: "0"
+    dump: "0"
+  become: yes
+  when: remote_filesystems is defined
+  loop: "{{ remote_filesystems }}"
