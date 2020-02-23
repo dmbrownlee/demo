@@ -31,7 +31,6 @@
     zone: "{{ item.zone }}"
   loop: "{{ ipa_firewall_service_enable }}"
   become: yes
-#- import_tasks: install_samba_packages.yml
 #- import_tasks: local_samba_users.yml
 #- import_tasks: datadir_ftp.yml
 #- import_tasks: datadir_nfsexport.yml

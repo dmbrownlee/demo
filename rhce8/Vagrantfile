@@ -39,6 +39,9 @@ Vagrant.configure("2") do |config|
       ],
       "krb5_clients" => [
         "labipa"
+      ],
+      "samba_servers" => [
+        "labipa"
       ]
     }
   end
