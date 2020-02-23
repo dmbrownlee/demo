@@ -1,0 +1,22 @@
+distro_gpg_keys:
+  - /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+  - /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8
+common_packages:
+  - nss-pam-ldapd
+  - ipa-client
+  - tcpdump
+  - bind-utils
+  - vim
+  - screen
+  - net-tools
+  - nfs-utils
+  - tmux
+remote_filesystems:
+  - mountpoint:
+      path: "/labfiles"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+    src: "192.168.4.1:/home/user/demo/rhcx/labfiles"
+    fstype: "nfs"
+    opts: "tcp,ro,async,noatime,_netdev"
