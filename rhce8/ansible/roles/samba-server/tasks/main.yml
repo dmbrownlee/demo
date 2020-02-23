@@ -5,18 +5,6 @@
     state: present
   become: yes
   loop: "{{ samba_server.packages }}"
-- name: Ensure Samba has initial smb.conf
-  copy:
-    dest: /etc/samba/smb.conf
-    src: smb.conf
-  become: yes
-- name: Ensure Samba service is enabled and started
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: yes
-  become: yes
-  loop: "{{ samba_server.service }}"
 - name: Ensure Samba users have corresponding Linux users
   user:
     name: "{{ item.username }}"
@@ -46,6 +34,35 @@
   become: yes
   when: users.samba is defined and item.username not in pdbedit.stdout
   loop: "{{ users.samba }}"
+- name: Ensure shared directories exist
+  file:
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    state: directory
+  become: yes
+  when: dirs.samba is defined
+  loop: "{{ dirs.samba }}"
+  notify: "samba_serestore"
+- name: Ensure example Samba share exists in Samba config file
+  template:
+    dest: /etc/samba/smb.conf
+    src: smb.conf.j2
+    group: "root"
+    mode: "0644"
+    owner: "root"
+    setype: "samba_etc_t"
+    validate: "testparm -s %s"
+  become: yes
+  notify: "samba_restart"
+- name: Ensure Samba service is enabled and started
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  become: yes
+  loop: "{{ samba_server.service }}"
 - name: Ensure firewall allows smb traffic
   firewalld:
     service: "{{ item.service }}"

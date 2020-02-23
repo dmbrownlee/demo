@@ -31,14 +31,11 @@
     zone: "{{ item.zone }}"
   loop: "{{ ipa_firewall_service_enable }}"
   become: yes
-#- import_tasks: local_samba_users.yml
 #- import_tasks: datadir_ftp.yml
 #- import_tasks: datadir_nfsexport.yml
 #- import_tasks: datadir_ldaphomedir.yml
-#- import_tasks: datadir_samba.yml
 #- import_tasks: datadir_data.yml
 #- import_tasks: enable_nfs_service.yml
-#- import_tasks: enable_samba_service.yml
 - name: Check the ipa-server-install install status
   command: ipactl status
   register: ipastatus
