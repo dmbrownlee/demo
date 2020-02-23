@@ -41,18 +41,18 @@
 	#create mask = 0664
 	#directory mask = 0775
 {% endif %}
-{% for share in dirs.samba %}
+{% for share in smbconf.shares %}
 
-[{{ share.smbconf.sharename }}]
-	comment = {{ share.smbconf.comment }}
+[{{ share.sharename }}]
+	comment = {{ share.comment }}
 	path = {{ share.path }}
-{% if share.smbconf.browseable is defined %}
-	browseable = {{ share.smbconf.browseable }}
+{% if share.browseable is defined %}
+	browseable = {{ share.browseable }}
 {% endif %}
-{% if share.smbconf.read_only is defined %}
-	read only = {{ share.smbconf.read_only }}
+{% if share.read_only is defined %}
+	read only = {{ share.read_only }}
 {% endif %}
-{% if share.smbconf.guest_ok is defined %}
-	guest ok = {{ share.smbconf.guest_ok }}
+{% if share.guest_ok is defined %}
+	guest ok = {{ share.guest_ok }}
 {% endif %}
 {% endfor %}

@@ -54,6 +54,17 @@
     state: present
   loop: "{{ common_packages }}"
   become: yes
+- name: Ensure local groups are present
+  group:
+    name: "{{ item.groupname }}"
+    gid: "{{ item.gid | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+  become: yes
+  when: usergroups.local is defined
+  loop: "{{ usergroups.local }}"
+  tags:
+    - testing
 - name: Ensure local users are present
   user:
     name: "{{ item.username }}"
@@ -73,6 +84,17 @@
   become: yes
   when: users.local is defined
   loop: "{{ users.local }}"
+- name: Ensure local directories exist
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    setype: "{{ item.setype | default(omit) }}"
+  become: yes
+  when: dirs.local is defined
+  loop: "{{ dirs.local }}"
 - name: "Ensure {{ item.mountpoint.path }} mount point exists"
   file:
     path: "{{ item.mountpoint.path }}"
