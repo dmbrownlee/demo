@@ -4,7 +4,7 @@
 # you modified it.
 
 [global]
-	workgroup = SAMBA
+	workgroup = {{ smbconf.global.workgroup }}
 	server string = Samba Server Version %v
 	security = user
 
@@ -12,15 +12,18 @@
 
 	printing = cups
 	printcap name = cups
-	load printers = yes
+	load printers = {{ smbconf.global.load_printers }}
 	cups options = raw
+{% if smbconf.homedirs %}
 
-[homes]
+[home]
 	comment = Home Directories
 	#valid users = %S, %D%w%S
 	browseable = no
 	read only = no
 	#inherit acls = yes
+{% endif %}
+{% if smbconf.global.load_printers == "yes" %}
 
 [printers]
 	comment = All Printers
@@ -37,4 +40,19 @@
 	#write list = root
 	#create mask = 0664
 	#directory mask = 0775
+{% endif %}
+{% for share in dirs.samba %}
 
+[{{ share.smbconf.sharename }}]
+	comment = {{ share.smbconf.comment }}
+	path = {{ share.path }}
+{% if share.smbconf.browseable is defined %}
+	browseable = {{ share.smbconf.browseable }}
+{% endif %}
+{% if share.smbconf.read_only is defined %}
+	read only = {{ share.smbconf.read_only }}
+{% endif %}
+{% if share.smbconf.guest_ok is defined %}
+	guest ok = {{ share.smbconf.guest_ok }}
+{% endif %}
+{% endfor %}

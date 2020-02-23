@@ -72,3 +72,18 @@ users:
       password_lock: yes
       shell: "/sbin/nologin"
       smbpw: "password"
+smbconf:
+  global:
+    workgroup: "SAMBA"
+    load_printers: "no"
+  homedirs: yes
+dirs:
+  samba:
+    - path: "/srv/samba"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+      smbconf:
+        sharename: "samba"
+        comment: "data share"
+        guest_ok: "yes"
