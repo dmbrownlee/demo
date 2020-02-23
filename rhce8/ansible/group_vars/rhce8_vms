@@ -28,7 +28,6 @@ firewall_service_disable:
   - { zone: home, service: mdns }
   - { zone: home, service: samba-client }
   - { zone: home, service: ssh }
-  - { zone: internal, service: samba-client }
   - { zone: public, service: cockpit }
   - { zone: public, service: dhcpv6-client }
   - { zone: public, service: ssh }
