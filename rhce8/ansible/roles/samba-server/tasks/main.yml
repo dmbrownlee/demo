@@ -17,15 +17,6 @@
     enabled: yes
   become: yes
   loop: "{{ samba_server.service }}"
-- name: Ensure firewall allows smb traffic
-  firewalld:
-    service: "{{ item.service }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
-    zone: "{{ item.zone }}"
-  become: yes
-  loop: "{{ samba_server.firewall_service_enable }}"
 - name: Ensure Samba users have corresponding Linux users
   user:
     name: "{{ item.username }}"
@@ -55,3 +46,12 @@
   become: yes
   when: users.samba is defined and item.username not in pdbedit.stdout
   loop: "{{ users.samba }}"
+- name: Ensure firewall allows smb traffic
+  firewalld:
+    service: "{{ item.service }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: "{{ item.zone }}"
+  become: yes
+  loop: "{{ samba_server.firewall_service_enable }}"
