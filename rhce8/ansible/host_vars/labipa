@@ -36,6 +36,9 @@ network_connections:
   persistent_state: absent
 - name: "System ens6"
   persistent_state: absent
+usergroups:
+  local:
+    - groupname: "dir_data"
 users:
   local:
     - username: "user"
@@ -77,13 +80,40 @@ smbconf:
     workgroup: "SAMBA"
     load_printers: "no"
   homedirs: yes
+  shares:
+    - sharename: "samba"
+      path: "/srv/samba"
+      comment: "data share"
+      guest_ok: "yes"
+    - sharename: "data"
+      path: "/data"
+      comment: "data share"
+      guest_ok: "yes"
+      read_only: "yes"
 dirs:
-  samba:
+  local:
+    - path: "/labfiles"
+      owner: "vagrant"
+      group: "vagrant"
+      mode: "0775"
+      setype: "nfs_t"
     - path: "/srv/samba"
       owner: "root"
       group: "root"
       mode: "0755"
-      smbconf:
-        sharename: "samba"
-        comment: "data share"
-        guest_ok: "yes"
+      setype: "var_t"
+    - path: "/srv/nfsexport"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+      setype: "nfs_t"
+    - path: "/home/ldap"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+      setype: "home_root_t"
+    - path: "/data"
+      owner: "root"
+      group: "dir_data"
+      mode: "02775"
+      setype: "public_content_rw_t"

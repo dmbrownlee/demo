@@ -32,10 +32,6 @@
   loop: "{{ ipa_firewall_service_enable }}"
   become: yes
 #- import_tasks: datadir_ftp.yml
-#- import_tasks: datadir_nfsexport.yml
-#- import_tasks: datadir_ldaphomedir.yml
-#- import_tasks: datadir_data.yml
-#- import_tasks: enable_nfs_service.yml
 - name: Check the ipa-server-install install status
   command: ipactl status
   register: ipastatus

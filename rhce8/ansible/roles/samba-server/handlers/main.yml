@@ -1,10 +1,4 @@
 ---
-- name: Ensure selinux policy is applied to new Samba shares
-  listen: "samba_serestore"
-  command: "restorecon -ir {{ item.path }}"
-  when: dirs.samba is defined
-  loop: "{{ dirs.samba }}"
-  become: yes
 - name: Ensure Samba service is enabled and started
   listen: "samba_restart"
   service:

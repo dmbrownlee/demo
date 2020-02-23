@@ -34,18 +34,7 @@
   become: yes
   when: users.samba is defined and item.username not in pdbedit.stdout
   loop: "{{ users.samba }}"
-- name: Ensure shared directories exist
-  file:
-    path: "{{ item.path }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
-    mode: "{{ item.mode }}"
-    state: directory
-  become: yes
-  when: dirs.samba is defined
-  loop: "{{ dirs.samba }}"
-  notify: "samba_serestore"
-- name: Ensure example Samba share exists in Samba config file
+- name: Ensure Samba config file has been generated from template
   template:
     dest: /etc/samba/smb.conf
     src: smb.conf.j2
