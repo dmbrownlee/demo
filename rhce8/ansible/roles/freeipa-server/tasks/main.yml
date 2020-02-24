@@ -14,24 +14,19 @@
   package:
     name: "{{ item }}"
     state: present
-  loop: "{{ ipa_packages }}"
   become: yes
-- name: Ensure vsftpd is enabled and started
-  service:
-    name: vsftpd
-    state: started
-    enabled: yes
-  become: yes
-- name: "Ensure firewall allows {{ item.service }} in zone {{ item.zone }}"
+  when: ipa_server.packages is defined
+  loop: "{{ ipa_server.packages }}"
+- name: Ensure firewall allows {{ item.service }} in zone {{ item.zone }}
   firewalld:
     service: "{{ item.service }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
+    state: "{{ item.state }}"
+    permanent: "{{ item.permanent | default('yes') }}"
+    immediate: "{{ item.immediate | default('yes') }}"
     zone: "{{ item.zone }}"
-  loop: "{{ ipa_firewall_service_enable }}"
+  when: ipa_server.firewalld.rules is defined
+  loop: "{{ ipa_server.firewalld.rules }}"
   become: yes
-#- import_tasks: datadir_ftp.yml
 - name: Check the ipa-server-install install status
   command: ipactl status
   register: ipastatus
@@ -39,7 +34,7 @@
   failed_when: false
   become: yes
 - name: Ensure IPA server is configured (takes several minutes if it isn't)
-  command: "ipa-server-install --setup-dns --allow-zone-overlap -U -p {{ passwords.directory_manager }} -a {{ passwords.ipa_admin }} -n {{ dns.domain }} -r {{ krb5.realm }} --ip-address {{ ipa_server.ip }} --hostname {{ ipa_server.fqdn }} --reverse-zone {{ dns.reverse_zone }} --forwarder {{ dns.forwarder }}"
+  command: "ipa-server-install --setup-dns --allow-zone-overlap -U -p {{ passwords.directory_manager }} -a {{ passwords.ipa_admin }} -n {{ dns.domain }} -r {{ krb5.realm }} --ip-address {{ site.ipa_server.ip }} --hostname {{ site.ipa_server.fqdn }} --reverse-zone {{ dns.reverse_zone }} --forwarder {{ dns.forwarder }}"
   become: yes
   when: ipastatus.rc == 4
   notify: reboot

@@ -4,7 +4,14 @@
     state: present
     key: "{{ item }}"
   become: yes
-  loop: "{{ distro_gpg_keys }}"
+  when: rhce8_vm.distro_gpg_keys is defined
+  loop: "{{ rhce8_vm.distro_gpg_keys }}"
+- name: Ensure common packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop: "{{ rhce8_vm.packages }}"
 - name: Ensure SELinux is in enforcing mode
   selinux:
     policy: targeted
@@ -23,28 +30,20 @@
   notify: serestorecon
 - name: Ensure firewalld is started and enabled at boot
   service:
-    name: firewalld
-    state: started
-    enabled: yes
+    name: "{{ firewalld.servicename }}"
+    state: "{{ firewalld.state }}"
+    enabled: "{{ firewalld.enabled }}"
   become: yes
-- name: "Ensure firewall blocks {{ item.service }} in zone {{ item.zone }}"
+- name: Ensure common firewall rules are applied
   firewalld:
     service: "{{ item.service }}"
-    state: disabled
-    permanent: yes
-    immediate: yes
     zone: "{{ item.zone }}"
-  loop: "{{ firewall_service_disable }}"
+    state: "{{ item.state }}"
+    permanent: '{{ item.permanent | default("yes") }}'
+    immediate: '{{ item.immediate | default("yes") }}'
   become: yes
-- name: "Ensure firewall allows {{ item.service }} in zone {{ item.zone }}"
-  firewalld:
-    service: "{{ item.service }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
-    zone: "{{ item.zone }}"
-  loop: "{{ firewall_service_enable }}"
-  become: yes
+  when: firewalld.common.rules is defined
+  loop: "{{ firewalld.common.rules }}"
 - name: Check if AccountsService is present
   stat:
     path: /var/lib/AccountsService
@@ -57,12 +56,6 @@
     mode: 0644
   become: yes
   when: accounts_service.stat.isdir is defined
-- name: Ensure packages common to lab VMs are installed
-  package:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ common_packages }}"
-  become: yes
 - name: Ensure local groups are present
   group:
     name: "{{ item.groupname }}"
@@ -102,25 +95,15 @@
   become: yes
   when: dirs.local is defined
   loop: "{{ dirs.local }}"
-- name: "Ensure {{ item.mountpoint.path }} mount point exists"
-  file:
-    path: "{{ item.mountpoint.path }}"
-    state: directory
-    owner: "{{ item.mountpoint.owner }}"
-    group: "{{ item.mountpoint.group }}"
-    mode: "{{ item.mountpoint.mode }}"
-  become: yes
-  when: remote_filesystems is defined
-  loop: "{{ remote_filesystems }}"
-- name: "Ensure {{ item.mountpoint.path }} will be remounted at boot"
+- name: Ensure local mount points are available at boot
   mount:
-    path: "{{ item.mountpoint.path }}"
+    path: "{{ item.path }}"
     src: "{{ item.src }}"
     fstype: "{{ item.fstype }}"
-    opts: "{{ item.opts }}"
-    state: present
-    passno: "0"
-    dump: "0"
+    opts: "{{ item.opts | default('defaults')}}"
+    state: "{{ item.state | default('present') }}"
+    passno: "{{ item.state | default('0') }}"
+    dump: "{{ item.state | default('0') }}"
   become: yes
-  when: remote_filesystems is defined
-  loop: "{{ remote_filesystems }}"
+  when: mountpoints is defined
+  loop: "{{ mountpoints }}"

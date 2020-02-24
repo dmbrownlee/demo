@@ -1,0 +1,35 @@
+rhce8_vm:
+  distro_gpg_keys:
+    - /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+    - /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8
+  packages:
+    - 'policycoreutils-python-utils'
+    - 'nss-pam-ldapd'
+    - 'ipa-client'
+    - 'tcpdump'
+    - 'bind-utils'
+    - 'vim'
+    - 'screen'
+    - 'net-tools'
+    - 'nfs-utils'
+    - 'tmux'
+firewalld:
+  servicename: firewalld
+  state: started
+  enabled: yes
+  common:
+    rules: 
+    - { zone: internal, service: 'ssh', state: enabled }
+    - { zone: dmz, service: 'ssh', state: disabled }
+    - { zone: external, service: 'ssh', state: disabled }
+    - { zone: home, service: 'cockpit', state: disabled }
+    - { zone: home, service: 'dhcpv6-client', state: disabled }
+    - { zone: home, service: 'mdns', state: disabled }
+    - { zone: home, service: 'samba-client', state: disabled }
+    - { zone: home, service: 'ssh', state: disabled }
+    - { zone: public, service: 'cockpit', state: disabled }
+    - { zone: public, service: 'dhcpv6-client', state: disabled }
+    - { zone: public, service: 'ssh', state: disabled }
+    - { zone: work, service: 'cockpit', state: disabled }
+    - { zone: work, service: 'dhcpv6-client', state: disabled }
+    - { zone: work, service: 'ssh', state: disabled }
