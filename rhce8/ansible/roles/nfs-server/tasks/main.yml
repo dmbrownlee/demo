@@ -1,0 +1,28 @@
+---
+- name: Ensure data directory is exported via NFS
+  copy:
+    dest: "{{ item.dest }}"
+    content: "{{ item.content }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.owner }}"
+  become: yes
+  when: autofs.exports is defined
+  loop: "{{ autofs.exports }}"
+  notify: "nfs_restart"
+- name: Ensure nfs-server is started and enabled at boot
+  service:
+    name: "{{ nfs_server.servicename }}"
+    state: "{{ nfs_server.state }}"
+    enabled: "{{ nfs_server.enabled }}"
+  become: yes
+- name: Ensure NFS traffic is allowed
+  firewalld:
+    service: "{{ item.service }}"
+    zone: "{{ item.zone }}"
+    state: "{{ item.state }}"
+    permanent: '{{ item.permanent | default("yes") }}'
+    immediate: '{{ item.immediate | default("yes") }}'
+  become: yes
+  when: nfs_server.firewalld.rules is defined
+  loop: "{{ nfs_server.firewalld.rules }}"
