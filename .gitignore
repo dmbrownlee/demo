@@ -1,3 +1,4 @@
+.terraform
 .vagrant
 .travis.yml
 *.swp
@@ -7,4 +8,3 @@
 *.box
 packer_cache
 output-virtualbox-iso
-rhcx/Vagrantfile
