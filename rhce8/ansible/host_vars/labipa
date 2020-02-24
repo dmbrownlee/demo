@@ -88,6 +88,10 @@ sefcontext_updates:
     restorecon_root: "/srv/nfsexport"
     setype: "nfs_t"
     state: "present"
+  - target: '/var/ftp(/.*)?'
+    restorecon_root: "/var/ftp"
+    setype: "public_content_t"
+    state: "present"
 dirs:
   local:
     - path: "/labfiles"
@@ -115,6 +119,11 @@ dirs:
       group: "dir_data"
       mode: "02775"
       setype: "public_content_rw_t"
+mountpoints:
+  - path: "/labfiles"
+    src: "192.168.4.1:/home/user/demo/rhcx/labfiles"
+    fstype: "nfs"
+    opts: "tcp,ro,async,noatime,_netdev"
 smbconf:
   global:
     workgroup: "SAMBA"
