@@ -1,0 +1,8 @@
+---
+- name: Ensure Samba service is enabled and started
+  listen: "samba_restart"
+  service:
+    name: "{{ item }}"
+    state: restarted
+  become: yes
+  loop: "{{ samba_server.service }}"

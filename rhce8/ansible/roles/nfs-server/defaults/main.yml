@@ -1,0 +1,9 @@
+nfs_server:
+  servicename: nfs-server
+  state: started
+  enabled: yes
+  firewalld:
+    rules: 
+    - { zone: internal, service: 'nfs', state: enabled }
+    - { zone: internal, service: 'mountd', state: enabled }
+    - { zone: internal, service: 'rpc-bind', state: enabled }
