@@ -75,21 +75,19 @@ users:
       password_lock: yes
       shell: "/sbin/nologin"
       smbpw: "password"
-smbconf:
-  global:
-    workgroup: "SAMBA"
-    load_printers: "no"
-  homedirs: yes
-  shares:
-    - sharename: "samba"
-      path: "/srv/samba"
-      comment: "data share"
-      guest_ok: "yes"
-    - sharename: "data"
-      path: "/data"
-      comment: "data share"
-      guest_ok: "yes"
-      read_only: "yes"
+sefcontext_updates:
+  - target: '/data(/.*)?'
+    restorecon_root: "/data"
+    setype: "public_content_rw_t"
+    state: "present"
+  - target: '/home/ldap(/.*)?'
+    restorecon_root: "/home/ldap"
+    setype: "nfs_t"
+    state: "present"
+  - target: '/srv/nfsexport(/.*)?'
+    restorecon_root: "/srv/nfsexport"
+    setype: "nfs_t"
+    state: "present"
 dirs:
   local:
     - path: "/labfiles"
@@ -117,3 +115,35 @@ dirs:
       group: "dir_data"
       mode: "02775"
       setype: "public_content_rw_t"
+smbconf:
+  global:
+    workgroup: "SAMBA"
+    load_printers: "no"
+  homedirs: yes
+  shares:
+    - sharename: "samba"
+      path: "/srv/samba"
+      comment: "data share"
+      guest_ok: "yes"
+    - sharename: "data"
+      path: "/data"
+      comment: "data share"
+      guest_ok: "yes"
+      read_only: "yes"
+autofs:
+  exports:
+    - dest: '/etc/exports.d/data.exports'
+      content: '/data *(rw)'
+      owner: 'root'
+      group: 'root'
+      mode: '0644'
+    - dest: '/etc/exports.d/nfshome.exports'
+      content: '/home/ldap	*(rw,sec=krb5p)'
+      owner: 'root'
+      group: 'root'
+      mode: '0644'
+    - dest: '/etc/exports.d/nfsexport.exports'
+      content: '/srv/nfsexport *(rw)'
+      owner: 'root'
+      group: 'root'
+      mode: '0644'

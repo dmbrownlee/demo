@@ -23,3 +23,8 @@
   hosts: samba_servers
   roles:
     - role: samba-server
+
+- name: Configure NFS servers
+  hosts: nfs_servers
+  roles:
+    - role: nfs-server
