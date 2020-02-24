@@ -22,8 +22,6 @@
   hosts: ftp_servers
   roles:
     - role: ftp-server
-      tags:
-        - testing
 
 - name: Configure FreeIPA servers
   hosts: ipa_servers
