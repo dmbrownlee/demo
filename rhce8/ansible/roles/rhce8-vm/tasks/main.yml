@@ -1,0 +1,109 @@
+---
+- name: Ensure we accept distro GPG keys
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  become: yes
+  when: rhce8_vm.distro_gpg_keys is defined
+  loop: "{{ rhce8_vm.distro_gpg_keys }}"
+- name: Ensure common packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  loop: "{{ rhce8_vm.packages }}"
+- name: Ensure SELinux is in enforcing mode
+  selinux:
+    policy: targeted
+    state: enforcing
+  become: yes
+  register: selinux
+  notify: reboot
+- name: Ensure SELinux fcontext policy updates have been configured
+  sefcontext:
+    target: "{{ item.target }}"
+    setype: "{{ item.setype }}"
+    state: "{{ item.state | default(omit) }}"
+  become: yes
+  when: sefcontext_updates is defined
+  loop: "{{ sefcontext_updates }}"
+  notify: serestorecon
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: "{{ firewalld.servicename }}"
+    state: "{{ firewalld.state }}"
+    enabled: "{{ firewalld.enabled }}"
+  become: yes
+- name: Ensure common firewall rules are applied
+  firewalld:
+    service: "{{ item.service }}"
+    zone: "{{ item.zone }}"
+    state: "{{ item.state }}"
+    permanent: '{{ item.permanent | default("yes") }}'
+    immediate: '{{ item.immediate | default("yes") }}'
+  become: yes
+  when: firewalld.common.rules is defined
+  loop: "{{ firewalld.common.rules }}"
+- name: Check if AccountsService is present
+  stat:
+    path: /var/lib/AccountsService
+  register: accounts_service
+  changed_when: False
+- name: Ensure vagrant user is hidden from gdm login screen
+  copy:
+    src: vagrant
+    dest: /var/lib/AccountsService/users
+    mode: 0644
+  become: yes
+  when: accounts_service.stat.isdir is defined
+- name: Ensure local groups are present
+  group:
+    name: "{{ item.groupname }}"
+    gid: "{{ item.gid | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+  become: yes
+  when: usergroups.local is defined
+  loop: "{{ usergroups.local }}"
+- name: Ensure local users are present
+  user:
+    name: "{{ item.username }}"
+    append: "{{ item.append | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    password: "{{ item.pw | default(omit) }}"
+    password_lock: "{{ item.password_lock | default(omit) }}"
+    remove: "{{ item.remmove | default(omit) }}"
+    shell: "{{ item.shell | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
+  become: yes
+  when: users.local is defined
+  loop: "{{ users.local }}"
+- name: Ensure local directories exist
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    setype: "{{ item.setype | default(omit) }}"
+  become: yes
+  when: dirs.local is defined
+  loop: "{{ dirs.local }}"
+- name: Ensure local mount points are available at boot
+  mount:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fstype }}"
+    opts: "{{ item.opts | default('defaults')}}"
+    state: "{{ item.state | default('present') }}"
+    passno: "{{ item.state | default('0') }}"
+    dump: "{{ item.state | default('0') }}"
+  become: yes
+  when: mountpoints is defined
+  loop: "{{ mountpoints }}"

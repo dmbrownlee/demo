@@ -1,0 +1,58 @@
+# See smb.conf.example for a more detailed config file or
+# read the smb.conf manpage.
+# Run 'testparm' to verify the config is correct after
+# you modified it.
+
+[global]
+	workgroup = {{ smbconf.global.workgroup }}
+	server string = Samba Server Version %v
+	security = user
+
+	passdb backend = tdbsam
+
+	printing = cups
+	printcap name = cups
+	load printers = {{ smbconf.global.load_printers }}
+	cups options = raw
+{% if smbconf.homedirs %}
+
+[home]
+	comment = Home Directories
+	#valid users = %S, %D%w%S
+	browseable = no
+	read only = no
+	#inherit acls = yes
+{% endif %}
+{% if smbconf.global.load_printers == "yes" %}
+
+[printers]
+	comment = All Printers
+	path = /var/tmp
+	printable = yes
+	create mask = 0600
+	browseable = no
+	guest ok = no
+	writable = no
+
+#[print$]
+	#comment = Printer Drivers
+	#path = /var/lib/samba/drivers
+	#write list = root
+	#create mask = 0664
+	#directory mask = 0775
+{% endif %}
+{% for share in smbconf.shares %}
+
+[{{ share.sharename }}]
+	comment = {{ share.comment }}
+	path = {{ share.path }}
+{% if share.browseable is defined %}
+	browseable = {{ share.browseable }}
+{% endif %}
+{% if share.read_only is defined %}
+	read only = {{ share.read_only }}
+{% endif %}
+{% if share.guest_ok is defined %}
+	guest ok = {{ share.guest_ok }}
+{% endif %}
+{% endfor %}

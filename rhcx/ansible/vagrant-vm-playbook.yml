@@ -3,12 +3,12 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: all
-    - role: vagranthost
+    - role: base
 
-- name: Lab configuration
-  hosts: labhost
+- name: RHCSA VM Configuration
+  hosts: rhcsa8
   roles:
+    - role: vagranthost
     - role: netconfig-lab
     - role: labhost
 
@@ -19,7 +19,7 @@
     - role: vagrant-freeipa-users
 
 - name: Exam hosts
-  hosts: exam1 exam2
+  hosts: examhost
   roles:
     - role: netconfig-lab
     - role: examhost

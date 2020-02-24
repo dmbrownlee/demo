@@ -1,0 +1,13 @@
+---
+- name: Check if AccountsService is present
+  stat:
+    path: /var/lib/AccountsService
+  register: accounts_service
+  changed_when: False
+- name: Ensure vagrant user is hidden from gdm login screen
+  copy:
+    src: vagrant
+    dest: /var/lib/AccountsService/users
+    mode: 0644
+  become: yes
+  when: accounts_service.stat.isdir is defined

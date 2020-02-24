@@ -1,0 +1,8 @@
+---
+- name: Ensure NFS service is restarted
+  listen: "nfs_restart"
+  service:
+    name: "{{ nfs_server.servicename }}"
+    state: restarted
+  become: yes
+  when: nfs_server is defined
