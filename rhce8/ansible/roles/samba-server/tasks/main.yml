@@ -47,11 +47,11 @@
   notify: "samba_restart"
 - name: Ensure Samba service is enabled and started
   service:
-    name: "{{ item }}"
-    state: started
-    enabled: yes
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
   become: yes
-  loop: "{{ samba_server.service }}"
+  loop: "{{ samba_server.servers }}"
 - name: Ensure firewall allows smb traffic
   firewalld:
     service: "{{ item.service }}"
