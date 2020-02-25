@@ -4,14 +4,15 @@
     state: present
     key: "{{ item }}"
   become: yes
-  when: rhce8_vm.distro_gpg_keys is defined
-  loop: "{{ rhce8_vm.distro_gpg_keys }}"
+  when: localconf.distro_gpg_keys is defined
+  loop: "{{ localconf.distro_gpg_keys }}"
 - name: Ensure common packages are installed
   package:
     name: "{{ item }}"
     state: present
   become: yes
-  loop: "{{ rhce8_vm.packages }}"
+  when: localconf.packages is defined
+  loop: "{{ localconf.packages }}"
 - name: Ensure SELinux is in enforcing mode
   selinux:
     policy: targeted
@@ -28,12 +29,14 @@
   when: sefcontext_updates is defined
   loop: "{{ sefcontext_updates }}"
   notify: serestorecon
-- name: Ensure firewalld is started and enabled at boot
+- name: Ensure firewalld service is configured
   service:
-    name: "{{ firewalld.servicename }}"
-    state: "{{ firewalld.state }}"
-    enabled: "{{ firewalld.enabled }}"
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
   become: yes
+  when: localconf.servers is defined and item.servicename == 'firewalld'
+  loop: "{{ localconf.servers }}"
 - name: Ensure common firewall rules are applied
   firewalld:
     service: "{{ item.service }}"
@@ -42,8 +45,8 @@
     permanent: '{{ item.permanent | default("yes") }}'
     immediate: '{{ item.immediate | default("yes") }}'
   become: yes
-  when: firewalld.common.rules is defined
-  loop: "{{ firewalld.common.rules }}"
+  when: localconf.firewalld.rules is defined
+  loop: "{{ localconf.firewalld.rules }}"
 - name: Check if AccountsService is present
   stat:
     path: /var/lib/AccountsService
