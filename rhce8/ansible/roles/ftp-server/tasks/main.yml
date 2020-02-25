@@ -7,10 +7,11 @@
   loop: "{{ ftp_server.packages }}"
 - name: Ensure ftp-server is started and enabled at boot
   service:
-    name: "{{ ftp_server.servicename }}"
-    state: "{{ ftp_server.state }}"
-    enabled: "{{ ftp_server.enabled }}"
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
   become: yes
+  loop: "{{ ftp_server.servers }}"
 - name: Ensure FTP traffic is allowed
   firewalld:
     service: "{{ item.service }}"

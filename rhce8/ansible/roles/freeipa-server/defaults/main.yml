@@ -4,9 +4,8 @@ ipa_server:
     - ipa-server
     - bind-dyndb-ldap
     - ipa-server-dns
-  servicename: nfs-server
-  state: started
-  enabled: yes
+  servers:
+    - { servicename: 'ipa', state: started, enabled: yes }
   firewalld:
     rules: 
     - { zone: internal, service: 'http', state: enabled }
@@ -16,4 +15,6 @@ ipa_server:
     - { zone: internal, service: 'kerberos', state: enabled }
     - { zone: internal, service: 'kpasswd', state: enabled }
     - { zone: internal, service: 'dns', state: enabled }
-    - { zone: internal, service: 'ntp', state: enabled }
+    #- { zone: internal, service: 'kadmin', state: enabled }
+    #- { zone: internal, service: '8080', state: enabled }
+    #- { zone: internal, service: '8443', state: enabled }

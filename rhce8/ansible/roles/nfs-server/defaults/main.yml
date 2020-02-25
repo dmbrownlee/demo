@@ -1,7 +1,9 @@
+---
 nfs_server:
-  servicename: nfs-server
-  state: started
-  enabled: yes
+  packages:
+    - 'nfs-utils'
+  servers:
+    - { servicename: 'nfs-server', state: started, enabled: yes }
   firewalld:
     rules: 
     - { zone: internal, service: 'nfs', state: enabled }
