@@ -55,9 +55,10 @@
 - name: Ensure firewall allows smb traffic
   firewalld:
     service: "{{ item.service }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
+    state: "{{ item.state }}"
+    permanent: "{{ item.permanent | default('yes') }}"
+    immediate: "{{ item.immediate | default('yes') }}"
     zone: "{{ item.zone }}"
+  when: samba_server.firewalld.rules is defined
+  loop: "{{ samba_server.firewalld.rules }}"
   become: yes
-  loop: "{{ samba_server.firewall_service_enable }}"

@@ -17,16 +17,6 @@
   become: yes
   when: ipa_server.packages is defined
   loop: "{{ ipa_server.packages }}"
-- name: Ensure firewall allows {{ item.service }} in zone {{ item.zone }}
-  firewalld:
-    service: "{{ item.service }}"
-    state: "{{ item.state }}"
-    permanent: "{{ item.permanent | default('yes') }}"
-    immediate: "{{ item.immediate | default('yes') }}"
-    zone: "{{ item.zone }}"
-  when: ipa_server.firewalld.rules is defined
-  loop: "{{ ipa_server.firewalld.rules }}"
-  become: yes
 - name: Check the ipa-server-install install status
   command: ipactl status
   register: ipastatus
@@ -75,3 +65,20 @@
   shell: "echo {{ passwords.krb5_admin }} | kinit admin; ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com."
   when: item.a not in ipa_dns_ptr_records.stdout_lines
   loop: "{{ dns.rr }}"
+- name: Ensure IPA service is enabled and started
+  service:
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  become: yes
+  loop: "{{ ipa_server.servers }}"
+- name: Ensure firewall allows {{ item.service }} in zone {{ item.zone }}
+  firewalld:
+    service: "{{ item.service }}"
+    state: "{{ item.state }}"
+    permanent: "{{ item.permanent | default('yes') }}"
+    immediate: "{{ item.immediate | default('yes') }}"
+    zone: "{{ item.zone }}"
+  when: ipa_server.firewalld.rules is defined
+  loop: "{{ ipa_server.firewalld.rules }}"
+  become: yes

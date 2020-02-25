@@ -12,10 +12,11 @@
   notify: "nfs_restart"
 - name: Ensure nfs-server is started and enabled at boot
   service:
-    name: "{{ nfs_server.servicename }}"
-    state: "{{ nfs_server.state }}"
-    enabled: "{{ nfs_server.enabled }}"
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
   become: yes
+  loop: "{{ nfs_server.servers }}"
 - name: Ensure NFS traffic is allowed
   firewalld:
     service: "{{ item.service }}"
