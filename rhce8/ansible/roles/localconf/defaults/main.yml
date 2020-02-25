@@ -1,4 +1,4 @@
-rhce8_vm:
+localconf:
   distro_gpg_keys:
     - /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
     - /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-8
@@ -13,11 +13,11 @@ rhce8_vm:
     - 'net-tools'
     - 'nfs-utils'
     - 'tmux'
-firewalld:
-  servicename: firewalld
-  state: started
-  enabled: yes
-  common:
+    - 'firewalld'
+    - 'bash-completion'
+  servers:
+    - { servicename: 'firewalld', state: started, enabled: yes }
+  firewalld:
     rules: 
     - { zone: internal, service: 'ssh', state: enabled }
     - { zone: dmz, service: 'ssh', state: disabled }
