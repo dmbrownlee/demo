@@ -9,7 +9,6 @@ localconf:
     - 'tcpdump'
     - 'bind-utils'
     - 'vim'
-    - 'screen'
     - 'net-tools'
     - 'nfs-utils'
     - 'tmux'
