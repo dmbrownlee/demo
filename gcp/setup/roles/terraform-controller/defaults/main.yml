@@ -1,0 +1,5 @@
+dirs:
+  - path: "{{ ansible_user_dir }}/keys"
+    state: 'directory'
+    mode: '0700'
+    owner: "{{ ansible_user_id }}"
