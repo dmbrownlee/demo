@@ -1,0 +1,15 @@
+---
+- name: Ensure dnf modules changes have been applied
+  dnf:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  become: yes
+  when: mydnf is defined
+  loop: "{{ mydnf }}"
+- name: Ensure additional software is installed
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  when: mypackages is defined
+  loop: "{{ mypackages }}"

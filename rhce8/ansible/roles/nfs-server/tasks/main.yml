@@ -10,20 +10,9 @@
   when: autofs.exports is defined
   loop: "{{ autofs.exports }}"
   notify: "nfs_restart"
-- name: Ensure nfs-server is started and enabled at boot
-  service:
-    name: "{{ item.servicename }}"
-    state: "{{ item.state }}"
-    enabled: "{{ item.enabled }}"
-  become: yes
-  loop: "{{ nfs_server.servers }}"
-- name: Ensure NFS traffic is allowed
-  firewalld:
-    service: "{{ item.service }}"
-    zone: "{{ item.zone }}"
-    state: "{{ item.state }}"
-    permanent: '{{ item.permanent | default("yes") }}'
-    immediate: '{{ item.immediate | default("yes") }}'
-  become: yes
-  when: nfs_server.firewalld.rules is defined
-  loop: "{{ nfs_server.firewalld.rules }}"
+- name: Ensure NFS setup complete using server role
+  import_role:
+    name: server
+    defaults_from: nfs_server
+  tags:
+    - testing

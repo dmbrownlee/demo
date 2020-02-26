@@ -1,24 +1,13 @@
 ---
 - name: Ensure the FTP server is installed
-  package:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  loop: "{{ ftp_server.packages }}"
-- name: Ensure ftp-server is started and enabled at boot
-  service:
-    name: "{{ item.servicename }}"
-    state: "{{ item.state }}"
-    enabled: "{{ item.enabled }}"
-  become: yes
-  loop: "{{ ftp_server.servers }}"
-- name: Ensure FTP traffic is allowed
-  firewalld:
-    service: "{{ item.service }}"
-    zone: "{{ item.zone }}"
-    state: "{{ item.state }}"
-    permanent: '{{ item.permanent | default("yes") }}'
-    immediate: '{{ item.immediate | default("yes") }}'
-  become: yes
-  when: ftp_server.firewalld.rules is defined
-  loop: "{{ ftp_server.firewalld.rules }}"
+  import_role:
+    name: additional_software
+    defaults_from: ftp_server
+  tags:
+    - testing
+- name: Ensure FTP setup complete using server role
+  import_role:
+    name: server
+    defaults_from: ftp_server
+  tags:
+    - testing
