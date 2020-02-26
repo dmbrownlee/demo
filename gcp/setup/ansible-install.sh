@@ -12,5 +12,3 @@ if [ $? -ne 0 ]; then
     export PATH=$PATH:$HOME/.local/bin
   }
 fi
-
-ansible-playbook gcp-tf-setup.yml
