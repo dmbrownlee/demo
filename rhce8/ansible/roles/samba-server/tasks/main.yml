@@ -1,10 +1,10 @@
 ---
-- name: Ensure Samba server and client is installed
-  package:
-    name: "{{ item }}"
-    state: present
-  become: yes
-  loop: "{{ samba_server.packages }}"
+- name: Ensure the Samba server is installed
+  import_role:
+    name: additional_software
+    defaults_from: samba_server
+  tags:
+    - testing
 - name: Ensure Samba users have corresponding Linux users
   user:
     name: "{{ item.username }}"
@@ -45,20 +45,9 @@
     validate: "testparm -s %s"
   become: yes
   notify: "samba_restart"
-- name: Ensure Samba service is enabled and started
-  service:
-    name: "{{ item.servicename }}"
-    state: "{{ item.state }}"
-    enabled: "{{ item.enabled }}"
-  become: yes
-  loop: "{{ samba_server.servers }}"
-- name: Ensure firewall allows smb traffic
-  firewalld:
-    service: "{{ item.service }}"
-    state: "{{ item.state }}"
-    permanent: "{{ item.permanent | default('yes') }}"
-    immediate: "{{ item.immediate | default('yes') }}"
-    zone: "{{ item.zone }}"
-  when: samba_server.firewalld.rules is defined
-  loop: "{{ samba_server.firewalld.rules }}"
-  become: yes
+- name: Ensure Samba setup complete using server role
+  import_role:
+    name: server
+    defaults_from: samba_server
+  tags:
+    - testing

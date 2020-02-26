@@ -1,9 +1,8 @@
 ---
-ftp_server:
-  packages:
-    - 'vsftpd'
-  servers:
-    - { servicename: 'vsftpd', state: started, enabled: yes }
-  firewalld:
-    rules: 
-    - { zone: internal, service: 'ftp', state: enabled }
+mypackages:
+  - 'vsftpd'
+myservices:
+  - { servicename: 'vsftpd', state: started, enabled: yes }
+myfirewalld:
+  rules: 
+  - { zone: internal, service: 'ftp', state: enabled }
