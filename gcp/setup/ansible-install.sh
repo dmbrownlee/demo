@@ -6,7 +6,8 @@
 
 which ansible 2>&1 > /dev/null
 if [ $? -ne 0 ]; then
-  pip3 install --user ansible
+  python3 -m pip install --upgrade --user pip
+  python3 -m pip install --user ansible
   [[ "$PATH" =~ "$HOME/.local/bin" ]] || {
     echo '[[ "$PATH" =~ "$HOME/.local/bin" ]] || export PATH=$PATH:$HOME/.local/bin' >> $HOME/.bashrc
     export PATH=$PATH:$HOME/.local/bin
