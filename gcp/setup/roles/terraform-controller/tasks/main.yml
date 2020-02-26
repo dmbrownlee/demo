@@ -1,0 +1,17 @@
+---
+- name: Ensure local directories exist
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) }}"
+    owner: "{{ item.owner | default(omit) }}"
+    setype: "{{ item.setype | default(omit) }}"
+  become: yes
+  when: local_dirs is defined
+  loop: "{{ local_dirs }}"
+- name: Ensure lab.tf exists
+  template:
+    dest: "{{ ansible_user_dir }}"
+    src: lab.tf
+    validate: "terraform plan {{ ansible_user_dir }}/%s"
