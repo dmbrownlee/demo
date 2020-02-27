@@ -1,17 +1,24 @@
 ---
-- name: Ensure local directories exist
+- name: Ensure terraform directory exists
   file:
-    path: "{{ item.path }}"
+    path: "{{ tf_dir }}"
     state: directory
-    group: "{{ item.group | default(omit) }}"
-    mode: "{{ item.mode | default(omit) }}"
-    owner: "{{ item.owner | default(omit) }}"
-    setype: "{{ item.setype | default(omit) }}"
-  become: yes
-  when: local_dirs is defined
-  loop: "{{ local_dirs }}"
+  register: mk_tf_dir
+- name: Ensure terraform keys directory exists
+  file:
+    path: "{{ tf_keys_dir }}"
+    state: directory
+    mode: '0700'
+    owner: "{{ ansible_user_id }}"
+  register: mk_tf_keys_dir
 - name: Ensure lab.tf exists
   template:
-    dest: "{{ ansible_user_dir }}"
+    dest: "{{ tf_conf }}"
     src: lab.tf
-    validate: "terraform plan {{ ansible_user_dir }}/%s"
+  register: mk_tf_conf
+- name: Ensure terraform has been initialized
+  command:
+    cmd: 'terraform init'
+    chdir: "{{ tf_dir }}"
+    creates: "{{ tf_dir }}/.terraform/"
+  when: mk_tf_conf.changed
