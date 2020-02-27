@@ -1,5 +1,2 @@
-dirs:
-  - path: "{{ ansible_user_dir }}/keys"
-    state: 'directory'
-    mode: '0700'
-    owner: "{{ ansible_user_id }}"
+gcp_region: "us-west1"
+gcp_zone: "us-west1-b"
