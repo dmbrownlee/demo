@@ -14,7 +14,7 @@ If you have not installed Linux yet or would like to start with a clean installa
 
 Once you have the installation media created, boot from it, use the cursor keys to highlight the menu option to install CentOS, and press 'e' __instead of pressing return__ so you can edit the menu option (the keys to press are displayed at the bottom of the screen in case you forget).  Use the cursor keys to go down to the line beginning with "linux" and use Ctrl-e to jump to the end of that line.  Once there, add the following to the end of the line:
 ```
-inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/rhcx/ks/ks.cfg
+inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/master/rhcx/ks/ks.cfg
 ```
 Then press Ctrl-x (as displayed at the bottom of the screen) to begin the installation.
 
