@@ -1,5 +1,0 @@
----
-- name: Ensure selinux policy is applied to new Samba share
-  listen: "serestore_samba"
-  command: restorecon -ir /srv/samba
-  become: yes

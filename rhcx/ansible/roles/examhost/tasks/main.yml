@@ -1,5 +1,0 @@
----
-- import_tasks: break_exam1.yml
-  when: exam_config == "exam1"
-- import_tasks: break_exam2.yml
-  when: exam_config == "exam2"

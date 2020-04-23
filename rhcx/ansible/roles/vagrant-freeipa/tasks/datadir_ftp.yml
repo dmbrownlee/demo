@@ -1,8 +1,0 @@
----
-- name: Ensure FTP share has correct SELinux fcontext in policy
-  sefcontext:
-    target: '/var/ftp(/.*)?'
-    setype: public_content_t
-    state: present
-  become: yes
-  notify: serestore_ftp

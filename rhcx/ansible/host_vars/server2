@@ -1,7 +1,0 @@
----
-hostname: server2
-host_vagrant_net_conn_name: vagrant
-host_vagrant_net_iface: ens6
-host_lab_net_conn_name: example_com                                              
-host_lab_net_iface: ens7
-host_lab_net_ipv4_addresses: "192.168.4.220/24" 

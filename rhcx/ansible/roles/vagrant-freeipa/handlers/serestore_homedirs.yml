@@ -1,5 +1,0 @@
----
-- name: Ensure selinux policy is applied to /home/ldap
-  listen: "serestore_homedirs"
-  command: restorecon -ir /home/ldap
-  become: yes
