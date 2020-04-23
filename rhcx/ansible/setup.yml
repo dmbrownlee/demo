@@ -1,5 +1,0 @@
----
-- name: Setup the KVM virtual machine lab environment
-  hosts: localhost
-  roles:
-    - role: vmhost
