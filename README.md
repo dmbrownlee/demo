@@ -29,7 +29,7 @@ cd && git clone https://github.com/dmbrownlee/demo.git
 ```
 This will create a copy of this project in your home directory.  Next, we install the software for the lab environment.  To kick this off, do this:
 ```
-cd ~/demo/rhcx && ./setup
+cd ~/demo/rhcsa && ./setup
 ```
 When prompted for the "BECOME" password, use the password of the admin account you are using ("BECOME" is Ansible's "sudo").  This step takes long time, possibly a few hours depending on the speed of your Internet connection and your machine, since, in addition to downloading Gigabytes of software, it also spins up two different CentOS virtual machines and copies their disk images to use as templates for quickly spinning up virtual machines later.  Ideally, the time spent setting this up saves lots of time down the road.
 
