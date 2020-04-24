@@ -1,7 +1,0 @@
----
-hostname: labipa
-host_vagrant_net_conn_name: vagrant
-host_vagrant_net_iface: eth0
-host_lab_net_conn_name: example_com                                              
-host_lab_net_iface: eth1
-host_lab_net_ipv4_addresses: "192.168.4.200/24" 
