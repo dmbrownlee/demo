@@ -1,4 +1,3 @@
-# The "host" directory
 This directory contains files for automating the installation of a minimal Linux system with a graphical desktop for use as the KVM host for the virtual machines in the labs.  If you already have Linux installed, you should not need anything here.  However, if you are having trouble with your installation, these are the kickstart and preseed files used to create the hosts on which the labs are tested.
 
 # Overview
