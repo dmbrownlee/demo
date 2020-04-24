@@ -3,7 +3,7 @@ This directory contains files for automating the installation of a minimal Linux
 # Overview
 The basic steps are:
 1. [Create the installion media](https://github.com/dmbrownlee/demo/blob/master/kvmhost/README.md#create-the-installation-media)
-2. Install the host using distribution specific automation
+2. [Install the host using distribution specific automation](https://github.com/dmbrownlee/demo/blob/master/kvmhost/README.md#install-the-host-using-distribution-specific-automation)
 
 Given the current focus on creating a lab environment for preparing for the RHCSA exam, the preferred and most tested platform is CentOS using kickstart files for automation.  However, suport for Debian (Buster) using preseed.cfg files has just started.
 
