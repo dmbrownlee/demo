@@ -1,2 +1,2 @@
 #!/bin/bash
-cd ansible && ansible-playbook --skip-tags disabled setup.yml
+cd ./.setup && ansible-playbook --skip-tags disabled setup.yml
