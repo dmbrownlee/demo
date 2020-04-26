@@ -1,20 +1,22 @@
 ---
-- name: Test if vagrant is already installed
+- name: Ensure vagrant is installed (CentOS)
   stat:
-    path: /usr/bin/vagrant
+    path: "{{ vagrant_install_path }}"
   register: vagrant_installation
   changed_when: False
-- name: Download and install Vagrant rpm file
+  when: ansible_distribution == 'CentOS'
+- name: Download and install Vagrant rpm file (CentOS)
   package:
     name: "{{ vagrant_url }}"
     state: present
-  when: vagrant_installation.stat.isreg is not defined
+  when: vagrant_installation.stat.isreg is not defined and ansible_distribution == 'CentOS'
   become: yes
-- name: Test if vagrant-libvirt plugin is already installed
+- name: Test if vagrant-libvirt plugin is already installed (CentOS)
   command: "vagrant plugin list"
   register: vagrant_plugin_installed
   changed_when: False
-- name: Ensure gcc is installed in order to build the vagrant plugin
+  when: ansible_distribution == 'CentOS'
+- name: Ensure gcc is installed in order to build the vagrant plugin (CentOS)
   package:
     name: "{{ item }}"
     state: present
@@ -23,10 +25,16 @@
     - gcc
     - libvirt-devel
     - make
-  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
-- name: Install vagrant-libvirt plugin
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout and ansible_distribution == 'CentOS'"
+- name: Install vagrant-libvirt plugin (CentOS)
   command: "vagrant plugin install vagrant-libvirt"
-  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout and ansible_distribution == 'CentOS'"
+- name: Ensure vagrant is installed (Debian)
+  apt:
+    name: vagrant
+    state: latest
+  become: yes
+  when: ansible_distribution == 'Debian'
 - name: Ensure {{ ansible_user_dir }}/keys directory exists
   file:
     path: "{{ ansible_user_dir }}/keys"
@@ -43,35 +51,3 @@
     chdir: "{{ ansible_user_dir }}/keys"
     creates: "{{ ansible_user_dir }}/keys/vagrant"
   when: keys_installation.stat.isreg is not defined
-- name: NFS services
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: yes
-  with_items:
-    - firewalld
-    - rpcbind
-    - nfs-server
-  become: yes
-- name: Ensure NFS is allowed through firewall on libvirt interfaces (CentOS 8)
-  firewalld:
-    service: "{{ item }}"
-    state: enabled
-    permanent: yes
-    immediate: yes
-    zone: libvirt
-  with_items:
-    - rpc-bind
-    - mountd
-    - nfs
-  become: yes
-  when: ansible_distribution_major_version == "8"
-- name: Ensure shared folders are exported
-  copy:
-    dest: /etc/exports.d/vagrant-shared-folders.exports
-    content: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
-  become: yes
-- name: Re-export shared folders
-  command: exportfs -ra
-  changed_when: false
-  become: yes
