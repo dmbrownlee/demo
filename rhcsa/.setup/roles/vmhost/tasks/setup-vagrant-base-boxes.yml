@@ -1,10 +1,17 @@
 ---
 #- import_tasks: basebox.yml
-- name: Ensure tigervnc is installed (helpful when debugging packer builds).
+- name: Ensure tigervnc is installed (helpful when debugging packer builds) (CentOS)
   package:
     name: tigervnc
     state: present
   become: yes
+  when: ansible_distribution == 'CentOS'
+- name: Ensure tigervnc is installed (helpful when debugging packer builds) (Debian)
+  package:
+    name: tigervnc-viewer
+    state: present
+  become: yes
+  when: ansible_distribution == 'Debian'
 - import_tasks: basebox.yml
   vars:
     inst_name: CentOS-8.1-1911-x86_64-Minimal
