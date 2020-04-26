@@ -5,10 +5,18 @@
     state: started
     enabled: yes
   with_items:
-    - firewalld
     - rpcbind
     - nfs-server
   become: yes
+- name: Firewalld service (CentOS)
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - firewalld
+  become: yes
+  when: ansible_distribution == 'CentOS'
 - name: Ensure NFS is allowed through firewall on libvirt interfaces (CentOS 8)
   firewalld:
     service: "{{ item }}"
@@ -21,12 +29,21 @@
     - mountd
     - nfs
   become: yes
-  when: ansible_distribution_major_version == "8"
-- name: Ensure shared folders are exported
+  when: ansible_distribution == 'CentOS'
+- name: Ensure shared folders are exported (CentOS)
   copy:
     dest: /etc/exports.d/vagrant-shared-folders.exports
     content: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
   become: yes
+  when: ansible_distribution == 'CentOS'
+- name: Ensure shared folders are exported (Debian)
+  lineinfile:
+    path: /etc/exports
+    line: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
+    state: present
+    create: yes
+  become: yes
+  when: ansible_distribution == 'Debian'
 - name: Re-export shared folders
   command: exportfs -ra
   changed_when: false
