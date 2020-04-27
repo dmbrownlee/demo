@@ -1,18 +1,17 @@
 ---
 # tasks file for packer
-- name: Ensure packer is installed (CentOS)
+- name: Ensure packer is installed
   stat:
     path: "{{ packer_install_path }}"
   register: packer_installation
   changed_when: False
-  when: ansible_distribution == 'CentOS'
-- name: Ensure zipped binary of packer has been downloaded (CentOS)
+- name: Ensure zipped binary of packer has been downloaded
   get_url:
     url: "{{ packer_url }}"
     dest: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
     checksum: "{{ packer_checksum }}"
-  when: ansible_distribution == 'CentOS' and packer_installation.stat.isreg is not defined
-- name: Install Packer (CentOS)
+  when: packer_installation.stat.isreg is not defined
+- name: Install Packer
   unarchive:
     src: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
     dest: "/usr/local/bin"
@@ -22,11 +21,4 @@
     group: "root"
     mode: 0755
   become: yes
-  when: ansible_distribution == 'CentOS' and packer_installation.stat.isreg is not defined
-- name: Ensure packer is installed (Debian)
-  apt:
-    name: packer
-    state: latest
-    update_cache: yes
-  become: yes
-  when: ansible_distribution == 'Debian'
+  when: packer_installation.stat.isreg is not defined
