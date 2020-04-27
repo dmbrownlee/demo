@@ -76,7 +76,6 @@
   ],
   "post-processors": [{
     "type": "vagrant",
-    "only": ["qemu"],
     "output": "{{user `inst_name`}}.box"
   }]
 }
