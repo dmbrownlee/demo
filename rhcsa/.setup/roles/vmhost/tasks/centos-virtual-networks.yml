@@ -5,11 +5,6 @@
     groups: libvirt
     append: yes
   become: yes
-- name: Ensure lxml library for python is installed
-  package:
-    name: python3-lxml
-    state: latest
-  become: true
 - name: Get the list of virtual networks
   command: "virsh net-list --all --name"
   ignore_errors: True
