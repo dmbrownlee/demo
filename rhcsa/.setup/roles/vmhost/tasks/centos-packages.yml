@@ -1,0 +1,78 @@
+---
+# Installing packages for KVM virtualization
+- name: Ensure epel-release is installed
+  package:
+    name: epel-release
+    state: latest
+  become: true
+- name: install kvm (CentOS)
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+     - "@virtualization-hypervisor"
+     - "@virtualization-client"
+     - "@virtualization-platform"
+     - "@virtualization-tools"
+     - qemu-kvm
+     - python3-lxml
+     - tigervnc
+  become: true
+- name: Ensure link to qemu-kvm using old name exists (CentOS 8)
+  file:
+    path: /usr/bin/qemu-system-x86_64
+    src: /usr/libexec/qemu-kvm
+    state: link
+  become: yes
+# tasks file for packer
+- name: Ensure packer is installed
+  stat:
+    path: "{{ packer_install_path }}"
+  register: packer_installation
+  changed_when: False
+- name: Ensure zipped binary of packer has been downloaded
+  get_url:
+    url: "{{ packer_url }}"
+    dest: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
+    checksum: "{{ packer_checksum }}"
+  when: packer_installation.stat.isreg is not defined
+- name: Install Packer
+  unarchive:
+    src: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
+    dest: "/usr/local/bin"
+    remote_src: yes
+    creates: "{{ packer_install_path }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
+  become: yes
+  when: packer_installation.stat.isreg is not defined
+# tasks file for vagrant
+- name: Ensure vagrant is installed
+  stat:
+    path: "{{ vagrant_install_path }}"
+  register: vagrant_installation
+  changed_when: False
+- name: Download and install Vagrant rpm file
+  package:
+    name: "{{ vagrant_url }}"
+    state: present
+  when: vagrant_installation.stat.isreg is not defined
+  become: yes
+- name: Test if vagrant-libvirt plugin is already installed
+  command: "vagrant plugin list"
+  register: vagrant_plugin_installed
+  changed_when: False
+- name: Ensure gcc is installed in order to build the vagrant plugin
+  package:
+    name: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - gcc
+    - libvirt-devel
+    - make
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
+- name: Install vagrant-libvirt plugin (CentOS)
+  command: "vagrant plugin install vagrant-libvirt"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
