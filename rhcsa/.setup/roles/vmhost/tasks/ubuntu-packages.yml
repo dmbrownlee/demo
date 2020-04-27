@@ -1,0 +1,16 @@
+---
+# Ensure necessary packages are installed
+- name: Ensure packer is installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  become: yes
+  with_items:
+    - virt-manager
+    - python3-libvirt
+    - packer
+    - vagrant
+    - vagrant-libvirt
+    - python3-lxml
+    - tigervnc-viewer
