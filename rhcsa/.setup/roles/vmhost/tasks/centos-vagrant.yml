@@ -1,26 +1,20 @@
 ---
-- name: Ensure vagrant is installed (CentOS)
+- name: Ensure vagrant is installed
   stat:
     path: "{{ vagrant_install_path }}"
   register: vagrant_installation
   changed_when: False
-- name: Download and install Vagrant rpm file (CentOS)
+- name: Download and install Vagrant rpm file
   package:
     name: "{{ vagrant_url }}"
     state: present
-  when: vagrant_installation.stat.isreg is not defined and ansible_distribution == 'CentOS'
+  when: vagrant_installation.stat.isreg is not defined
   become: yes
-- name: Ensure vagrant is installed (Debian)
-  apt:
-    name: vagrant
-    state: latest
-  become: yes
-  when: ansible_distribution == 'Debian'
-- name: Test if vagrant-libvirt plugin is already installed (CentOS)
+- name: Test if vagrant-libvirt plugin is already installed
   command: "vagrant plugin list"
   register: vagrant_plugin_installed
   changed_when: False
-- name: Ensure gcc is installed in order to build the vagrant plugin (CentOS)
+- name: Ensure gcc is installed in order to build the vagrant plugin
   package:
     name: "{{ item }}"
     state: present
@@ -29,16 +23,10 @@
     - gcc
     - libvirt-devel
     - make
-  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout and ansible_distribution == 'CentOS'"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
 - name: Install vagrant-libvirt plugin (CentOS)
   command: "vagrant plugin install vagrant-libvirt"
-  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout and ansible_distribution == 'CentOS'"
-- name: Ensure vagrant-libvirt is installed (Debian)
-  apt:
-    name: vagrant-libvirt
-    state: latest
-  become: yes
-  when: ansible_distribution == 'Debian'
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
 - name: Ensure {{ ansible_user_dir }}/keys directory exists
   file:
     path: "{{ ansible_user_dir }}/keys"
