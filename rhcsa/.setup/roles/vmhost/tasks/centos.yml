@@ -1,0 +1,9 @@
+---
+- include_tasks: centos-directories.yml
+- include_tasks: centos-packer.yml
+- include_tasks: centos-vagrant.yml
+- include_tasks: centos-vagrant-shared-folders.yml
+- include_tasks: centos-kvm.yml
+- include_tasks: centos-configure-host.yml
+- include_tasks: centos-virtual-networks.yml
+- include_tasks: centos-vagrant-base-boxes.yml

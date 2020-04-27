@@ -1,0 +1,8 @@
+---
+#- import_tasks: basebox.yml
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-8.1-1911-x86_64-Minimal
+- import_tasks: basebox.yml
+  vars:
+    inst_name: CentOS-8.1-1911-x86_64-ServerWithGui
