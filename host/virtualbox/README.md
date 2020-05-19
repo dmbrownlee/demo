@@ -1,4 +1,4 @@
-This directory contains files for automating the installation of VirtalBox, Vagrant, etc on a Mac for use as a host platform for the virtual lab environment.
+This directory contains files for automating the installation of VirtualBox, Vagrant, etc on a Mac for use as a host platform for the virtual lab environment.
 
 Note: The Vagrantfile provided in each course currently only works with KVM virtualization on Linux.  I'm in the process of new lab environments specifically for VirtualBox and will provide a VirtualBox specific Vagrantfile for each of those as they become available.  For now, this is just useful for installing the virtualization platform on MacOS.
 
