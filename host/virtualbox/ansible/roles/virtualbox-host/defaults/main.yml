@@ -1,0 +1,26 @@
+---
+downloads: "{{ ansible_user_dir }}/Downloads"
+# defaults values for packer
+packer_version: "1.5.6"
+packer_checksum: "sha256:2731a5139d1311e3bd346fb8c4658fbba77eca3714534011cc3037543673c64a"
+packer_bin: "packer"
+packer_install_path: "/usr/local/bin/"
+packer_zip: "packer_{{ packer_version }}_darwin_amd64.zip"
+packer_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
+# defaults values for vagrant
+vagrant_version: "2.2.9"
+vagrant_checksum: "sha256:529cde2a78e6df38ec906b65c70b36a087e2601eab42e25856e35b20ccb027c0"
+vagrant_bin: "vagrant"
+vagrant_install_path: "/usr/local/bin/"
+vagrant_dmg: "vagrant_{{ vagrant_version }}_x86_64.dmg"
+vagrant_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_dmg }}"
+vagrant_mount_path: "/Volumes/Vagrant"
+vagrant_key_dir: "{{ ansible_user_dir }}/keys"
+# default values for virtualbox
+virtualbox_version: "6.1.8"
+virtualbox_build: "137981"
+virtualbox_checksum: "sha256:569e91eb3c7cb002d407b236a7aa71ac610cf2ad1afa03730dab11fbd4b89e7c"
+virtualbox_plist: "/Applications/VirtualBox.app/Contents/Info.plist"
+virtualbox_dmg: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-OSX.dmg"
+virtualbox_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_dmg }}"
+virtualbox_mount_path: "/Volumes/VirtualBox"

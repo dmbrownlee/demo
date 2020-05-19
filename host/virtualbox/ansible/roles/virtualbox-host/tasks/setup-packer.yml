@@ -1,0 +1,24 @@
+---
+- name: Check if packer binary exists
+  stat:
+    path: "{{ packer_install_path }}{{ packer_bin }}"
+  register: installed_packer
+  changed_when: false
+- name: Check the version of packer if already installed
+  command: "{{ packer_install_path }}{{ packer_bin }} --version"
+  changed_when: false
+  register: installed_packer_version
+  when: installed_packer.stat.exists and installed_packer.stat.isreg
+- name: Download zipped binary of packer
+  get_url:
+    url: "{{ packer_url }}"
+    dest: "{{ downloads }}/{{ packer_zip }}"
+    checksum: "{{ packer_checksum }}"
+  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+- name: Install Packer
+  command: unzip -o -f {{ downloads }}/{{ packer_zip }}
+  args:
+    chdir: "{{ packer_install_path }}"
+    warn: false
+  become: yes
+  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
