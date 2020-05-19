@@ -1,0 +1,8 @@
+---
+# Could put these in ~/.ssh but don't want to step on any keys that may already
+# exist.
+- name: Ensure ~/keys directory for vagrant key pair exists
+  file:
+    path: "{{ ansible_user_dir }}/keys"
+    state: directory
+    mode: '0700'

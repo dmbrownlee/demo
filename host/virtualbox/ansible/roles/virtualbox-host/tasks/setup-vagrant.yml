@@ -1,0 +1,50 @@
+---
+- name: Check if vagrant binary exists
+  stat:
+    path: "{{ vagrant_install_path }}{{ vagrant_bin }}"
+  register: installed_vagrant
+  changed_when: false
+- name: Check the version of vagrant if already installed
+  shell: "{{ vagrant_install_path }}{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
+  changed_when: false
+  register: installed_vagrant_version
+  when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
+- name: Download the Vagrant disk image file
+  get_url:
+    url: "{{ vagrant_url }}"
+    dest: "{{ downloads }}/{{ vagrant_dmg }}"
+    checksum: "{{ vagrant_checksum }}"
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Mount the Vagrant disk image file
+  command: hdiutil attach "{{ vagrant_dmg }}"
+  args:
+    chdir: "{{ downloads }}"
+  become: yes
+  changed_when: false
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Install the Vagrant pkg file inside the disk image file
+  command: installer -allowUntrusted -pkg "{{ vagrant_mount_path }}/Vagrant.pkg" -target /
+  become: yes
+  notify: vagrant_plugin_update
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Unmount Vagrant image
+  command: hdiutil detach "{{ vagrant_mount_path }}"
+  become: yes
+  changed_when: false
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Ensure a directory exists for vagrant user's key pair
+  file:
+    path: "{{ vagrant_key_dir }}"
+    state: directory
+    mode: '0700'
+- name: Check if ssh key pair exists for the vagrant user
+  stat:
+    path: "{{ vagrant_key_dir }}/vagrant"
+  register: installed_key
+  changed_when: false
+- name: Create SSH key pair for the vagrant user
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ vagrant_key_dir }}"
+    creates: "{{ vagrant_key_dir }}/vagrant"
+  when: installed_key.stat.exists is false

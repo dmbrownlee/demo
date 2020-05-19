@@ -1,0 +1,17 @@
+#!/bin/bash
+# This script sets up VirtualBox on a MacOS host.
+
+function die {
+  echo $1
+  exit 1
+}
+
+[[ "Darwin" == "$(uname)" ]] ||
+  die "ERROR: This script is only intended to be run on MacOS."
+
+which -s git || die "ERROR: you must install git first"
+
+# First, we install Ansible.  Then we use ansible to setup everything else.
+sudo -H python3 /usr/local/bin/easy_install pip &&
+sudo -H pip install ansible &&
+cd ansible && ansible-playbook -K -i localhost, localhost-playbook.yml
