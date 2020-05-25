@@ -1,0 +1,13 @@
+---
+- name: Get the list of virtual networks
+  shell: "VBoxManage natnetwork list '{{ lab_network_name }}'| grep -q '1 network found'"
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+  register: netlist
+  become: yes
+- name: Ensure RHCSA Network network is created
+  command: "VBoxManage natnetwork add --netname '{{ lab_network_name }}' --network {{ lab_network }} --dhcp off --enable"
+  when: netlist.rc != 0
+- name: Ensure RHCSA Network network is started
+  command: "VBoxManage natnetwork start --netname '{{ lab_network_name }}'"
