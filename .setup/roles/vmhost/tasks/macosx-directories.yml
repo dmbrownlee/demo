@@ -1,0 +1,45 @@
+---
+# tasks file for directories
+- name: Ensure {{ ansible_user_dir }}/keys directory exists
+  file:
+    path: "{{ ansible_user_dir }}/keys"
+    state: directory
+    mode: 0700
+- name: Test if {{ ansible_user_dir }}/keys/vagrant already installed
+  stat:
+    path: "{{ ansible_user_dir }}/keys/vagrant"
+  register: keys_installation
+  changed_when: False
+- name: Ensure key pair in {{ ansible_user_dir }}/keys
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ ansible_user_dir }}/keys"
+    creates: "{{ ansible_user_dir }}/keys/vagrant"
+  when: keys_installation.stat.isreg is not defined
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: file
+- name: Ensure convenience functions are defined
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: |
+      export VAGRANT_DEFAULT_PROVIDER=virtualbox
+      rebuild () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
+        vagrant destroy -f $1
+        vagrant up --no-parallel $1
+      }
+      showlabs () {
+        find ~/demo/rhcsa/labfiles/lab* -name "README*" -exec head -1 \{\} \;
+      }
+      updateall () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
+        cd $HOME/demo/rhcsa &&
+        vagrant destroy -f || [ $? -eq 2 ] &&
+        git pull &&
+        ./setup &&
+        vagrant up --no-parallel
+      }

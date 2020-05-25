@@ -1,0 +1,149 @@
+---
+# ==============
+# sshpass
+# ==============
+#- stat: path=/usr/local/bin/sshpass
+#  register: sshpass_source
+##- name: Download sshpass
+##  get_url:
+##    url: "{{ sshpass_url }}"
+##    dest: "{{ ansible_env.HOME}}/Downloads/{{ sshpass_file }}"
+##  when: sshpass_source.stat.exists == False
+#- name: Copy sshpass tarball to Downloads directory
+#  copy:
+#    dest: "{{ ansible_env.HOME}}/Downloads/{{ sshpass_file }}"
+#    src: "{{ ansible_env.HOME}}/demo/vagrantbox/ansible/roles/setup-sshpass/files/{{ sshpass_file }}"
+#  when: sshpass_source.stat.exists == False
+#- name: Unpack sshpass tarball
+#  command: "tar zxvf {{ ansible_env.HOME }}/Downloads/{{ sshpass_file }} -C /private/tmp"
+#  when: sshpass_source.stat.exists == False
+#- name: sshpass configure
+#  command: creates={{ sshpass_srcdir }}/Makefile
+#           chdir={{ sshpass_srcdir }}
+#           ./configure
+#  when: sshpass_source.stat.exists == False
+#- name: sshpass make
+#  command: creates={{ sshpass_srcdir }}/sshpass
+#           chdir={{ sshpass_srcdir }}
+#           make
+#  when: sshpass_source.stat.exists == False
+#- name: sshpass make install
+#  command: creates=/usr/local/bin/sshpass
+#           chdir={{ sshpass_srcdir }}
+#           make install
+#  become: yes
+#  when: sshpass_source.stat.exists == False
+# ==============
+# packer
+# ==============
+- name: Check if packer binary exists
+  stat:
+    path: "{{ packer_install_path }}{{ packer_bin }}"
+  register: installed_packer
+  changed_when: false
+- name: Check the version of packer if already installed
+  command: "{{ packer_install_path }}{{ packer_bin }} --version"
+  changed_when: false
+  register: installed_packer_version
+  when: installed_packer.stat.exists and installed_packer.stat.isreg
+- name: Download zipped binary of packer
+  get_url:
+    url: "{{ packer_url }}"
+    dest: "{{ downloads }}/{{ packer_zip }}"
+    checksum: "{{ packer_checksum }}"
+  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+- name: Install Packer
+  command: unzip -o -f {{ downloads }}/{{ packer_zip }}
+  args:
+    chdir: "{{ packer_install_path }}"
+    warn: false
+  become: yes
+  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+# ==============
+# vagrant
+# ==============
+- name: Check if vagrant binary exists
+  stat:
+    path: "{{ vagrant_install_path }}{{ vagrant_bin }}"
+  register: installed_vagrant
+  changed_when: false
+- name: Check the version of vagrant if already installed
+  shell: "{{ vagrant_install_path }}{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
+  changed_when: false
+  register: installed_vagrant_version
+  when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
+- name: Download the Vagrant disk image file
+  get_url:
+    url: "{{ vagrant_url }}"
+    dest: "{{ downloads }}/{{ vagrant_dmg }}"
+    checksum: "{{ vagrant_checksum }}"
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Mount the Vagrant disk image file
+  command: hdiutil attach "{{ vagrant_dmg }}"
+  args:
+    chdir: "{{ downloads }}"
+  become: yes
+  changed_when: false
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Install the Vagrant pkg file inside the disk image file
+  command: installer -allowUntrusted -pkg "{{ vagrant_mount_path }}/Vagrant.pkg" -target /
+  become: yes
+  notify: vagrant_plugin_update
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Unmount Vagrant image
+  command: hdiutil detach "{{ vagrant_mount_path }}"
+  become: yes
+  changed_when: false
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+- name: Ensure a directory exists for vagrant user's key pair
+  file:
+    path: "{{ vagrant_key_dir }}"
+    state: directory
+    mode: '0700'
+- name: Check if ssh key pair exists for the vagrant user
+  stat:
+    path: "{{ vagrant_key_dir }}/vagrant"
+  register: installed_key
+  changed_when: false
+- name: Create SSH key pair for the vagrant user
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ vagrant_key_dir }}"
+    creates: "{{ vagrant_key_dir }}/vagrant"
+  when: installed_key.stat.exists is false
+# ==============
+# virtualbox
+# ==============
+- name: Test if VirtualBox is already installed
+  stat:
+    path: "{{ virtualbox_plist }}"
+  register: installed_virtualbox
+  changed_when: false
+- name: Check the version of VirtualBox if already installed
+  command: sed -n -e '/CFBundleVersion/s/^.*<string>\(.*\)<\/string>.*$/\1/p' {{ virtualbox_plist }}
+  args:
+    warn: false
+  changed_when: false
+  failed_when: false
+  register: installed_virtualbox_version
+  when: installed_virtualbox.stat.exists
+- name: Download VirtualBox disk image
+  get_url:
+    url: "{{ virtualbox_url }}"
+    dest: "{{ downloads }}/{{ virtualbox_dmg }}"
+    checksum: "{{ virtualbox_checksum }}"
+  when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
+- name: Mount the VirtualBox disk image file
+  command: hdiutil attach "{{ downloads }}/{{ virtualbox_dmg }}"
+  become: yes
+  changed_when: false
+  when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
+- name: Install VirtualBox.pkg
+  command: installer -pkg "{{ virtualbox_mount_path }}/VirtualBox.pkg" -target /
+  become: yes
+  when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
+- name: Unmount VirtualBox image
+  command: hdiutil detach "{{ virtualbox_mount_path }}"
+  become: yes
+  changed_when: false
+  when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)

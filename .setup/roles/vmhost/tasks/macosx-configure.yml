@@ -1,0 +1,10 @@
+---
+- name: Ensure packer JSON files for virtualbox are installed
+  copy:
+    dest: "{{ ansible_user_dir }}/demo/rhcsa/.setup/packer/"
+    src: virtualbox/{{ item }}
+  with_items:
+    - CentOS-8.1-1911-x86_64-Minimal.json
+    - CentOS-8.1-1911-x86_64-ServerWithGui.json
+    - Minimal8-ks.cfg
+    - ServerWithGui8-ks.cfg
