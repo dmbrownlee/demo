@@ -1,6 +1,0 @@
----
-- name: Setup the VirtualBox host environment
-  hosts: localhost
-  connection: local
-  roles:
-    - role: virtualbox-host
