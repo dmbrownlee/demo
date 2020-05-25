@@ -1,0 +1,4 @@
+---
+- include_tasks: ubuntu-directories.yml
+- include_tasks: ubuntu-packages.yml
+- include_tasks: ubuntu-configuration.yml
