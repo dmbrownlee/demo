@@ -1,6 +1,4 @@
 ---
-- include_tasks: ubuntu-directories.yml
-- include_tasks: ubuntu-packages.yml
 - include_tasks: ubuntu-vagrant-shared-folders.yml
 - include_tasks: ubuntu-virtual-networks.yml
 - include_tasks: ubuntu-vagrant-base-boxes.yml

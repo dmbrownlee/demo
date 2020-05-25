@@ -1,6 +1,4 @@
 ---
-- include_tasks: centos-directories.yml
-- include_tasks: centos-packages.yml
 - include_tasks: centos-vagrant-shared-folders.yml
 - include_tasks: centos-virtual-networks.yml
 - include_tasks: centos-vagrant-base-boxes.yml
