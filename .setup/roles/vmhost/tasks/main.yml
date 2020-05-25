@@ -1,6 +1,0 @@
----
-# The main YAML config just organizes the collection of task specific files
-#- import_tasks: setup-sshpass.yml
-- import_tasks: setup-packer.yml
-- import_tasks: setup-vagrant.yml
-- import_tasks: setup-virtualbox.yml
