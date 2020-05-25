@@ -1,7 +1,13 @@
 ---
-- include_tasks: centos.yml
+- name: Setup lab environment on a CentOS KVM host
+  include_tasks: centos.yml
   when: ansible_distribution == 'CentOS'
-- include_tasks: debian.yml
+- name: Setup lab environment on a Debian KVM host
+  include_tasks: debian.yml
   when: ansible_distribution == 'Debian'
-- include_tasks: ubuntu.yml
+- name: Setup lab environment on a Ubuntu KVM host
+  include_tasks: ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
+- name: Setup lab environment on a MacOS VirtualBox host
+  include_tasks: macosx.yml
+  when: ansible_distribution == 'MacOSX'
