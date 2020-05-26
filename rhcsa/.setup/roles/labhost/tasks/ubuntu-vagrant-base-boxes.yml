@@ -1,8 +1,12 @@
 ---
-#- import_tasks: basebox.yml
-- import_tasks: basebox.yml
+- name: Ensure vagrant base boxes are built
+  include_tasks: basebox.yml
   vars:
-    inst_name: CentOS-8.1-1911-x86_64-Minimal
-- import_tasks: basebox.yml
-  vars:
-    inst_name: CentOS-8.1-1911-x86_64-ServerWithGui
+    inst_name: "{{ item }}"
+  with_items:
+    - CentOS-8.1-1911-x86_64-Minimal
+    - CentOS-8.1-1911-x86_64-ServerWithGui
+- name: Ensure KVM version of Vagrantfile is installed
+  copy:
+    dest: "{{ ansible_user_dir }}/demo/rhcsa/"
+    src: kvm/Vagrantfile

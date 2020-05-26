@@ -1,0 +1,104 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.ssh.private_key_path= "~/keys/vagrant"
+  # Common to all VMs
+  config.vm.synced_folder "labfiles/", "/labfiles"
+  config.vm.provider :virtualbox do |vboxvm|
+    vboxvm.gui = false
+    vboxvm.memory = 1024
+    vboxvm.customize ["modifyvm", :id, "--vram", "10"]
+    vboxvm.customize ["modifyvm", :id, "--vrde", "off"]
+    vboxvm.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "3.0"]
+#    vboxvm.customize ["natnetwork", "add",
+#      "--netname", "RHCSA Network",
+#      "--network", "192.168.4.0/24",
+#      "--dhcp", "off",
+#      "--enable"]
+    vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+    vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+  end
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "ansible/vagrant-vm-playbook.yml"
+    ansible.skip_tags = "disabled"
+    ansible.groups = {
+      "ipa_client" => [
+        "server1","server2",
+      ],
+      "ipa_server" => [
+        "labipa"
+      ],
+      "rhcsa8" => [
+        "labipa",
+        "server1",
+        "server2"
+      ],
+      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" },
+      "examhost" => [
+        "exam1",
+        "exam2"
+      ]
+    }
+  end
+
+  #==============================
+  #==  CentOS 8.x Lab Machines ==
+  #==============================
+  #=== labipa ===
+  config.vm.define "labipa" do |node|
+    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_labipa"
+      virtualbox.memory = 2048
+    end
+  end
+
+  #=== server1 ===
+  config.vm.define "server1" do |node|
+    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_server1"
+    end
+  end 
+  
+  #=== server2 ===
+  config.vm.define "server2" do |node|
+    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_server2"
+    end
+  #  node.vm.provider :virtualbox do |virtualbox|
+  #    virtualbox.storage :file, :bus => :sata
+  #  end
+  end
+  
+  #==============================
+  #==  Additional Lab Machines ==
+  #==============================
+  #=== pxeclient ===
+  #config.vm.define :pxeclient, autostart: false do |pxeclient|
+  #  pxeclient.vm.provider :virtualbox do |domain|
+  #    domain.storage :file, :size => '10G', :type => 'qcow2'
+  #    domain.memory = 2048
+  #    boot_network = {'network' => 'vagrant-private-dhcp'}
+  #    domain.boot boot_network
+  #    domain.boot 'hd'
+  #  end
+  #end
+
+  #===================================
+  #==  Machines for practice exams  ==
+  #===================================
+  #=== exam1 ===
+  config.vm.define "exam1", autostart: false do |node|
+    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+  end
+
+  #=== exam2 ===
+  config.vm.define "exam2", autostart: false do |node|
+    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+  end
+end

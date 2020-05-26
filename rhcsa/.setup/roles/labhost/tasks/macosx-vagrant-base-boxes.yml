@@ -6,3 +6,7 @@
   with_items:
     - CentOS-8.1-1911-x86_64-Minimal
     - CentOS-8.1-1911-x86_64-ServerWithGui
+- name: Ensure VirtualBox version of Vagrantfile is installed
+  copy:
+    dest: "{{ ansible_user_dir }}/demo/rhcsa/"
+    src: virtualbox/Vagrantfile
