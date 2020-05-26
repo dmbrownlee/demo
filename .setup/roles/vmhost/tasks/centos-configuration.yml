@@ -1,7 +1,7 @@
 ---
 - name: Ensure packer JSON files for KVM are installed
   copy:
-    dest: "{{ ansible_user_dir }}/demo/rhcsa/.setup/packer/"
+    dest: "{{ ansible_user_dir }}/demo/.setup/packer/"
     src: kvm/{{ item }}
   with_items:
     - CentOS-8.1-1911-x86_64-Minimal.json

@@ -25,23 +25,23 @@
     state: link
   become: yes
 # tasks file for packer
-- name: Ensure packer is installed
+- name: Check if packer is already installed
   stat:
-    path: "{{ packer_install_path }}"
+    path: "{{ packer_install_path }}{{ packer_bin }}"
   register: packer_installation
-  changed_when: False
+  changed_when: false
 - name: Ensure zipped binary of packer has been downloaded
   get_url:
-    url: "{{ packer_url }}"
-    dest: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
-    checksum: "{{ packer_checksum }}"
+    url: "{{ packer_linux_zip_url }}"
+    dest: "{{ downloads }}/{{ packer_linux_zip }}"
+    checksum: "{{ packer_linux_zip_checksum }}"
   when: packer_installation.stat.isreg is not defined
 - name: Install Packer
   unarchive:
-    src: "{{ ansible_user_dir }}/Downloads/{{ packer_zip }}"
-    dest: "/usr/local/bin"
+    src: "{{ downloads }}/{{ packer_linux_zip }}"
+    dest: "{{ packer_install_path }}"
     remote_src: yes
-    creates: "{{ packer_install_path }}"
+    creates: "{{ packer_install_path }}{{ packer_bin }}"
     owner: "root"
     group: "root"
     mode: 0755
@@ -50,19 +50,19 @@
 # tasks file for vagrant
 - name: Ensure vagrant is installed
   stat:
-    path: "{{ vagrant_install_path }}"
+    path: "{{ vagrant_install_path }}{{ vagrant_bin }}"
   register: vagrant_installation
-  changed_when: False
+  changed_when: false
 - name: Download and install Vagrant rpm file
   package:
-    name: "{{ vagrant_url }}"
+    name: "{{ vagrant_linux_rpm_url }}"
     state: present
   when: vagrant_installation.stat.isreg is not defined
   become: yes
 - name: Test if vagrant-libvirt plugin is already installed
   command: "vagrant plugin list"
   register: vagrant_plugin_installed
-  changed_when: False
+  changed_when: false
 - name: Ensure gcc is installed in order to build the vagrant plugin
   package:
     name: "{{ item }}"
