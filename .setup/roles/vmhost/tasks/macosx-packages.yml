@@ -7,15 +7,15 @@
 ##- name: Download sshpass
 ##  get_url:
 ##    url: "{{ sshpass_url }}"
-##    dest: "{{ ansible_env.HOME}}/Downloads/{{ sshpass_file }}"
+##    dest: "{{ downloads}}//{{ sshpass_file }}"
 ##  when: sshpass_source.stat.exists == False
-#- name: Copy sshpass tarball to Downloads directory
+#- name: Copy sshpass tarball to the download directory
 #  copy:
-#    dest: "{{ ansible_env.HOME}}/Downloads/{{ sshpass_file }}"
-#    src: "{{ ansible_env.HOME}}/demo/vagrantbox/ansible/roles/setup-sshpass/files/{{ sshpass_file }}"
+#    dest: "{{ downloads}}/{{ sshpass_file }}"
+#    src: "{{ ansible_user_dir }}/demo/.setup/roles/setup-sshpass/files/{{ sshpass_file }}"
 #  when: sshpass_source.stat.exists == False
 #- name: Unpack sshpass tarball
-#  command: "tar zxvf {{ ansible_env.HOME }}/Downloads/{{ sshpass_file }} -C /private/tmp"
+#  command: "tar zxvf {{ downloads}}/{{ sshpass_file }} -C /private/tmp"
 #  when: sshpass_source.stat.exists == False
 #- name: sshpass configure
 #  command: creates={{ sshpass_srcdir }}/Makefile
@@ -48,9 +48,9 @@
   when: installed_packer.stat.exists and installed_packer.stat.isreg
 - name: Download zipped binary of packer
   get_url:
-    url: "{{ packer_url }}"
-    dest: "{{ downloads }}/{{ packer_zip }}"
-    checksum: "{{ packer_checksum }}"
+    url: "{{ packer_mac_zip_url }}"
+    dest: "{{ downloads }}/{{ packer_mac_zip }}"
+    checksum: "{{ packer_mac_zip_checksum }}"
   when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
 - name: Install Packer
   command: unzip -o -f {{ downloads }}/{{ packer_zip }}
@@ -74,24 +74,24 @@
   when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
 - name: Download the Vagrant disk image file
   get_url:
-    url: "{{ vagrant_url }}"
-    dest: "{{ downloads }}/{{ vagrant_dmg }}"
-    checksum: "{{ vagrant_checksum }}"
+    url: "{{ vagrant_mac_dmg_url }}"
+    dest: "{{ downloads }}/{{ vagrant_mac_dmg }}"
+    checksum: "{{ vagrant_mac_dmg_checksum }}"
   when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
 - name: Mount the Vagrant disk image file
-  command: hdiutil attach "{{ vagrant_dmg }}"
+  command: hdiutil attach "{{ vagrant_mac_dmg }}"
   args:
     chdir: "{{ downloads }}"
   become: yes
   changed_when: false
   when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
 - name: Install the Vagrant pkg file inside the disk image file
-  command: installer -allowUntrusted -pkg "{{ vagrant_mount_path }}/Vagrant.pkg" -target /
+  command: installer -allowUntrusted -pkg "{{ vagrant_mac_dmg_mount_path }}/Vagrant.pkg" -target /
   become: yes
   notify: vagrant_plugin_update
   when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
 - name: Unmount Vagrant image
-  command: hdiutil detach "{{ vagrant_mount_path }}"
+  command: hdiutil detach "{{ vagrant_mac_dmg_mount_path }}"
   become: yes
   changed_when: false
   when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
