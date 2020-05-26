@@ -2,7 +2,7 @@
 # Ensure necessary packages are installed
 - name: Ensure virtualization utilities are installed
   apt:
-    name: packages
+    name: "{{ packages }}"
     state: latest
     update_cache: yes
   become: yes
