@@ -15,7 +15,7 @@
   virt_net:
     command: define
     name: "vagrant-private-dhcp"
-    xml: '{{ lookup("file", "RHCxNetwork.xml") }}'
+    xml: '{{ lookup("file", "kvm/RHCxNetwork.xml") }}'
   when: "'vagrant-private-dhcp' not in netlist.stdout"
 - name: Ensure RHCxNetwork network is created
   virt_net:
