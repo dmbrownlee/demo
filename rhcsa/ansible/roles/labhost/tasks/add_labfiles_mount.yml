@@ -7,7 +7,7 @@
     group: root
     mode: '0775'
   become: yes
-- name: Ensure /labfiles will be remounted in the case of a reboot
+- name: Ensure /labfiles will be remounted in the case of a reboot (KVM)
   mount:
     path: /labfiles
     src: 192.168.4.1:/home/user/demo/rhcsa/labfiles
@@ -18,3 +18,16 @@
     dump: "0"
   become: yes
   notify: reboot
+  when: ansible_virtualization_type == 'kvm'
+- name: Ensure /labfiles will be remounted in the case of a reboot (VirtualBox)
+  mount:
+    path: /labfiles
+    src: labfiles
+    fstype: vboxsf
+    opts: defaults
+    state: present
+    passno: "0"
+    dump: "0"
+  become: yes
+  notify: reboot
+  when: ansible_virtualization_type == 'virtualbox'
