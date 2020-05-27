@@ -37,9 +37,10 @@
   changed_when: false
   become: yes
 - name: Ensure lab connection exists
-  command: nmcli c add con-name "{{ host_lab_net_conn_name }}" type "{{ lab_net_type }}" ifname "{{ host_lab_net_iface }}" connection.autoconnect "{{ lab_net_autoconnect }}" connection.zone "{{ lab_net_zone }}" ipv4.method "{{ lab_net_ipv4_method }}" ipv4.dns "{{ lab_net_ipv4_dns }}" ipv4.addresses "{{ host_lab_net_ipv4_addresses }}" ipv4.gateway "{{ lab_net_ipv4_gateway }}" ipv4.ignore-auto-dns "{{ lab_net_ipv4_ignore_auto_dns }}" ipv4.never-default "{{ lab_net_ipv4_never_default }}" ipv6.method "{{ lab_net_ipv6_method }}"
+  command: nmcli c add con-name "{{ host_lab_net_conn_name }}" type "{{ lab_net_type }}" ifname "{{ item.device }}" connection.autoconnect "{{ lab_net_autoconnect }}" connection.zone "{{ lab_net_zone }}" ipv4.method "{{ lab_net_ipv4_method }}" ipv4.dns "{{ lab_net_ipv4_dns }}" ipv4.addresses "{{ host_lab_net_ipv4_addresses }}" ipv4.gateway "{{ lab_net_ipv4_gateway }}" ipv4.ignore-auto-dns "{{ lab_net_ipv4_ignore_auto_dns }}" ipv4.never-default "{{ lab_net_ipv4_never_default }}" ipv6.method "{{ lab_net_ipv6_method }}"
   become: yes
-  when: host_lab_net_conn_name not in existing_connections.stdout_lines
+  with_items: "{{ ansible_facts | dict2items | json_query('[? value.type==`ether` && value.active ].value.{device: device}') }}"
+  when: host_lab_net_conn_name not in existing_connections.stdout_lines and item.device != ansible_facts.default_ipv4.interface
 - name: Get a list of active connections
   command: nmcli -t -f name c show --active
   register: active_connections

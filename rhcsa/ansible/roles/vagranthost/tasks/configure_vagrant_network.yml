@@ -27,7 +27,7 @@
   changed_when: false
   become: yes
 - name: Ensure vagrant connection exists
-  command: nmcli c add con-name "{{ host_vagrant_net_conn_name }}" type "{{ vagrant_net_type }}" ifname "{{ host_vagrant_net_iface }}" connection.autoconnect "{{ vagrant_net_autoconnect }}" connection.zone "{{ vagrant_net_zone }}" ipv4.method "{{ vagrant_net_ipv4_method }}" ipv4.never-default "{{ vagrant_net_ipv4_never_default }}" ipv6.method "{{ vagrant_net_ipv6_method }}"
+  command: nmcli c add con-name "{{ host_vagrant_net_conn_name }}" type "{{ vagrant_net_type }}" ifname "{{ ansible_facts.default_ipv4.interface }}" connection.autoconnect "{{ vagrant_net_autoconnect }}" connection.zone "{{ vagrant_net_zone }}" ipv4.method "{{ vagrant_net_ipv4_method }}" ipv4.never-default "{{ vagrant_net_ipv4_never_default }}" ipv6.method "{{ vagrant_net_ipv6_method }}"
   become: yes
   when: host_vagrant_net_conn_name not in existing_connections.stdout_lines
 - name: Get a list of active connections
