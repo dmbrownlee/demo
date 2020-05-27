@@ -53,10 +53,11 @@
     checksum: "{{ packer_mac_zip_checksum }}"
   when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
 - name: Install Packer
-  command: unzip -o -f {{ downloads }}/{{ packer_mac_zip }}
+  command: unzip -o -u {{ downloads }}/{{ packer_mac_zip }}
   args:
     chdir: "{{ packer_install_path }}"
     warn: false
+    creates: "{{ packer_install_path }}{{ packer_bin }}"
   become: yes
   when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
 # ==============
