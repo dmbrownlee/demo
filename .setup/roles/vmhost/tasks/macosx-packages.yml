@@ -53,7 +53,7 @@
     checksum: "{{ packer_mac_zip_checksum }}"
   when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
 - name: Install Packer
-  command: unzip -o -f {{ downloads }}/{{ packer_zip }}
+  command: unzip -o -f {{ downloads }}/{{ packer_mac_zip }}
   args:
     chdir: "{{ packer_install_path }}"
     warn: false
@@ -100,11 +100,11 @@
 # ==============
 - name: Test if VirtualBox is already installed
   stat:
-    path: "{{ virtualbox_plist }}"
+    path: "{{ virtualbox_mac_plist }}"
   register: installed_virtualbox
   changed_when: false
 - name: Check the version of VirtualBox if already installed
-  command: sed -n -e '/CFBundleVersion/s/^.*<string>\(.*\)<\/string>.*$/\1/p' {{ virtualbox_plist }}
+  command: sed -n -e '/CFBundleVersion/s/^.*<string>\(.*\)<\/string>.*$/\1/p' {{ virtualbox_mac_plist }}
   args:
     warn: false
   changed_when: false
@@ -113,21 +113,21 @@
   when: installed_virtualbox.stat.exists
 - name: Download VirtualBox disk image
   get_url:
-    url: "{{ virtualbox_url }}"
-    dest: "{{ downloads }}/{{ virtualbox_dmg }}"
-    checksum: "{{ virtualbox_checksum }}"
+    url: "{{ virtualbox_mac_dmg_url }}"
+    dest: "{{ downloads }}/{{ virtualbox_mac_dmg }}"
+    checksum: "{{ virtualbox_mac_dmg_checksum }}"
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
 - name: Mount the VirtualBox disk image file
-  command: hdiutil attach "{{ downloads }}/{{ virtualbox_dmg }}"
+  command: hdiutil attach "{{ downloads }}/{{ virtualbox_mac_dmg }}"
   become: yes
   changed_when: false
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
 - name: Install VirtualBox.pkg
-  command: installer -pkg "{{ virtualbox_mount_path }}/VirtualBox.pkg" -target /
+  command: installer -pkg "{{ virtualbox_mac_dmg_mount_path }}/VirtualBox.pkg" -target /
   become: yes
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
 - name: Unmount VirtualBox image
-  command: hdiutil detach "{{ virtualbox_mount_path }}"
+  command: hdiutil detach "{{ virtualbox_mac_dmg_mount_path }}"
   become: yes
   changed_when: false
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
