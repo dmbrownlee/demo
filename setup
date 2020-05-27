@@ -5,11 +5,14 @@
 # We install ansible using pip on MacOSX but assume it is installed on Linux
 # via native packages.
 if [[ "Darwin" == "$(uname)" ]]; then
-  which ansible-playbook
+  which -s ansible-playbook
   if [[ $? -ne 0 ]]; then
     sudo -H python3 /usr/local/bin/easy_install pip &&
     sudo -H pip install ansible
   fi
 fi
 
-cd ./.setup && ansible-playbook -K -i localhost, -c local --skip-tags disabled setup.yml
+APARGS="-e \"ansible_python_interpreter=$(which python3)\" --skip-tags disabled"
+
+cd ./.setup &&
+ansible-playbook -K -i localhost, -c local $APARGS setup.yml
