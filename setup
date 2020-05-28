@@ -7,7 +7,7 @@
 if [[ "Darwin" == "$(uname)" ]]; then
   which -s ansible-playbook
   if [[ $? -ne 0 ]]; then
-    sudo -H python3 /usr/local/bin/easy_install pip &&
+    sudo -H python3 /usr/bin/easy_install pip &&
     sudo -H pip install ansible
   fi
 fi
