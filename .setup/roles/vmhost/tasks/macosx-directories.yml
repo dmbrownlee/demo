@@ -16,10 +16,16 @@
     chdir: "{{ ansible_user_dir }}/keys"
     creates: "{{ ansible_user_dir }}/keys/vagrant"
   when: keys_installation.stat.isreg is not defined
-- name: Ensure {{ ansible_user_dir }}/.bashrc exists
+- name: Check if {{ ansible_user_dir }}/.bashrc exists
+  stat:
+    path: "{{ ansible_user_dir }}/.bashrc"
+  register: bashrc
+- name: Create {{ ansible_user_dir }}/.bashrc if it doesn't exist
   file:
     path: "{{ ansible_user_dir }}/.bashrc"
-    state: file
+    state: touch
+    mode: '0644'
+  when: bashrc.stat.exists == false
 - name: Ensure convenience functions are defined
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
