@@ -14,4 +14,5 @@
       - vagrant
       - vagrant-libvirt
       - python3-lxml
+      - python3-jmespath
       - tigervnc-viewer

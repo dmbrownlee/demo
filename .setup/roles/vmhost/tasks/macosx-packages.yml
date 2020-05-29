@@ -36,6 +36,10 @@
 # ==============
 # packer
 # ==============
+- name: Ensure  jmespath is installed for python3
+  pip:
+    name: jmespath
+  become: true
 - name: Check if packer binary exists
   stat:
     path: "{{ packer_install_path }}{{ packer_bin }}"

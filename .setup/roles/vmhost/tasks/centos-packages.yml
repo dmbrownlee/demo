@@ -16,6 +16,7 @@
      - "@virtualization-tools"
      - qemu-kvm
      - python3-lxml
+     - python3-jmespath
      - tigervnc
   become: true
 - name: Ensure link to qemu-kvm using old name exists (CentOS 8)
