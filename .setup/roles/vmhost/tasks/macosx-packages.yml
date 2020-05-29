@@ -126,6 +126,7 @@
 - name: Install VirtualBox.pkg
   command: installer -pkg "{{ virtualbox_mac_dmg_mount_path }}/VirtualBox.pkg" -target /
   become: yes
+  ignore_errors: true
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
 - name: Unmount VirtualBox image
   command: hdiutil detach "{{ virtualbox_mac_dmg_mount_path }}"
