@@ -86,8 +86,6 @@
     path: "{{ wireshark_app }}"
   register: installed_wireshark
   changed_when: false
-  tags:
-  - testing
 - name: Check the version of Wireshark if already installed
   command: sed -n -e '/<key>CFBundleShortVersionString<\/key>/{n;s/^.*<string>\(.*\)<\/string>.*$/\1/;p;}' {{ wireshark_mac_plist }}
   args:
@@ -96,55 +94,39 @@
   failed_when: false
   register: installed_wireshark_version
   when: installed_wireshark.stat.exists
-  tags:
-  - testing
 - name: Download wireshark disk image
   get_url:
     url: "{{ wireshark_mac_dmg_url }}"
     dest: "{{ downloads }}/{{ wireshark_mac_dmg }}"
     checksum: "{{ wireshark_mac_dmg_checksum }}"
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Mount the wireshark disk image file
   command: hdiutil attach "{{ downloads }}/{{ wireshark_mac_dmg }}"
   become: yes
   changed_when: false
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Ensure previous version of Wireshark is removed if we are upgrading
   file:
     path: "{{ wireshark_app }}"
     state: absent
   become: yes
   when: installed_wireshark.stat.exists is true and (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Install Wireshark.app
   command: cp -R "{{ wireshark_mac_dmg_mount_path }}/Wireshark.app" /Applications
   become: yes
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Install ChmodBPF
   command: installer -pkg "{{ wireshark_mac_dmg_mount_path }}/Install ChmodBPF.pkg" -target /
   become: yes
   ignore_errors: true
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Add Wireshark to system path
   command: installer -pkg "{{ wireshark_mac_dmg_mount_path }}/Add Wireshark to the system path.pkg" -target /
   become: yes
   ignore_errors: true
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
 - name: Unmount wireshark image
   command: hdiutil detach "{{ wireshark_mac_dmg_mount_path }}"
   become: yes
   changed_when: false
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
-  tags:
-  - testing
