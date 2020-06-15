@@ -1,4 +1,2 @@
 ---
 - include_tasks: macosx-packages.yml
-  tags:
-  - testing
