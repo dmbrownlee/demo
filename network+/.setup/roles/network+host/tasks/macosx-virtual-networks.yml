@@ -1,0 +1,9 @@
+---
+- name: Get the list of hostonly network interfaces
+  shell: "VBoxManage list hostonlyifs | grep -q 'vboxnet0'"
+  changed_when: false
+  failed_when: false
+  register: existing_hostonlyifs
+- name: Ensure vboxnet0 hostonly network interface is created
+  command: "VBoxManage hostonlyif create"
+  when: existing_hostonlyifs.rc != 0
