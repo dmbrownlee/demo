@@ -5,5 +5,9 @@
   failed_when: false
   register: existing_hostonlyifs
 - name: Ensure vboxnet0 hostonly network interface is created
-  command: "VBoxManage hostonlyif create"
+  command: "{{ item }}"
+  with_items:
+    - VBoxManage hostonlyif create
+    - VBoxManage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1
+    - VBoxManage dhcpserver modify --interface vboxnet0 --server-ip 192.168.56.2 --netmask 255.255.255.0 --lowerip 192.168.56.3 --upperip 192.168.56.253 --enable
   when: existing_hostonlyifs.rc != 0
