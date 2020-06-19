@@ -4,6 +4,9 @@
   changed_when: false
   failed_when: false
   register: existing_hostonlyifs
+- name: Ensure kernel extensions are reloaded
+  command: /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
+  become: yes
 - name: Ensure vboxnet0 hostonly network interface is created
   command: "{{ item }}"
   with_items:
