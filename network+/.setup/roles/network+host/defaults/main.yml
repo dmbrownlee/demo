@@ -28,8 +28,26 @@ wireshark_mac_dmg_url: "https://1.na.dl.wireshark.org/osx/{{ wireshark_mac_dmg }
 wireshark_mac_dmg_checksum: "sha256:735d43bdbde1caeb9bfff89acc62acfeb05ffda36e6d0d243bc08333e60fdac6"
 wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
 # defaults for virtual network
-networks:
-  - name: "Network+ Net1"
-    block: '192.168.5.0/24'
-  - name: "Network+ Net2"
-    block: '192.168.6.0/24'
+hostonlyifs:
+  - name: "vboxnet0"
+    ip: "192.168.56.1"
+  - name: "vboxnet1"
+    ip: "192.168.1.1"
+  - name: "vboxnet2"
+    ip: "172.16.0.1"
+dhcpservers:
+  - interface: "vboxnet0"
+    server_ip: "192.168.56.2"
+    lower_ip: "192.168.56.3"
+    upper_ip: "192.168.56.253"
+    netmask: "255.255.255.0"
+  - interface: "vboxnet1"
+    server_ip: "192.168.1.2"
+    lower_ip: "192.168.1.3"
+    upper_ip: "192.168.1.253"
+    netmask: "255.255.255.0"
+  - interface: "vboxnet2"
+    server_ip: "172.16.0.2"
+    lower_ip: "172.16.0.3"
+    upper_ip: "172.16.0.253"
+    netmask: "255.255.255.0"
