@@ -1,9 +1,12 @@
+.terraform
 .vagrant
 .travis.yml
 *.swp
+*.un~
 .DS_Store
 *.retry
 *.box
 packer_cache
 output-virtualbox-iso
-rhcx/Vagrantfile
+.setup/packer/
+rhcsa/Vagrantfile

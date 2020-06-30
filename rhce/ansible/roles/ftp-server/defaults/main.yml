@@ -1,0 +1,8 @@
+---
+mypackages:
+  - 'vsftpd'
+myservices:
+  - { servicename: 'vsftpd', state: started, enabled: yes }
+myfirewalld:
+  rules: 
+  - { zone: internal, service: 'ftp', state: enabled }

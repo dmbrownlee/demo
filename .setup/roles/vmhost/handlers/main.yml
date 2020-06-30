@@ -1,0 +1,10 @@
+---
+- name: Ensure XCode command line tools are installed
+  command: xcode-select --install
+  listen: vagrant_plugin_update
+  register: xcode_install
+  failed_when: xcode_install.rc != 0 and xcode_install.rc != 1
+  changed_when: xcode_install.rc == 0
+- name: Update Vagrant plugins
+  command: vagrant plugin update
+  listen: vagrant_plugin_update

@@ -1,0 +1,19 @@
+---
+- name: Ensure the services are configured
+  service:
+    name: "{{ item.servicename }}"
+    state: "{{ item.state }}"
+    enabled: "{{ item.enabled }}"
+  become: yes
+  when: myservices is defined
+  loop: "{{ myservices }}"
+- name: Ensure the firewall is configured for the server
+  firewalld:
+    service: "{{ item.service }}"
+    zone: "{{ item.zone }}"
+    state: "{{ item.state }}"
+    permanent: '{{ item.permanent | default("yes") }}'
+    immediate: '{{ item.immediate | default("yes") }}'
+  become: yes
+  when: myfirewalld.rules is defined
+  loop: "{{ myfirewalld.rules }}"

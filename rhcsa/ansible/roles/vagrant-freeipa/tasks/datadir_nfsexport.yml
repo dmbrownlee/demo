@@ -1,0 +1,25 @@
+---
+- name: Ensure example NFS share for labs has correct SELinux fcontext in policy
+  sefcontext:
+    target: '/srv/nfsexport(/.*)?'
+    setype: nfs_t
+    state: present
+  become: yes
+  notify: serestore_nfs
+- name: Ensure /srv/nfsexport example directory exists
+  file:
+    path: '/srv/nfsexport'
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+    setype: nfs_t
+  become: yes
+- name: Ensure example NFS share for labs is exported
+  copy:
+    dest: /etc/exports.d/nfsexport.exports
+    content: "/srv/nfsexport *(rw)"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes

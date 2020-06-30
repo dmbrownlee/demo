@@ -1,0 +1,5 @@
+---
+- name: Ensure selinux policy is applied to new data share
+  listen: "serestore_data"
+  command: restorecon -ir /data
+  become: yes

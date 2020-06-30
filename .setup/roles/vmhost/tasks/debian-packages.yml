@@ -1,0 +1,18 @@
+---
+# Ensure necessary packages are installed
+- name: Ensure virtualization utilities are installed
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  become: yes
+  vars:
+    packages:
+      - virt-manager
+      - python3-libvirt
+      - packer
+      - vagrant
+      - vagrant-libvirt
+      - python3-lxml
+      - python3-jmespath
+      - tigervnc-viewer

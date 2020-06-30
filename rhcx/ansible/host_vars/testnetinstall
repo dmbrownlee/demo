@@ -1,6 +1,0 @@
----
-hostname: testnetinstall
-iface_int: eth0
-iface_ext: eth1
-iface_ext_address: 192.168.4.230/24
-iface_ext_gateway: 192.168.4.1
