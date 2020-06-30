@@ -1,0 +1,21 @@
+---
+- name: Ensure necessary packages are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - nss-pam-ldapd
+    - ipa-client
+    - tcpdump
+    - bind-utils
+    - vim
+    - screen
+    - net-tools
+    - nfs-utils
+    - git
+  become: yes
+- name: Ensure ansible is installed
+  package:
+    name: ansible
+    state: present
+  become: yes

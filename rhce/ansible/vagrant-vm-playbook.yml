@@ -1,0 +1,34 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Configure RHCE 8 VMs
+  hosts: rhce8_vms
+  roles:
+    - role: rhel-system-roles.network
+      become: yes
+    - role: localconf
+      become: yes
+
+- name: Configure Samba servers
+  hosts: samba_servers
+  roles:
+    - role: samba-server
+
+- name: Configure NFS servers
+  hosts: nfs_servers
+  roles:
+    - role: nfs-server
+
+- name: Configure FTP servers
+  hosts: ftp_servers
+  roles:
+    - role: ftp-server
+
+- name: Configure FreeIPA servers
+  hosts: ipa_servers
+  roles:
+    - role: freeipa-server
+
+- name: Configure Kerberos clients
+  hosts: krb5_clients
+  roles:
+    - role: krb5_client

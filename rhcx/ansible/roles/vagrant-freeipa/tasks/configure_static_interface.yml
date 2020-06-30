@@ -1,9 +1,0 @@
----
-#- name: Ensure the freeipa server is using static addressing
-#  command: nmcli c mod "{{ iface_ext }}" ipv4.address 192.168.4.200/24 ipv4.gateway 192.168.4.1 ipv4.method manual
-#  become: yes
-- name: Ensure the interface is reloaded
-  command: nmcli c down "{{ iface_ext }}"
-  become: yes
-- command: nmcli c up "{{ iface_ext }}"
-  become: yes

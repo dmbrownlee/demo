@@ -1,7 +1,0 @@
----
-- import_tasks: hide_vagrant_user.yml
-- import_tasks: add_lab_user.yml
-- import_tasks: configure_7.0_networking.yml
-  when: ansible_distribution_version == "7.0.1406"
-- import_tasks: configure_networking.yml
-  when: ansible_distribution_version != "7.0.1406"

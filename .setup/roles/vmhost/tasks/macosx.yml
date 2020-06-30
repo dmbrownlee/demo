@@ -1,0 +1,4 @@
+---
+- include_tasks: macosx-directories.yml
+- include_tasks: macosx-packages.yml
+- include_tasks: macosx-configuration.yml

@@ -1,0 +1,53 @@
+---
+- name: Ensure the Samba server is installed
+  import_role:
+    name: additional_software
+    defaults_from: samba_server
+  tags:
+    - testing
+- name: Ensure Samba users have corresponding Linux users
+  user:
+    name: "{{ item.username }}"
+    append: "{{ item.append | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    create_home: "{{ item.create_home | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    home: "{{ item.home | default(omit) }}"
+    password: "{{ item.pw | default(omit) }}"
+    password_lock: "{{ item.password_lock | default(omit) }}"
+    remove: "{{ item.remmove | default(omit) }}"
+    shell: "{{ item.shell | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
+  become: yes
+  when: users.samba is defined
+  loop: "{{ users.samba }}"
+- name: Get a list of Samba users that already exist in tdbsam database
+  shell: pdbedit -L | cut -f1 -d':'
+  become: yes
+  register: pdbedit
+  changed_when: false
+- name: Ensure Samba users exist in tdbsam database
+  shell: echo -e "{{ item.smbpw }}\n{{ item.smbpw }}" | smbpasswd -sa {{ item.username }}
+  become: yes
+  when: users.samba is defined and item.username not in pdbedit.stdout
+  loop: "{{ users.samba }}"
+- name: Ensure Samba config file has been generated from template
+  template:
+    dest: /etc/samba/smb.conf
+    src: smb.conf.j2
+    group: "root"
+    mode: "0644"
+    owner: "root"
+    setype: "samba_etc_t"
+    validate: "testparm -s %s"
+  become: yes
+  notify: "samba_restart"
+- name: Ensure Samba setup complete using server role
+  import_role:
+    name: server
+    defaults_from: samba_server
+  tags:
+    - testing

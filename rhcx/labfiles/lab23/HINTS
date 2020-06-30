@@ -1,8 +1,0 @@
-- The showmount command gets its info by talking to a process on the NFS 
-  server called rpcbind (aka portmapper)
-- rpcbind replies to showmount with a list of various service and the ports
-  they are running on
-- Running "rpcinfo -p" on the NFS server may be insightful
-- If the text of the error looks like it changed, you may have gotten past
-  one hurdle to be confronted with another, even if the text of the error
-  is roughly the same
