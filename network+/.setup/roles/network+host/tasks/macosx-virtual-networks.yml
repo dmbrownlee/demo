@@ -1,13 +1,13 @@
 ---
+- name: Ensure kernel extensions are reloaded
+  command: /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
+  changed_when: false
+  become: yes
 - name: Get the list of hostonly network interfaces
   shell: VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
   changed_when: false
   failed_when: false
   register: existing_hostonlyifs
-- name: Ensure kernel extensions are reloaded
-  command: /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
-  changed_when: false
-  become: yes
 - name: Ensure vboxnetX hostonly network interfaces exist
   command: VBoxManage hostonlyif create
   when: item not in existing_hostonlyifs.stdout_lines
