@@ -1,0 +1,12 @@
+---
+- name: Ensure common packages are installed
+  package:
+    name:
+      - nmap
+      - tcpdump
+      - tmux
+      - traceroute
+      - vim
+      - wireshark
+    state: present
+  become: yes

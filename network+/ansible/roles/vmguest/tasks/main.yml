@@ -1,0 +1,4 @@
+---
+- include_tasks: install-packages.yml
+#- include_tasks: configure-networking.yml
+- include_tasks: manage-accounts.yml
