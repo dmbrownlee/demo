@@ -7,6 +7,7 @@
     system: no
     append: yes
     groups: "cdrom,floppy,sudo,audio,dip,video,plugdev,netdev,bluetooth,lpadmin,scanner"
+    shell: "/usr/bin/bash"
     state: present
   become: yes
 - name: Ensure GDM sessions are configured for the users
