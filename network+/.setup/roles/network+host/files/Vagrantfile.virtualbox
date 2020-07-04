@@ -18,6 +18,9 @@ Vagrant.configure("2") do |config|
     vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "3.0"]
     # NIC1 is connected to the vagrant management network
     vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    # NIC2 is not connected (you connect it within GNS3)
+    vboxvm.customize ["modifyvm", :id, "--nic2", "null"]
+    vboxvm.customize ["modifyvm", :id, "--cableconnected2", "off"]
   end
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/site.yml"
@@ -27,18 +30,30 @@ Vagrant.configure("2") do |config|
       "foo" => ["bar"]
     }
   end
+
   #==========================
   # Netblock: 192.168.1.0/24
   #==========================
 
-  config.vm.define "dhcp-192.168.1.100" do |node|
-    node.vm.provider "virtualbox" do |vboxvm|
-      vboxvm.name = "dhcp-192.168.1.100"
-      # NIC2 will use the hostonly network for this netblock but is not
-      # connected by default (you connect it in GNS3)
-      vboxvm.customize ["modifyvm", :id, "--nic2", "hostonly"]
-      vboxvm.customize ["modifyvm", :id, "--cableconnected2", "off"]
-      vboxvm.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet1"]
+  (100..102).each do |addr_host|
+    addr_net = "192.168.1"
+    config.vm.define "dhcp-#{addr_net}.#{addr_host}" do |node|
+      node.vm.provider "virtualbox" do |vboxvm|
+        vboxvm.name = "dhcp-#{addr_net}.#{addr_host}"
+      end
+    end
+  end
+
+  #==========================
+  # Netblock: 192.168.2.0/24
+  #==========================
+
+  (100..101).each do |addr_host|
+    addr_net = "192.168.2"
+    config.vm.define "dhcp-#{addr_net}.#{addr_host}" do |node|
+      node.vm.provider "virtualbox" do |vboxvm|
+        vboxvm.name = "dhcp-#{addr_net}.#{addr_host}"
+      end
     end
   end
 
@@ -46,14 +61,12 @@ Vagrant.configure("2") do |config|
   # Netblock: 172.16.1.0/24
   #==========================
 
-  config.vm.define "dhcp-172.16.1.100" do |node|
-    node.vm.provider "virtualbox" do |vboxvm|
-      vboxvm.name = "dhcp-172.16.1.100"
-      # NIC2 will use the hostonly network for this netblock but is not
-      # connected by default (you connect it in GNS3)
-      vboxvm.customize ["modifyvm", :id, "--nic2", "hostonly"]
-      vboxvm.customize ["modifyvm", :id, "--cableconnected2", "off"]
-      vboxvm.customize ["modifyvm", :id, "--hostonlyadapter2", "vboxnet2"]
+  (100..101).each do |addr_host|
+    addr_net = "172.16.1"
+    config.vm.define "dhcp-#{addr_net}.#{addr_host}" do |node|
+      node.vm.provider "virtualbox" do |vboxvm|
+        vboxvm.name = "dhcp-#{addr_net}.#{addr_host}"
+      end
     end
   end
 
@@ -61,10 +74,11 @@ Vagrant.configure("2") do |config|
   # Netblock: 10.1.1.0/24
   #==========================
 
-  (10..12).each do |host|
-    config.vm.define "dhcp-10.1.1.#{host}", autostart: false do |node|
+  (10..12).each do |addr_host|
+    addr_net = "10.1.1"
+    config.vm.define "dhcp-#{addr_net}.#{addr_host}", autostart: false  do |node|
       node.vm.provider "virtualbox" do |vboxvm|
-        vboxvm.name = "dhcp-10.1.1.#{host}"
+        vboxvm.name = "dhcp-#{addr_net}.#{addr_host}"
       end
     end
   end
