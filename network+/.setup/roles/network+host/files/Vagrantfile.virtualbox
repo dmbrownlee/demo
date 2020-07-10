@@ -18,9 +18,7 @@ Vagrant.configure("2") do |config|
     vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "2.0"]
     # NIC1 is connected to the vagrant management network
     vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
-    # NIC2 is not connected (you connect it within GNS3)
-    # vboxvm.customize ["modifyvm", :id, "--nic2", "null"]
-    # vboxvm.customize ["modifyvm", :id, "--cableconnected2", "off"]
+    vboxvm.customize ["modifyvm", :id, "--macaddress1", "auto"]
   end
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/site.yml"
