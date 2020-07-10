@@ -1,8 +1,9 @@
 ---
-- name: Ensure kernel extensions are reloaded
-  command: /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
-  changed_when: false
-  become: yes
+#- name: Ensure kernel extensions are reloaded
+#  command: /Library/Application\ Support/VirtualBox/LaunchDaemons/VirtualBoxStartup.sh restart
+#  changed_when: false
+#  ignore_errors: true
+#  become: yes
 - name: Get the list of hostonly network interfaces
   shell: VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
   changed_when: false
