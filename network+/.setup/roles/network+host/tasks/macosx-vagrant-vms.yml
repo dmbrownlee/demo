@@ -10,5 +10,5 @@
   shell: vagrant up {{ item }} && vagrant halt {{ item }}
   args:
     chdir: "{{ ansible_user_dir }}/demo/network+"
-  when: "{{ missing_vms.stdout_lines | length }} > 0"
+  when: missing_vms.stdout_lines | length > 0
   with_items: "{{ missing_vms.stdout_lines }}"
