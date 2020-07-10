@@ -19,13 +19,13 @@ gns3vm_vbox_zip_checksum: "sha256:24d560a5d09e55fedb0b07359dba5785cc3ce2f66803a5
 #gns3vm_kvm_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3vm_kvm_zip }}"
 #gns3vm_kvm_zip_checksum: "sha256:7b940a8ebf632258c02073f9f3e9c41610d81d2583a89dacdc156616cebe6661"
 # defaults for Wireshark
-wireshark_version: "3.2.4"
+wireshark_version: "3.2.5"
 wireshark_bin: "/usr/local/bin/wireshark"
 wireshark_app: "/Applications/wireshark.app"
 wireshark_mac_plist: "{{ wireshark_app }}/Contents/Info.plist"
 wireshark_mac_dmg: "Wireshark%20{{ wireshark_version }}%20Intel%2064.dmg"
 wireshark_mac_dmg_url: "https://1.na.dl.wireshark.org/osx/{{ wireshark_mac_dmg }}"
-wireshark_mac_dmg_checksum: "sha256:735d43bdbde1caeb9bfff89acc62acfeb05ffda36e6d0d243bc08333e60fdac6"
+wireshark_mac_dmg_checksum: "sha256:c95277ecc61c22b900591d07dae94ef659fe1d80d584479ddc46855b4e3a3745"
 wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
 # defaults for virtual network
 hostonlyifs:
