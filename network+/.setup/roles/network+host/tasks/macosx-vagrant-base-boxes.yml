@@ -4,9 +4,8 @@
   vars:
     inst_name: "{{ item }}"
   with_items:
-    - CentOS-8.1-1911-x86_64-Minimal
-    - CentOS-8.1-1911-x86_64-ServerWithGui
+    - Debian-10.4.0-amd64
 - name: Ensure VirtualBox version of Vagrantfile is installed
   copy:
-    dest: "{{ ansible_user_dir }}/demo/rhcsa/Vagrantfile"
+    dest: "{{ ansible_user_dir }}/demo/network+/Vagrantfile"
     src: Vagrantfile.virtualbox

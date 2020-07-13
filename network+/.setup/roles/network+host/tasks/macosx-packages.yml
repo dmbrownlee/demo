@@ -72,13 +72,6 @@
     path: "{{ gns3_user_dir }}/symbols"
     state: directory
     mode: 0755
-- name: Copy SVG icons for VMs
-  copy:
-    src: "{{ item }}"
-    dest: "{{ gns3_user_dir }}/symbols/{{ item }}"
-  with_items:
-    - "computer_green.svg"
-    - "computer_purple.svg"
 # ==============
 # GNS3.VM.VirtualBox
 # ==============

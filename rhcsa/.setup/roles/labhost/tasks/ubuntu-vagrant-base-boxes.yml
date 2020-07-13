@@ -8,5 +8,5 @@
     - CentOS-8.1-1911-x86_64-ServerWithGui
 - name: Ensure KVM version of Vagrantfile is installed
   copy:
-    dest: "{{ ansible_user_dir }}/demo/rhcsa/"
-    src: kvm/Vagrantfile
+    dest: "{{ ansible_user_dir }}/demo/rhcsa/Vagrantfile"
+    src: Vagrantfile.kvm
