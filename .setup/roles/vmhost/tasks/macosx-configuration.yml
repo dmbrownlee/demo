@@ -10,3 +10,7 @@
     - ServerWithGui8-ks.cfg
     - Debian-10.4.0-amd64.json
     - Debian10-preseed.cfg
+    - answer_files
+    - cookbooks
+    - scripts
+    - win10.json
