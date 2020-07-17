@@ -60,12 +60,12 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "windows" do |node|
     node.vm.box = "Windows-10"
-    node.memory = 1024
     node.vm.communicator = "winrm"
     node.vm.boot_timeout = 300
     node.vm.network :forwarded_port, guest: 3389, host: 3389, id: 'rdp', auto_correct: true
     node.vm.provider "virtualbox" do |vboxvm|
       vboxvm.name = "windows"
+      vboxvm.memory = 1024
     end
   end
 end
