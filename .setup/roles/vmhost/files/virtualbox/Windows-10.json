@@ -1,6 +1,5 @@
 {
   "variables": {
-    "build_directory": "../../builds",
     "cpus": "2",
     "floppy_dir": "{{template_dir}}/answer_files",
     "guest_additions_mode": "attach",
@@ -34,7 +33,6 @@
       "iso_interface": "sata",
       "iso_url": "{{ user `iso_url` }}",
       "memory": "{{ user `memory` }}",
-      "output_directory": "{{ user `build_directory` }}/packer-{{user `template`}}-virtualbox",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "15m",
       "vboxmanage": [
