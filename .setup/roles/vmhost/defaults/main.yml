@@ -27,7 +27,7 @@ vagrant_linux_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_versio
 vagrant_linux_deb_checksum: "sha256:d06038b68a97a38369220838f0d21c50f9f09b693cf0458cad872864bb7ee09b"
 # default values for virtualbox
 virtualbox_version: "6.1.12"
-virtualbox_build: "137981"
+virtualbox_build: "139181"
 virtualbox_mac_plist: "/Applications/VirtualBox.app/Contents/Info.plist"
 virtualbox_mac_dmg: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-OSX.dmg"
 virtualbox_mac_dmg_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_mac_dmg }}"
