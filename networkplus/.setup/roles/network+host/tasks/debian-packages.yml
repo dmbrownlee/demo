@@ -101,3 +101,28 @@
     - libvirt
     - docker
     - ubridge
+- name: Ensure user config directory for GNS3 exists
+  file:
+    path: "{{ gns3_config_dir }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: user
+    mode: 0755
+- name: Update GNS3 configuration files
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
+  with_items:
+    - "gns3_gui"
+    - "gns3_server"
+    - "gns3_controller"
+- name: Ensure directory for IOS images exists
+  file:
+    path: "{{ gns3_user_dir }}/images"
+    state: directory
+    mode: 0755
+- name: Ensure directory for IOS symbols exists
+  file:
+    path: "{{ gns3_user_dir }}/symbols"
+    state: directory
+    mode: 0755

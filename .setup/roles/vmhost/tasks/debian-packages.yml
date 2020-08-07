@@ -16,3 +16,12 @@
       - python3-lxml
       - python3-jmespath
       - tigervnc-viewer
+- name: Download VirtualBox package
+  get_url:
+    url: "{{ virtualbox_linux_deb_url }}"
+    dest: "{{ ansible_user_dir }}/Downloads/{{ virtualbox_linux_deb }}"
+    checksum: "{{ virtualbox_linux_deb_checksum }}"
+- name: Ensure VirtualBox installed
+  apt:
+    deb: "{{ ansible_user_dir }}/Downloads/{{ virtualbox_linux_deb }}"
+  become: yes
