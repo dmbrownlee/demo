@@ -1,0 +1,5 @@
+---
+- include_tasks: debian-packages.yml
+#- include_tasks: debian-virtual-networks.yml
+#- include_tasks: debian-vagrant-base-boxes.yml
+#- include_tasks: debian-vagrant-vms.yml
