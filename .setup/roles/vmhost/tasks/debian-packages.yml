@@ -8,6 +8,10 @@
   become: yes
   vars:
     packages:
+      - gcc
+      - make
+      - perl
+      - linux-headers-{{ ansible_kernel }}
       - virt-manager
       - python3-libvirt
       - packer
@@ -25,3 +29,18 @@
   apt:
     deb: "{{ ansible_user_dir }}/Downloads/{{ virtualbox_linux_deb }}"
   become: yes
+- name: Check for existance of VirtualBox drivers
+  stat:
+    path: /lib/modules/{{ ansible_kernel }}/misc/{{ item }}
+  with_items:
+    - vboxdrv.ko
+    - vboxnetadp.ko
+    - vboxnetflt.ko
+  changed_when: false
+  register: vboxdrivers
+- debug:
+    var: vboxdrivers
+- name: Ensure VirtualBox drivers are built and installed
+  command: /sbin/vboxconfig
+  become: yes
+  when: vboxdrivers.results[0].stat.exists == false or vboxdrivers.results[1].stat.exists == false or vboxdrivers.results[2].stat.exists == false
