@@ -36,6 +36,11 @@
     pip_packages:
       - gns3-server
       - gns3-gui
+- name: Check status of bionic packages
+  command: dpkg -s dynamips ubridge vpcs gns3-server gns3-gui
+  changed_when: false
+  failed_when: false
+  register: bionic
 - name: Ensure the apt key for the docker repo is installed
   apt_key:
     url: https://download.docker.com/linux/debian/gpg
@@ -46,6 +51,7 @@
     id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
     state: present
   become: yes
+  when: bionic.rc != 0
 - name: Ensure the docker repo is enabled
   apt_repository:
     repo: "deb https://download.docker.com/linux/debian buster stable edge"
@@ -60,6 +66,7 @@
       deb-src http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
     state: present
   become: yes
+  when: bionic.rc != 0
 - name: Ensure apt repos are updated
   apt:
     update_cache: yes
@@ -77,6 +84,7 @@
       - vpcs
       - gns3-server
       - gns3-gui
+  when: bionic.rc != 0
 - name: Ensure the Ubuntu repos are removed after dynamips is installed
   blockinfile:
     path: /etc/apt/sources.list
@@ -85,11 +93,13 @@
       deb-src http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
     state: absent
   become: yes
+  when: bionic.rc != 0
 - name: Ensure the apt key for Ubuntu bionic repo is removed
   apt_key:
     id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
     state: absent
   become: yes
+  when: bionic.rc != 0
 - name: Ensure user is in the required groups
   user:
     name: "{{ ansible_user }}"
