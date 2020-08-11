@@ -36,8 +36,6 @@
     - vboxnetflt.ko
   changed_when: false
   register: vboxdrivers
-- debug:
-    var: vboxdrivers
 - name: Ensure VirtualBox drivers are built and installed
   command: /sbin/vboxconfig
   become: yes
