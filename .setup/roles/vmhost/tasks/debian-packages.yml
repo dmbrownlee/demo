@@ -13,10 +13,8 @@
       - perl
       - linux-headers-{{ ansible_kernel }}
       - virt-manager
+      - libvirt-dev
       - python3-libvirt
-      - packer
-      - vagrant
-      - vagrant-libvirt
       - python3-lxml
       - python3-jmespath
       - tigervnc-viewer
@@ -44,3 +42,59 @@
   command: /sbin/vboxconfig
   become: yes
   when: vboxdrivers.results[0].stat.exists == false or vboxdrivers.results[1].stat.exists == false or vboxdrivers.results[2].stat.exists == false
+# tasks file for packer
+- name: Check if packer is already installed
+  stat:
+    path: "{{ packer_install_path }}{{ packer_bin }}"
+  register: installed_packer
+  changed_when: false
+- name: Check the version of packer if already installed
+  command: "{{ packer_install_path }}{{ packer_bin }} --version"
+  changed_when: false
+  register: installed_packer_version
+  when: installed_packer.stat.exists and installed_packer.stat.isreg
+- name: Ensure zipped binary of packer has been downloaded
+  get_url:
+    url: "{{ packer_linux_zip_url }}"
+    dest: "{{ downloads }}/{{ packer_linux_zip }}"
+    checksum: "{{ packer_linux_zip_checksum }}"
+  when: installed_packer.stat.exists == false or (installed_packer_version.stdout != packer_version)
+- name: Install Packer
+  unarchive:
+    src: "{{ downloads }}/{{ packer_linux_zip }}"
+    dest: "{{ packer_install_path }}"
+    remote_src: yes
+    creates: "{{ packer_install_path }}{{ packer_bin }}"
+    owner: "root"
+    group: "root"
+    mode: 0755
+  become: yes
+  when: installed_packer.stat.exists == false or (installed_packer_version.stdout != packer_version)
+# tasks file for vagrant
+- name: Check if vagrant binary exists
+  stat:
+    path: "{{ vagrant_install_path }}{{ vagrant_bin }}"
+  register: installed_vagrant
+  changed_when: false
+- name: Check the version of vagrant if already installed
+  shell: "{{ vagrant_install_path }}{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
+  changed_when: false
+  register: installed_vagrant_version
+  when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
+- name: Download the Vagrant deb file
+  get_url:
+    url: "{{ vagrant_linux_deb_url }}"
+    dest: "{{ downloads }}/{{ vagrant_linux_deb }}"
+    checksum: "{{ vagrant_linux_deb_checksum }}"
+- name: Install the Vagrant deb file
+  apt:
+    deb: "{{ downloads }}/{{ vagrant_linux_deb }}"
+  when: installed_vagrant.stat.exists == false or (installed_vagrant_version.stdout != vagrant_version)
+  become: yes
+- name: Test if vagrant-libvirt plugin is already installed
+  command: "vagrant plugin list"
+  register: vagrant_plugin_installed
+  changed_when: false
+- name: Install vagrant-libvirt plugin (Debian)
+  shell: "CONFIGURE_ARGS='with-ldflags=-L/opt/vagrant/embedded/lib with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib' vagrant plugin install vagrant-libvirt"
+  when: "'vagrant-libvirt' not in vagrant_plugin_installed.stdout"
