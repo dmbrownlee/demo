@@ -7,12 +7,15 @@
     "headless": "true",
     "hyperv_switch": "{{env `hyperv_switch`}}",
     "inst_name": "Windows-10",
+    "iso_name": "18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
     "iso_checksum": "489ebee676e26cdb81377b0e6385c001a22589b8",
-    "iso_url": "https://software-download.microsoft.com/download/pr/18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
+    "iso_checksum_type": "sha1",
+    "iso_location_current": "https://software-download.microsoft.com/download/pr/",
     "memory": "4096",
     "template": "windows-10",
     "unattended_file_path": "10/Autounattend.xml",
-    "virtio_win_iso": "~/virtio-win.iso"
+    "virtio_win_iso": "~/virtio-win.iso",
+    "dir_downloads": "{{env `HOME`}}/Downloads"
   },
   "builders": [
     {
@@ -29,9 +32,13 @@
       "guest_os_type": "Windows10_64",
       "hard_drive_interface": "sata",
       "headless": "{{ user `headless` }}",
-      "iso_checksum": "sha1:{{ user `iso_checksum` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `iso_checksum_type` }}",
       "iso_interface": "sata",
-      "iso_url": "{{ user `iso_url` }}",
+      "iso_urls": [
+	"{{user `dir_downloads`}}/{{user `iso_name`}}",
+	"{{user `iso_location_current`}}/{{user `iso_name`}}"
+      ],
       "memory": "{{ user `memory` }}",
       "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
       "shutdown_timeout": "15m",
