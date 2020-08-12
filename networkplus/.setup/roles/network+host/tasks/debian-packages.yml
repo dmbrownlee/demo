@@ -34,8 +34,8 @@
     name: "{{ pip_packages }}"
   vars:
     pip_packages:
-      - gns3-server
-      - gns3-gui
+      - gns3-server=={{ gns3_version }}
+      - gns3-gui=={{ gns3_version }}
 - name: Check status of bionic packages
   command: dpkg -s dynamips ubridge vpcs gns3-server gns3-gui
   changed_when: false
