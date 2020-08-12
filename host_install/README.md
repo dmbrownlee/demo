@@ -52,10 +52,10 @@ The ks.cfg kickstart file is mostly automated but you will have to follow the te
 Once the install completes, you will have an administrative user named "user".  The password for both of this account is "password" and you will be forced to change them to something more secure on first login.
 
 ### Debian
-Boot from the installation media, use the cursor keys to highlight the "Advanced options..." menu option and press enter.  Next, select the "Automated install.." menu option and press enter.  The installation will begin.  When prompted for the location of the preseed file, use this URL:
+Boot from the installation media, use the cursor keys to highlight the "Advanced options ..." menu option and press enter.  Next, select the "... Automated install" menu option and press enter.  The installation will begin.  When prompted for "Location of initial preconfiguration file:", use this URL:
 ```
 https://raw.githubusercontent.com/dmbrownlee/demo/master/host_install/Debian/preseed.cfg
 ```
-The Debian preseed file is mostly automated but you will have to follow the text screen prompts to select the disk you want to install on.  You may also need to write to the EFI partition.
+The Debian preseed file is mostly automated but you will have to follow the text screen prompts to select the partitioning scheme (I use "Guided - use entire disk and set up LVM") and the disk use.  You need to confirm you want to write these changes to disk.
 
 Once the install completes, you will have an administrative user named "user".  The password for both of this account is "password" and you will be forced to change them to something more secure on first login.
