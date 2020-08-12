@@ -1,6 +1,6 @@
 {
     "Builtin": {
-        "default_nat_interface": "vmnet8"
+        "default_nat_interface": "vboxnet0"
     },
     "Cloud": {
         "accepted_terms": false,
@@ -21,7 +21,7 @@
     },
     "Dynamips": {
         "allocate_aux_console_ports": false,
-        "dynamips_path": "/Applications/GNS3.app/Contents/MacOS/dynamips",
+        "dynamips_path": "{{ gns3_bin_dir }}/dynamips",
         "ghost_ios_support": true,
         "mmap_support": true,
         "routers": [],
@@ -66,13 +66,13 @@
         "allow_console_from_anywhere": false,
         "auth": true,
         "auto_start": true,
-        "console_end_port_range": 5000,
-        "console_start_port_range": 2001,
+        "console_end_port_range": 10000,
+        "console_start_port_range": 5000,
         "host": "127.0.0.1",
         "images_path": "{{ gns3_user_dir }}/images",
         "password": "",
         "path": "/Applications/GNS3.app/Contents/Resources/server/Contents/MacOS/gns3server",
-        "port": 8000,
+        "port": {{ gns3_server_port }},
         "projects_path": "{{ gns3_user_dir }}/projects",
         "report_errors": true,
         "udp_end_port_range": 20000,
@@ -91,10 +91,10 @@
         "direct_file_upload": false,
         "experimental_features": false,
         "geometry": "AdnQywADAAAAAAAtAAAAOwAABrUAAARaAAAALQAAAFEAAAa1AAAEWgAAAAAAAAAAB4AAAAAtAAAAUQAABrUAAARa",
-        "hdpi": true,
-        "hide_getting_started_dialog": true,
+        "hdpi": {{ gns3_gui_hdpi }},
+        "hide_getting_started_dialog": false,
         "hide_new_template_button": false,
-        "hide_news_dock_widget": false,
+        "hide_news_dock_widget": true,
         "hide_setup_wizard": true,
         "last_check_for_update": 1592144068,
         "link_manual_mode": true,
@@ -103,15 +103,15 @@
         "recent_files": [],
         "recent_projects": [],
         "send_stats": false,
-        "serial_console_command": "/usr/bin/osascript -e 'tell application \"terminal\" to do script with command \"stty raw; nc -U \\\"%s\\\"; exit\"'",
+        "serial_console_command": "{{ gns3_gui_serial_console_command }}",
         "slow_device_start_all": 0,
-        "spice_console_command": "/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer spice://%h:%p",
+        "spice_console_command": "{{ gns3_gui_spice_console_command }}",
         "state": "AAAA/wAAAAD9AAAAAwAAAAAAAAEAAAAC6fwCAAAAAfsAAAAiAHUAaQBOAG8AZABlAHMARABvAGMAawBXAGkAZABnAGUAdAAAAAArAAAC6QAAAIkA////AAAAAQAAAQAAAALp/AIAAAAC+wAAADYAdQBpAFQAbwBwAG8AbABvAGcAeQBTAHUAbQBtAGEAcgB5AEQAbwBjAGsAVwBpAGQAZwBlAHQBAAAAKwAAAXQAAABZAP////sAAAA0AHUAaQBDAG8AbQBwAHUAdABlAFMAdQBtAG0AYQByAHkARABvAGMAawBXAGkAZABnAGUAdAEAAAGlAAABbwAAAFkA////AAAAAwAABk0AAADT/AEAAAAB+wAAACYAdQBpAEMAbwBuAHMAbwBsAGUARABvAGMAawBXAGkAZABnAGUAdAEAAAA8AAAGTQAAAEYAB///AAAFRwAAAukAAAAEAAAABAAAAAgAAAAI/AAAAAIAAAAAAAAAAQAAACIAdQBpAEIAcgBvAHcAcwBlAHIAcwBUAG8AbwBsAEIAYQByAwAAAAD/////AAAAAAAAAAAAAAACAAAAAwAAACAAdQBpAEcAZQBuAGUAcgBhAGwAVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAIAB1AGkAQwBvAG4AdAByAG8AbABUAG8AbwBsAEIAYQByAQAAAF7/////AAAAAAAAAAAAAAAmAHUAaQBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIBAAABkP////8AAAAAAAAAAA==",
         "stats_visitor_id": "11b7ce60-3011-4fa6-823d-46174ad75ea5",
         "style": "Charcoal",
         "symbol_theme": "Classic",
-        "telnet_console_command": "osascript -e 'set posix_path to do shell script \"echo \\\"$PATH\\\"\"' -e 'tell application \"Terminal\"' -e 'activate' -e 'do script \"echo -n -e \\\"\\\\033]0;%d\\\\007\\\"; clear; PATH=\" & quoted form of posix_path & \" telnet %h %p ; exit\"' -e 'end tell'",
-        "vnc_console_command": "osascript -e 'tell application \"Screen Sharing\"' -e '   display dialog \"WARNING OSX VNC support is limited if you have trouble connecting to a device please use an alternative client like Chicken of the VNC.\" buttons {\"OK\"} default button 1 with icon caution with title \"GNS3\"' -e '  open location \"vnc://%h:%p\"' -e 'end tell'"
+        "telnet_console_command": "{{ gns3_gui_telnet_command }}",
+        "vnc_console_command": "{{ gns3_gui_vnc_command }}"
     },
     "NodesView": {
         "nodes_view_filter": 0
@@ -119,7 +119,7 @@
     "PacketCapture": {
         "command_auto_start": true,
         "packet_capture_analyzer_command": "",
-        "packet_capture_reader_command": "tail -f -c +0 %c | /Applications/Wireshark.app/Contents/MacOS/Wireshark -o \"gui.window_title:%d\" -k -i -"
+        "packet_capture_reader_command": "{{ gns3_pcap_reader_command }}"
     },
     "Qemu": {
         "enable_hardware_acceleration": true,
@@ -158,13 +158,13 @@
     "VPCS": {
         "base_script_file": "{{ ansible_user_dir }}/.config/gns3.net/base_configs/vpcs_base_config.txt",
         "use_local_server": true,
-        "vpcs_path": "/Applications/GNS3.app/Contents/MacOS/vpcs"
+        "vpcs_path": "{{ gns3_bin_dir }}/vpcs"
     },
     "VirtualBox": {
         "use_local_server": true,
-        "vboxmanage_path": "/Applications/VirtualBox.app/Contents/MacOS/VBoxManage",
+        "vboxmanage_path": "{{ vboxmanage_path }}",
         "vms": []
     },
     "type": "settings",
-    "version": "2.2.9"
+    "version": "{{ gns3_version }}"
 }
