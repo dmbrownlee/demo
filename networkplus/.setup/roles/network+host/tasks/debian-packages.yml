@@ -167,7 +167,13 @@
   args:
     chdir: "{{ downloads }}"
     warn: false
+    creates: "{{ downloads }}/GNS3 VM.ova"
   when: installed_gns3vm.rc != 0
 - name: Import GNS3.VM ova file into VirtualBox
   command: "VBoxManage import '{{ downloads }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'" 
+  when: installed_gns3vm.rc != 0
+- name: Ensure OVA file is removed after import
+  file:
+    path: "{{ downloads }}/GNS3 VM.ova"
+    state: absent
   when: installed_gns3vm.rc != 0
