@@ -2,8 +2,8 @@ This directory contains files for automating the installation of a minimal Linux
 
 # Overview
 The basic steps are:
-1. [Create the installion media](https://github.com/dmbrownlee/demo/blob/master/kvmhost/README.md#create-the-installation-media)
-2. [Install the host using distribution specific automation](https://github.com/dmbrownlee/demo/blob/master/kvmhost/README.md#install-the-host-using-distribution-specific-automation)
+1. [Create the installion media](https://github.com/dmbrownlee/demo/blob/master/host_install/README.md#create-the-installation-media)
+2. [Install the host using distribution specific automation](https://github.com/dmbrownlee/demo/blob/master/host_install/README.md#install-the-host-using-distribution-specific-automation)
 
 ## Create the installation media
 There are plenty of better places to find information on how to do this so I'm keeping this short and only addressing using the ```dd``` command to write the ISO image to a file.
