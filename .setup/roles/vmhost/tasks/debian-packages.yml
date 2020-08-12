@@ -18,6 +18,7 @@
       - python3-lxml
       - python3-jmespath
       - tigervnc-viewer
+      - xterm
 - name: Download VirtualBox package
   get_url:
     url: "{{ virtualbox_linux_deb_url }}"
