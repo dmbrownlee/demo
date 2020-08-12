@@ -14,19 +14,26 @@ There are plenty of better places to find information on how to do this so I'm k
     - [CentOS 8.2 CHECKSUM](http://distro.ibiblio.org/centos/8.2.2004/isos/x86_64/CHECKSUM)
     - [Debian SHA256SUMS](https://cdimage.debian.org/mirror/cdimage/archive/10.5.0/amd64/iso-cd/SHA256SUMS)
 3. Calculate the checksum on the ISO file you downloaded and compare it to the checksum in step 2.
-    > On Linux: sha256sum *.iso
-    > On Mac: shasum -a 256 *.iso
+    > On Linux:  
+    > ```sha256sum *.iso```  
+    >
+    > On Mac:  
+    > ```shasum -a 256 *.iso```  
 
     Assuming your checksum matches, you have downloaded the ISO file successfully and you can now use dd to write it to a USB flash drive.  In order to do that, you will need to know the disk device of your USB flash drive.
 4. Before inserting your flash drive, run the following command to see your existing disks:
-    > On Linux:
-    > ```lsblk```
-    > On Mac:
-      ```diskutil list```
+    > On Linux:  
+    > ```lsblk```  
+    >
+    > On Mac:  
+    > ```diskutil list```  
 5. Insert the USB flash drive and re-run the commands above and look for the disk that did not exist on the first run.  That is your USB flash drive.
 6. Now that you know the name of the USB flash drive, you can use dd to write the ISO image to it.
-    > On Linux: sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4m status=progress
-    > On Mac: sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4M &
+    > On Linux:  
+    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4m status=progress```  
+    >
+    > On Mac:  
+    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4M &```
 The network installing ISO images are fairly small so the dd command should not take long.
 
 ## Install the host using distribution specific automation
