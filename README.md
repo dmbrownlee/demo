@@ -27,5 +27,5 @@ When prompted for the "BECOME" password, use the password of the account you are
 
 Assuming the setup script completed without errors, step one is done.  You may want to reboot before proceeding with the README.md in your course's directory.
 
-[CompTIA Network+](https://github.com/dmbrownlee/demo/tree/master/networkplus)
-[Red Hat RHCSA](https://github.com/dmbrownlee/demo/tree/master/rhcsa)
+- [CompTIA Network+](https://github.com/dmbrownlee/demo/tree/master/networkplus)
+- [Red Hat RHCSA](https://github.com/dmbrownlee/demo/tree/master/rhcsa)
