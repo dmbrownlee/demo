@@ -9,7 +9,7 @@
     "inst_name": "Windows-10",
     "iso_name": "18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso",
     "iso_checksum": "sha1:489ebee676e26cdb81377b0e6385c001a22589b8",
-    "iso_location_current": "https://software-download.microsoft.com/download/pr/",
+    "iso_location_current": "https://software-download.microsoft.com/download/pr",
     "memory": "4096",
     "template": "windows-10",
     "unattended_file_path": "10/Autounattend.xml",
