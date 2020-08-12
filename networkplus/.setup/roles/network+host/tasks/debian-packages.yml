@@ -126,6 +126,18 @@
     - "gns3_gui"
     - "gns3_server"
     - "gns3_controller"
+  vars:
+    gns3_bin_dir: "/usr/bin"
+    gns3_server_host: "192.168.56.1"
+    gns3_server_port: "8000"
+    gns3_server_path: "{{ ansible_user_dir }}/.local/bin/gns3server"
+    gns3_gui_hdpi: "false"
+    gns3_gui_serial_console_command: ""
+    gns3_gui_spice_console_command: "remote-viewer spice://%h:%p"
+    gns3_gui_telnet_command: "gnome-terminal -t \"%d\" -e \"telnet %h %p\""
+    gns3_gui_vnc_command: "vncviewer %h:%p"
+    gns3_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
+    vboxmanage_path: "/usr/bin/VBoxManage"
 - name: Ensure directory for IOS images exists
   file:
     path: "{{ gns3_user_dir }}/images"
@@ -155,7 +167,6 @@
   args:
     chdir: "{{ downloads }}"
     warn: false
-    creates: "{{ downloads }}/GNS3 VM.ova"
   when: installed_gns3vm.rc != 0
 - name: Import GNS3.VM ova file into VirtualBox
   command: "VBoxManage import '{{ downloads }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'" 
