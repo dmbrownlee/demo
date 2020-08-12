@@ -2,13 +2,13 @@
 This project makes it easy to setup virtual lab environments, on either a Linux or MacOSX host machine using Vagrant.  On Linux, KVM or VirtualBox is used as the virtualization platform (depending on course requirements) and VirtualBox is used on Mac.  CentOS, Debian, and Ubuntu are the Linux distributions we are currently using as virtualization hosts.  In addition to the platform specific virtualization software, the setup script also installs packer, packer configuration files, and Vagrant which are used to automate building the VMs used in the lab environments.
 
 # Prerequisites
-Your hardware should support virtualization. This means your CPU has hardware virtualization support and multiple cores and you have lots of disk space for machine images and RAM to run multiple VMs simultaneously.  Your host OS should also have python3, git and Ansible already installed (the setup script will install Ansible for you if you are on Mac).  You will also want development tools on Mac for building vagrant pluggins (Ansible will install the dev tools for you on Linux).  The easiest way to get development tools on Mac, including git, is to install XCode from the Apple App Store.  It is recommended you start with a clean install for your host OS and, if you are reinstalling Linux for use as the host platform, there are files that automate some or all of that in the host_install directory.  See the README.md file there.
+Your hardware should support virtualization. This means your CPU has hardware virtualization support and multiple cores and you have lots of disk space for machine images and RAM to run multiple VMs simultaneously.  Your host OS should also have python3, git and Ansible already installed (the setup script will install Ansible for you if you are on Mac).  You will also want development tools on Mac for building vagrant pluggins (Ansible will install the dev tools for you on Linux).  The easiest way to get development tools on Mac, including git, is to install XCode from the Apple App Store.  It is recommended you start with a clean install of the operating system on your host.  If you are reinstalling Linux for use as the host platform, there are files in the [host_install](https://github.com/dmbrownlee/demo/tree/master/host_install) directory you can optionally use to automate some or all of your host installation. See the README.md in that directory for details.
 
 # Getting Started
 ## Overview
 Before you can begin using the virtual lab environmets, there are three setup steps you need to complete first:
 
-1. Install and configure the virtualization tools on the host (one time)
+1. Install and configure the virtualization tools on the host (one time - documented here)
 2. Configure the virtualization environment for a specific lab (one time)
 3. Instantiate a new virtual lab network (you can setup and tear down as needed)
 
@@ -26,3 +26,6 @@ cd ~/demo && ./setup
 When prompted for the "BECOME" password, use the password of the account you are using ("BECOME" is Ansible's "sudo").  This step can take a few minutes depending on the speed of your Internet connection and your machine and which tasks still need to be completed.  Ansible playbooks (the setup script is just a wrapper around Ansible) are idempotent so, if you get interrupted, just run it again and it will pick up where it left off.  Ansible displays each step as it goes and skips over steps that have already been done or are not relevant your platform.
 
 Assuming the setup script completed without errors, step one is done.  You may want to reboot before proceeding with the README.md in your course's directory.
+
+[CompTIA Network+](https://github.com/dmbrownlee/demo/tree/master/networkplus)
+[Red Hat RHCSA](https://github.com/dmbrownlee/demo/tree/master/rhcsa)
