@@ -7,7 +7,7 @@
   failed_when: false
   register: missing_vms
 - name: Ensure missing VMs are created and halted
-  shell: vagrant up {{ item }} && vagrant halt {{ item }}
+  shell: vagrant up --provider=virtualbox {{ item }} && vagrant halt {{ item }}
   args:
     chdir: "{{ ansible_user_dir }}/demo/networkplus"
   when: missing_vms.stdout_lines | length > 0
