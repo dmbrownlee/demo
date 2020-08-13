@@ -10,3 +10,4 @@
   copy:
     dest: "{{ ansible_user_dir }}/demo/networkplus/Vagrantfile"
     src: Vagrantfile.virtualbox
+    mode: 0644
