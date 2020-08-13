@@ -54,6 +54,7 @@
   get_url:
     url: "{{ packer_mac_zip_url }}"
     dest: "{{ downloads }}/{{ packer_mac_zip }}"
+    mode: 0644
     checksum: "{{ packer_mac_zip_checksum }}"
   when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
 - name: Install Packer
@@ -81,6 +82,7 @@
   get_url:
     url: "{{ vagrant_mac_dmg_url }}"
     dest: "{{ downloads }}/{{ vagrant_mac_dmg }}"
+    mode: 0644
     checksum: "{{ vagrant_mac_dmg_checksum }}"
   when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
 - name: Mount the Vagrant disk image file
@@ -120,6 +122,7 @@
   get_url:
     url: "{{ virtualbox_mac_dmg_url }}"
     dest: "{{ downloads }}/{{ virtualbox_mac_dmg }}"
+    mode: 0644
     checksum: "{{ virtualbox_mac_dmg_checksum }}"
   when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version)
 - name: Mount the VirtualBox disk image file

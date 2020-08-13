@@ -3,6 +3,7 @@
   copy:
     dest: "{{ ansible_user_dir }}/demo/.setup/packer/"
     src: virtualbox/{{ item }}
+    mode: 0644
   with_items:
     - CentOS-8.1-1911-x86_64-Minimal.json
     - CentOS-8.1-1911-x86_64-ServerWithGui.json
