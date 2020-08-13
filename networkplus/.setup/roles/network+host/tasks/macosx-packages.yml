@@ -19,6 +19,7 @@
   get_url:
     url: "{{ gns3_mac_dmg_url }}"
     dest: "{{ downloads }}/{{ gns3_mac_dmg }}"
+    mode: 0644
     checksum: "{{ gns3_mac_dmg_checksum }}"
   when: installed_gns3.stat.exists is false or (installed_gns3_version.stdout != gns3_version)
 - name: Mount the GNS3 disk image file
@@ -58,6 +59,7 @@
   template:
     src: "{{ item }}.j2"
     dest: "{{ gns3_config_dir }}/{{ item }}.conf"
+    mode: 0644
   with_items:
     - "gns3_gui"
     - "gns3_server"
@@ -96,6 +98,7 @@
   get_url:
     url: "{{ gns3vm_vbox_zip_url }}"
     dest: "{{ downloads }}/{{ gns3vm_vbox_zip }}"
+    mode: 0644
     checksum: "{{ gns3vm_vbox_zip_checksum }}"
   when: installed_gns3vm.rc != 0
 - name: Unzip the GNS3.VM.VirtualBox zip file
@@ -128,6 +131,7 @@
   get_url:
     url: "{{ wireshark_mac_dmg_url }}"
     dest: "{{ downloads }}/{{ wireshark_mac_dmg }}"
+    mode: 0644
     checksum: "{{ wireshark_mac_dmg_checksum }}"
   when: installed_wireshark.stat.exists is false or (installed_wireshark_version.stdout != wireshark_version)
 - name: Mount the wireshark disk image file
