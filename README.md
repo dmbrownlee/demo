@@ -23,9 +23,12 @@ This will create a copy of this project in your home directory.  Next, setup the
 ```
 cd ~/demo && ./setup
 ```
-When prompted for the "BECOME" password, use the password of the account you are using ("BECOME" is Ansible's "sudo").  This step can take a few minutes depending on the speed of your Internet connection and your machine and which tasks still need to be completed.  Ansible playbooks (the setup script is just a wrapper around Ansible) are idempotent so, if you get interrupted, just run it again and it will pick up where it left off.  Ansible displays each step as it goes and skips over steps that have already been done or are not relevant your platform.
+When prompted for the "SUDO" password (prompt is "BECOME" on Mac hosts), use the password of the account you are using.  This step can take a few minutes depending on the speed of your Internet connection and your machine and which tasks still need to be completed.  Ansible playbooks (the setup script is just a wrapper around Ansible) are idempotent so, if you get interrupted, just run it again and it will pick up where it left off.  Ansible displays each step as it goes and skips over steps that have already been done or are not relevant your platform.
 
-Assuming the setup script completed without errors, step one is done.  You may want to reboot before proceeding with the README.md in your course's directory.
+> NOTE: if your host platform is running macOS Catalina, you will see an error during the VirtualBox install which is ignored.  When the setup script finishes, you need to go into System Preferences > Security & Privacy and allow the Oracle kernel extensions to run.
 
+Assuming the setup script completed without errors, step one is done.  **You need to reboot before proceeding with the README.md in your course's directory.**
+
+For step two, follow one of these links:
 - [CompTIA Network+](https://github.com/dmbrownlee/demo/tree/master/networkplus)
 - [Red Hat RHCSA](https://github.com/dmbrownlee/demo/tree/master/rhcsa)
