@@ -10,7 +10,7 @@ virtualization: libvirt
 #packer_bin: "packer"
 #packer_install_path: "/usr/local/bin/"
 packer_zip: "packer_{{ packer_version }}_linux_amd64.zip"
-packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_linux_zip }}"
+packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
 packer_zip_checksum: "sha256:8dcf97610e8c3907c23e25201dce20b498e1939e89878dec01de6975733c7729"
 #==============
 #  Vagrant
