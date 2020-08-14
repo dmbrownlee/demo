@@ -8,11 +8,13 @@
   become: yes
   vars:
     packages:
+      - gcc
+      - make
+      - perl
+      - linux-headers-{{ ansible_kernel }}
       - virt-manager
+      - libvirt-dev
       - python3-libvirt
-      - packer
-      - vagrant
-      - vagrant-libvirt
       - python3-lxml
       - python3-jmespath
       - tigervnc-viewer

@@ -1,0 +1,36 @@
+---
+# ==============
+# vagrant
+# ==============
+# vars:
+#   downloads: the user download directory
+#   vagrant_version: the targeted version of vagrant
+#   vagrant_install_path: the directory containing the installed vagrant
+#   vagrant_package: the filename of the vagrant package file to download
+#   vagrant_package_url: full URL to the vagrant package file (including vagrant_package above)
+#   vagrant_package_checksum: the checksum of the vagrant package file prefixed with type: (example sha256:abc123...)
+#
+- name: Download the Vagrant package file
+  get_url:
+    url: "{{ vagrant_package_url }}"
+    dest: "{{ downloads }}/{{ vagrant_package }}"
+    mode: 0644
+    checksum: "{{ vagrant_package_checksum }}"
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+# =======================
+# CentOS specific install
+# =======================
+- name: Download and install Vagrant rpm file (CentOS)
+  package:
+    name: "{{ downloads }}/{{ vagrant_package }}"
+    state: present
+  become: yes
+  when: ansible_distribution == 'CentOS' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version)
+- name: Test if vagrant-libvirt plugin is already installed (CentOS)
+  command: "vagrant plugin list"
+  register: vagrant_plugin_installed
+  changed_when: false
+  when: ansible_distribution == 'CentOS' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version)
+- name: Install vagrant-libvirt plugin (CentOS)
+  shell: "CONFIGURE_ARGS='with-ldflags=-L/opt/vagrant/embedded/lib with-libvirt-include=/usr/include/libvirt with-libvirt-lib=/usr/lib' vagrant plugin install vagrant-libvirt"
+  when: ansible_distribution == 'CentOS' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version) and 'vagrant-libvirt' not in vagrant_plugin_installed.stdout

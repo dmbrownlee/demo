@@ -1,42 +1,25 @@
 ---
 downloads: "{{ ansible_user_dir }}/Downloads"
-# defaults values for packer
+# Note:
+# It is possible these values are overridden for specific
+# platforms in ../vars/{{ ansible_distribution }}-vars.yml.
+#==============
+#  Packer
+#==============
 packer_version: "1.6.1"
 packer_bin: "packer"
 packer_install_path: "/usr/local/bin/"
-packer_linux_zip: "packer_{{ packer_version }}_linux_amd64.zip"
-packer_linux_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_linux_zip }}"
-packer_linux_zip_checksum: "sha256:8dcf97610e8c3907c23e25201dce20b498e1939e89878dec01de6975733c7729"
-packer_mac_zip: "packer_{{ packer_version }}_darwin_amd64.zip"
-packer_mac_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_mac_zip }}"
-packer_mac_zip_checksum: "sha256:668cf8b798c5dbbdb04ced053dbb33ea76a5d6a4de955e7ce39a52fe2a758d10"
-# defaults values for vagrant
+#==============
+#  Vagrant
+#==============
 vagrant_version: "2.2.9"
 vagrant_bin: "vagrant"
 vagrant_install_path: "/usr/local/bin/"
-vagrant_mac_dmg: "vagrant_{{ vagrant_version }}_x86_64.dmg"
-vagrant_mac_dmg_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_mac_dmg }}"
-vagrant_mac_dmg_checksum: "sha256:529cde2a78e6df38ec906b65c70b36a087e2601eab42e25856e35b20ccb027c0"
-vagrant_mac_dmg_mount_path: "/Volumes/Vagrant"
-vagrant_linux_rpm: "vagrant_{{ vagrant_version }}_x86_64.rpm"
-vagrant_linux_rpm_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_linux_rpm }}"
-vagrant_linux_rpm_checksum: "sha256:236982834381c7b242cb8cd268c880263d3bb6dd5f87fb20ce8af3bf5fb65538"
-vagrant_linux_rpm_install_path: "/usr/bin/vagrant/"
-vagrant_linux_deb: "vagrant_{{ vagrant_version }}_x86_64.deb"
-vagrant_linux_deb_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_linux_deb }}"
-vagrant_linux_deb_checksum: "sha256:d06038b68a97a38369220838f0d21c50f9f09b693cf0458cad872864bb7ee09b"
-# default values for virtualbox
+#==============
+#  Virtualbox
+#==============
 virtualbox_short_version: "6.1"
 virtualbox_version: "6.1.12"
 virtualbox_build: "139181"
-virtualbox_mac_plist: "/Applications/VirtualBox.app/Contents/Info.plist"
-virtualbox_mac_dmg: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-OSX.dmg"
-virtualbox_mac_dmg_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_mac_dmg }}"
-virtualbox_mac_dmg_checksum: "sha256:96c45572213e68fb58ee6669f99caf1126e61495de7e710363350e07f3a1c4d6"
-virtualbox_mac_dmg_mount_path: "/Volumes/VirtualBox"
-virtualbox_linux_rpm: "virtualbox-{{ virtualbox_short_version }}-{{ virtualbox_version }}_{{ virtualbox_build }}_el8-1.x86_64.rpm"
-virtualbox_linux_rpm_url: "https://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_linux_rpm }}"
-virtualbox_linux_rpm_checksum: "sha256:cd963e242216ccf3cdcafb5d022607eff1fd0a766738daa02c8770f25f13a4e6"
-virtualbox_linux_deb: "virtualbox-{{ virtualbox_short_version }}_{{ virtualbox_version }}-{{ virtualbox_build }}~Debian~buster_amd64.deb"
-virtualbox_linux_deb_url: "https://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_linux_deb }}"
-virtualbox_linux_deb_checksum: "sha256:c26d30cf870043f4244a14587a677840dc92c1837522af6de318483acf9abd69"
+virtualbox_version_string: "{{ virtualbox_version }}r{{ virtualbox_build }}"
+virtualbox_install_path: "/usr/local/bin/"

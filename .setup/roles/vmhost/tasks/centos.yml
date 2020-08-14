@@ -1,4 +1,0 @@
----
-- include_tasks: centos-directories.yml
-- include_tasks: centos-packages.yml
-- include_tasks: centos-configuration.yml
