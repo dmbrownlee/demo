@@ -1,0 +1,32 @@
+---
+# ==============
+# virtualbox install
+# ==============
+# vars:
+#   downloads: the user download directory
+#   virtualbox_package: the filename of the virtualbox package file to download
+#   virtualbox_package_url: full URL to the virtualbox package file (including virtualbox_package above)
+#   virtualbox_package_checksum: the checksum of the virtualbox package file prefixed with type: (example sha256:abc123...)
+#   virtualbox_package_mount_path: the path under /Volumes where the dmg gets mounted
+#
+- name: Download VirtualBox package
+  get_url:
+    url: "{{ virtualbox_package_url }}"
+    dest: "{{ downloads }}/{{ virtualbox_package }}"
+    mode: 0644
+    checksum: "{{ virtualbox_package_checksum }}"
+# =======================
+# MacOSX specific install
+# =======================
+- name: Mount the VirtualBox disk image file (MacOSX)
+  command: hdiutil attach "{{ downloads }}/{{ virtualbox_package }}"
+  become: yes
+  changed_when: false
+- name: Install VirtualBox.pkg (MacOSX)
+  command: installer -pkg "{{ virtualbox_package_mount_path }}/VirtualBox.pkg" -target /
+  become: yes
+  ignore_errors: true
+- name: Unmount VirtualBox image (MacOSX)
+  command: hdiutil detach "{{ virtualbox_package_mount_path }}"
+  become: yes
+  changed_when: false

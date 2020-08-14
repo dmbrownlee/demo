@@ -1,31 +1,20 @@
 ---
-# tasks file for directories
-- name: Ensure {{ ansible_user_dir }}/keys directory exists
-  file:
-    path: "{{ ansible_user_dir }}/keys"
-    state: directory
-    mode: 0700
-- name: Test if {{ ansible_user_dir }}/keys/vagrant already installed
-  stat:
-    path: "{{ ansible_user_dir }}/keys/vagrant"
-  register: keys_installation
-  changed_when: False
-- name: Ensure key pair in {{ ansible_user_dir }}/keys
-  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
-  args:
-    chdir: "{{ ansible_user_dir }}/keys"
-    creates: "{{ ansible_user_dir }}/keys/vagrant"
-  when: keys_installation.stat.isreg is not defined
-- name: Check if {{ ansible_user_dir }}/.bashrc exists
+- name: Check if {{ ansible_user_dir }}/.bashrc exists (MacOSX)
   stat:
     path: "{{ ansible_user_dir }}/.bashrc"
   register: bashrc
-- name: Create {{ ansible_user_dir }}/.bashrc if it doesn't exist
+  when: ansible_distribution == 'MacOSX'
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists (MacOSX)
   file:
     path: "{{ ansible_user_dir }}/.bashrc"
     state: touch
     mode: '0644'
-  when: bashrc.stat.exists == false
+  when: ansible_distribution == 'MacOSX' and bashrc.stat.exists == false
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists (Linux)
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: file
+  when: ansible_distribution != 'MacOSX'
 - name: Ensure convenience functions are defined
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"

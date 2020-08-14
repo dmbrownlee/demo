@@ -1,4 +1,0 @@
----
-- include_tasks: debian-directories.yml
-- include_tasks: debian-packages.yml
-- include_tasks: debian-configuration.yml

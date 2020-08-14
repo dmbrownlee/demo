@@ -1,0 +1,39 @@
+---
+# ==============
+# vagrant
+# ==============
+# vars:
+#   downloads: the user download directory
+#   vagrant_version: the targeted version of vagrant
+#   vagrant_install_path: the directory containing the installed vagrant
+#   vagrant_package: the filename of the vagrant package file to download
+#   vagrant_package_url: full URL to the vagrant package file (including vagrant_package above)
+#   vagrant_package_checksum: the checksum of the vagrant package file prefixed with type: (example sha256:abc123...)
+#
+- name: Download the Vagrant package file
+  get_url:
+    url: "{{ vagrant_package_url }}"
+    dest: "{{ downloads }}/{{ vagrant_package }}"
+    mode: 0644
+    checksum: "{{ vagrant_package_checksum }}"
+  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+# =======================
+# MacOSX specific install
+# =======================
+- name: Mount the Vagrant disk image file (MacOSX)
+  command: hdiutil attach "{{ vagrant_package }}"
+  args:
+    chdir: "{{ downloads }}"
+  become: yes
+  changed_when: false
+  when: ansible_distribution == 'MacOSX' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version)
+- name: Install the Vagrant pkg file inside the disk image file (MacOSX)
+  command: installer -allowUntrusted -pkg "{{ vagrant_package_mount_path }}/Vagrant.pkg" -target /
+  become: yes
+  notify: vagrant_plugin_update
+  when: ansible_distribution == 'MacOSX' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version)
+- name: Unmount Vagrant image (MacOSX)
+  command: hdiutil detach "{{ vagrant_package_mount_path }}"
+  become: yes
+  changed_when: false
+  when: ansible_distribution == 'MacOSX' and (installed_vagrant.stat.exists == false or installed_vagrant_version.stdout != vagrant_version)

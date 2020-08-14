@@ -1,0 +1,27 @@
+---
+# ==============
+# packer-check
+# ==============
+# vars:
+#   downloads: the user download directory
+#   packer_version: the targeted version of packer
+#   packer_install_path: the directory containing the installed packer
+#   packer_zip: the filename of the packer zip file to download
+#   packer_zip_url: full URL to the packer zip file (including packer_zip above)
+#   packer_zip_checksum: the checksum of the packer zip file prefixed with type: (example sha256:abc123...)
+#
+- name: Check if packer binary exists
+  stat:
+    path: "{{ packer_install_path }}/packer"
+  register: installed_packer
+  changed_when: false
+- name: Check the version of packer if already installed
+  command: "{{ packer_install_path }}/packer --version"
+  changed_when: false
+  register: installed_packer_version
+  when: installed_packer.stat.exists and installed_packer.stat.isreg
+- name: Install packer
+  include_tasks: "packer-install.yml"
+  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+- name: Ensure packer build files have beein installed
+  include_tasks: "packer-configuration-{{ virtualization }}.yml"
