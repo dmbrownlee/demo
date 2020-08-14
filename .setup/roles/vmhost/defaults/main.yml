@@ -14,7 +14,7 @@ packer_install_path: "/usr/local/bin/"
 #==============
 vagrant_version: "2.2.9"
 vagrant_bin: "vagrant"
-vagrant_install_path: "/usr/local/bin/"
+vagrant_install_path: "/usr/bin/"
 #==============
 #  Virtualbox
 #==============
