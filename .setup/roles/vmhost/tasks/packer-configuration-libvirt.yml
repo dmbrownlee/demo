@@ -1,5 +1,5 @@
 ---
-- name: Ensure packer JSON files for KVM are installed
+- name: Ensure packer build files for libvirt have beein installed
   copy:
     dest: "{{ ansible_user_dir }}/demo/.setup/packer/"
     src: kvm/{{ item }}
