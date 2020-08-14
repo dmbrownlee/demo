@@ -21,4 +21,4 @@
   when: installed_virtualbox.stat.exists
 - name: Install VirtualBox
   include_tasks: "virtualbox-install.yml"
-  when: installed_virtualbox.stat.exists is false or (installed_virtualbox_version.stdout != virtualbox_version_string)
+  when: installed_virtualbox.stat.exists == 'false' or (installed_virtualbox_version.stdout != virtualbox_version_string)

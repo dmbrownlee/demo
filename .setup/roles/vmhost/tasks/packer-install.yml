@@ -17,7 +17,7 @@
     dest: "{{ downloads }}/{{ packer_zip }}"
     mode: 0600
     checksum: "{{ packer_zip_checksum }}"
-  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+  when: installed_packer.stat.exists == 'false' or (installed_packer_version.stdout != packer_version)
 #- name: Install Packer (MacOSX)
 #  command: unzip -o -u {{ downloads }}/{{ packer_zip }}
 #  args:
@@ -28,7 +28,7 @@
 #    group: "root"
 #    mode: 0755
 #  become: yes
-#  when: installed_packer.stat.exists is false or (installed_packer_version.stdout != packer_version)
+#  when: installed_packer.stat.exists == 'false' or (installed_packer_version.stdout != packer_version)
 - name: Install Packer
   unarchive:
     src: "{{ downloads }}/{{ packer_zip }}"
