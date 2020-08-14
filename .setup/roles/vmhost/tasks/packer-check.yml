@@ -22,6 +22,6 @@
   when: installed_packer.stat.exists and installed_packer.stat.isreg
 - name: Install packer
   include_tasks: "packer-install.yml"
-  when: installed_packer.stat.exists == 'false' or (installed_packer_version.stdout != packer_version)
+  when: (not installed_packer.stat.exists) or (installed_packer_version.stdout is defined and installed_packer_version.stdout != packer_version)
 - name: Ensure packer build files have beein installed
   include_tasks: "packer-configuration-{{ virtualization }}.yml"
