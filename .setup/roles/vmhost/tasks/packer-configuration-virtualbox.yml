@@ -1,5 +1,5 @@
 ---
-- name: Ensure packer JSON files for virtualbox are installed
+- name: Ensure packer build files for VirtualBox have beein installed
   copy:
     dest: "{{ ansible_user_dir }}/demo/.setup/packer/"
     src: virtualbox/{{ item }}
