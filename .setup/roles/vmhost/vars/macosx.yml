@@ -17,7 +17,7 @@ packer_zip_checksum: "sha256:668cf8b798c5dbbdb04ced053dbb33ea76a5d6a4de955e7ce39
 #==============
 #vagrant_version: "2.2.9"
 #vagrant_bin: "vagrant"
-#vagrant_install_path: "/usr/local/bin/"
+vagrant_install_path: "/usr/local/bin/"
 vagrant_package: "vagrant_{{ vagrant_version }}_x86_64.dmg"
 vagrant_package_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_package }}"
 vagrant_package_checksum: "sha256:529cde2a78e6df38ec906b65c70b36a087e2601eab42e25856e35b20ccb027c0"
