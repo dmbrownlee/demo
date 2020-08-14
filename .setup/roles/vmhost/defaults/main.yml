@@ -8,13 +8,13 @@ downloads: "{{ ansible_user_dir }}/Downloads"
 #==============
 packer_version: "1.6.1"
 packer_bin: "packer"
-packer_install_path: "/usr/local/bin/"
+packer_install_path: "/usr/local/bin"
 #==============
 #  Vagrant
 #==============
 vagrant_version: "2.2.9"
 vagrant_bin: "vagrant"
-vagrant_install_path: "/usr/bin/"
+vagrant_install_path: "/usr/bin"
 #==============
 #  Virtualbox
 #==============
@@ -22,4 +22,4 @@ virtualbox_short_version: "6.1"
 virtualbox_version: "6.1.12"
 virtualbox_build: "139181"
 virtualbox_version_string: "{{ virtualbox_version }}r{{ virtualbox_build }}"
-virtualbox_install_path: "/usr/bin/"
+virtualbox_install_path: "/usr/bin"
