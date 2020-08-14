@@ -16,7 +16,7 @@
     dest: "{{ downloads }}/{{ vagrant_package }}"
     mode: 0644
     checksum: "{{ vagrant_package_checksum }}"
-  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+  when: installed_vagrant.stat.exists == 'false' or (installed_vagrant_version.stdout != vagrant_version)
 # =======================
 # Debian specific install
 # =======================

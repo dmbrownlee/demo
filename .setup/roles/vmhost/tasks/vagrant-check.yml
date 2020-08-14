@@ -22,4 +22,4 @@
   when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
 - name: Install vagrant
   include_tasks: "vagrant-install-{{ ansible_distribution | lower }}.yml"
-  when: installed_vagrant.stat.exists is false or (installed_vagrant_version.stdout != vagrant_version)
+  when: installed_vagrant.stat.exists == 'false' or (installed_vagrant_version.stdout != vagrant_version)
