@@ -1,0 +1,94 @@
+{
+    "Builtin": {
+        "default_nat_interface": "vboxnet0"
+    },
+    "CustomConsoleCommands": {
+        "serial": {},
+        "spice": {},
+        "telnet": {},
+        "vnc": {}
+    },
+    "Docker": {
+        "containers": []
+    },
+    "Dynamips": {
+        "allocate_aux_console_ports": false,
+        "dynamips_path": "{{ gns3_bin_dir }}/dynamips",
+        "ghost_ios_support": true,
+        "mmap_support": true,
+        "sparse_memory_support": true
+    },
+    "GraphicsView": {
+        "default_label_color": "#000000",
+        "default_label_font": "TypeWriter,10,-1,5,75,0,0,0,0,0",
+        "default_note_color": "#000000",
+        "default_note_font": "TypeWriter,10,-1,5,75,0,0,0,0,0",
+        "draw_link_status_points": true,
+        "draw_rectangle_selected_item": true,
+        "drawing_grid_size": 25,
+        "grid_size": 75,
+        "limit_size_node_symbols": true,
+        "scene_height": 1000,
+        "scene_width": 2000,
+        "show_grid": false,
+        "show_grid_on_new_project": false,
+        "show_interface_labels": false,
+        "show_interface_labels_on_new_project": true,
+        "show_layers": false,
+        "snap_to_grid": false,
+        "snap_to_grid_on_new_project": true,
+        "zoom": null
+    },
+    "IOU": {
+        "iourc_content": "",
+        "license_check": true
+    },
+    "MainWindow": {
+        "check_for_update": false,
+        "debug_level": 0,
+        "delay_console_all": 500,
+        "direct_file_upload": false,
+        "experimental_features": false,
+        "hdpi": {{ gns3_gui_hdpi }},
+        "hide_getting_started_dialog": false,
+        "hide_new_template_button": false,
+        "hide_setup_wizard": true,
+        "multi_profiles": false,
+        "overlay_notifications": true,
+        "recent_files": [],
+        "recent_projects": [],
+        "send_stats": false,
+        "spice_console_command": "{{ gns3_gui_spice_console_command }}",
+        "style": "Charcoal",
+        "symbol_theme": "Classic",
+        "telnet_console_command": "{{ gns3_gui_telnet_command }}",
+        "vnc_console_command": "{{ gns3_gui_vnc_command }}"
+    },
+    "NodesView": {
+        "nodes_view_filter": 0
+    },
+    "PacketCapture": {
+        "command_auto_start": true,
+        "packet_capture_analyzer_command": "",
+        "packet_capture_reader_command": "{{ gns3_pcap_reader_command }}"
+    },
+    "Qemu": {
+        "enable_hardware_acceleration": true,
+        "require_hardware_acceleration": true
+    },
+    "Servers": {},
+    "VMware": {
+        "block_host_traffic": false,
+        "host_type": "ws",
+        "vmnet_end_range": 100,
+        "vmnet_start_range": 2,
+        "vmrun_path": ""
+    },
+    "VPCS": {
+        "vpcs_path": "{{ gns3_bin_dir }}/vpcs"
+    },
+    "VirtualBox": {
+        "vboxmanage_path": "{{ vboxmanage_path }}"
+    },
+    "version": "{{ gns3_version }}"
+}
