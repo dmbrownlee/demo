@@ -1,4 +1,7 @@
 ---
+- name: Enable host support for Vagrant Shared Folders
+  include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
+  when: virtualization == "libvirt"
 - name: Setup lab environment on a CentOS KVM host
   include_tasks: centos.yml
   when: ansible_distribution == 'CentOS'
