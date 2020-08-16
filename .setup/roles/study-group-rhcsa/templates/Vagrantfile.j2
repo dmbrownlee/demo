@@ -2,26 +2,28 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
+  config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
-  config.ssh.private_key_path = "~/keys/vagrant"
-  config.vm.network :private_network,
-    :type => "dhcp",
-    :libvirt__network_name => "vagrant-private-dhcp",
-    :libvirt__domain_name => "example.com",
-    :libvirt__network_address => "192.168.4.0",
-    :libvirt__netmask => "255.255.255.0",
-    :libvirt__dhcp_enabled => true,
-    :libvirt__host_ip => "192.168.4.1",
-    :libvirt__dhcp_start => "192.168.4.2",
-    :libvirt__dhcp_stop => "192.168.4.99",
-    :libvirt__dhcp_bootp_file => "pxelinux/pxelinux.0",
-    :libvirt__dhcp_bootp_server => "192.168.4.102"
+  config.vm.synced_folder "labfiles/", "/labfiles"
+  {% if virtualization == "virtualbox" %}
+  config.vm.provider :virtualbox do |vboxvm|
+    vboxvm.gui = false
+    vboxvm.memory = 1024
+    {% if ansible_distribution == 'MacOSX' %}
+    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "3.0"]
+    {% endif %}
+    vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+    vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+  end
+  {% elif virtualization == "libvirt" %}
   config.vm.provider :libvirt do |libvirt|
     libvirt.driver = "kvm"
     libvirt.host = "localhost"
     libvirt.uri = 'qemu:///system'
     libvirt.memory = 1024
   end
+  {% endif %}
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/vagrant-vm-playbook.yml"
     ansible.skip_tags = "disabled"
@@ -44,7 +46,6 @@ Vagrant.configure("2") do |config|
       ]
     }
   end
-  config.vm.synced_folder ".", "/vagrant", disabled: true
 
   #==============================
   #==  CentOS 8.x Lab Machines ==
@@ -52,24 +53,35 @@ Vagrant.configure("2") do |config|
   #=== labipa ===
   config.vm.define "labipa" do |node|
     node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
-    node.vm.provider :libvirt do |libvirt|
-      libvirt.memory = 2048
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_labipa"
+      virtualbox.memory = 2048
     end
   end
 
   #=== server1 ===
   config.vm.define "server1" do |node|
     node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_server1"
+    end
   end 
   
   #=== server2 ===
   config.vm.define "server2" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
-    node.vm.provider :libvirt do |libvirt|
-      libvirt.storage :file, :bus => :sata
+    node.vm.box = "centos-8.2.2004"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "rhcsa_server2"
     end
+  #  node.vm.provider :virtualbox do |virtualbox|
+  #    virtualbox.storage :file, :bus => :sata
+  #  end
   end
-  
+ 
+  {# VirtualBox VMs do not support PXE boot without the use
+     of the extension pack which is licensed software.
+  #} 
+  {% if virtualization == "libvirt" %}
   #==============================
   #==  Additional Lab Machines ==
   #==============================
@@ -82,18 +94,19 @@ Vagrant.configure("2") do |config|
       domain.boot boot_network
       domain.boot 'hd'
     end
-  end
+  #end
+  {% endif %}
 
   #===================================
   #==  Machines for practice exams  ==
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+    node.vm.box = "centos-8.2.2004"
   end
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-Minimal"
+    node.vm.box = "centos-8.2.2004"
   end
 end
