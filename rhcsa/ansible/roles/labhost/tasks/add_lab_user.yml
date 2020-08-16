@@ -1,10 +1,13 @@
 ---
 - name: Adding user account
-  user: name='user'
-    comment='user'
-    createhome=yes
-    append=yes
-    state=present
-    password='$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'
-    system=no
-  become: True
+  user:
+    name: 'user'
+    comment: 'user'
+    createhome: yes
+    append: yes
+    groups:
+      - wheel
+    state: present
+    password: '$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'
+    system: no
+  become: true
