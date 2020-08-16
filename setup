@@ -12,7 +12,7 @@ if [[ "Darwin" == "$(uname)" ]]; then
 fi
 
 if [[ $# -eq 1 ]]; then
-  APARGS="-e study_group=$1"
+  APARGS="-e study_group=study-group-$1"
 fi
 
 APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
