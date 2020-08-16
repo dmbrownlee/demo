@@ -1,3 +1,2 @@
 ---
-- include_tasks: ubuntu-virtual-networks.yml
 - include_tasks: ubuntu-vagrant-base-boxes.yml

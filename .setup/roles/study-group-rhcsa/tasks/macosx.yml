@@ -1,3 +1,2 @@
 ---
-- include_tasks: macosx-virtual-networks.yml
 - include_tasks: macosx-vagrant-base-boxes.yml
