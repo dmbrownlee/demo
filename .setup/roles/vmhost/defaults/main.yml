@@ -1,8 +1,17 @@
 ---
-downloads: "{{ ansible_user_dir }}/Downloads"
 # Note:
 # It is possible these values are overridden for specific
 # platforms in ../vars/{{ ansible_distribution }}-vars.yml.
+# ===========================================
+# directories relative to the user's home dir
+# ===========================================
+downloads: "{{ ansible_user_dir }}/Downloads"
+key_dir: "{{ ansible_user_dir }}/keys"
+demo_root: "{{ ansible_user_dir }}/demo"
+# ===========================================
+# directories relative to the demo root dir
+# ===========================================
+packer_build_dir: "{{ demo_root }}/.setup/packer"
 #==============
 #  Packer
 #==============
