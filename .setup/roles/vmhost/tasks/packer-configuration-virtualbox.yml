@@ -1,7 +1,7 @@
 ---
 - name: Ensure packer build files for VirtualBox have beein installed
   copy:
-    dest: "{{ ansible_user_dir }}/demo/.setup/packer/"
+    dest: "{{ packer_build_dir }}"
     src: virtualbox/{{ item }}
   with_items:
     - CentOS-8.1-1911-x86_64-Minimal.json
