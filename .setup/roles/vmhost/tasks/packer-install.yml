@@ -33,6 +33,5 @@
     dest: "{{ packer_install_path }}"
     remote_src: yes
     owner: "root"
-    group: "root"
     mode: 0755
   become: yes
