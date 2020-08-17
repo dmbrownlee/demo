@@ -25,3 +25,4 @@
   when: (not installed_packer.stat.exists) or (installed_packer_version.stdout is defined and installed_packer_version.stdout != packer_version)
 - name: Ensure packer build files have beein installed
   include_tasks: "packer-configuration-{{ virtualization }}.yml"
+  when: virtualization == "virtualbox"

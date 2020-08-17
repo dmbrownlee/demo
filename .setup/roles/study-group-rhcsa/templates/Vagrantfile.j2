@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== labipa ===
   config.vm.define "labipa" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+    node.vm.box = "centos-8.2.2004"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_labipa"
       virtualbox.memory = 2048
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ===
   config.vm.define "server1" do |node|
-    node.vm.box = "CentOS-8.1-1911-x86_64-ServerWithGui"
+    node.vm.box = "centos-8.2.2004"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_server1"
     end

@@ -4,10 +4,6 @@
     dest: "{{ packer_build_dir }}"
     src: virtualbox/{{ item }}
   with_items:
-    - CentOS-8.1-1911-x86_64-Minimal.json
-    - CentOS-8.1-1911-x86_64-ServerWithGui.json
-    - Minimal8-ks.cfg
-    - ServerWithGui8-ks.cfg
     - Debian-10.4.0-amd64.json
     - Debian10-preseed.cfg
     - answer_files
