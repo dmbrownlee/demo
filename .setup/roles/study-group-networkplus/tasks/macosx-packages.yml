@@ -55,37 +55,37 @@
     owner: "{{ ansible_user_id }}"
     group: staff
     mode: 0755
-- name: Update GNS3 configuration files
-  template:
-    src: "{{ item }}.j2"
-    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
-    mode: 0644
-  with_items:
-    - "gns3_gui"
-    - "gns3_server"
-    - "gns3_controller"
-  vars:
-    gns3_bin_dir: "/Applications/GNS3.app/Contents/MacOS"
-    gns3_server_host: "192.168.56.1"
-    gns3_server_port: "8000"
-    gns3_server_path: "/Applications/GNS3.app/Contents/MacOS/gns3server"
-    gns3_gui_hdpi: "true"
-    gns3_gui_serial_console_command: "/usr/bin/osascript -e 'tell application \"terminal\" to do script with command \"stty raw; nc -U \\\"%s\\\"; exit\"'"
-    gns3_gui_spice_console_command: "/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer spice://%h:%p"
-    gns3_gui_telnet_command: "osascript -e 'set posix_path to do shell script \"echo \\\"$PATH\\\"\"' -e 'tell application \"Terminal\"' -e 'activate' -e 'do script \"echo -n -e \\\"\\\\033]0;%d\\\\007\\\"; clear; PATH=\" & quoted form of posix_path & \" telnet %h %p ; exit\"' -e 'end tell'"
-    gns3_gui_vnc_command: "osascript -e 'tell application \"Screen Sharing\"' -e '   display dialog \"WARNING OSX VNC support is limited if you have trouble connecting to a device please use an alternative client like Chicken of the VNC.\" buttons {\"OK\"} default button 1 with icon caution with title \"GNS3\"' -e '  open location \"vnc://%h:%p\"' -e 'end tell'"
-    gns3_pcap_reader_command: "tail -f -c +0 %c | /Applications/Wireshark.app/Contents/MacOS/Wireshark -o \"gui.window_title:%d\" -k -i -"
-    vboxmanage_path: "/Applications/VirtualBox.app/Contents/MacOS/VBoxManage"
-- name: Ensure directory for IOS images exists
-  file:
-    path: "{{ gns3_user_dir }}/images"
-    state: directory
-    mode: 0755
-- name: Ensure directory for IOS symbols exists
-  file:
-    path: "{{ gns3_user_dir }}/symbols"
-    state: directory
-    mode: 0755
+#- name: Update GNS3 configuration files
+#  template:
+#    src: "{{ item }}.j2"
+#    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
+#    mode: 0644
+#  with_items:
+#    - "gns3_gui"
+#    - "gns3_server"
+#    - "gns3_controller"
+#  vars:
+#    gns3_bin_dir: "/Applications/GNS3.app/Contents/MacOS"
+#    gns3_server_host: "192.168.56.1"
+#    gns3_server_port: "8000"
+#    gns3_server_path: "/Applications/GNS3.app/Contents/MacOS/gns3server"
+#    gns3_gui_hdpi: "true"
+#    gns3_gui_serial_console_command: "/usr/bin/osascript -e 'tell application \"terminal\" to do script with command \"stty raw; nc -U \\\"%s\\\"; exit\"'"
+#    gns3_gui_spice_console_command: "/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer spice://%h:%p"
+#    gns3_gui_telnet_command: "osascript -e 'set posix_path to do shell script \"echo \\\"$PATH\\\"\"' -e 'tell application \"Terminal\"' -e 'activate' -e 'do script \"echo -n -e \\\"\\\\033]0;%d\\\\007\\\"; clear; PATH=\" & quoted form of posix_path & \" telnet %h %p ; exit\"' -e 'end tell'"
+#    gns3_gui_vnc_command: "osascript -e 'tell application \"Screen Sharing\"' -e '   display dialog \"WARNING OSX VNC support is limited if you have trouble connecting to a device please use an alternative client like Chicken of the VNC.\" buttons {\"OK\"} default button 1 with icon caution with title \"GNS3\"' -e '  open location \"vnc://%h:%p\"' -e 'end tell'"
+#    gns3_pcap_reader_command: "tail -f -c +0 %c | /Applications/Wireshark.app/Contents/MacOS/Wireshark -o \"gui.window_title:%d\" -k -i -"
+#    vboxmanage_path: "/Applications/VirtualBox.app/Contents/MacOS/VBoxManage"
+#- name: Ensure directory for IOS images exists
+#  file:
+#    path: "{{ gns3_user_dir }}/images"
+#    state: directory
+#    mode: 0755
+#- name: Ensure directory for IOS symbols exists
+#  file:
+#    path: "{{ gns3_user_dir }}/symbols"
+#    state: directory
+#    mode: 0755
 # ==============
 # GNS3.VM.VirtualBox
 # ==============
