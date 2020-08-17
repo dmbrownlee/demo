@@ -3,7 +3,7 @@
   file:
     name: "{{ packer_build_dir }}"
     state: "directory"
-    mode: 700
+    mode: 0700
 - name: Ensure packer build files for libvirt have beein installed
   copy:
     dest: "{{ packer_build_dir }}/"
