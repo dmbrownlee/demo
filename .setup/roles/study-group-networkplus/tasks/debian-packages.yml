@@ -118,36 +118,36 @@
     owner: "{{ ansible_user_id }}"
     group: user
     mode: 0755
-- name: Update GNS3 configuration files
-  template:
-    src: "{{ item }}.j2"
-    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
-  with_items:
-    - "gns3_gui"
-    - "gns3_server"
-    - "gns3_controller"
-  vars:
-    gns3_bin_dir: "/usr/bin"
-    gns3_server_host: "192.168.56.1"
-    gns3_server_port: "8000"
-    gns3_server_path: "{{ ansible_user_dir }}/.local/bin/gns3server"
-    gns3_gui_hdpi: "false"
-    gns3_gui_serial_console_command: ""
-    gns3_gui_spice_console_command: "remote-viewer spice://%h:%p"
-    gns3_gui_telnet_command: "gnome-terminal -t \"%d\" -e \"telnet %h %p\""
-    gns3_gui_vnc_command: "vncviewer %h:%p"
-    gns3_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
-    vboxmanage_path: "/usr/bin/VBoxManage"
-- name: Ensure directory for IOS images exists
-  file:
-    path: "{{ gns3_user_dir }}/images"
-    state: directory
-    mode: 0755
-- name: Ensure directory for IOS symbols exists
-  file:
-    path: "{{ gns3_user_dir }}/symbols"
-    state: directory
-    mode: 0755
+#- name: Update GNS3 configuration files
+#  template:
+#    src: "{{ item }}.j2"
+#    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
+#  with_items:
+#    - "gns3_gui"
+#    - "gns3_server"
+#    - "gns3_controller"
+#  vars:
+#    gns3_bin_dir: "/usr/bin"
+#    gns3_server_host: "192.168.56.1"
+#    gns3_server_port: "8000"
+#    gns3_server_path: "{{ ansible_user_dir }}/.local/bin/gns3server"
+#    gns3_gui_hdpi: "false"
+#    gns3_gui_serial_console_command: ""
+#    gns3_gui_spice_console_command: "remote-viewer spice://%h:%p"
+#    gns3_gui_telnet_command: "gnome-terminal -t \"%d\" -e \"telnet %h %p\""
+#    gns3_gui_vnc_command: "vncviewer %h:%p"
+#    gns3_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
+#    vboxmanage_path: "/usr/bin/VBoxManage"
+#- name: Ensure directory for IOS images exists
+#  file:
+#    path: "{{ gns3_user_dir }}/images"
+#    state: directory
+#    mode: 0755
+#- name: Ensure directory for IOS symbols exists
+#  file:
+#    path: "{{ gns3_user_dir }}/symbols"
+#    state: directory
+#    mode: 0755
 # ==============
 # GNS3.VM.VirtualBox
 # ==============
