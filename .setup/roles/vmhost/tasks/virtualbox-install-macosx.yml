@@ -26,6 +26,20 @@
   command: installer -pkg "{{ virtualbox_package_mount_path }}/VirtualBox.pkg" -target /
   become: yes
   ignore_errors: true
+  register: virtualbox_install_result
+- fail:
+    msg: >
+      Installation of Oracle VirtualBox failed.
+      If you are on Catalina or greater, this is likely due to greater
+      security restrictions on kernel extensions installed by software
+      not originating from the App Store.  If this is the case, you
+      likely have a pop-up dialog telling you to go to
+      'System Preferences > Security & Privacy > General'
+      and allowing the extensions after unlocking the settings using
+      the lock icon on the bottom left.  Do that now and, when you are
+      finished, reboot this machine.
+      You will need to re-run this setup after the system has rebooted.
+  when: virtualbox_install_result.failed is defined and virtualbox_install_result.failed is true
 - name: Unmount VirtualBox image (MacOSX)
   command: hdiutil detach "{{ virtualbox_package_mount_path }}"
   become: yes
