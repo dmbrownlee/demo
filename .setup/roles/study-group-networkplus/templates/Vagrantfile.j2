@@ -1,0 +1,75 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  #===========================================================
+  # These settings are defaults for all VMs unless overridden
+  #===========================================================
+  config.ssh.private_key_path= "~/keys/vagrant"
+  config.vm.box = "Debian-10.4.0-amd64"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder ".", "/vagrant"
+  config.vm.provider :virtualbox do |vboxvm|
+    #vboxvm.gui = false
+    vboxvm.memory = 1024
+    vboxvm.customize ["modifyvm", :id, "--vram", "10"]
+    vboxvm.customize ["modifyvm", :id, "--vrde", "off"]
+    vboxvm.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+{% if ansible_distribution == 'MacOSX' %}
+    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "2.0"]
+{% endif %}
+    # NIC1 is connected to the vagrant management network
+    vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    vboxvm.customize ["modifyvm", :id, "--macaddress1", "auto"]
+  end
+
+  #==========================
+  # Debian VMs
+  #==========================
+
+  (1..3).each do |host|
+    config.vm.define "debian#{host}" do |node|
+      node.vm.provider "virtualbox" do |vboxvm|
+        vboxvm.name = "debian#{host}"
+      end
+      node.vm.provision :ansible do |ansible|
+        ansible.playbook = "ansible/site.yml"
+        ansible.raw_arguments = ["-e ansible_python_interpreter=/usr/bin/python3"]
+        ansible.skip_tags = "disabled"
+        ansible.groups = {
+          "foo" => ["bar"]
+        }
+      end
+    end
+  end
+
+  #==========================
+  # Infrastructure Hosts
+  #==========================
+
+#  (10..12).each do |addr_host|
+#    addr_net = "10.1.1"
+#    config.vm.define "dhcp-#{addr_net}.#{addr_host}", autostart: false  do |node|
+#      node.vm.provider "virtualbox" do |vboxvm|
+#        vboxvm.name = "dhcp-#{addr_net}.#{addr_host}"
+#      end
+#    end
+#  end
+
+  #==========================
+  # Windows VM
+  #==========================
+
+  config.vm.define "windows" do |node|
+    node.vm.box = "Windows-10"
+    node.vm.communicator = "winrm"
+    node.vm.boot_timeout = 300
+    node.vm.network :forwarded_port, guest: 3389, host: 3389, id: 'rdp', auto_correct: true
+    node.vm.provider "virtualbox" do |vboxvm|
+      vboxvm.name = "windows"
+      vboxvm.memory = 1024
+      vboxvm.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
+      vboxvm.customize ["modifyvm", :id, "--vram", "30"]
+    end
+  end
+end

@@ -1,0 +1,21 @@
+---
+# ==============
+# GNS3 check
+# ==============
+# vars:
+#   gns3_version: the version of GNS3 that needs to be installed
+#   gns3_bin_dir: the directory containing the installed gns3(-gui) binary
+#
+- name: Check if GNS3 already exists
+  stat:
+    path: "{{ gns3_bin_dir }}/gns3"
+  register: installed_gns3
+  changed_when: false
+- name: Check the version of GNS3 if already installed
+  command: "{{ gns3_bin_dir }}/gns3 --version"
+  changed_when: false
+  register: installed_gns3_version
+  when: installed_gns3.stat.exists and installed_gns3.stat.isreg
+- name: Install GNS3
+  include_tasks: "gns3-install.yml"
+  when: (not installed_gns3.stat.exists) or (installed_gns3_version.stdout is defined and installed_gns3_version.stdout != gns3_version)

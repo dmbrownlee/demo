@@ -1,0 +1,14 @@
+---
+- name: Get the list of Vagrant VMs not yet created
+  shell: vagrant status | awk '/not created/ { print $1 }'
+  args:
+    chdir: "{{ ansible_user_dir }}/demo/networkplus"
+  changed_when: false
+  failed_when: false
+  register: missing_vms
+- name: Ensure missing VMs are created and halted
+  shell: vagrant up --provider=virtualbox {{ item }} && vagrant halt {{ item }}
+  args:
+    chdir: "{{ ansible_user_dir }}/demo/networkplus"
+  when: missing_vms.stdout_lines | length > 0
+  with_items: "{{ missing_vms.stdout_lines }}"

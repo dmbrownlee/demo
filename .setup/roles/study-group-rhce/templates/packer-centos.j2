@@ -1,0 +1,79 @@
+{
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_urls": [
+      "{{ downloads }}/{{ box.iso_name }}",
+      "{{ box.iso_location }}/{{ box.iso_name }}"
+    ],
+    "iso_checksum": "{{ box.iso_checksum }}",
+    "iso_target_path": "{{ downloads }}/{{ box.iso_name }}",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "40m",
+    "disk_size" : "{{ box.disk_size }}",
+    "memory": {{ box.ram }},
+    "vm_name": "{{ box.name }}",
+    "headless": true,
+
+    "shutdown_command": "echo vagrant | sudo -S shutdown -P now",
+    "boot_command": [
+    {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
+      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.kickstart }}<enter>"
+    ]
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{ key_dir }}/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {# Note: We actually want the {{ ... }} in the JSON output so we are
+             escaping the block between {% raw %} and {% endraw %}
+    #}
+    {% raw %}
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
+                  "chmod 0440 /etc/sudoers.d/vagrant"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y install bzip2 make dkms kernel-devel"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "yum -y update"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "reboot"],
+       "expect_disconnect": true,
+       "pause_before": "10s"
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+    {% endraw %}
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "output": "{{ box.name }}.box"
+  }]
+}

@@ -1,0 +1,13 @@
+---
+- name: Ensure vagrant base boxes are built
+  include_tasks: basebox.yml
+  vars:
+    inst_name: "{{ item }}"
+  with_items:
+    - Debian-10.4.0-amd64
+    - Windows-10
+- name: Ensure VirtualBox version of Vagrantfile is installed
+  template:
+    dest: "{{ ansible_user_dir }}/demo/networkplus/Vagrantfile"
+    src: Vagrantfile.j2
+    mode: 0644

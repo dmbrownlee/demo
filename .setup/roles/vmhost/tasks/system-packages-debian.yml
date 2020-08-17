@@ -1,0 +1,20 @@
+---
+# Ensure necessary packages are installed
+- name: Ensure virtualization utilities are installed
+  apt:
+    name: "{{ packages }}"
+    state: latest
+    update_cache: yes
+  become: yes
+  vars:
+    packages:
+      - gcc
+      - make
+      - perl
+      - linux-headers-{{ ansible_kernel }}
+      - virt-manager
+      - libvirt-dev
+      - python3-libvirt
+      - python3-lxml
+      - python3-jmespath
+      - tigervnc-viewer

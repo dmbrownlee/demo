@@ -7,11 +7,16 @@
 if [[ "Darwin" == "$(uname)" ]]; then
   which -s ansible-playbook
   if [[ $? -ne 0 ]]; then
+    sudo -H python3 -m pip install --upgrade pip
     sudo -H python3 -m pip install --upgrade ansible
   fi
 fi
 
-APARGS="-e ansible_python_interpreter=$(which python3) --skip-tags disabled"
+if [[ $# -eq 1 ]]; then
+  APARGS="-e study_group=study-group-$1"
+fi
+
+APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
 
 cd ./.setup &&
 ansible-playbook -K -i localhost, -c local $APARGS setup.yml

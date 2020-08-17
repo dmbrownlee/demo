@@ -1,0 +1,5 @@
+---
+- name: Include OS specific variables
+  include_vars: "{{ ansible_distribution | lower }}.yml"
+- name: GNS3 tasks
+  include_tasks: gns3-check.yml

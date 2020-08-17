@@ -1,0 +1,57 @@
+---
+# Ensure we have SSH keys for the vagrant user
+- name: Ensure {{ key_dir }} directory exists
+  file:
+    path: "{{ key_dir }}"
+    state: directory
+    mode: 0700
+- name: Test if {{ key_dir }}/vagrant already installed
+  stat:
+    path: "{{ key_dir }}/vagrant"
+  register: keys_installation
+  changed_when: false
+- name: Ensure key pair in {{ key_dir }}
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ key_dir }}"
+    creates: "{{ key_dir }}/vagrant"
+  when: keys_installation.stat.isreg is not defined
+- name: Check if {{ ansible_user_dir }}/.bashrc exists (MacOSX)
+  stat:
+    path: "{{ ansible_user_dir }}/.bashrc"
+  register: bashrc
+  when: ansible_distribution == 'MacOSX'
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists (MacOSX)
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: touch
+    mode: '0644'
+  when: ansible_distribution == 'MacOSX' and bashrc.stat.exists == false
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists (Linux)
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: file
+  when: ansible_distribution != 'MacOSX'
+- name: Ensure convenience functions are defined
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    block: |
+      export VAGRANT_DEFAULT_PROVIDER=virtualbox
+      rebuild () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
+        vagrant destroy -f $1
+        vagrant up --no-parallel $1
+      }
+      showlabs () {
+        find ~/demo/rhcsa/labfiles/lab* -name "README*" -exec head -1 \{\} \;
+      }
+      updateall () {
+        ping -n -c 1 -q 8.8.8.8 > /dev/null
+        [ $? -eq 0 ] || read -p "Building the VMs requires Internet access to download software.  Please fix your network connection before pressing enter to continue (or press Ctrl-c to cancel)." RETURN
+        cd $HOME/demo/rhcsa &&
+        vagrant destroy -f || [ $? -eq 2 ] &&
+        git pull &&
+        ./setup &&
+        vagrant up --no-parallel
+      }

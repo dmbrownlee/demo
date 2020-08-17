@@ -1,0 +1,25 @@
+---
+# ==============
+# vagrant
+# ==============
+# vars:
+#   downloads: the user download directory
+#   vagrant_version: the targeted version of vagrant
+#   vagrant_install_path: the directory containing the installed vagrant
+#   vagrant_package: the filename of the vagrant package file to download
+#   vagrant_package_url: full URL to the vagrant package file (including vagrant_package above)
+#   vagrant_package_checksum: the checksum of the vagrant package file prefixed with type: (example sha256:abc123...)
+#
+- name: Check if vagrant binary exists
+  stat:
+    path: "{{ vagrant_install_path }}/{{ vagrant_bin }}"
+  register: installed_vagrant
+  changed_when: false
+- name: Check the version of vagrant if already installed
+  shell: "{{ vagrant_install_path }}/{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
+  changed_when: false
+  register: installed_vagrant_version
+  when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
+- name: Install vagrant
+  include_tasks: "vagrant-install-{{ ansible_distribution | lower }}.yml"
+  when: (not installed_vagrant.stat.exists) or (installed_vagrant_version.stdout is defined and installed_vagrant_version.stdout != vagrant_version)
