@@ -1,0 +1,9 @@
+---
+- name: Ensure Server With GUI environment is installed
+  dnf:
+    name: "@Server with GUI"
+    state: present
+  become: yes
+- name: Ensure default systemd target is graphical
+  command: "systemctl set-default graphical.target"
+  become: yes
