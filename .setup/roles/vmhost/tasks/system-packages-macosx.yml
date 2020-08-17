@@ -1,0 +1,6 @@
+---
+# packer pre-requisite
+- name: Ensure jmespath is installed for python3
+  pip:
+    name: jmespath
+  become: true

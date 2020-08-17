@@ -5,6 +5,13 @@
   roles:
     - role: base
 
+- name: Server with GUI
+  hosts:
+    - labipa
+    - server1
+  roles:
+    - role: server-with-gui
+
 - name: RHCSA VM Configuration
   hosts: rhcsa8
   roles:

@@ -7,3 +7,8 @@
   connection: local
   roles:
     - role: vmhost
+  tasks:
+    - name: Include setup for specific study group
+      include_role:
+        name: "{{ study_group }}"
+      when: study_group is defined

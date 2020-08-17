@@ -1,0 +1,37 @@
+---
+# ==============
+# install packer
+# ==============
+# vars:
+#   downloads: the user download directory
+#   packer_version: the targeted version of packer
+#   packer_install_path: the directory containing the installed packer
+#   packer_zip: the filename of the packer zip file to download
+#   packer_zip_url: full URL to the packer zip file (including packer_zip above)
+#   packer_zip_checksum: the checksum of the packer zip file prefixed with type: (example sha256:abc123...)
+#   virtualization: which hypervisor the platform uses, virtualbox or libvirt (KVM)
+#
+- name: Download zipped binary of packer
+  get_url:
+    url: "{{ packer_zip_url }}"
+    dest: "{{ downloads }}/{{ packer_zip }}"
+    mode: 0600
+    checksum: "{{ packer_zip_checksum }}"
+#- name: Install Packer (MacOSX)
+#  command: unzip -o -u {{ downloads }}/{{ packer_zip }}
+#  args:
+#    chdir: "{{ packer_install_path }}"
+#    warn: false
+#    creates: "{{ packer_install_path }}/packer"
+#    owner: "root"
+#    group: "root"
+#    mode: 0755
+#  become: yes
+- name: Install Packer
+  unarchive:
+    src: "{{ downloads }}/{{ packer_zip }}"
+    dest: "{{ packer_install_path }}"
+    remote_src: yes
+    owner: "root"
+    mode: 0755
+  become: yes

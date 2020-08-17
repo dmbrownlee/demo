@@ -1,0 +1,24 @@
+---
+# ==============
+# base box install
+# ==============
+# vars:
+#   box.name: the base box to build and install
+#
+- name: Check if box file alread exists ({{ box.name }})
+  stat:
+    path: "{{ packer_build_dir }}/{{ box.name }}.box"
+  register: boxfile
+  changed_when: false
+- name: Build box file if missing ({{ box.name }})
+  command: packer build -force {{ box.name }}.json
+  args:
+    chdir: "{{ packer_build_dir }}"
+    creates: "{{ packer_build_dir }}/{{ box.name }}.box"
+  register: boxfilebuild
+  when: boxfile.stat.isreg is not defined
+- name: Install Vagrant base box ({{ box.name }})
+  command: vagrant box add --name {{ box.name }} {{ box.name }}.box
+  args:
+    chdir: "{{ packer_build_dir }}"
+  when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0

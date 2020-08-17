@@ -1,4 +1,0 @@
----
-# defaults for virtual network
-lab_network_name: 'RHCSA Network'
-lab_network: '192.168.4.0/24'
