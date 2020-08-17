@@ -1,7 +1,12 @@
 ---
+- name: Ensure packer build directory exists
+  file:
+    name: "{{ packer_build_dir }}"
+    state: "directory"
+    mode: 700
 - name: Ensure packer build files for libvirt have beein installed
   copy:
-    dest: "{{ packer_build_dir }}"
+    dest: "{{ packer_build_dir }}/"
     src: kvm/{{ item }}
   with_items:
     - CentOS-8.1-1911-x86_64-Minimal.json

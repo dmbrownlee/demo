@@ -1,7 +1,12 @@
 ---
+- name: Ensure packer build directory exists
+  file:
+    name: "{{ packer_build_dir }}"
+    state: "directory"
+    mode: 700
 - name: Ensure packer build files for VirtualBox have beein installed
   copy:
-    dest: "{{ packer_build_dir }}"
+    dest: "{{ packer_build_dir }}/"
     src: virtualbox/{{ item }}
   with_items:
     - Debian-10.4.0-amd64.json
