@@ -2,21 +2,58 @@
 # This script installs Ansible if on MacOSX and it is not already installed and
 # then runs the playbook to configure the virtualization software on the host.
 
-# We install ansible using pip on MacOSX but assume it is installed on Linux
-# via native packages.
-if [[ "Darwin" == "$(uname)" ]]; then
-  which -s ansible-playbook
-  if [[ $? -ne 0 ]]; then
-    sudo -H python3 -m pip install --upgrade pip
-    sudo -H python3 -m pip install --upgrade ansible
-  fi
-fi
-
 if [[ $# -eq 1 ]]; then
   APARGS="-e study_group=study-group-$1"
 fi
 
 APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
 
-cd ./.setup &&
-ansible-playbook -K -i localhost, -c local $APARGS setup.yml
+cat <<DONE
+=========================================================================
+Verifying network connectivity.
+=========================================================================
+DONE
+ping -q -c 1 8.8.8.8
+if [[ $? -ne 0 ]]; then
+  echo "Unable to reach the Internet.  Please check your network connectivity."
+  exit 1;
+fi
+echo
+
+case "$(uname)" in
+  "Darwin")
+    # We install ansible using pip on MacOSX but assume it is installed on Linux
+    # via native packages.
+    which -s ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      sudo -H python3 -m pip install --upgrade pip
+      sudo -H python3 -m pip install --upgrade ansible
+      sudo -H python3 -m pip install --upgrade jmespath
+    fi
+    # Warn if power adapter is not plugged in before continuing anyway
+    pmset -g ac | grep -q "No adapter attached"
+    if [[ $? -eq 0 ]]; then
+      cat <<DONE
+=========================================================================
+This script takes a long time to run.  Please plug in your power adapter.
+=========================================================================
+DONE
+      sleep 10
+    fi
+    cat <<DONE
+=========================================================================
+Running Ansible playbook under caffeinate to prevent hibernation.
+=========================================================================
+DONE
+    cd ./.setup &&
+    caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
+    ;;
+  "Linux")
+    cd ./.setup &&
+    ansible-playbook -K -i localhost, -c local $APARGS setup.yml &
+    ;;
+  "*")
+    echo "This setup script does not work with your host operating system."
+    exit 1
+    ;;
+esac
