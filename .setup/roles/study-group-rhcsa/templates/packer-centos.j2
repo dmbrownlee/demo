@@ -20,6 +20,9 @@
     "memory": {{ box.ram }},
     "vm_name": "{{ box.name }}",
     "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
 
     {% if virtualization == "virtualbox" %}
     {# Note: We actually want all the {{ ... }} in this JSON block

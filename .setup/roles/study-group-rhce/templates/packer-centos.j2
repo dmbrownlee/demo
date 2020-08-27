@@ -20,21 +20,34 @@
     "memory": {{ box.ram }},
     "vm_name": "{{ box.name }}",
     "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
 
-    "shutdown_command": "echo vagrant | sudo -S shutdown -P now",
+    {% if virtualization == "virtualbox" %}
+    {# Note: We actually want all the {{ ... }} in this JSON block
+             in the output so we are escaping the block between {% raw %}
+             and {% endraw %}
+    #}
+    {% raw %}
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--vram", "64"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"]
+    ],
+    {% endraw %}
+    {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
       "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.kickstart }}<enter>"
-    ]
+    ],
+    "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
   }],
   "provisioners": [
     {  "type": "file",
        "source": "{{ key_dir }}/vagrant.pub",
        "destination": "/tmp/vagrant.pub"
     },
-    {# Note: We actually want the {{ ... }} in the JSON output so we are
-             escaping the block between {% raw %} and {% endraw %}
-    #}
     {% raw %}
     {  "type": "shell",
        "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
