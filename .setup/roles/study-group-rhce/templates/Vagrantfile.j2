@@ -11,13 +11,13 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vboxvm|
     vboxvm.gui = false
     vboxvm.memory = 1024
-    {% if ansible_distribution == 'MacOSX' %}
-    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "3.0"]
-    {% endif %}
     vboxvm.customize ["modifyvm", :id, "--firmware", "EFI"]
     vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
     vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
     vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+    {% if ansible_distribution == 'MacOSX' %}
+    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "2.0"]
+    {% endif %}
   end
   {% elif virtualization == "libvirt" %}
   config.vm.network :private_network,
