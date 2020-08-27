@@ -21,7 +21,7 @@ packer_install_path: "/usr/local/bin"
 #==============
 #  Vagrant
 #==============
-vagrant_version: "2.2.9"
+vagrant_version: "2.2.10"
 vagrant_bin: "vagrant"
 vagrant_install_path: "/usr/bin"
 #==============

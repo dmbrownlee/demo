@@ -15,12 +15,12 @@ packer_zip_checksum: "sha256:8dcf97610e8c3907c23e25201dce20b498e1939e89878dec01d
 #==============
 #  Vagrant
 #==============
-#vagrant_version: "2.2.9"
+#vagrant_version: "2.2.10"
 #vagrant_bin: "vagrant"
 #vagrant_install_path: "/usr/local/bin"
 vagrant_package: "vagrant_{{ vagrant_version }}_x86_64.deb"
 vagrant_package_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_package }}"
-vagrant_package_checksum: "sha256:d06038b68a97a38369220838f0d21c50f9f09b693cf0458cad872864bb7ee09b"
+vagrant_package_checksum: "sha256:e770e3c6169ace1bdaed716cfbc084a2de2b0212a162303dffec6857a758b616"
 #==============
 #  Virtualbox
 #==============
