@@ -12,6 +12,7 @@ Vagrant.configure("2") do |config|
     {% if ansible_distribution == 'MacOSX' %}
     vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "3.0"]
     {% endif %}
+    vboxvm.customize ["modifyvm", :id, "--firmware", "EFI"]
     vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
     vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
     vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
