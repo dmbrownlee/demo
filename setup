@@ -20,19 +20,19 @@ if [[ $? -ne 0 ]]; then
 fi
 echo
 
-which -s ansible-playbook
-if [[ $? -ne 0 ]]; then
-  cat <<DONE
-=========================================================================
-Installing ansible.
-=========================================================================
-DONE
-  sudo -H python3 -m pip install --upgrade pip
-  sudo -H python3 -m pip install --upgrade ansible
-  sudo -H python3 -m pip install --upgrade jmespath
-fi
 case "$(uname)" in
   "Darwin")
+    which -s ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
+      sudo -H python3 -m pip install --upgrade pip
+      sudo -H python3 -m pip install --upgrade ansible
+      sudo -H python3 -m pip install --upgrade jmespath
+    fi
     # Warn if power adapter is not plugged in before continuing anyway
     pmset -g ac | grep -q "No adapter attached"
     if [[ $? -eq 0 ]]; then
@@ -52,6 +52,17 @@ DONE
     caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "Linux")
+    which -s ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
+      sudo -H python3 -m pip install --upgrade pip
+      sudo -H python3 -m pip install --upgrade ansible
+      sudo -H python3 -m pip install --upgrade jmespath
+    fi
     cd ./.setup &&
     ansible-playbook -K -i localhost, -c local $APARGS setup.yml &
     ;;
