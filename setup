@@ -52,6 +52,11 @@ DONE
     caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "Linux")
+    if [[ -f /etc/debian_version ]]; then
+      if [[ ! -x /usr/local/bin/pip3 ]]; then
+	sudo apt install -y python3-pip
+      fi
+    fi
     which -s ansible-playbook
     if [[ $? -ne 0 ]]; then
       cat <<DONE
