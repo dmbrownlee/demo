@@ -21,6 +21,8 @@
     - python3-lxml
     - python3-jmespath
     - tigervnc
+    - kernel-devel
+    - dkms
 - name: Ensure link to qemu-kvm using old name exists (CentOS 8)
   file:
     path: /usr/bin/qemu-system-x86_64
