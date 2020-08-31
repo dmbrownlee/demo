@@ -6,7 +6,7 @@
   become: true
 - name: Ensure needed system packages are installed
   package:
-    name: "{{ name }}"
+    name: "{{ item }}"
     state: present
   become: true
   with_items:
