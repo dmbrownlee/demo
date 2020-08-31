@@ -22,3 +22,7 @@
     name: "{{ downloads }}/{{ virtualbox_package }}"
     state: present
   become: yes
+- name: Ensure the VirtualBox kernel modules have been built
+  command: /sbin/vboxconfig
+  creates: /lib/modules/{{ ansible_kernel }}/misc/vboxdrv.ko
+  become: yes
