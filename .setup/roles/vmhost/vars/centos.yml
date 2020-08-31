@@ -2,7 +2,7 @@
 # Default variables assumed to be the same for all platforms are commented out
 # but you can override them here if you want to test new software versions
 # one platform at a time.
-virtualization: libvirt
+virtualization: virtualbox
 #==============
 #  Packer
 #==============
