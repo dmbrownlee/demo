@@ -61,7 +61,7 @@ DONE
         sudo yum install -y python3-pip
       fi
     fi
-    which -s ansible-playbook
+    which ansible-playbook
     if [[ $? -ne 0 ]]; then
       cat <<DONE
     =========================================================================
@@ -73,7 +73,7 @@ DONE
       sudo -H python3 -m pip install --upgrade jmespath
     fi
     cd ./.setup &&
-    ansible-playbook -K -i localhost, -c local $APARGS setup.yml &
+    ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "*")
     echo "This setup script does not work with your host operating system."
