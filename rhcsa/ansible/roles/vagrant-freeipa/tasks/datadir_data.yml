@@ -23,6 +23,7 @@
   copy:
     dest: /data/README.data
     content: 'This directory is writable by members of the dir_data group.'
+    mode: '0644'
   become: yes
 - name: Ensure data directory is exported via NFS
   copy:
