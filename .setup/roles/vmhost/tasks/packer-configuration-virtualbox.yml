@@ -8,6 +8,7 @@
   copy:
     dest: "{{ packer_build_dir }}/"
     src: virtualbox/{{ item }}
+    mode: '0644'
   with_items:
     - Debian-10.4.0-amd64.json
     - Debian10-preseed.cfg
