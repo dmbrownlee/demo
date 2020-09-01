@@ -2,7 +2,7 @@
 # Default variables assumed to be the same for all platforms are commented out
 # but you can override them here if you want to test new software versions
 # one platform at a time.
-virtualization: libvirt
+virtualization: virtualbox
 #==============
 #  Packer
 #==============
@@ -28,6 +28,6 @@ vagrant_package_checksum: "sha256:cff96e6014532959c10d45d9956aa145c3759e1819eb93
 #virtualbox_version: "6.1.12"
 #virtualbox_build: "139181"
 #virtualbox_install_path: "/usr/local/bin"
-virtualbox_package: "virtualbox-{{ virtualbox_short_version }}-{{ virtualbox_version }}_{{ virtualbox_build }}_el8-1.x86_64.rpm"
+virtualbox_package: "VirtualBox-{{ virtualbox_short_version }}-{{ virtualbox_version }}_{{ virtualbox_build }}_el8-1.x86_64.rpm"
 virtualbox_package_url: "https://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_package }}"
 virtualbox_package_checksum: "sha256:cd963e242216ccf3cdcafb5d022607eff1fd0a766738daa02c8770f25f13a4e6"

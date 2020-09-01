@@ -22,10 +22,13 @@ echo
 
 case "$(uname)" in
   "Darwin")
-    # We install ansible using pip on MacOSX but assume it is installed on Linux
-    # via native packages.
     which -s ansible-playbook
     if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
       sudo -H python3 -m pip install --upgrade pip
       sudo -H python3 -m pip install --upgrade ansible
       sudo -H python3 -m pip install --upgrade jmespath
@@ -49,8 +52,28 @@ DONE
     caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "Linux")
+    if [[ -f /etc/debian_version ]]; then
+      if [[ ! -x /usr/local/bin/pip3 ]]; then
+	      sudo apt install -y python3-pip
+      fi
+    elif [[ -f /etc/centos-release ]]; then
+      if [[ ! -x /usr/bin/pip3 ]]; then
+        sudo yum install -y python3-pip
+      fi
+    fi
+    which ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
+      sudo -H python3 -m pip install --upgrade pip
+      sudo -H python3 -m pip install --upgrade ansible
+      sudo -H python3 -m pip install --upgrade jmespath
+    fi
     cd ./.setup &&
-    ansible-playbook -K -i localhost, -c local $APARGS setup.yml &
+    ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "*")
     echo "This setup script does not work with your host operating system."
