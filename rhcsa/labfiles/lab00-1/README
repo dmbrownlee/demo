@@ -12,12 +12,12 @@ rebooted the host):
 
   Host OS:
     On the host machine (not in a VM) run:
-      cd ~/demo/rhcsa && build
-    "build" is a shell function, defined in your ~/.bashrc, that will use
-    Vagrant to create the three VMs used in labs.  Vagrant makes it easy to
-    build an destroy VMs so you can focus on the lab topics and can start
-    over with a cleanly installed VM any time.  Vagrant and Ansible are tools
-    for our convenience and are not on the RHCSA/RHCE exams.
+      cd ~/demo/rhcsa && vagrant up --no-parallel
+   
+    Vagrant makes it easy to build an destroy VMs so you can focus on the lab 
+    topics and can start over with a cleanly installed VM any time.  Vagrant 
+    and Ansible are tools for our convenience and are not on the RHCSA/RHCE 
+    exams.
 
     The lab is now configured.
 
