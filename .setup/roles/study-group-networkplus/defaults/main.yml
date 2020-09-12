@@ -47,7 +47,7 @@ base_boxes:
     iso_location: "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd"
     iso_altlocation: "http://cdimage.debian.org/mirror/cdimage/archive/10.5.0/amd64/iso-cd"
     iso_name: "debian-10.5.0-amd64-netinst.iso"
-    preseed: "debian-10.5.0-preseed.cfg"
+    install_file: "debian-10.5.0-preseed.cfg"
     disk_size: "20480"
     ram: 1024
     template: "packer-debian.j2"

@@ -39,7 +39,7 @@
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.kickstart }}<enter>"
+      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.install_file }}<enter>"
     ],
     "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
   }],
