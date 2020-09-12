@@ -15,7 +15,7 @@
   loop: "{{ base_boxes }}"
 - name: Ensure we have a kickstart file for each base box
   template:
-    dest: "{{ packer_build_dir }}/{{ item.kickstart }}"
+    dest: "{{ packer_build_dir }}/{{ item.install_file }}"
     src: "{{ item.templateks }}"
     mode: 0600
   vars:
