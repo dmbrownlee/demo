@@ -13,7 +13,7 @@
   vars:
     box: "{{ item }}"
   loop: "{{ base_boxes }}"
-- name: Ensure we have a kickstart file for each base box
+- name: Ensure we have an installer file for each base box
   template:
     dest: "{{ packer_build_dir }}/{{ item.install_file }}"
     src: "{{ item.templateks }}"
