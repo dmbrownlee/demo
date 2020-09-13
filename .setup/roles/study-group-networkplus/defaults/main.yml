@@ -1,4 +1,7 @@
 ---
+supported_host_os:
+  - "macosx"
+  - "debian"
 downloads: "{{ ansible_user_dir }}/Downloads"
 # defaults for GNS3
 gns3_version: "2.2.12"
