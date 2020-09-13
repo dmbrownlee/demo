@@ -1,0 +1,20 @@
+---
+# This playbook will backup your *.box files and corresponding keys so you can
+# save time during testing. Assuming your external backup media is mounted on
+# /mnt, you can use this:
+#
+# ansible-playbook -i localhost, -c local -e backup_dir=/mnt box-backup.yml
+- name: box-backup
+  hosts: localhost
+  connection: local
+  tasks:
+    - fail:
+        msg: "You need to specifiy a backup destionation with '-e backup_dir=<somedir>'"
+      when: backup_dir is not defined
+    - archive:
+        path:
+          - "{{ ansible_user_dir }}/keys/vagrant*"
+          - "{{ ansible_user_dir }}/demo/.setup/packer/*.box"
+          - "{{ ansible_user_dir }}/Downloads/*.iso"
+        dest: "{{ backup_dir }}/box-backup.tar"
+        format: tar
