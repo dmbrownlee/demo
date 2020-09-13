@@ -1,5 +1,6 @@
 {
   "builders": [{
+    "vm_name": "{{ box.name }}",
     "type": "virtualbox-iso",
     "guest_os_type": "{{ box.guest_os_type }}",
     "iso_urls": [
@@ -16,10 +17,11 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "60m",
-    "disk_size" : "{{ box.disk_size }}",
-    "memory": {{ box.ram }},
-    "vm_name": "{{ box.name }}",
     "headless": true,
+    
+    "cpus": "{{ box.cpus }}",
+    "memory": {{ box.ram }},
+    "disk_size" : "{{ box.disk_size }}",
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
     "hard_drive_nonrotational": true,

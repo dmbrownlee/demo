@@ -48,10 +48,26 @@ base_boxes:
     iso_altlocation: "http://cdimage.debian.org/mirror/cdimage/archive/10.5.0/amd64/iso-cd"
     iso_name: "debian-10.5.0-amd64-netinst.iso"
     install_file: "debian-10.5.0-preseed.cfg"
-    disk_size: "20480"
+    cpus: 1
     ram: 1024
+    disk_size: "20480"
     template: "packer-debian.j2"
     templateks: "packer-debian-preseed.j2"
+  - name: "windows-10"
+    guest_os_type: "Windows10_64"
+    iso_checksum: "sha1:489ebee676e26cdb81377b0e6385c001a22589b8"
+    iso_location: "https://software-download.microsoft.com/download/pr"
+    iso_name: "18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
+    install_file: "answer_files/10/Autounattend.xml"
+    cpus: 2
+    ram: 4096
+    disk_size: "20480"
+    floppy_dir: "answer_files"
+    guest_additions_mode: "attach"
+    guest_additions_url: ""
+    unattended_file_path: "10/Autounattend.xml"
+    template: "packer-windows-10.json.j2"
+    templateks: "packer-windows-10-autounattend.xml.j2"
 # defaults for virtual network
 virtual_networks:
   - name: 'RHCSA Network'
