@@ -30,12 +30,12 @@ There are plenty of better places to find information on how to do this so I'm k
 5. Insert the USB flash drive and re-run the commands above and look for the disk that did not exist on the first run.  That is your USB flash drive.
 6. Now that you know the name of the USB flash drive, you can use ```dd``` to write the ISO image to it.
     > On Linux:  
-    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4m status=progress```  
+    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4M status=progress```  
     >
     > On Mac:  
-    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4M &```  
+    > ```sudo dd if=*<downloaded ISO image>* of=*<flash drive device file>* bs=4m```  
 
-The network installing ISO images are fairly small so the ```dd``` command should not take long.
+The network installing ISO images are fairly small so the ```dd``` command should not take long.  Note, you can use send SIGINFO to the PID of ```dd``` on Mac OS X to get it to dump its status to STDOUT.
 
 ## Install the host using distribution specific automation
 **NOTE: The CentOS kickstart files and Debian preseed files shown here do NOT automate disk partioning to allow for flexible installations (such as dual-booting with other operating systems).  You should, however, still know what you are doing and, if losing everything on your disk would be a problem for you, you should have good backups just in case you make a mistake or there is a bug in the files.  The other CentOS kickstart files in this directory WILL remove any current drive contents so don't use them unless you know what you're doing.**
