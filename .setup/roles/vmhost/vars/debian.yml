@@ -6,12 +6,12 @@ virtualization: virtualbox
 #==============
 #  Packer
 #==============
-#packer_version: "1.6.1"
+#packer_version: "1.6.2"
 #packer_bin: "packer"
 #packer_install_path: "/usr/local/bin"
 packer_zip: "packer_{{ packer_version }}_linux_amd64.zip"
 packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
-packer_zip_checksum: "sha256:8dcf97610e8c3907c23e25201dce20b498e1939e89878dec01de6975733c7729"
+packer_zip_checksum: "sha256:089fc9885263bb283f20e3e7917f85bb109d9335f24d59c81e6f3a0d4a96a608"
 #==============
 #  Vagrant
 #==============
@@ -25,9 +25,9 @@ vagrant_package_checksum: "sha256:e770e3c6169ace1bdaed716cfbc084a2de2b0212a16230
 #  Virtualbox
 #==============
 #virtualbox_short_version: "6.1"
-#virtualbox_version: "6.1.12"
-#virtualbox_build: "139181"
+#virtualbox_version: "6.1.14"
+#virtualbox_build: "140239"
 #virtualbox_install_path: "/usr/local/bin"
 virtualbox_package: "virtualbox-{{ virtualbox_short_version }}_{{ virtualbox_version }}-{{ virtualbox_build }}~Debian~buster_amd64.deb"
 virtualbox_package_url: "https://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_package }}"
-virtualbox_package_checksum: "sha256:c26d30cf870043f4244a14587a677840dc92c1837522af6de318483acf9abd69"
+virtualbox_package_checksum: "sha256:1d368820a4e2be8215df47b838cdc4430d108c8d29f94c77f89dff8c404ede4e"

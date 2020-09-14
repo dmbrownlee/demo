@@ -6,12 +6,12 @@ virtualization: virtualbox
 #==============
 #  Packer
 #==============
-#packer_version: "1.6.1"
+#packer_version: "1.6.2"
 #packer_bin: "packer"
 #packer_install_path: "/usr/local/bin"
 packer_zip: "packer_{{ packer_version }}_darwin_amd64.zip"
 packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
-packer_zip_checksum: "sha256:668cf8b798c5dbbdb04ced053dbb33ea76a5d6a4de955e7ce39a52fe2a758d10"
+packer_zip_checksum: "sha256:2b5e8c76ae280c72fe33b2ac6511c24d2e0c02df9d437d2e4a5efbe988f71e2b"
 #==============
 #  Vagrant
 #==============
@@ -26,10 +26,10 @@ vagrant_package_mount_path: "/Volumes/Vagrant"
 #  Virtualbox
 #==============
 #virtualbox_short_version: "6.1"
-#virtualbox_version: "6.1.12"
-#virtualbox_build: "139181"
+#virtualbox_version: "6.1.14"
+#virtualbox_build: "140239"
 virtualbox_install_path: "/usr/local/bin"
 virtualbox_package: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-OSX.dmg"
 virtualbox_package_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_package }}"
-virtualbox_package_checksum: "sha256:96c45572213e68fb58ee6669f99caf1126e61495de7e710363350e07f3a1c4d6"
+virtualbox_package_checksum: "sha256:3abeee4822707db2f949431391dba27827840aa5390a9ec4e1bafdc5c8c3aaaa"
 virtualbox_package_mount_path: "/Volumes/VirtualBox"

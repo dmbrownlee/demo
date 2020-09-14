@@ -15,7 +15,7 @@ packer_build_dir: "{{ demo_root }}/.setup/packer"
 #==============
 #  Packer
 #==============
-packer_version: "1.6.1"
+packer_version: "1.6.2"
 packer_bin: "packer"
 packer_install_path: "/usr/local/bin"
 #==============
@@ -28,7 +28,7 @@ vagrant_install_path: "/usr/bin"
 #  Virtualbox
 #==============
 virtualbox_short_version: "6.1"
-virtualbox_version: "6.1.12"
-virtualbox_build: "139181"
+virtualbox_version: "6.1.14"
+virtualbox_build: "140239"
 virtualbox_version_string: "{{ virtualbox_version }}r{{ virtualbox_build }}"
 virtualbox_install_path: "/usr/bin"
