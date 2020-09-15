@@ -33,3 +33,20 @@ virtualbox_package: "VirtualBox-{{ virtualbox_version }}-{{ virtualbox_build }}-
 virtualbox_package_url: "http://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_package }}"
 virtualbox_package_checksum: "sha256:3abeee4822707db2f949431391dba27827840aa5390a9ec4e1bafdc5c8c3aaaa"
 virtualbox_package_mount_path: "/Volumes/VirtualBox"
+#=====================
+#  Homebrew packages
+#=====================
+system_brews:
+  - dockutil
+  - packer
+  - packer-completion
+  - vagrant-completion
+system_casks:
+  - google-chrome
+  - vagrant
+  - virtualbox
+dockitems_to_add:
+  - name: Google Chrome
+    path: "/Applications/Google Chrome.app"
+  - name: VirtualBox
+    path: "/Applications/VirtualBox.app"
