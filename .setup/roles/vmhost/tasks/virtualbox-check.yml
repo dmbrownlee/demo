@@ -18,7 +18,10 @@
   changed_when: false
   failed_when: false
   register: installed_virtualbox_version
-  when: installed_virtualbox.stat.exists
+  when:
+    - installed_virtualbox.stat.exists
+    - installed_virtualbox.stat.isreg
+    - installed_virtualbox.stat.executable
 - name: Install VirtualBox
   include_tasks: "virtualbox-install.yml"
   when: (not installed_virtualbox.stat.exists) or (installed_virtualbox_version.stdout is defined and installed_virtualbox_version.stdout != virtualbox_version_string)

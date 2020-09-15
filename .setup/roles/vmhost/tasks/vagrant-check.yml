@@ -19,7 +19,10 @@
   shell: "{{ vagrant_install_path }}/{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
   changed_when: false
   register: installed_vagrant_version
-  when: installed_vagrant.stat.exists and installed_vagrant.stat.executable
+  when:
+    - installed_vagrant.stat.exists
+    - (installed_vagrant.stat.isreg or installed_vagrant.stat.islnk)
+    - installed_vagrant.stat.executable
 - name: Install vagrant
   include_tasks: "vagrant-install-{{ ansible_distribution | lower }}.yml"
   when: (not installed_vagrant.stat.exists) or (installed_vagrant_version.stdout is defined and installed_vagrant_version.stdout != vagrant_version)
