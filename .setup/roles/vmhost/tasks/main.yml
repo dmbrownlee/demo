@@ -10,8 +10,8 @@
 - name: homebrew packages
   include_tasks: "system-packages-{{ ansible_distribution | lower }}-homebrew.yml"
   when: brew.stat is defined and brew.stat.exists
-- name: shell configuration tasks
-  include_tasks: "shell-configuration.yml"
+- name: shell configuration
+  include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"
 - name: system package tasks
   include_tasks: "system-packages-{{ ansible_distribution | lower }}.yml"
 - name: packer tasks

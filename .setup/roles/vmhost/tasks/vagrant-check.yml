@@ -23,3 +23,20 @@
 - name: Install vagrant
   include_tasks: "vagrant-install-{{ ansible_distribution | lower }}.yml"
   when: (not installed_vagrant.stat.exists) or (installed_vagrant_version.stdout is defined and installed_vagrant_version.stdout != vagrant_version)
+# Ensure we have SSH keys for the vagrant user
+- name: Ensure {{ key_dir }} directory exists
+  file:
+    path: "{{ key_dir }}"
+    state: directory
+    mode: 0700
+- name: Test if {{ key_dir }}/vagrant already installed
+  stat:
+    path: "{{ key_dir }}/vagrant"
+  register: keys_installation
+  changed_when: false
+- name: Ensure key pair in {{ key_dir }}
+  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
+  args:
+    chdir: "{{ key_dir }}"
+    creates: "{{ key_dir }}/vagrant"
+  when: keys_installation.stat.isreg is not defined
