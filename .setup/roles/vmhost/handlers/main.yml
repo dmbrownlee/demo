@@ -8,3 +8,7 @@
 - name: Update Vagrant plugins
   command: vagrant plugin update
   listen: vagrant_plugin_update
+- name: Ensure Dock is restarting after changes
+  listen: "launcher-restart-macosx"
+  command:
+    cmd: killall Dock
