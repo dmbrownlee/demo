@@ -29,10 +29,8 @@ wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
 #=====================
 #  Homebrew packages
 #=====================
-system_brews:
-  - dockutil
+system_brews: []
 system_casks:
-  - gns3
   - wireshark
 dockitems_to_add:
   - name: GNS3
