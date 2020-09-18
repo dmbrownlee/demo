@@ -25,10 +25,8 @@ caffeinate -dsu ansible-playbook -i localhost, -c local $APARGS \
   hosts: localhost
   connection: local
   tasks:
-    - fail:
-        msg: "You need to specifiy a backup destionation with '-e backup_dir=<somedir>'"
-      when: backup_dir is not defined
-    - archive:
+    - name: Backing up vagrant keys, box files, and ISO downloads
+      archive:
         path:
           - "{{ ansible_user_dir }}/keys/vagrant*"
           - "{{ ansible_user_dir }}/demo/.setup/packer/*.box"
