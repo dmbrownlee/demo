@@ -24,12 +24,8 @@ caffeinate -dsu ansible-playbook -i localhost, -c local $APARGS \
   hosts: localhost
   connection: local
   tasks:
-    - fail:
-        msg: >
-          You need to specifiy the directory containing the backup with
-          '-e backup_dir=<somedir>'
-      when: backup_dir is not defined
-    - command:
+    - name: Restoring files from backup
+      command:
         cmd: "tar -xpvf {{ backup_dir }}/box-backup.tar"
         chdir: "{{ ansible_user_dir }}"
         warn: false
