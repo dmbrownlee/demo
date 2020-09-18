@@ -10,12 +10,13 @@ downloads: "{{ ansible_user_dir }}/Downloads"
 # Software versions
 # =================
 # defaults for GNS3
+gns3_version: "2.2.14"
 gns3_user_dir: "{{ ansible_user_dir }}/GNS3"
 gns3_config_dir: "{{ ansible_user_dir }}/.config/GNS3/2.2"
 # defaults for GNS3.VM for VirtualBox
 gns3vm_vbox_zip: "GNS3.VM.VirtualBox.{{ gns3_version }}.zip"
 gns3vm_vbox_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3vm_vbox_zip }}"
-gns3vm_vbox_zip_checksum: "sha256:b2a3d309f1d4df746f119f913c4ff09d4f01fe10b4e45abea71fdf9d40079fd9"
+gns3vm_vbox_zip_checksum: "sha256:07a88f1419bcddce12bf073707658dba7e0843cb6880d27311b4236689cc4297"
 # ===========================================
 # Virtual lab environment specific base boxes
 # ===========================================
