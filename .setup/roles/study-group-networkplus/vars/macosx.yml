@@ -11,16 +11,14 @@
 # Additional distribution specific variables
 # ==========================================
 # defaults for GNS3
-gns3_version: "2.2.13"
 gns3_app: "/Applications/GNS3.app"
 gns3_mac_plist: "{{ gns3_app }}/Contents/Info.plist"
 gns3_mac_dmg: "GNS3-{{ gns3_version }}.dmg"
 gns3_mac_dmg_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3_mac_dmg }}"
-gns3_mac_dmg_checksum: "sha256:70de4580044340f066c424483e706d9bf3e61993428d4c265766c8c06a96cdd6"
+gns3_mac_dmg_checksum: "sha256:7925c7ae2d202b7b1a3e7f807e54a46c4da1a20fabc5c6201f77d01839454e74"
 gns3_mac_dmg_mount_path: "/Volumes/GNS3 {{ gns3_version }}"
 # Defaults for Wireshark
 wireshark_version: "3.2.6"
-wireshark_bin: "/usr/local/bin/wireshark"
 wireshark_bin: "/usr/local/bin/wireshark"
 wireshark_app: "/Applications/wireshark.app"
 wireshark_mac_plist: "{{ wireshark_app }}/Contents/Info.plist"
