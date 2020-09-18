@@ -26,3 +26,14 @@ wireshark_mac_dmg: "Wireshark%20{{ wireshark_version }}%20Intel%2064.dmg"
 wireshark_mac_dmg_url: "https://1.na.dl.wireshark.org/osx/{{ wireshark_mac_dmg }}"
 wireshark_mac_dmg_checksum: "sha256:e63b7345e8a068a4c3e6dcd8b2de61fe66c03e78f3c8002a94829d152e1566d5"
 wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
+#=====================
+#  Homebrew packages
+#=====================
+system_brews:
+  - dockutil
+system_casks:
+  - gns3
+  - wireshark
+dockitems_to_add:
+  - name: GNS3
+    path: "/Applications/GNS3.app"
