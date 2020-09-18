@@ -8,6 +8,24 @@ fi
 
 APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
 
+function restore_backup() {
+  BACKUP_DIR="$1"
+  if [[ -f "$BACKUP_DIR/box-backup.tar" ]]; then
+    cat <<DONE
+=========================================================================
+Found backup file $BACKUP_DIR/box-backup.tar
+=========================================================================
+Restoring keys, box files, and ISO image downloads can save a lot of
+time during setup.
+
+DONE
+    read -p "Would you like to retore from this backup [Y/n]? " a
+    if [[ ! "$a" =~ [nN][oO]* ]]; then
+      .setup/box-restore.sh $BACKUP_DIR
+    fi
+  fi
+}
+
 cat <<DONE
 =========================================================================
 Verifying network connectivity.
@@ -39,10 +57,12 @@ DONE
       cat <<DONE
 =========================================================================
 This script takes a long time to run.  Please plug in your power adapter.
+(continuting in 10 seconds...)
 =========================================================================
 DONE
       sleep 10
     fi
+    restore_backup "/Volumes/Backup"
     cat <<DONE
 =========================================================================
 Running Ansible playbook under caffeinate to prevent hibernation.
@@ -72,6 +92,7 @@ DONE
       sudo -H python3 -m pip install --upgrade ansible
       sudo -H python3 -m pip install --upgrade jmespath
     fi
+    restore_backup "/mnt"
     cd ./.setup &&
     ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
