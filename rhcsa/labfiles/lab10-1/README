@@ -1,57 +1,18 @@
-=== LAB 10: Managing Process
+=== LAB 10: Managing Software
 
 OBJECTIVE:
 
-In this lab, you will practice finding poorly behaving processes and shut them
-down.
+In this lab, you will practice creating your own repositories.
 
-STEPS: 
+STEPS:
 
-You can do these steps on the host or any virtual machine.
+You can do this lab on the host machine or the virtual machines.
 
-1.  Open a terminal and run:
+1.  Create a yum repository
+2.  Add the hello-1-1.x86_64.rpm file in this directory to the repository
+    you created
+3.  Add the repository to the current system
+4.  Install the hello package
+5.  Run "hello" to verify it was installed correctly
 
-      while true; do echo "Are we there yet?"; sleep 2; done
-
-    The previous command will echo a message to the screen every two seconds.
-
-2.  Stop the previous command without closing the terminal
-    a: ctrl + c 
-3.  Now run this in your terminal:
-
-      (while true; do ls -LR / > /dev/null 2>&1 ; done) &
-
-    You should get a prompt back right away.
-
-4.  Figure out which process is using most of your CPU and terminate the process.
-    a: top | grep ls. pid = 13411
-5.  Read the man page for "ps" to find out how to change the output so that only
-    this information is displayed about every process:
-
-      The user running the process 
-      The process ID 
-      The percent of CPU the process is using 
-      The percent of memory the process is using
-      The command line used to start the process,pid
-
-      a: ps -o user,pid,pcpu,pmem,command
-
-6.  How would you sort the output of ps by total CPU time the process has used?
-
-    a: ps u --sort -time
-7.  What do you think this command is showing you:
-
-      echo $$
-
-      a: bash pid
-
-8.  How would you change the output of "top"?
-    
-    a: < or >
-    a: capital E to change memory size
-    a: 1 to show stats for each cpu
-    a: m to sort by memory
-
-
-
-NOTE: jobs -l will return jobs and PID
+Make sure that you can see it in your repolist.
