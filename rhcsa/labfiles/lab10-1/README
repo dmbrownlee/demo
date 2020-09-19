@@ -16,6 +16,7 @@ You can do these steps on the host or any virtual machine.
     The previous command will echo a message to the screen every two seconds.
 
 2.  Stop the previous command without closing the terminal
+    a: ctrl + c 
 3.  Now run this in your terminal:
 
       (while true; do ls -LR / > /dev/null 2>&1 ; done) &
@@ -23,18 +24,34 @@ You can do these steps on the host or any virtual machine.
     You should get a prompt back right away.
 
 4.  Figure out which process is using most of your CPU and terminate the process.
+    a: top | grep ls. pid = 13411
 5.  Read the man page for "ps" to find out how to change the output so that only
     this information is displayed about every process:
 
-      The user running the process
-      The process ID
-      The percent of CPU the process is using
+      The user running the process 
+      The process ID 
+      The percent of CPU the process is using 
       The percent of memory the process is using
       The command line used to start the process,pid
 
+      a: ps -o user,pid,pcpu,pmem,command
+
 6.  How would you sort the output of ps by total CPU time the process has used?
+
+    a: ps u --sort -time
 7.  What do you think this command is showing you:
 
       echo $$
 
+      a: bash pid
+
 8.  How would you change the output of "top"?
+    
+    a: < or >
+    a: capital E to change memory size
+    a: 1 to show stats for each cpu
+    a: m to sort by memory
+
+
+
+NOTE: jobs -l will return jobs and PID
