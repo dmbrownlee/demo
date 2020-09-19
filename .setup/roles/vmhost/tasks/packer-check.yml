@@ -19,7 +19,10 @@
   command: "{{ packer_install_path }}/packer --version"
   changed_when: false
   register: installed_packer_version
-  when: installed_packer.stat.exists and installed_packer.stat.isreg
+  when:
+    - installed_packer.stat.exists
+    - (installed_packer.stat.isreg or installed_packer.stat.islnk)
+    - installed_packer.stat.executable
 - name: Install packer
   include_tasks: "packer-install.yml"
   when: (not installed_packer.stat.exists) or (installed_packer_version.stdout is defined and installed_packer_version.stdout != packer_version)

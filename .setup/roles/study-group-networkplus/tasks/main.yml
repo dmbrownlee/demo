@@ -1,7 +1,23 @@
 ---
-- name: Configure host for course lab environment (Debian)
-  include_tasks: debian.yml
-  when: ansible_distribution == 'Debian'
-- name: Configure host for course lab environment (MacOS)
-  include_tasks: macosx.yml
-  when: ansible_distribution == 'MacOSX'
+- fail:
+    msg: "This virtual lab environment is not supported on your host operating system."
+  when: ansible_distribution | lower not in supported_host_os
+- name: Include host distribution specific variables
+  include_vars: "{{ ansible_distribution | lower }}.yml"
+- name: Check for homebrew installation on Mac
+  stat:
+    path: /usr/local/bin/brew
+  register: brew
+  changed_when: false
+  when: ansible_distribution == "MacOSX"
+- name: homebrew packages
+  include_tasks: "system-packages-{{ ansible_distribution | lower }}-homebrew.yml"
+  when: brew.stat is defined and brew.stat.exists
+- name: Ensure GNS3 and the GNS3 VM are installed
+  include_tasks: "gns3-packages-{{ ansible_distribution | lower }}.yml"
+- name: Ensure virtual networks have been configured
+  include_tasks: "{{ virtualization }}-virtual-network-check.yml"
+- name: Ensure Vagrant base boxes have been built
+  include_tasks: "vagrant-base-box-check.yml"
+- name: Ensure virtual machines exist and have been added to GNS3
+  include_tasks: "vagrant-vm-check.yml"

@@ -33,6 +33,6 @@
   loop: "{{ base_boxes }}"
 - name: Ensure the Vagrantfile exists
   template:
-    dest: "{{ demo_root }}/rhcsa/Vagrantfile"
+    dest: "{{ demo_root }}/networkplus/Vagrantfile"
     src: "Vagrantfile.j2"
     mode: 0644

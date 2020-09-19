@@ -6,28 +6,28 @@ virtualization: virtualbox
 #==============
 #  Packer
 #==============
-#packer_version: "1.6.1"
+#packer_version: "1.6.2"
 #packer_bin: "packer"
 #packer_install_path: "/usr/local/bin"
 packer_zip: "packer_{{ packer_version }}_linux_amd64.zip"
 packer_zip_url: "https://releases.hashicorp.com/packer/{{ packer_version }}/{{ packer_zip }}"
-packer_zip_checksum: "sha256:8dcf97610e8c3907c23e25201dce20b498e1939e89878dec01de6975733c7729"
+packer_zip_checksum: "sha256:089fc9885263bb283f20e3e7917f85bb109d9335f24d59c81e6f3a0d4a96a608"
 #==============
 #  Vagrant
 #==============
-#vagrant_version: "2.2.9"
+#vagrant_version: "2.2.10"
 #vagrant_bin: "vagrant"
 vagrant_install_path: "/usr/bin"
 vagrant_package: "vagrant_{{ vagrant_version }}_x86_64.rpm"
 vagrant_package_url: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/{{ vagrant_package }}"
-vagrant_package_checksum: "sha256:236982834381c7b242cb8cd268c880263d3bb6dd5f87fb20ce8af3bf5fb65538"
+vagrant_package_checksum: "sha256:911432d5e37161f7bdce1d32066b67ac6b21f822ad70904f28ab2c9fe9d8e553"
 #==============
 #  Virtualbox
 #==============
 #virtualbox_short_version: "6.1"
-#virtualbox_version: "6.1.12"
-#virtualbox_build: "139181"
+#virtualbox_version: "6.1.14"
+#virtualbox_build: "140239"
 #virtualbox_install_path: "/usr/local/bin"
 virtualbox_package: "VirtualBox-{{ virtualbox_short_version }}-{{ virtualbox_version }}_{{ virtualbox_build }}_el8-1.x86_64.rpm"
 virtualbox_package_url: "https://download.virtualbox.org/virtualbox/{{ virtualbox_version }}/{{ virtualbox_package }}"
-virtualbox_package_checksum: "sha256:cd963e242216ccf3cdcafb5d022607eff1fd0a766738daa02c8770f25f13a4e6"
+virtualbox_package_checksum: "sha256:39e8cf9aad041e06d670ca84ab2279184b984d4d721c09a0c80855c70baa5505"

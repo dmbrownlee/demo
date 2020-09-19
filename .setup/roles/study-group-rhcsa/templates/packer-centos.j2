@@ -1,7 +1,7 @@
 {
   "builders": [{
     "type": "virtualbox-iso",
-    "guest_os_type": "RedHat_64",
+    "guest_os_type": "{{ box.guest_os_type }}",
     "iso_urls": [
       "{{ downloads }}/{{ box.iso_name }}",
       "{{ box.iso_location }}/{{ box.iso_name }}"
@@ -20,6 +20,9 @@
     "memory": {{ box.ram }},
     "vm_name": "{{ box.name }}",
     "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
 
     {% if virtualization == "virtualbox" %}
     {# Note: We actually want all the {{ ... }} in this JSON block
@@ -36,7 +39,7 @@
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.kickstart }}<enter>"
+      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.install_file }}<enter>"
     ],
     "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
   }],
@@ -75,6 +78,7 @@
        "pause_before": "10s"
     },
     {  "type": "shell",
+       "only": [ "virtualbox-iso" ],
        "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
        "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",

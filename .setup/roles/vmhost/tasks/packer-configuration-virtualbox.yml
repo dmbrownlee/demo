@@ -10,9 +10,6 @@
     src: virtualbox/{{ item }}
     mode: '0644'
   with_items:
-    - Debian-10.4.0-amd64.json
-    - Debian10-preseed.cfg
     - answer_files
     - cookbooks
     - scripts
-    - Windows-10.json
