@@ -18,13 +18,13 @@ gns3_mac_dmg_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_v
 gns3_mac_dmg_checksum: "sha256:7925c7ae2d202b7b1a3e7f807e54a46c4da1a20fabc5c6201f77d01839454e74"
 gns3_mac_dmg_mount_path: "/Volumes/GNS3 {{ gns3_version }}"
 # Defaults for Wireshark
-wireshark_version: "3.2.6"
+wireshark_version: "3.2.7"
 wireshark_bin: "/usr/local/bin/wireshark"
 wireshark_app: "/Applications/wireshark.app"
 wireshark_mac_plist: "{{ wireshark_app }}/Contents/Info.plist"
 wireshark_mac_dmg: "Wireshark%20{{ wireshark_version }}%20Intel%2064.dmg"
 wireshark_mac_dmg_url: "https://1.na.dl.wireshark.org/osx/{{ wireshark_mac_dmg }}"
-wireshark_mac_dmg_checksum: "sha256:e63b7345e8a068a4c3e6dcd8b2de61fe66c03e78f3c8002a94829d152e1566d5"
+wireshark_mac_dmg_checksum: "sha256:1347138534c6d9adb2ee1af7898cac2248b63bfb1ac6afee54e17725ab333106"
 wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
 #=====================
 #  Homebrew packages
