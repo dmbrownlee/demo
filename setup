@@ -47,6 +47,8 @@ case "$(uname)" in
     Installing ansible.
     =========================================================================
 DONE
+      xcode-select --install 2>/dev/null ||
+        echo "Command line development tools already installed."
       sudo -H python3 -m pip install --upgrade pip
       sudo -H python3 -m pip install --upgrade ansible
       sudo -H python3 -m pip install --upgrade jmespath
