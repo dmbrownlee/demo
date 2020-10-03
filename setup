@@ -62,7 +62,7 @@ This script takes a long time to run.  Please plug in your power adapter.
 DONE
       sleep 10
     fi
-    restore_backup "/Volumes/Backup"
+    restore_backup "/Volumes/Backups"
     cat <<DONE
 =========================================================================
 Running Ansible playbook under caffeinate to prevent hibernation.
