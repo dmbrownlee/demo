@@ -5,7 +5,8 @@
     "guest_os_type": "{{ box.guest_os_type }}",
     "iso_urls": [
       "{{ downloads }}/{{ box.iso_name }}",
-      "{{ box.iso_location }}/{{ box.iso_name }}"
+      "{{ box.iso_location }}/{{ box.iso_name }}",
+      "{{ box.iso_altlocation }}/{{ box.iso_name }}"
     ],
     "iso_checksum": "{{ box.iso_checksum }}",
     "iso_target_path": "{{ downloads }}/{{ box.iso_name }}",
