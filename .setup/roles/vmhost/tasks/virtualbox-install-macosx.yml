@@ -44,3 +44,5 @@
   command: hdiutil detach "{{ virtualbox_package_mount_path }}"
   become: yes
   changed_when: false
+- name: Ensure host key is swapped to right command key
+  command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
