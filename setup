@@ -69,7 +69,7 @@ Running Ansible playbook under caffeinate to prevent hibernation.
 =========================================================================
 DONE
     # In case we are curling this directly from raw.githubusercontent.com
-    if [[ ! -d ansible ]]; then
+    if [[ ! -d ./.setup ]]; then
       # Install git from Homebrew
       [ -x /usr/local/bin/git ] || brew install git
       # Clone this repo into the home directory
