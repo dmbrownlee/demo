@@ -68,6 +68,16 @@ DONE
 Running Ansible playbook under caffeinate to prevent hibernation.
 =========================================================================
 DONE
+    # In case we are curling this directly from raw.githubusercontent.com
+    if [[ ! -d ansible ]]; then
+      # Install git from Homebrew
+      [ -x /usr/local/bin/git ] || brew install git
+      # Clone this repo into the home directory
+      if [[ ! -d $HOME/home ]]; then
+        cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
+      fi
+      cd $HOME/demo
+    fi
     cd ./.setup &&
     caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
