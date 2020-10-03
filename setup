@@ -40,6 +40,16 @@ echo
 
 case "$(uname)" in
   "Darwin")
+    which -s brew
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing homebrew.
+    =========================================================================
+DONE
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    fi
+
     which -s ansible-playbook
     if [[ $? -ne 0 ]]; then
       cat <<DONE
@@ -47,11 +57,7 @@ case "$(uname)" in
     Installing ansible.
     =========================================================================
 DONE
-      xcode-select --install 2>/dev/null ||
-        echo "Command line development tools already installed."
-      sudo -H python3 -m pip install --upgrade pip
-      sudo -H python3 -m pip install --upgrade ansible
-      sudo -H python3 -m pip install --upgrade jmespath
+      brew install ansible
     fi
     # Warn if power adapter is not plugged in before continuing anyway
     pmset -g ac | grep -q "No adapter attached"
