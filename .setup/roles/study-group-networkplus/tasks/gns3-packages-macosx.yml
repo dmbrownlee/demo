@@ -24,7 +24,6 @@
   when: installed_gns3.stat.exists is false or (installed_gns3_version.stdout != gns3_version)
 - name: Mount the GNS3 disk image file
   command: hdiutil attach "{{ downloads }}/{{ gns3_mac_dmg }}"
-  become: yes
   changed_when: false
   when: installed_gns3.stat.exists is false or (installed_gns3_version.stdout != gns3_version)
 - name: Ensure previous version of GNS3 is removed if we are upgrading
@@ -35,17 +34,16 @@
   when: installed_gns3.stat.exists is true and (installed_gns3_version.stdout != gns3_version)
 - name: Install GNS3.app
   command: cp -R "{{ gns3_mac_dmg_mount_path }}/GNS3.app" /Applications
-  become: yes
   when: installed_gns3.stat.exists is false or (installed_gns3_version.stdout != gns3_version)
 - name: Unmount the GNS3 disk image file
   command: hdiutil detach "{{ gns3_mac_dmg_mount_path }}"
-  become: yes
   changed_when: false
   when: installed_gns3.stat.exists is false or (installed_gns3_version.stdout != gns3_version)
 - name: Ensure ownership and mode of ubridge are correct
   file:
     path: "{{ gns3_app }}/Contents/MacOS/ubridge"
     owner: root
+    group: admin
     mode: 04750
   become: yes
 - name: Ensure user config directory for GNS3 exists
