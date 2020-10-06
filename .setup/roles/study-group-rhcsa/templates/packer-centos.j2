@@ -4,7 +4,8 @@
     "guest_os_type": "{{ box.guest_os_type }}",
     "iso_urls": [
       "{{ downloads }}/{{ box.iso_name }}",
-      "{{ box.iso_location }}/{{ box.iso_name }}"
+      "{{ box.iso_location }}/{{ box.iso_name }}",
+      "{{ box.iso_altlocation }}/{{ box.iso_name }}"
     ],
     "iso_checksum": "{{ box.iso_checksum }}",
     "iso_target_path": "{{ downloads }}/{{ box.iso_name }}",
@@ -33,13 +34,15 @@
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--vram", "64"],
       ["modifyvm", "{{.Name}}", "--vrde", "off"],
-      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"]
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+      ["modifyvm", "{{.Name}}", "--firmware", "EFI"],
+      ["setextradata", "{{.Name}}", "GUI/ScaleFactor", "2.0"]
     ],
     {% endraw %}
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "<tab> text ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.install_file }}<enter>"
+      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.install_file }}<leftCtrlOn>x"
     ],
     "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
   }],
