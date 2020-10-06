@@ -14,7 +14,7 @@
 # a PXE boot server, enter the following on the PXE boot prompt:
 #    > linux text inst.ks=http://<your_ip>:8000/ks.cfg
 
-#ignoredisk --only-use=sdb,sda
+ignoredisk --only-use=sda
 # System bootloader configuration
 #bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
 autopart --type=lvm
@@ -32,8 +32,7 @@ keyboard --vckeymap=us --xlayouts='us'
 lang en_US.UTF-8
 
 # Network information
-network  --bootproto=dhcp --device=enp0s31f6 --ipv6=auto --activate
-network  --bootproto=dhcp --hostname=localhost.localdomain
+network  --bootproto=dhcp --device=link --ipv6=auto --activate --hostname=localhost.localdomain --onboot=on
 repo --name="epel" --baseurl=https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch
 repo --name="AppStream" --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=AppStream&infra=$infra
 # Use network installation
@@ -51,8 +50,11 @@ user --groups=wheel --name=vagrant --plaintext --password=vagrant
 
 %packages
 @^minimal-environment
-python3
--iwl*-firmware
+ansible
+epel-release
+git-core
+tmux
+rhel-system-roles
 %end
 
 %post
