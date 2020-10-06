@@ -32,6 +32,7 @@ wireshark_mac_dmg_mount_path: "/Volumes/Wireshark {{ wireshark_version }}"
 system_brews: []
 system_casks:
   - wireshark
+  - gns3
 dockitems_to_add:
   - name: GNS3
     path: "/Applications/GNS3.app"
