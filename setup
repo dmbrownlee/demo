@@ -21,7 +21,7 @@ time during setup.
 DONE
     read -p "Would you like to retore from this backup [Y/n]? " a
     if [[ ! "$a" =~ [nN][oO]* ]]; then
-      .setup/box-restore.sh $BACKUP_DIR
+      utils/box-restore.sh $BACKUP_DIR
     fi
   fi
 }
