@@ -1,0 +1,5 @@
+control.example.com
+ansible1.example.com
+
+[webservers]
+ansible2.example.com
