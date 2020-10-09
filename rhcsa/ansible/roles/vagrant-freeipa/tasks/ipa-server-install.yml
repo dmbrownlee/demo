@@ -53,6 +53,9 @@
   with_items:
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible1', a: '201' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible2', a: '202' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'control', a: '203' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
@@ -67,6 +70,9 @@
   with_items:
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible1', a: '201' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible2', a: '202' }
+    - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'control', a: '203' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
