@@ -40,7 +40,10 @@ Vagrant.configure("2") do |config|
       "rhcsa8" => [
         "labipa",
         "server1",
-        "server2"
+        "server2",
+        "control",
+        "ansible1",
+        "andible2"
       ],
       "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" },
       "examhost" => [
@@ -87,6 +90,36 @@ Vagrant.configure("2") do |config|
   #  end
   end
  
+  #=========================
+  #==  Machines for RHCE  ==
+  #=========================
+  #=== control ===
+  config.vm.define "control", autostart: false do |node|
+    {% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "control"
+    end
+    {% endif %}
+  end
+
+  #=== ansible1 ===
+  config.vm.define "ansible1", autostart: false do |node|
+    {% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible1"
+    end
+    {% endif %}
+  end
+
+  #=== ansible2 ===
+  config.vm.define "ansible2", autostart: false do |node|
+    {% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible2"
+    end
+    {% endif %}
+  end
+
   #==============================
   #==  Additional Lab Machines ==
   #==============================
