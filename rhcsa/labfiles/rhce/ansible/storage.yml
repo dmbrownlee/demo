@@ -1,0 +1,54 @@
+---
+- name: Configure /dev/sdb
+  hosts: all
+  tasks:
+    - name: Fail if there is no /dev/sdb
+      fail:
+        msg: "{{ inventory_host }} does not have an sdb device"
+      when: ansible_facts.devices.sdb is not defined
+      tags: test
+    - name: Configure block device partitions
+      parted:
+        align:                 # Set alignment for newly created partitions.
+        device: /dev/sdb
+        label:                 # Creates a new disk label.
+        name:                  # Sets the name for the partition number (GPT, Mac, MIPS and PC98 only).
+        number:                # The number of the partition to work with or the number of the partition that will be created.  Required when performing any action on the disk, except fetching information.
+        part_end:              # Where the partition will end as offset from the beginning of the disk, that is, the "distance" from the start of the disk. The distance can be specified with all the units supported by parted (except compat) and it is case sensitive, e.g.  `10GiB', `15%'.
+        part_start:            # Where the partition will start as offset from the beginning of the disk, that is, the "distance" from the start of the disk. The distance can be specified with all the units supported by parted (except compat) and it is case sensitive, e.g.  `10GiB', `15%'.
+        part_type:             # May be specified only with 'msdos' or 'dvh' partition tables. A `name' must be specified for a 'gpt' partition table. Neither `part_type' nor `name' may be used with a 'sun' partition table.
+        state:                 # Whether to create or delete a partition. If set to `info' the module will only return the device information.
+        unit:                  # Selects the current default unit that Parted will use to display locations and capacities on the disk and to interpret those given by the user if they are not suffixed by an unit. When fetching information about a disk, it is always recommended to specify a unit.
+    - name: Configure LVM logical volumes
+      lvol:
+          active:                # Whether the volume is activate and visible to the host.
+          force:                 # Shrink or remove operations of volumes requires this switch. Ensures that that filesystems get never corrupted/destroyed by mistake.
+          lv:                    # The name of the logical volume.
+          opts:                  # Free-form options to be passed to the lvcreate command.
+          pvs:                   # Comma separated list of physical volumes (e.g. /dev/sda,/dev/sdb).
+          resizefs:              # Resize the underlying filesystem together with the logical volume.
+          shrink:                # Shrink if current size is higher than size requested.
+          size:                  # The size of the logical volume, according to lvcreate(8) --size, by default in megabytes or optionally with one of [bBsSkKmMgGtTpPeE] units; or according to lvcreate(8) --extents as a percentage of [VG|PVS|FREE]; Float values must begin with a digit.  Resizing using percentage values was not supported prior to 2.1.
+          snapshot:              # The name of the snapshot volume
+          state:                 # Control if the logical volume exists. If `present' and the volume does not already exist then the `size' option is required.
+          thinpool:              # The thin pool volume name. When you want to create a thin provisioned volume, specify a thin pool volume name.
+          vg:                    # The volume group this logical volume is part of.
+    - name: Makes a filesystem
+      filesystem:
+          dev:                   # (required) Target path to device or image file.
+          force:                 # If `yes', allows to create new filesystem on devices that already has filesystem.
+          fstype:                # (required) Filesystem type to be created. reiserfs support was added in 2.2. lvm support was added in 2.5.  since 2.5, `dev' can be an image file. vfat support was added in 2.5 ocfs2 support was added in 2.6 f2fs support was added in 2.7 swap support was added in 2.8
+          opts:                  # List of options to be passed to mkfs command.
+          resizefs:              # If `yes', if the block device and filesystem size differ, grow the filesystem into the space. Supported for `ext2', `ext3', `ext4', `ext4dev', `f2fs', `lvm', `xfs', `vfat', `swap' filesystems. XFS Will only grow if mounted. vFAT will likely fail if fatresize < 1.04.
+    - name: Control active and configured mount points
+      mount:
+          backup:                # Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly.
+          boot:                  # Determines if the filesystem should be mounted on boot. Only applies to Solaris systems.
+          dump:                  # Dump (see fstab(5)). Note that if set to `null' and `state' set to `present', it will cease to work and duplicate entries will be made with subsequent runs. Has no effect on Solaris systems.
+          fstab:                 # File to use instead of `/etc/fstab'. You should not use this option unless you really know what you are doing. This might be useful if you need to configure mountpoints in a chroot environment. OpenBSD does not allow specifying alternate fstab files with mount so do not use this on OpenBSD with any state that operates on the live filesystem. This parameter defaults to /etc/fstab or /etc/vfstab on Solaris.
+          fstype:                # Filesystem type. Required when `state' is `present' or `mounted'.
+          opts:                  # Mount options (see fstab(5), or vfstab(4) on Solaris).
+          passno:                # Passno (see fstab(5)). Note that if set to `null' and `state' set to `present', it will cease to work and duplicate entries will be made with subsequent runs. Deprecated on Solaris systems.
+          path:                  # (required) Path to the mount point (e.g. `/mnt/files'). Before Ansible 2.3 this option was only usable as `dest', `destfile' and `name'.
+          src:                   # Device to be mounted on `path'. Required when `state' set to `present' or `mounted'.
+          state:                 # (required) If `mounted', the device will be actively mounted and appropriately configured in `fstab'.  If the mount point is not present, the mount point will be created. If `unmounted', the device will be unmounted without changing `fstab'.  `present' only specifies that the device is to be configured in `fstab' and does not trigger or require a mount. `absent' specifies that the device mount's entry will be removed from `fstab' and will also unmount the device and remove the mount point. `remounted' specifies that the device will be remounted for when you want to force a refresh on the mount itself (added in 2.9). This will always return changed=true.

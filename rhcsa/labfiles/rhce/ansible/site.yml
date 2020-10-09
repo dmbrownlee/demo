@@ -1,0 +1,40 @@
+---
+- name: Ensure ansible management account exists
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure the ansible user exists on the control host
+      user:
+        name: ansible
+      become: yes
+      register: user
+    - name: Ensure the ansible user has a directory for SSH keys
+      file:
+        path: "{{ user.home }}/.ssh"
+        state: directory
+        owner: ansible
+        group: ansible
+        mode: '0700'
+      become: yes
+    - name: Ensure an SSH keypair has been generated for the ansible management account
+      openssh_keypair:
+        path: "{{ user.home }}/.ssh/id_rsa"
+      become: yes
+      become_user: ansible
+    - authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '~ansible/.ssh/id_rsa.pub') }}"
+
+- name: Prepare hosts for Ansible management
+  hosts:
+    - all
+  tasks:
+    - raw: sudo yum install -y python3
+    - raw: sudo useradd ansible
+    - raw: echo password | sudo passwd --stdin ansible
+    - raw: 'echo "ansible ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ansible'
+    - raw: ssh-copy-id {{ inventory_hostname }}
+      delegate_to: localhost
+  roles:
+    - role: managed_host

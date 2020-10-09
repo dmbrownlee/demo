@@ -1,0 +1,8 @@
+---
+- name: Play showing no_log
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: date
+      no_log: true
+      command: date

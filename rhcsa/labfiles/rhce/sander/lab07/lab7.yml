@@ -1,0 +1,75 @@
+---
+- name: Provision web server
+  hosts:
+    - webservers
+  vars_files:
+    - "web-packages.yml"
+  tasks:
+    - name: Ensure web server packages are installed
+      block:
+        - yum:
+            name: "{{ item }}"
+            state: present
+          # web_packages list defined in web-packages.yml
+          loop: "{{ web_packages }}"
+      rescue:
+        - debug:
+            msg: “Host {{ ansible_host }} does not meet minimal requirements”
+      when:
+        - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+        - ansible_distribution_major_version >= "8"
+      become: yes
+
+- name: Create web content
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure temporary content has been created
+      copy:
+        dest: "/tmp/index.html"
+        content: “welcome to my webserver”
+        mode: "0644"
+
+- name: Deploy web content
+  hosts:
+    - webservers
+  tasks:
+    - name: Ensure web content is pushed and web servers are active
+      block:
+        - name: Ensure content is deployed
+          copy:
+            src: "/tmp/index.html"
+            dest: "/var/www/html/index.html"
+            owner: "apache"
+            group: "apache"
+            mode: "0644"
+          notify: restart_http
+        - name: Ensure httpd service is started
+          systemd:
+            name: httpd
+            enabled: yes
+            state: started
+        - name: Ensure firewall permits web traffic
+          firewalld:
+            service: "{{ item }}"
+            state: enabled
+            zone: "internal"
+            immediate: yes
+            permanent: yes
+          loop:
+            - "http"
+            - "https"
+      rescue:
+        - debug:
+            msg: "Failed to deploy content to {{ ansible_host }}"
+      when:
+        - ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+        - ansible_distribution_major_version >= "8"
+      become: yes
+  handlers:
+    - name: Restart httpd
+      listen: restart_http
+      systemd:
+        name: "httpd"
+        state: "restarted"
+      become: yes

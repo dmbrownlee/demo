@@ -1,0 +1,4 @@
+---
+web_packages:
+  - httpd
+  - mod_ssl
