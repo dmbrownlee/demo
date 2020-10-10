@@ -12,6 +12,7 @@ DMG=$1
 echo ========================================================================
 echo Attaching disk image $DMG
 echo ========================================================================
+echo (hdiutil attach $DMG)
 hdiutil attach $DMG
 
 TARGET="/dev/$(diskutil list internal physical | awk '/Apple_APFS/{ print $NF; }')"
@@ -28,12 +29,15 @@ echo ========================================================================
 echo ========================================================================
 echo Replacing APFS Container on $TARGET with HFS+ filesystem
 echo ========================================================================
+echo (diskutil apfs deleteContainer $TARGET)
 diskutil apfs deleteContainer $TARGET
 echo ========================================================================
-echo Unmounting the new HFS+ filesystem, $TARGET, before restoring
+echo Unmounting $TARGET before restoring
 echo ========================================================================
+echo (umount $TARGET)
 umount $TARGET
 echo ========================================================================
 echo "Restoring APFS Container ($SOURCE) inside $DMG to $TARGET"
 echo ========================================================================
+echo (asr --source $SOURCE --target $TARGET --erase --useInverter)
 asr --source $SOURCE --target $TARGET --erase --useInverter
