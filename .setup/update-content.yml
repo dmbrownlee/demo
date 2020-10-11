@@ -1,0 +1,5 @@
+---
+- name: Update course contents
+  hosts: localhost
+  roles:
+    - role: coursematerials
