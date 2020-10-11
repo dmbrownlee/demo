@@ -1,0 +1,7 @@
+---
+# defaults file for coursematerials
+demo_root: "{{ ansible_user_dir }}/demo"
+course_root: '{{ demo_root }}/{{ course }}'
+assignment_dir: "{{ course_root }}/assignments"
+lab_dir: "{{ course_root }}/labfiles"
+image_dir: "{{ course_root }}/images"
