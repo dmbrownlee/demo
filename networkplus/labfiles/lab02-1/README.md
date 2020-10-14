@@ -16,6 +16,6 @@ You should see the following networks:
 1. Try two-finger clicking (Mac) or right clicking on a link between any pair of switches and deleting the link.  Then run your ping test again.  Is there any difference between how the two network topologies handle a broken link?
 
 ## Food for (future) thought
-IP addresses uniquely identify hosts (aka nodes) on a network.  Many home networks use 192.168.1.0/24 as their network address range (aka netblock).  Can PC1 have the same IP address as PC3?  If so, what happens if Network 1 and Network 2 are connected?  How is it that so many home networks can use the same range of addresses when they are connected to the same Internet?
+IP addresses uniquely identify hosts (aka nodes) on a network.  Many home networks use 192.168.1.0/24 as their network address range (aka netblock).  How is it that PC1 can have the same IP address as PC3?  What would happen if Networks 1 and 2 were connected by adding a link between switches 2 and 4?  How is it that so many home networks can use the same range of addresses when they are connected to the same Internet?
 
 
