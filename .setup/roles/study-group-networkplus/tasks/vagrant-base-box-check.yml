@@ -31,6 +31,8 @@
     box: "{{ item }}"
   when: item.name not in vagrant_box_list.stdout_lines
   loop: "{{ base_boxes }}"
+  tags:
+    - disabled
 - name: Ensure the Vagrantfile exists
   template:
     dest: "{{ demo_root }}/networkplus/Vagrantfile"
