@@ -16,7 +16,13 @@
   include_tasks: "system-packages-{{ ansible_distribution | lower }}.yml"
 - name: packer tasks
   include_tasks: packer-check.yml
+  tags:
+    - disabled
 - name: vagrant tasks
   include_tasks: vagrant-check.yml
+  tags:
+    - disabled
 - name: virtualbox tasks
   include_tasks: virtualbox-check.yml
+  tags:
+    - disabled
