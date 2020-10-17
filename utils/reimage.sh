@@ -12,11 +12,16 @@ DMG=$1
 echo ========================================================================
 echo Attaching disk image $DMG
 echo ========================================================================
-echo (hdiutil attach $DMG)
-hdiutil attach $DMG
+echo "(hdiutil attach $DMG)"
+hdiutil attach "$DMG"
 
 TARGET="/dev/$(diskutil list internal physical | awk '/Apple_APFS/{ print $NF; }')"
 SOURCE="$(diskutil list external virtual | awk '/synthesized/{ print $1; }')"
+
+if [ "$TARGET" == "/dev/" ]; then
+  echo "Failed to find an APFS container on the internal, physical disk."
+  exit 1
+fi
 
 echo ========================================================================
 echo Source is $SOURCE
@@ -29,15 +34,15 @@ echo ========================================================================
 echo ========================================================================
 echo Replacing APFS Container on $TARGET with HFS+ filesystem
 echo ========================================================================
-echo (diskutil apfs deleteContainer $TARGET)
+echo "(diskutil apfs deleteContainer $TARGET)"
 diskutil apfs deleteContainer $TARGET
 echo ========================================================================
 echo Unmounting $TARGET before restoring
 echo ========================================================================
-echo (umount $TARGET)
+echo "(umount $TARGET)"
 umount $TARGET
 echo ========================================================================
 echo "Restoring APFS Container ($SOURCE) inside $DMG to $TARGET"
 echo ========================================================================
-echo (asr --source $SOURCE --target $TARGET --erase --useInverter)
+echo "(asr --source $SOURCE --target $TARGET --erase --useInverter)"
 asr --source $SOURCE --target $TARGET --erase --useInverter
