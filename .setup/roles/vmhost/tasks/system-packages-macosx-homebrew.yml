@@ -15,6 +15,20 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
+- name: Ensure VirtualBox is installed
+  # VirtualBox is a special case as we know it fails on installation due to
+  # installing kernel extensions
+  block:
+    - name: Attempt VirtualBox installation (will fail on first run)
+      homebrew_cask:
+        name: virtualbox
+        state: present
+  rescue:
+    - name: Ensure the user knows this was expected
+      command: say "Don't panic, this failure was expected.  In system preferences, open Security & Privacy and go to the General tab.  Click the lock icon in the bottom left corner and provide your password to unlock the dialog.  Click the allow button to allow kernel extensions from Oracle.  Finally, reboot and then run this script again."
+    - name: And again in print
+      fail:
+        msg: "Don't panic, this failure was expected.  In system preferences, open Security & Privacy and go to the General tab.  Click the lock icon in the bottom left corner and provide your password to unlock the dialog.  Click the allow button to allow kernel extensions from Oracle.  Finally, reboot and then run this script again."
 - name: Ensure icons are added to the Dock
   shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
   register: dockadd
