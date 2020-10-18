@@ -23,3 +23,5 @@
   include_tasks: "vagrant-base-box-check.yml"
 - name: Ensure virtual machines exist and have been added to GNS3
   include_tasks: "vagrant-vm-check.yml"
+  tags:
+    - disabled
