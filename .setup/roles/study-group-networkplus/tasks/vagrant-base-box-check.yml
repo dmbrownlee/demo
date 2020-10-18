@@ -5,11 +5,17 @@
 # vars:
 #   base_boxes: the list of base boxes the study group uses
 #
+- name: Ensure the packer build directories exists before copying files there
+  # this is a bit hacky as it hardcodes a directory path for the Win10 box
+  file:
+    path: "{{ packer_build_dir }}/answer_files/10"
+    state: directory
+    mode: '0700'
 - name: Ensure we have a packer JSON file for each base box
   template:
     dest: "{{ packer_build_dir }}/{{ item.name }}.json"
     src: "{{ item.template }}"
-    mode: 0600
+    mode: '0600'
   vars:
     box: "{{ item }}"
   loop: "{{ base_boxes }}"
@@ -17,7 +23,7 @@
   template:
     dest: "{{ packer_build_dir }}/{{ item.install_file }}"
     src: "{{ item.templateks }}"
-    mode: 0600
+    mode: '0600'
   vars:
     box: "{{ item }}"
   loop: "{{ base_boxes }}"
@@ -37,4 +43,4 @@
   template:
     dest: "{{ demo_root }}/networkplus/Vagrantfile"
     src: "Vagrantfile.j2"
-    mode: 0644
+    mode: '0644'
