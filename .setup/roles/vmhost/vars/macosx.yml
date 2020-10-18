@@ -42,9 +42,9 @@ system_brews:
   - packer-completion
   - vagrant-completion
 system_casks:
-  - google-chrome
+  # - google-chrome
   - vagrant
-  - virtualbox
+  # - virtualbox
 dockitems_to_add:
   - name: Google Chrome
     path: "/Applications/Google Chrome.app"
