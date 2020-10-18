@@ -2,11 +2,19 @@
 # This script installs Ansible if on MacOSX and it is not already installed and
 # then runs the playbook to configure the virtualization software on the host.
 
-if [[ $# -eq 1 ]]; then
-  APARGS="-e study_group=study-group-$1"
+APARGS="-K --skip-tags disabled"
+
+if [[ $# -ge 1 ]]; then
+  if [[ ! -d "$1/labfiles" ]]; then
+    echo "$1 is not a valid course name."
+    exit 1;
+  fi
+  APARGS="$APARGS -e study_group=study-group-$1"
 fi
 
-APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
+if [[ $# -eq 2 ]]; then
+  APARGS="$APARGS $2"
+fi
 
 function restore_backup() {
   BACKUP_DIR="$1"
@@ -87,12 +95,12 @@ DONE
       cd $HOME/demo
     fi
     cd ./.setup &&
-    caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
+    caffeinate -dsu ansible-playbook $APARGS setup.yml
     ;;
   "Linux")
     if [[ -f /etc/debian_version ]]; then
       if [[ ! -x /usr/local/bin/pip3 ]]; then
-	      sudo apt install -y python3-pip
+        sudo apt install -y python3-pip
       fi
     elif [[ -f /etc/centos-release ]]; then
       if [[ ! -x /usr/bin/pip3 ]]; then
