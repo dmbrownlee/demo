@@ -2,7 +2,7 @@
 downloads: "{{ ansible_user_dir }}/Downloads"
 key_dir: "{{ ansible_user_dir }}/keys"
 demo_root: "{{ ansible_user_dir }}/demo"
-packer_build_dir: "{{ demo_root }}/.setup/packer"
+packer_build_dir: "{{ demo_root }}/ansible/packer"
 virtualization: libvirt
 base_boxes:
   - name: "centos-8.2.2004"

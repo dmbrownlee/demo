@@ -85,7 +85,7 @@ Running Ansible playbook under caffeinate to prevent hibernation.
 =========================================================================
 DONE
     # In case we are curling this directly from raw.githubusercontent.com
-    if [[ ! -d ./.setup ]]; then
+    if [[ ! -d ./ansible ]]; then
       # Install git from Homebrew
       [ -x /usr/local/bin/git ] || brew install git
       # Clone this repo into the home directory
@@ -94,7 +94,7 @@ DONE
       fi
       cd $HOME/demo
     fi
-    cd ./.setup &&
+    cd ./ansible &&
     caffeinate -dsu ansible-playbook $APARGS setup.yml
     ;;
   "Linux")
@@ -119,7 +119,7 @@ DONE
       sudo -H python3 -m pip install --upgrade jmespath
     fi
     restore_backup "/mnt"
-    cd ./.setup &&
+    cd ./ansible &&
     ansible-playbook -K -i localhost, -c local $APARGS setup.yml
     ;;
   "*")
