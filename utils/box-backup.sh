@@ -29,7 +29,7 @@ caffeinate -dsu ansible-playbook -i localhost, -c local $APARGS \
       archive:
         path:
           - "{{ ansible_user_dir }}/keys/vagrant*"
-          - "{{ ansible_user_dir }}/demo/.setup/packer/*.box"
+          - "{{ ansible_user_dir }}/demo/ansible/packer/*.box"
           - "{{ ansible_user_dir }}/Downloads/*.iso"
         dest: "{{ backup_dir }}/box-backup.tar"
         format: tar

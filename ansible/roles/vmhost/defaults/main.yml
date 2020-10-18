@@ -11,7 +11,7 @@ demo_root: "{{ ansible_user_dir }}/demo"
 # ===========================================
 # directories relative to the demo root dir
 # ===========================================
-packer_build_dir: "{{ demo_root }}/.setup/packer"
+packer_build_dir: "{{ demo_root }}/ansible/packer"
 #==============
 #  Packer
 #==============

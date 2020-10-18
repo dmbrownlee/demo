@@ -8,5 +8,5 @@
 *.box
 packer_cache
 output-virtualbox-iso
-.setup/packer/
+ansible/packer/
 */Vagrantfile
