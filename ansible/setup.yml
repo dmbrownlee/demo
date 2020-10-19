@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   roles:
-    - role: common-config
+    - role: common_config
     - role: vmhost
   tasks:
     - name: Include setup for specific study group
