@@ -14,23 +14,3 @@ demo_root: "{{ ansible_user_dir }}/demo"
 # directories relative to the demo root dir
 # ===========================================
 packer_build_dir: "{{ demo_root }}/ansible/packer"
-#==============
-#  Packer
-#==============
-packer_version: "1.6.2"
-packer_bin: "packer"
-packer_install_path: "/usr/local/bin"
-#==============
-#  Vagrant
-#==============
-vagrant_version: "2.2.10"
-vagrant_bin: "vagrant"
-vagrant_install_path: "/usr/bin"
-#==============
-#  Virtualbox
-#==============
-virtualbox_short_version: "6.1"
-virtualbox_version: "6.1.14"
-virtualbox_build: "140239"
-virtualbox_version_string: "{{ virtualbox_version }}r{{ virtualbox_build }}"
-virtualbox_install_path: "/usr/bin"

@@ -22,10 +22,3 @@
       if [[ -d "$HOME/.zshrc.d" ]]; then
         source $HOME/.zshrc.d/*
       fi
-#- name: Ensure shell customizations are installed
-#  template:
-#    src: ".zshrc.d/{{ item }}.j2"
-#    dest: "{{ ansible_user_dir }}/.zshrc.d/{{ item }}"
-#    mode: '0644'
-#  with_items:
-#  - '90user_bin_dir'

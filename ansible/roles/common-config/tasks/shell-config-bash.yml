@@ -22,10 +22,3 @@
       if [[ -d "$HOME/.bashrc.d" ]]; then
         source $HOME/.bashrc.d/*
       fi
-#- name: Ensure shell customizations are installed
-#  template:
-#    src: ".bashrc.d/{{ item }}.j2"
-#    dest: "{{ ansible_user_dir }}/.bashrc.d/{{ item }}"
-#    mode: '0644'
-#  with_items:
-#  - '90user_bin_dir'

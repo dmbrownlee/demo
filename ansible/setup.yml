@@ -1,11 +1,9 @@
 ---
-# The vmhost role configures the localhost and installs the software needed to
-# build and deploy virtual machines using Vagrant.  KVM virtualization is used
-# on Linux and VirtuaBox is used on MacOSX.
-- name: Ensure localhost is configured to host Vagrant VMs
+- name: Ensure localhost is configured as a virtualization host
   hosts: localhost
   connection: local
   roles:
+    - role: common-config
     - role: vmhost
   tasks:
     - name: Include setup for specific study group
