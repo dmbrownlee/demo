@@ -24,4 +24,11 @@
     creates: "{{ key_dir }}/vagrant"
   when: keys_installation.stat.isreg is not defined
 - name: Ensure host key is swapped to right command key
-  command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
+  block:
+    - name: Get current hostkey setting
+      shell: set -o pipefail && VBoxManage getextradata global GUI/Input/HostKeyCombination | awk '{ print $2; }'
+      register: hostkey
+      changed_when: false
+    - name: Set hostkey to right command key if needed
+      command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
+      when: hostkey.stdout != "54"
