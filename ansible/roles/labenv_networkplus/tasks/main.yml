@@ -5,15 +5,9 @@
     fail_msg: "This role is not supported on your host operating system."
 - name: Include host distribution specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Check for homebrew installation on Mac
-  stat:
-    path: /usr/local/bin/brew
-  register: brew
-  changed_when: false
-  when: ansible_distribution == "MacOSX"
 - name: homebrew packages
   include_tasks: "system-packages-{{ ansible_distribution | lower }}-homebrew.yml"
-  when: brew.stat is defined and brew.stat.exists
+  when: ansible_pkg_mgr == "homebrew"
 - name: Ensure GNS3 is installed
   include_tasks: "gns3-packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure the GNS3 server VM is installed
