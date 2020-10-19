@@ -34,15 +34,5 @@
   include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"
 - name: system package tasks
   include_tasks: "system-packages-{{ ansible_distribution | lower }}.yml"
-- name: packer tasks
-  include_tasks: packer-check.yml
-  tags:
-    - disabled
-- name: vagrant tasks
-  include_tasks: vagrant-check.yml
-  tags:
-    - disabled
-- name: virtualbox tasks
-  include_tasks: virtualbox-check.yml
-  tags:
-    - disabled
+- name: Ensure host key is swapped to right command key
+  command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
