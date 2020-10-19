@@ -4,6 +4,11 @@
 
 APARGS="-K --skip-tags disabled"
 
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "This setup script only supports Mac."
+  exit 1
+fi
+
 if [[ $# -ge 1 ]]; then
   if [[ ! -d "$1/labfiles" ]]; then
     echo "$1 is not a valid course name."
@@ -46,84 +51,51 @@ if [[ $? -ne 0 ]]; then
 fi
 echo
 
-case "$(uname)" in
-  "Darwin")
-    which -s brew
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing homebrew.
-    =========================================================================
+which -s brew
+if [[ $? -ne 0 ]]; then
+  cat <<DONE
+=========================================================================
+Installing homebrew.
+=========================================================================
 DONE
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    fi
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
 
-    which -s ansible-playbook
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing ansible.
-    =========================================================================
+which -s ansible-playbook
+if [[ $? -ne 0 ]]; then
+  cat <<DONE
+=========================================================================
+Installing ansible.
+=========================================================================
 DONE
-      brew install ansible
-    fi
-    # Warn if power adapter is not plugged in before continuing anyway
-    pmset -g ac | grep -q "No adapter attached"
-    if [[ $? -eq 0 ]]; then
-      cat <<DONE
+  brew install ansible
+fi
+# Warn if power adapter is not plugged in before continuing anyway
+pmset -g ac | grep -q "No adapter attached"
+if [[ $? -eq 0 ]]; then
+  cat <<DONE
 =========================================================================
 This script takes a long time to run.  Please plug in your power adapter.
 (continuting in 10 seconds...)
 =========================================================================
 DONE
-      sleep 10
-    fi
-    restore_backup "/Volumes/Backups"
-    cat <<DONE
+  sleep 10
+fi
+restore_backup "/Volumes/Backups"
+cat <<DONE
 =========================================================================
 Running Ansible playbook under caffeinate to prevent hibernation.
 =========================================================================
 DONE
-    # In case we are curling this directly from raw.githubusercontent.com
-    if [[ ! -d ./ansible ]]; then
-      # Install git from Homebrew
-      [ -x /usr/local/bin/git ] || brew install git
-      # Clone this repo into the home directory
-      if [[ ! -d $HOME/demo ]]; then
-        cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
-      fi
-      cd $HOME/demo
-    fi
-    cd ./ansible &&
-    caffeinate -dsu ansible-playbook $APARGS setup.yml
-    ;;
-  "Linux")
-    if [[ -f /etc/debian_version ]]; then
-      if [[ ! -x /usr/local/bin/pip3 ]]; then
-        sudo apt install -y python3-pip
-      fi
-    elif [[ -f /etc/centos-release ]]; then
-      if [[ ! -x /usr/bin/pip3 ]]; then
-        sudo yum install -y python3-pip
-      fi
-    fi
-    which ansible-playbook
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing ansible.
-    =========================================================================
-DONE
-      sudo -H python3 -m pip install --upgrade pip
-      sudo -H python3 -m pip install --upgrade ansible
-      sudo -H python3 -m pip install --upgrade jmespath
-    fi
-    restore_backup "/mnt"
-    cd ./ansible &&
-    ansible-playbook -K -i localhost, -c local $APARGS setup.yml
-    ;;
-  "*")
-    echo "This setup script does not work with your host operating system."
-    exit 1
-    ;;
-esac
+# In case we are curling this directly from raw.githubusercontent.com
+if [[ ! -d ./ansible ]]; then
+  # Install git from Homebrew
+  [ -x /usr/local/bin/git ] || brew install git
+  # Clone this repo into the home directory
+  if [[ ! -d $HOME/demo ]]; then
+    cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
+  fi
+  cd $HOME/demo
+fi
+cd ./ansible &&
+caffeinate -dsu ansible-playbook $APARGS setup.yml
