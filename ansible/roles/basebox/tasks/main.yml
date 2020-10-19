@@ -1,4 +1,8 @@
 ---
+- name: Assert this host can use this role
+  assert:
+    that: ansible_distribution in supported_distributions
+    fail_msg: "This role is not supported on your host operating system."
 - name: Assert specific box was requested by name
   assert:
     that:

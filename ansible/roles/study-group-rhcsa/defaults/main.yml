@@ -1,5 +1,6 @@
 ---
-# study group specific
+supported_distributions:
+  - MacOSX
 base_boxes:
   - name: "centos-8.2.2004"
     distro: "centos"
