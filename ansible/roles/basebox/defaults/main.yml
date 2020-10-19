@@ -1,0 +1,5 @@
+---
+download_dir: "{{ ansible_user_dir }}/Downloads"
+packer_build_dir: "{{ ansible_user_dir }}/demo/ansible/packer"
+key_dir: "{{ ansible_user_dir }}/keys"
+virtualization: "virtualbox"

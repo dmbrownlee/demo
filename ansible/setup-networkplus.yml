@@ -1,0 +1,13 @@
+---
+- name: Configure virtual lab environment for the Network+ study group
+  hosts: localhost
+  connection: local
+  roles:
+    - role: vmhost
+    - role: basebox
+      vars:
+        box: "debian-10.6.0"
+    - role: basebox
+      vars:
+        box: "windows-10"
+    - role: study-group-networkplus
