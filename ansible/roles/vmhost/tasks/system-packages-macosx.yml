@@ -35,10 +35,15 @@
         state: present
   rescue:
     - name: Ensure the user knows this was expected
-      command: say "Don't panic, this failure was expected.  In system preferences, open Security & Privacy and go to the General tab.  Click the lock icon in the bottom left corner and provide your password to unlock the dialog.  Click the allow button to allow kernel extensions from Oracle.  Finally, reboot and then run this script again."
+      command: say "Don't panic, this failure was expected.  Read the error message for instructions."
     - name: And again in print
       fail:
-        msg: "Don't panic, this failure was expected.  In system preferences, open Security & Privacy and go to the General tab.  Click the lock icon in the bottom left corner and provide your password to unlock the dialog.  Click the allow button to allow kernel extensions from Oracle.  Finally, reboot and then run this script again."
+        msg: >
+          Don't panic, this failure was expected.  In system preferences, open
+          Security & Privacy and go to the General tab.  Click the lock icon in
+          the bottom left corner and provide your password to unlock the dialog.
+          Click the allow button to allow kernel extensions from Oracle.
+          Finally, reboot and then run this script again.
 - name: Ensure icons are added to the Dock
   shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
   register: dockadd
