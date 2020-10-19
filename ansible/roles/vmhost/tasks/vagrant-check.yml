@@ -16,7 +16,7 @@
   register: installed_vagrant
   changed_when: false
 - name: Check the version of vagrant if already installed
-  shell: "{{ vagrant_install_path }}/{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
+  shell: "set -o pipefail && {{ vagrant_install_path }}/{{ vagrant_bin }} version | sed -n -e 's/^Installed Version: //p'"
   changed_when: false
   register: installed_vagrant_version
   when:
