@@ -15,9 +15,6 @@
     dest: "{{ downloads }}/{{ virtualbox_package }}"
     mode: 0644
     checksum: "{{ virtualbox_package_checksum }}"
-# =======================
-# MacOSX specific install
-# =======================
 - name: Mount the VirtualBox disk image file (MacOSX)
   command: hdiutil attach "{{ downloads }}/{{ virtualbox_package }}"
   become: yes
@@ -27,7 +24,8 @@
   become: yes
   ignore_errors: true
   register: virtualbox_install_result
-- fail:
+- name: Display VirtualBox warning
+  fail:
     msg: >
       Installation of Oracle VirtualBox failed.
       If you are on Catalina or greater, this is likely due to greater
