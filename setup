@@ -3,6 +3,7 @@
 # then runs the playbook to configure the virtualization software on the host.
 
 APARGS="-K --skip-tags disabled"
+PLAYBOOK="setup.yml"
 
 if [[ "$(uname)" != "Darwin" ]]; then
   echo "This setup script only supports Mac."
@@ -10,11 +11,11 @@ if [[ "$(uname)" != "Darwin" ]]; then
 fi
 
 if [[ $# -ge 1 ]]; then
-  if [[ ! -d "$1/labfiles" ]]; then
+  PLAYBOOK="setup-$1.yml"
+  if [[ ! -f "ansible/$PLAYBOOK" ]]; then
     echo "$1 is not a valid course name."
     exit 1;
   fi
-  APARGS="$APARGS -e study_group=labenv_$1"
 fi
 
 if [[ $# -eq 2 ]]; then
@@ -98,4 +99,4 @@ if [[ ! -d ./ansible ]]; then
   cd $HOME/demo
 fi
 cd ./ansible &&
-caffeinate -dsu ansible-playbook $APARGS setup.yml
+caffeinate -dsu ansible-playbook $APARGS $PLAYBOOK
