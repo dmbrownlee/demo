@@ -16,39 +16,6 @@ gns3_config_dir: "{{ ansible_user_dir }}/.config/GNS3/2.2"
 gns3vm_vbox_zip: "GNS3.VM.VirtualBox.{{ gns3_version }}.zip"
 gns3vm_vbox_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3vm_vbox_zip }}"
 gns3vm_vbox_zip_checksum: "sha256:d3878904441cf2d4eb7fa2872b2b5c75bcb031daded3c6fc862fe833be11aa0d"
-# ===========================================
-# Virtual lab environment specific base boxes
-# ===========================================
-base_boxes:
-  - name: "debian-10.6.0"
-    distro: "debian"
-    version: "10.6.0"
-    guest_os_type: "Debian_64"
-    iso_checksum: "sha256:2af8f43d4a7ab852151a7f630ba596572213e17d3579400b5648eba4cc974ed0"
-    iso_location: "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd"
-    iso_altlocation: "http://cdimage.debian.org/mirror/cdimage/archive/10.6.0/amd64/iso-cd"
-    iso_name: "debian-10.6.0-amd64-netinst.iso"
-    install_file: "debian-10.6.0-preseed.cfg"
-    cpus: 1
-    ram: 1024
-    disk_size: "20480"
-    template: "packer-debian.j2"
-    templateks: "packer-debian-preseed.j2"
-  - name: "windows-10"
-    guest_os_type: "Windows10_64"
-    iso_checksum: "sha1:489ebee676e26cdb81377b0e6385c001a22589b8"
-    iso_location: "https://software-download.microsoft.com/download/pr"
-    iso_name: "18363.418.191007-0143.19h2_release_svc_refresh_CLIENTENTERPRISEEVAL_OEMRET_x64FRE_en-us.iso"
-    install_file: "answer_files/10/Autounattend.xml"
-    cpus: 2
-    ram: 4096
-    disk_size: "20480"
-    floppy_dir: "answer_files"
-    guest_additions_mode: "attach"
-    guest_additions_url: ""
-    unattended_file_path: "10/Autounattend.xml"
-    template: "packer-windows-10.json.j2"
-    templateks: "packer-windows-10-autounattend.xml.j2"
 # ======================================
 # Virtual network configuration settings
 # ======================================
