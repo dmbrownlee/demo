@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   roles:
-    - role: common-config
+    - role: common_config
     - role: vmhost
     - role: basebox
       vars:
@@ -11,4 +11,4 @@
     - role: basebox
       vars:
         box: "windows-10"
-    - role: study-group-networkplus
+    - role: labenv_networkplus

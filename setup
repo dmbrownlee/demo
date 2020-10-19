@@ -14,7 +14,7 @@ if [[ $# -ge 1 ]]; then
     echo "$1 is not a valid course name."
     exit 1;
   fi
-  APARGS="$APARGS -e study_group=study-group-$1"
+  APARGS="$APARGS -e study_group=labenv_$1"
 fi
 
 if [[ $# -eq 2 ]]; then
