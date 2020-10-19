@@ -4,7 +4,7 @@
   connection: local
   roles:
     - role: common_config
-    - role: vmhost
+    - role: virtualization_host
     - role: basebox
       vars:
         box: "debian-10.6.0"
