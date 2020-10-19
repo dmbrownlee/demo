@@ -1,7 +1,8 @@
 ---
-- fail:
-    msg: "This virtual lab environment is not supported on your host operating system."
-  when: ansible_distribution | lower not in supported_host_os
+- name: Assert this host can use this role
+  assert:
+    that: ansible_distribution in supported_distributions
+    fail_msg: "This role is not supported on your host operating system."
 - name: Include host distribution specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
 - name: Check for homebrew installation on Mac

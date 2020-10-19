@@ -2,9 +2,8 @@
 # =============================
 # Miscellaneous global defaults
 # =============================
-supported_host_os:
-  - "macosx"
-  - "debian"
+supported_distributions:
+  - MacOSX
 downloads: "{{ ansible_user_dir }}/Downloads"
 # =================
 # Software versions
