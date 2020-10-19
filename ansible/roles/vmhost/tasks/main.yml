@@ -5,15 +5,8 @@
     fail_msg: "This role is not supported on your host operating system."
 - name: Include OS specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Check for homebrew installation on Mac
-  stat:
-    path: /usr/local/bin/brew
-  register: brew
-  changed_when: false
-  when: ansible_distribution == "MacOSX"
 - name: homebrew packages
-  include_tasks: "system-packages-{{ ansible_distribution | lower }}-homebrew.yml"
-  when: brew.stat is defined and brew.stat.exists
+  include_tasks: "system-packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure {{ key_dir }} directory exists
   file:
     path: "{{ key_dir }}"
@@ -30,9 +23,5 @@
     chdir: "{{ key_dir }}"
     creates: "{{ key_dir }}/vagrant"
   when: keys_installation.stat.isreg is not defined
-- name: shell configuration
-  include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"
-- name: system package tasks
-  include_tasks: "system-packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure host key is swapped to right command key
   command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
