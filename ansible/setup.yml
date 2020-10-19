@@ -4,7 +4,7 @@
   connection: local
   roles:
     - role: common_config
-    - role: vmhost
+    - role: virtualization_host
   tasks:
     - name: Include setup for specific study group
       include_role:
