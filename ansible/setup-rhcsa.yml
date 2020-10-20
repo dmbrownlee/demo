@@ -1,0 +1,11 @@
+---
+- name: Configure virtual lab environment for the RHCSA study group
+  hosts: localhost
+  connection: local
+  roles:
+    - role: common_config
+    - role: virtualization_host
+    - role: basebox
+      vars:
+        box: "centos-8.2.2004"
+    - role: labenv_rhcsa

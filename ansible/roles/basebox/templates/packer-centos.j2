@@ -1,14 +1,14 @@
 {
   "builders": [{
     "type": "virtualbox-iso",
-    "guest_os_type": "{{ box.guest_os_type }}",
+    "guest_os_type": "{{ guest_os_type }}",
     "iso_urls": [
-      "{{ downloads }}/{{ box.iso_name }}",
-      "{{ box.iso_location }}/{{ box.iso_name }}",
-      "{{ box.iso_altlocation }}/{{ box.iso_name }}"
+      "{{ downloads }}/{{ iso_name }}",
+      "{{ iso_location }}/{{ iso_name }}",
+      "{{ iso_altlocation }}/{{ iso_name }}"
     ],
-    "iso_checksum": "{{ box.iso_checksum }}",
-    "iso_target_path": "{{ downloads }}/{{ box.iso_name }}",
+    "iso_checksum": "{{ iso_checksum }}",
+    "iso_target_path": "{{ downloads }}/{{ iso_name }}",
 
     "http_directory" : ".",
     "http_port_min" : 9001,
@@ -17,9 +17,9 @@
     "ssh_username": "vagrant",
     "ssh_password": "vagrant",
     "ssh_wait_timeout": "40m",
-    "disk_size" : "{{ box.disk_size }}",
-    "memory": {{ box.ram }},
-    "vm_name": "{{ box.name }}",
+    "disk_size" : "{{ disk_size }}",
+    "memory": {{ ram }},
+    "vm_name": "{{ box }}",
     "headless": true,
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
@@ -42,7 +42,7 @@
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ box.install_file }}<leftCtrlOn>x"
+      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ install_file }}<leftCtrlOn>x"
     ],
     "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
   }],
@@ -91,6 +91,6 @@
   ],
   "post-processors": [{
     "type": "vagrant",
-    "output": "{{ box.name }}.box"
+    "output": "{{ box }}.box"
   }]
 }
