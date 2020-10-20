@@ -10,5 +10,8 @@
   when: virtualization == "libvirt"
 - name: Ensure virtual networks have been configured
   include_tasks: "{{ virtualization }}-virtual-network-check.yml"
-- name: Ensure Vagrant base boxes have been built
-  include_tasks: "vagrant-base-box-check.yml"
+- name: Ensure the Vagrantfile exists
+  template:
+    dest: "{{ demo_root }}/rhcsa/Vagrantfile"
+    src: "Vagrantfile.j2"
+    mode: 0644
