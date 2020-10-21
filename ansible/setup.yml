@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   roles:
-    - role: common_config
+    - role: baseline
     - role: virtualization_host
   tags:
     - default
