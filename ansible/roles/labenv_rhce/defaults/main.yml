@@ -1,4 +1,5 @@
 ---
+buildvms: true
 downloads: "{{ ansible_user_dir }}/Downloads"
 key_dir: "{{ ansible_user_dir }}/keys"
 demo_root: "{{ ansible_user_dir }}/demo"

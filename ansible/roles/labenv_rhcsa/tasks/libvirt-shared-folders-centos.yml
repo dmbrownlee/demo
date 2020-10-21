@@ -32,6 +32,7 @@
   copy:
     dest: /etc/exports.d/vagrant-shared-folders.exports
     content: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
+    mode: '0644'
   become: yes
 - name: Re-export shared folders
   command: exportfs -ra

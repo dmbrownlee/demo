@@ -22,7 +22,7 @@
     box: "{{ item }}"
   loop: "{{ base_boxes }}"
 - name: Get list of available Vagrant base boxes
-  shell: vagrant box list | awk '{ print $1 }'
+  shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
   register: vagrant_box_list
   changed_when: false
 - name: Build and install missing base boxes

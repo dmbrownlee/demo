@@ -5,8 +5,45 @@
   roles:
     - role: common_config
     - role: virtualization_host
-  tasks:
-    - name: Include setup for specific study group
-      include_role:
-        name: "{{ study_group }}"
-      when: study_group is defined
+  tags:
+    - default
+
+- name: Ensure virtual lab environment for networkplus is configured
+  hosts: localhost
+  connection: local
+  roles:
+    - role: basebox
+      vars:
+        box: "debian-10.6.0"
+      when: buildvms|bool
+    - role: basebox
+      vars:
+        box: "windows-10"
+      when: buildvms|bool
+    - role: labenv_networkplus
+  tags:
+    - networkplus
+
+- name: Ensure virtual lab environment for rhcsa is configured
+  hosts: localhost
+  connection: local
+  roles:
+    - role: basebox
+      vars:
+        box: "centos-8.2.2004"
+      when: buildvms|bool
+    - role: labenv_rhcsa
+  tags:
+    - rhcsa
+
+- name: Ensure virtual lab environment for rhce is configured
+  hosts: localhost
+  connection: local
+  roles:
+    - role: basebox
+      vars:
+        box: "centos-8.2.2004"
+      when: buildvms|bool
+    - role: labenv_rhce
+  tags:
+    - rhce

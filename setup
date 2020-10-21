@@ -2,25 +2,43 @@
 # This script installs Ansible if on MacOSX and it is not already installed and
 # then runs the playbook to configure the virtualization software on the host.
 
-APARGS="-K --skip-tags disabled"
-PLAYBOOK="setup.yml"
+APARGS="-K --skip-tags disabled -t default"
 
 if [[ "$(uname)" != "Darwin" ]]; then
   echo "This setup script only supports Mac."
   exit 1
 fi
 
-if [[ $# -ge 1 ]]; then
-  PLAYBOOK="setup-$1.yml"
-  if [[ ! -f "ansible/$PLAYBOOK" ]]; then
+# Pass -t and -e options to ansible-playbook
+while getopts "t:e:" OPT; do
+  case "$OPT" in
+    "t")
+      APARGS="$APARGS -t $OPTARG"
+      ;;
+    "e")
+      APARGS="$APARGS -e $OPTARG"
+      ;;
+    ":")
+      echo "Option $OPTARG requires an argument."
+      exit 1
+      ;;
+    "*")
+      echo "Invalid option $OPTARG."
+      exit 1
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+while [[ $# -gt 0 ]]; do
+  if [[ ! -d "ansible/roles/labenv_$1" ]]; then
     echo "$1 is not a valid course name."
     exit 1;
   fi
-fi
-
-if [[ $# -eq 2 ]]; then
-  APARGS="$APARGS $2"
-fi
+  APARGS="$APARGS -t $1"
+  shift
+done
 
 function restore_backup() {
   BACKUP_DIR="$1"
@@ -99,4 +117,4 @@ if [[ ! -d ./ansible ]]; then
   cd $HOME/demo
 fi
 cd ./ansible &&
-caffeinate -dsu ansible-playbook $APARGS $PLAYBOOK
+caffeinate -dsu ansible-playbook $APARGS setup.yml
