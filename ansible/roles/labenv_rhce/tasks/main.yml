@@ -4,5 +4,3 @@
 - name: Enable host support for Vagrant Shared Folders
   include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
   when: virtualization == "libvirt"
-- name: Ensure Vagrant base boxes have been built
-  include_tasks: "vagrant-base-box-check.yml"
