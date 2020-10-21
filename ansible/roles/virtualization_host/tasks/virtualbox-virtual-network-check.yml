@@ -1,4 +1,5 @@
 ---
+# Configure VirtualBox HostOnly Interfaces
 - name: Get the list of hostonly network interfaces
   shell: set -o pipefail && VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
   changed_when: false
@@ -16,6 +17,17 @@
   command: "VBoxManage hostonlyif ipconfig {{ item.name }} --ip {{ item.ip }}"
   loop: "{{ hostonlyifs }}"
   when: item.name not in hostonlyifs_status.stdout_lines
+# Configure VirtualBox NAT Networks
+- name: Get a list of existing natnetworks
+  shell: "set -o pipefail VBoxManage list natnetworks | awk '/NetworkName/{ print $2 }'"
+  changed_when: false
+  register: natnetworks
+- name: Ensure all NAT networks have been configured
+  include_tasks: "virtualbox-configure-natnetwork.yml"
+  vars:
+    vnet: "{{ item }}"
+  when: item.name not in natnetworks.stdout_lines
+# Configure VirtualBox DHCP Servers
 - name: Get the list of DHCP servers
   shell: set -o pipefail && VBoxManage list dhcpservers | awk '/^NetworkName:/ { gsub(/HostInterfaceNetworking-/, "", $2); print $2 }'
   changed_when: false

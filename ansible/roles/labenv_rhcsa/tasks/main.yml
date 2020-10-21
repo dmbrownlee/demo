@@ -8,8 +8,6 @@
 - name: Enable host support for Vagrant Shared Folders
   include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
   when: virtualization == "libvirt"
-- name: Ensure virtual networks have been configured
-  include_tasks: "{{ virtualization }}-virtual-network-check.yml"
 - name: Ensure the Vagrantfile exists
   template:
     dest: "{{ demo_root }}/rhcsa/Vagrantfile"

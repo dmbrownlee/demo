@@ -1,0 +1,7 @@
+---
+# This block should only be included from a loop that has already determined
+# the NAT network does not exist.
+- name: Creating virtualbox NAT network ({{ vnet.name }})
+  command: "VBoxManage natnetwork add --netname '{{ vnet.name }}' --network {{ vnet.netblock }} --dhcp off --enable"
+- name: Starting virtualbox NAT network ({{ vnet.name }})
+  command: "VBoxManage natnetwork start --netname '{{ vnet.name }}'"
