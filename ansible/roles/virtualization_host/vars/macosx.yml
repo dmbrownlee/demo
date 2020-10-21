@@ -1,11 +1,5 @@
 ---
-# Default variables assumed to be the same for all platforms are commented out
-# but you can override them here if you want to test new software versions
-# one platform at a time.
 virtualization: virtualbox
-#=====================
-#  Homebrew packages
-#=====================
 system_brews:
   - dockutil
   - packer
@@ -13,7 +7,7 @@ system_brews:
   - vagrant-completion
 system_casks:
   - vagrant
-  # - virtualbox
+  # - virtualbox (installed separately due to kernel ext failure)
 dockitems_to_add:
   - name: VirtualBox
     path: "/Applications/VirtualBox.app"
