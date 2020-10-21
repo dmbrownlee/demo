@@ -20,7 +20,7 @@ packer_build_dir: "{{ demo_root }}/ansible/packer"
 hostonlyifs:
   - name: "vboxnet0"
     ip: "192.168.56.1"
-virtual_networks:
+natnetworks:
   - name: 'RHCSA Network'
     netblock: '192.168.4.0/24'
   - name: 'RHCE Network'
