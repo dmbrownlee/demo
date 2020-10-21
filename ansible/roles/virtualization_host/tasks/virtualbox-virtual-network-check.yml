@@ -19,7 +19,7 @@
   when: item.name not in hostonlyifs_status.stdout_lines
 # Configure VirtualBox NAT Networks
 - name: Get a list of existing natnetworks
-  shell: "set -o pipefail VBoxManage list natnetworks | awk '/NetworkName/{ print $2 }'"
+  shell: "set -o pipefail && VBoxManage list natnetworks | sed -n -e '/^NetworkName:/s/^NetworkName: *//p'"
   changed_when: false
   register: natnets
 - name: Ensure all NAT networks have been configured
