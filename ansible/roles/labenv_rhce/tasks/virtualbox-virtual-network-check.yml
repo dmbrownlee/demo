@@ -6,7 +6,7 @@
 #   virtual_networks: the list of virtual_networks the study group uses
 #
 - name: Get the list of virtual networks
-  shell: "VBoxManage natnetwork list | sed -n -e 's/^Name: *//p'"
+  shell: "set -o pipefail && VBoxManage natnetwork list | sed -n -e 's/^Name: *//p'"
   changed_when: false
   register: netlist
 - name: Configure missing virtual networks

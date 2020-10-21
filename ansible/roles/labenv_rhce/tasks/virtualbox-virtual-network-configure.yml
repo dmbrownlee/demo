@@ -5,7 +5,16 @@
 # vars:
 #   vnet: the virtual_network to configure
 #
-- name: Create virtualbox virtual network ({{ vnet.name }})
-  command: "VBoxManage natnetwork add --netname '{{ vnet.name }}' --network {{ vnet.netblock }} --dhcp off --enable"
-- name: Start virtualbox virtual network ({{ vnet.name }})
-  command: "VBoxManage natnetwork start --netname '{{ vnet.name }}'"
+- name: Get a list of existing natnetworks
+  shell: "set -o pipefail VBoxManage list natnetworks | awk '/NetworkName/{ print $2 }'"
+  changed_when: false
+  register: natnetworks
+- debug:
+    var: natnetworks
+- name: Ensure network, {{ vnet.name }} is ready
+  block:
+  - name: Create virtualbox virtual network ({{ vnet.name }})
+    command: "VBoxManage natnetwork add --netname '{{ vnet.name }}' --network {{ vnet.netblock }} --dhcp off --enable"
+  - name: Start virtualbox virtual network ({{ vnet.name }})
+    command: "VBoxManage natnetwork start --netname '{{ vnet.name }}'"
+  when: vnet.name in natnetworks.stdout_lines
