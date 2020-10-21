@@ -29,7 +29,7 @@
         state: present
   rescue:
     - name: Ensure the user knows this was expected
-      command: say "Don't panic, this failure was expected.  Read the error message for instructions."
+      command: say "Don't panic, this failure was expected.  Reed the error message for instructions."
     - name: And again in print
       fail:
         msg: >
