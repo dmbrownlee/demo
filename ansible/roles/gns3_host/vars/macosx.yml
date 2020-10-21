@@ -1,11 +1,11 @@
 ---
-# Default variables assumed to be the same for all platforms are commented out
-# but you can override them here if you want to test new software versions
-# one platform at a time.
-#
-#gns3_vers: "2.2"
-#gns3_version: "2.2.12"
-gns3_bin_dir: "/Applications/GNS3.app/Contents/MacOS"
+system_brews: []
+system_casks:
+  - wireshark
+  - gns3
+dockitems_to_add:
+  - name: GNS3
+    path: "/Applications/GNS3.app"
 #gns3_config_dir: "{{ ansible_user_dir }}/GNS3"
 #gns3_user_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
 #===== vars for gns3_controller.j2

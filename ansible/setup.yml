@@ -12,6 +12,7 @@
   hosts: localhost
   connection: local
   roles:
+    - role: gns3_host
     - role: basebox
       vars:
         box: "debian-10.6.0"
