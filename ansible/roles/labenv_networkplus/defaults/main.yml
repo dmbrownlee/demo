@@ -17,22 +17,3 @@ gns3_config_dir: "{{ ansible_user_dir }}/.config/GNS3/2.2"
 gns3vm_vbox_zip: "GNS3.VM.VirtualBox.{{ gns3_version }}.zip"
 gns3vm_vbox_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3vm_vbox_zip }}"
 gns3vm_vbox_zip_checksum: "sha256:d3878904441cf2d4eb7fa2872b2b5c75bcb031daded3c6fc862fe833be11aa0d"
-# ======================================
-# Virtual network configuration settings
-# ======================================
-hostonlyifs:
-  - name: "vboxnet0"
-    ip: "192.168.56.1"
-virtual_networks:
-  - name: 'RHCSA Network'
-    netblock: '192.168.4.0/24'
-  - name: 'RHCE Network'
-    netblock: '192.168.5.0/24'
-  - name: 'Network+ Network'
-    netblock: '192.168.6.0/24'
-dhcpservers:
-  - interface: "vboxnet0"
-    server_ip: "192.168.56.2"
-    lower_ip: "192.168.56.3"
-    upper_ip: "192.168.56.253"
-    netmask: "255.255.255.0"

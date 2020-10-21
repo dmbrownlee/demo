@@ -19,9 +19,3 @@ base_boxes:
     ram: 1024
     template: "packer-centos.j2"
     templateks: "packer-centos-ks.j2"
-# defaults for virtual network
-virtual_networks:
-  - name: 'RHCSA Network'
-    netblock: '192.168.4.0/24'
-  - name: "RHCE Network"
-    netblock: "192.168.5.0/24"
