@@ -21,12 +21,12 @@
 - name: Get a list of existing natnetworks
   shell: "set -o pipefail VBoxManage list natnetworks | awk '/NetworkName/{ print $2 }'"
   changed_when: false
-  register: natnetworks
+  register: natnets
 - name: Ensure all NAT networks have been configured
   include_tasks: "virtualbox-configure-natnetwork.yml"
   vars:
     vnet: "{{ item }}"
-  when: item.name not in natnetworks.stdout_lines
+  loop: "{{ natnetworks }}"
 # Configure VirtualBox DHCP Servers
 - name: Get the list of DHCP servers
   shell: set -o pipefail && VBoxManage list dhcpservers | awk '/^NetworkName:/ { gsub(/HostInterfaceNetworking-/, "", $2); print $2 }'
