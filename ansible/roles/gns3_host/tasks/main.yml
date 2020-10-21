@@ -1,5 +1,12 @@
 ---
-- name: Include OS specific variables
+- name: Assert this host can use this role
+  assert:
+    that: ansible_distribution in supported_distributions
+    fail_msg: "This role is not supported on your host operating system."
+- name: Include host distribution specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: GNS3 tasks
-  include_tasks: gns3-check.yml
+- name: role packages
+  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+  when: ansible_pkg_mgr == "homebrew"
+- name: Ensure the GNS3 server VM is installed
+  include_tasks: "gns3vm-packages-{{ ansible_distribution | lower }}.yml"
