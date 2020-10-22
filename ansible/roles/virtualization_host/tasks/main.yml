@@ -20,14 +20,14 @@
 - name: Test if {{ key_dir }}/vagrant already installed
   stat:
     path: "{{ key_dir }}/vagrant"
-  register: keys_installation
+  register: vagrant_key
   changed_when: false
 - name: Ensure key pair in {{ key_dir }}
   command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
   args:
     chdir: "{{ key_dir }}"
     creates: "{{ key_dir }}/vagrant"
-  when: keys_installation.stat.isreg is not defined
+  when: not vagrant_key.stat.exists
 - name: Ensure host key is swapped to right command key
   block:
     - name: Get current hostkey setting
