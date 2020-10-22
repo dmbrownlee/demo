@@ -46,3 +46,10 @@ echo "Restoring APFS Container ($SOURCE) inside $DMG to $TARGET"
 echo ========================================================================
 echo "(asr --source $SOURCE --target $TARGET --erase --useInverter)"
 asr --source $SOURCE --target $TARGET --erase --useInverter
+
+echo ========================================================================
+echo Detaching disk image $DMG
+echo ========================================================================
+echo "(hdiutil detach $SOURCE)"
+hdiutil detach "$SOURCE"
+
