@@ -5,9 +5,6 @@
     fail_msg: "This role is not supported on your host operating system."
 - name: Include host distribution specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Enable host support for Vagrant Shared Folders
-  include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
-  when: virtualization == "libvirt"
 - name: Ensure the Vagrantfile exists
   template:
     dest: "{{ demo_root }}/rhce/Vagrantfile"
