@@ -9,17 +9,17 @@
 - name: Download the GNS3.VM.VirtualBox zip file
   get_url:
     url: "{{ gns3vm_vbox_zip_url }}"
-    dest: "{{ downloads }}/{{ gns3vm_vbox_zip }}"
+    dest: "{{ download_dir }}/{{ gns3vm_vbox_zip }}"
     mode: 0644
     checksum: "{{ gns3vm_vbox_zip_checksum }}"
   when: installed_gns3vm.rc != 0
 - name: Unzip the GNS3.VM.VirtualBox zip file
-  command: unzip -o -u {{ downloads }}/{{ gns3vm_vbox_zip }}
+  command: unzip -o -u {{ download_dir }}/{{ gns3vm_vbox_zip }}
   args:
-    chdir: "{{ downloads }}"
+    chdir: "{{ download_dir }}"
     warn: false
-    creates: "{{ downloads }}/GNS3 VM.ova"
+    creates: "{{ download_dir }}/GNS3 VM.ova"
   when: installed_gns3vm.rc != 0
 - name: Import GNS3.VM ova file into VirtualBox
-  command: "VBoxManage import '{{ downloads }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
+  command: "VBoxManage import '{{ download_dir }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
   when: installed_gns3vm.rc != 0
