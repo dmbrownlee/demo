@@ -3,12 +3,12 @@
     "type": "virtualbox-iso",
     "guest_os_type": "{{ guest_os_type }}",
     "iso_urls": [
-      "{{ downloads }}/{{ iso_name }}",
+      "{{ download_dir }}/{{ iso_name }}",
       "{{ iso_location }}/{{ iso_name }}",
       "{{ iso_altlocation }}/{{ iso_name }}"
     ],
     "iso_checksum": "{{ iso_checksum }}",
-    "iso_target_path": "{{ downloads }}/{{ iso_name }}",
+    "iso_target_path": "{{ download_dir }}/{{ iso_name }}",
 
     "http_directory" : ".",
     "http_port_min" : 9001,

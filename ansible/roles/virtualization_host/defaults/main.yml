@@ -7,7 +7,7 @@ supported_distributions:
 # ===========================================
 # directories relative to the user's home dir
 # ===========================================
-downloads: "{{ ansible_user_dir }}/Downloads"
+download_dir: "{{ ansible_user_dir }}/Downloads"
 key_dir: "{{ ansible_user_dir }}/keys"
 demo_root: "{{ ansible_user_dir }}/demo"
 # ===========================================
