@@ -1,7 +1,6 @@
 ---
 buildvms: true
-downloads: "{{ ansible_user_dir }}/Downloads"
-key_dir: "{{ ansible_user_dir }}/keys"
 demo_root: "{{ ansible_user_dir }}/demo"
-packer_build_dir: "{{ demo_root }}/ansible/packer"
-virtualization: libvirt
+downloads: "{{ ansible_user_dir }}/Downloads"
+supported_distributions:
+  - MacOSX
