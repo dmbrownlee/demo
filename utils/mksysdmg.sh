@@ -8,20 +8,20 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
-TARGET=$1
+TARGET="$1"
 SOURCE="$(diskutil list internal virtual | awk '/synthesized/{ print $1; }')"
 
 echo ========================================================================
 echo Source is $SOURCE
 echo Target is $TARGET
 echo ========================================================================
-if [ -f $TARGET ]; then
+if [ -f "$TARGET" ]; then
   read -p "Replace existing $TARGET (y/N)? " replace
   if [ "$replace" != 'y' ]; then
     echo "Image creation cancelled."
     exit
   fi
-  rm $TARGET
+  rm "$TARGET"
 fi
 
 echo ========================================================================
@@ -33,11 +33,11 @@ diskutil unmountDisk $SOURCE
 echo ========================================================================
 echo Creating $TARGET from $SOURCE
 echo ========================================================================
-echo "(hdiutil create -srcdevice $SOURCE $TARGET)"
-hdiutil create -srcdevice $SOURCE $TARGET
+echo "(hdiutil create -srcdevice $SOURCE \"$TARGET\")"
+hdiutil create -srcdevice $SOURCE "$TARGET"
 
 echo ========================================================================
 echo Verifying $TARGET
 echo ========================================================================
-echo "(hdiutil verify $TARGET)"
-hdiutil verify $TARGET
+echo "(hdiutil verify \"$TARGET\")"
+hdiutil verify "$TARGET"
