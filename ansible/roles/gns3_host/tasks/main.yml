@@ -10,6 +10,11 @@
   when: ansible_pkg_mgr == "homebrew"
 - name: Ensure the GNS3 server VM is installed
   include_tasks: "gns3vm-packages-{{ ansible_distribution | lower }}.yml"
+- name: Ensure LaunchAgents directory exists
+  file:
+    path: "{{ ansible_user_dir }}/Library/LaunchAgents"
+    state: directory
+    mode: '0755'
 - name: Ensure the script to start vboxnet0 at login is installed
   copy:
     dest: "{{ item.dest }}"
