@@ -1,5 +1,5 @@
-# Finding information about your Ethernet interface in Linux (with an unrelated introduction to Vagrant)
-In this lab, we will take a look a how to find information about your Ethernet interface in Linux. Rather than do this in GNS3 with Linux Docker containers as in previous labs, we will take this opportunity to spin up full Linux installations in VirtualBox and learn to integrate these into our GNS3 network models.  Along the way, we will learn about Packer and Vagrant, two free, cross-platform tools from Hashicorp that help us quickly spin up virtual machines and discard them when we are done with them.
+# Introduction to Vagrant and using VirtualBox VMs within GNS3
+In this lab, we will get a quick introduction to a small sampling of IT automation tools which demonstrate the Infrastructure as Code paradigm. We will spin up Linux and Windows virtual machines in VirtualBox using Vagrant, a free, cross-platform tool from Hashicorp that helps us quickly spin up virtual machines and discard them when we are done with them using nothing more than text configuration files. Since Vagrant could be further automated in scripts and these scripts and the related configuration files could be checked into source control (in our case, git, a Distributed Version Control System), we will have the tools necessary to create controlled, tested, snapshots of our network models should we want to.  However, for the labs in this course, we will just be using these tools to simplify creating and destroying the virtual machines and will be integrating these into our GNS3 network models manually.
 
 ## Setup
 First, let's get a quick introduction to some of the tools we have available.
@@ -13,42 +13,53 @@ First, let's get a quick introduction to some of the tools we have available.
 Now that the introductions are out of the way, let's learn how to use these tools.
 
 ## Lab: Creating VirtualBox virtual machines with Vagrant
-1. As mentioned above, Vagrant will look for its configuration file, ```Vagrantfile```, in the current directory so let's start by changing our location and making sure it's there:
+1. As mentioned above, Vagrant will look for its configuration file, ```Vagrantfile```, in the current directory. Since this is easy to forget when you're first starting out, let's take a look a the error message you get when you're in the wrong directory.
+
+    ```cd / && vagrant status```
+
+    You can ignore the suggested fixes in the error message since we should already have a ```Vagrantfile``` in a diiferent directory.  Now that we will recognize that error should we forget to change directories, let's change to the correct directory and make sure our ```Vagrantfile``` is there:
 
     ```cd ~/demo/networkplus && ls```
 
-The ```Vagrantfile``` file is created by the ```setup``` script so, if you don't see a ```Vagrantfile``` file in this directory, you should re-run ```cd ~/demo && ./setup networkplus```.
-1. You can open the ```Vagrantfile``` to see which virtual machines are defined and how, but for our purposes, we can get the list of machines and their current status with:
+    The ```Vagrantfile``` file is created by the demo project's ```setup``` script so, if you don't see a ```Vagrantfile``` file in this directory, you should re-run ```cd ~/demo && ./setup networkplus```.
+1. You could open the ```Vagrantfile``` to see which virtual machines are defined and how, but for our purposes, we can get the list of the virtual machines defined in the file and their current status with just this command:
 
     ```vagrant status```
 
-    Virtual machines in the "not created" state do not yet exist in VirtualBox.  Let's create one of them now.
-1. Use the ```vagrant up``` command to start one or more virtual machines.  If the machine is in the "poweroff" state, Vagrant will start it.  If the machine is in the "not created" state, Vagrant will first create the virtual machine, boot it, and run the provisioning scripts (if there are any).  Let's create the debian1 virtual machine now.
+    Virtual machines in the "not created" state do not yet exist in VirtualBox.
+
+1. Recall that Vagrant creates new VMs by copying base box images (disk image files with operating systems already installed). Let's see which base boxes Vagrant already has available in its cache.
+
+    ```vagrant box list```
+
+    Keep in mind these disk images are not used directly but are copied and therefore can each be used as the starting point for mulitple VMs.  For example, all debian VMs defined in the ```Vagrantfile``` will be created using the one debian base box in Vagrant's cache. Let's create one of them now.
+    > Note: If you ran the demo project's setup with ```-e buildvms=false``` in order to save time, your box list will be empty and you cannot continue with this lab until you build the base boxes.  To do this, make sure your laptop is plugged in and connected to the Internet, run ```cd ~/demo && ./setup networkplus```, enter your password when prompted, and then go do something else for a few hours while the base boxes are built and installed.
+1. Use the ```vagrant up``` command to start one or more virtual machines.  If the machine is in the "poweroff" state, Vagrant will start it.  If the machine is in the "not created" state, Vagrant will first create the virtual machine, boot it, and run the provisioning scripts (if there are any).  The initial creation does take longer than starting a VM that already exists but it's certainly faster (and the results are more repeatedly consistent) than creating the VM and installing the VM by hand.  Let's create the debian1 virtual machine now.
 
     ```vagrant up debian1```
 
-    It takes a couple minutes to copy the disk, boot the VM, and run the provisioning scripts, but you should be left with a VM you can log into using the username "user" and the password "password".  Back on the host, if you run ```vagrant status``` again, you will see the status of the virtual machine is now "running".
-1. You can also shutdown the virtual machine from the command line with ```vagrant halt```.  Let's do that now:
+    It takes a couple minutes to copy the disk, boot the VM, and run the provisioning scripts, but you should be left with a VM you can log into using the username "user" and the password "password".  Back at the shell prompt on the host, if you run ```vagrant status``` again, you will see the status of the virtual machine is now "running".
+1. You can shutdown the virtual machine from the command line with ```vagrant halt```.  Let's do that now:
 
     ```vagrant halt debian1```
 
     The virtual machine shuts down but is not deleted.  Running ```vagrant status``` again shows the virtual machine is in the "poweroff" state.
-1. By default, Vagrant only runs provisioning when the virtual machines are created.  If you change the provisioning scripts, you can re-run them on virtual machines that have already been created by adding the ```--provision``` option to ```vagrant up```.  Let's restart the debian1 virtual machine and re-run the Ansible provisioning script now (although it shouldn't need to change anything since it hasn't changed since the first time it ran).
+1. By default, Vagrant only runs provisioning when the virtual machines are created.  If you change the provisioning scripts, you can re-run them on virtual machines that have already been created by adding the ```--provision``` option to ```vagrant up```.  Let's restart the debian1 virtual machine and re-run the Ansible provisioning script now (although it shouldn't need to change anything since we haven't changed the Ansible playbook since the first time it ran).
 
     ```vagrant up --provision debian1```
 
-    Note, you can also use ```--no-provision``` if you want Vagrant to create a virtual machine without running the default provisioning.
-1. Finally, when we no longer need a virtual machine and would like to reclaim the disk space, we can delete the machine entirely with ```vagrant destroy```.  Don't worry, you can always recreat it again with ```vagrant up```, it will just take a couple minutes more as it has to copy the disk image again.  Let's destroy our virtual machine now.
+    Note, you can also use ```--no-provision``` if you want Vagrant to create a virtual machine without running the configured provisioning system.
+1. Finally, when we no longer need a virtual machine and would like to reclaim the disk space, we can delete the machine entirely with ```vagrant destroy```.  Don't worry, you can always recreate it again with ```vagrant up```, it will just take a couple minutes more as it has to copy the disk image again.  Let's destroy our virtual machine now.
 
     ```vagrant destroy debian1```
 
     Vagrant will ask you to confirm that you really want to destroy the virtual machine which is a little silly since ```vagrant up``` will recreate it.  If you find this prompt annoying, you can use ```vagrant destroy -f debian1``` instead to force the destroy operation.
 
-In the steps above, we specified which virtual machine we were working with.  If you leave off the name of the virtual machine, Vagrant will perform the operation on all virtual machines defiend in the Vagrantfile file unless those machines have the "autostart: false" attribute in their definition.  We will **not** be using Vagrant to start and stop our virtual machines but we do need to make sure they all exist before we can add them to GNS3 so create all of them now and then shut them down with:
+In the steps above, we specified which virtual machine we were working with.  If you run the commands above without the name of the virtual machine, Vagrant will perform the operation on all virtual machines defiend in the Vagrantfile file (although ```vagrant up``` will not create or start machines which have the "autostart: false" attribute in their definition).  We will **not** be using Vagrant to start and stop our virtual machines but we do need to make sure they all exist before we can add them to GNS3 so create all of them now and then shut them down with:
 
-    ```vagrant up && vagrant halt```
+```vagrant up && vagrant halt```
 
-With the virtual machines created, we are now ready to learn how to add them to our GNS3 models.
+With the virtual machines created and halted, we are now ready to learn how to add them to our GNS3 models.
 
 ## Lab: Adding VirtualBox VMs to GNS3 network models
 
@@ -57,18 +68,30 @@ There are a couple of important caveats to keep in mind when using virtual machi
 - **You can only have one of each virtual machine in any network model**
 
     GNS3 can connect a virtual machine to a network model but there is still only one instance of the virtual machine within VirtualBox.  Unlike the built-in switch devices where you can drag as many as you need into your network model, the virtual machines can only appear once.
+
 - **You must start the virtual machines from within GNS3**
 
     Although you just learned you can start virtual machine using Vagrant, when using a virtual machine within a GNS3 model, you must start it from within GNS3 itself using the green, right pointing triangle icon.  This is because, in addition to starting the VMs, GNS3 also needs to manipulate their virtual network interfaces and connect them to the virtual networks in the model.
+
+- **The networking changes made by GNS3 mean Vagrant can no longer manage the VM**
+
+    Normally, you would be able to re-run the host provisioning scripts on the VM with ```vagrant up --provision, as mentioned above, as well as do other things with Vagrant like connect to the VMs from the host with ```vagrant ssh```.  However, when GNS3 connects the VM to the virtual network in the model, it also disconnects it from the network Vagrant is using.
+
+- **The virtual machines have universally unique identifiers (UUIDs)**
+
+    If you destroy a VM with ```vagrant destroy``` and rebuild it with ```vagrant up```, the VM will have a different UUID.  The consequence of this is, is you will have to delete the template you created for this machine in GNS3 (instructions below) and recreate it.  You may also need to reload your newwork model if it is load with the UUID from deleted VM.
 
 With those considerations in mind, let's add our virtual machines to GNS3.
 
 1. With the VMs shutdown, start GNS3 and, from the ```GNS3``` menu, select ```Preferences``` to open the Preferences dialog.
 1. Repeat the following steps for each virtual machine you want to use in GNS3 (don't add the GNS3 VM though):
-    2. Select ```VirtualBox VMs``` on the left side of the Preferences dialog and then click the ```New``` button at the bottom.
-    2. Select ```Run this VirtualBox VM on my local computer``` in the New VirtualBox VM template dialog and click the ```Next``` button.
-    2. Select debian1 from the pre-populated ```VM List``` dropdown and click ```finish```.
-    Depending on which machinces you have created in VirtualBox, the result might look like this:
+    1. Select ```VirtualBox VMs``` on the left side of the Preferences dialog and then click the ```New``` button at the bottom.
+    1. Select ```Run this VirtualBox VM on my local computer``` in the New VirtualBox VM template dialog and click the ```Next``` button.
+    1. Select debian1 from the pre-populated ```VM List``` dropdown and click ```finish```.
+    1. Back at the Preferences dialog, select the VM template you just created and click the ```Edit``` button at the bottom of the dialog box.
+    1. In the ```VirtualBox VM template configuration``` that pops up, go to the ```Network``` tab, check the ```Allow GNS3 to use any configured VirtualBox adapter```, and click ```OK```
+
+    Depending on which machinces you have created in VirtualBox, the end result might look like this:
 
     ![Preferences - VirtualBox VM templates](PreferencesVirtualBoxVMsTemplates.png)
 
