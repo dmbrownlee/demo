@@ -1,0 +1,6 @@
+---
+buildvms: true
+demo_root: "{{ ansible_user_dir }}/demo"
+download_dir: "{{ ansible_user_dir }}/Downloads"
+supported_distributions:
+  - MacOSX

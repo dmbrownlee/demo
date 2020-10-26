@@ -1,6 +1,0 @@
----
-# ==================
-# VirtualBox install
-# ==================
-- name: Install VirtualBox
-  include_tasks: "virtualbox-install-{{ ansible_distribution | lower }}.yml"

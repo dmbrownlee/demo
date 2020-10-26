@@ -1,0 +1,19 @@
+---
+- name: Ensure the Vagrantfile exists
+  template:
+    dest: "{{ demo_root }}/networkplus/Vagrantfile"
+    src: "Vagrantfile.j2"
+    mode: '0644'
+- name: Get the list of Vagrant VMs not yet created
+  shell: set -o pipefail && vagrant status | awk '/not created/ { print $1 }'
+  args:
+    chdir: "{{ demo_root }}/networkplus"
+  changed_when: false
+  failed_when: false
+  register: missing_vms
+- name: Ensure missing VMs are created and halted
+  shell: vagrant up --provider=virtualbox {{ item }} && vagrant halt {{ item }}
+  args:
+    chdir: "{{ demo_root }}/networkplus"
+  when: missing_vms.stdout_lines | length > 0
+  with_items: "{{ missing_vms.stdout_lines }}"

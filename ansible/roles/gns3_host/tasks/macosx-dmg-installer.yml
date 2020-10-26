@@ -1,0 +1,29 @@
+---
+- name: Ensure {{ dmg.file }} has been downloaded
+  get_url:
+    url: "{{ dmg.url }}"
+    dest: "{{ ansible_user_dir }}/Software/{{ dmg.file }}"
+    checksum: "{{ dmg.checksum }}"
+- name: Ensure {{ dmg.file }} has been mounted
+  command:
+    cmd: hdiutil attach {{ ansible_user_dir }}/Software/{{ dmg.file }}
+  register: hdiutil_attach
+  changed_when: false
+- name: Ensure {{ dmg.contents }} app has been installed
+  copy:
+    src: "/Volumes/{{ dmg.mount }}/{{ dmg.contents }}"
+    dest: "/Applications/"
+    mode: '0755'
+    remote_src: yes
+      #become: yes
+  when: dmg.content_type == "app"
+- name: Ensure {{ dmg.contents }} package has been installed
+  command:
+    cmd: "installer -pkg '/Volumes/{{ dmg.mount }}/{{ dmg.contents }}' -target /"
+  become: yes
+  when: dmg.content_type == "pkg"
+- name: Ensure {{ dmg.file }} has been unmounted
+  command:
+    cmd: hdiutil detach "/Volumes/{{ dmg.mount }}"
+  changed_when: false
+  when: hdiutil_attach.rc == 0

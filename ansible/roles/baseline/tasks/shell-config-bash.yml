@@ -1,0 +1,24 @@
+---
+# bash configuration
+- name: Ensure {{ ansible_user_dir }}/.bashrc exists
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+    mode: '0644'
+- name: Ensure directory for shell customizations exists
+  file:
+    path: "{{ ansible_user_dir }}/.bashrc.d"
+    state: directory
+    mode: '0755'
+- name: Ensure ~/.bashrc.d/ files are sourced from .bashrc
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    marker: "# {mark}"
+    marker_begin: "=== ANSIBLE MANAGED BLOCK BEGIN: Source files in .bashrc.d"
+    marker_end: "END: .bashrc.d"
+    block: |
+      if [[ -d "$HOME/.bashrc.d" ]]; then
+        source $HOME/.bashrc.d/*
+      fi
