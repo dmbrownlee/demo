@@ -1,0 +1,25 @@
+---
+- name: Assert this host can use this role
+  assert:
+    that: ansible_distribution in supported_distributions
+    fail_msg: "This role is not supported on your host operating system."
+- name: Include host distribution specific variables
+  include_vars: "{{ ansible_distribution | lower }}.yml"
+- name: role packages
+  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+  when: ansible_pkg_mgr == "homebrew"
+- name: Ensure the GNS3 server VM is installed
+  include_tasks: "gns3vm-packages-{{ ansible_distribution | lower }}.yml"
+- name: Ensure LaunchAgents directory exists
+  file:
+    path: "{{ ansible_user_dir }}/Library/LaunchAgents"
+    state: directory
+    mode: '0755'
+- name: Ensure the script to start vboxnet0 at login is installed
+  copy:
+    dest: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { src: "vboxnet0.zsh", dest: "{{ ansible_user_dir }}/.vboxnet0.zsh", mode: '0755' }
+    - { src: "com.user.loginscript.plist", dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.user.loginscript.plist", mode: '0644' }

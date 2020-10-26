@@ -1,0 +1,51 @@
+---
+- name: Assert homebrew is installed
+  assert:
+    that: ansible_pkg_mgr == "homebrew"
+    fail_msg: "A homebrew installation is required."
+- name: Ensure system brews are installed
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_brews }}"
+  when:
+    - system_brews is defined
+    - (system_brews | length > 0)
+- name: Ensure system casks are installed
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_casks }}"
+  when:
+    - system_casks is defined
+    - (system_casks | length > 0)
+- name: Ensure VirtualBox is installed
+  # VirtualBox is a special case as we know it fails on installation due to
+  # installing kernel extensions
+  block:
+    - name: Attempt VirtualBox installation (will fail on first run)
+      homebrew_cask:
+        name: virtualbox
+        state: present
+  rescue:
+    - name: Ensure the user knows this was expected
+      command: say "Don't panic, this failure was expected.  Reed the error message for instructions."
+    - name: And again in print
+      fail:
+        msg: >
+          Don't panic, this failure was expected.  In system preferences, open
+          Security & Privacy and go to the General tab.  Click the lock icon in
+          the bottom left corner and provide your password to unlock the dialog.
+          Click the allow button to allow kernel extensions from Oracle.
+          Finally, reboot and then run this script again.
+- name: Ensure icons are added to the Dock
+  shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
+  register: dockadd
+  changed_when: "'item added at end' in dockadd.stdout"
+  loop: "{{ dockitems_to_add }}"
+  notify: launcher-restart-macosx
+# packer pre-requisite
+- name: Ensure jmespath is installed for python3
+  pip:
+    name: jmespath
+  become: true

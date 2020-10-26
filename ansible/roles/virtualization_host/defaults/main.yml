@@ -1,0 +1,35 @@
+---
+supported_distributions:
+  - MacOSX
+# Note:
+# It is possible these values are overridden for specific
+# platforms in ../vars/{{ ansible_distribution }}-vars.yml.
+# ===========================================
+# directories relative to the user's home dir
+# ===========================================
+download_dir: "{{ ansible_user_dir }}/Downloads"
+key_dir: "{{ ansible_user_dir }}/keys"
+demo_root: "{{ ansible_user_dir }}/demo"
+# ===========================================
+# directories relative to the demo root dir
+# ===========================================
+packer_build_dir: "{{ demo_root }}/ansible/packer"
+# ======================================
+# Virtual network configuration settings
+# ======================================
+hostonlyifs:
+  - name: "vboxnet0"
+    ip: "192.168.56.1"
+natnetworks:
+  - name: 'RHCSA Network'
+    netblock: '192.168.4.0/24'
+  - name: 'RHCE Network'
+    netblock: '192.168.5.0/24'
+  - name: 'Network+ Network'
+    netblock: '192.168.6.0/24'
+dhcpservers:
+  - interface: "vboxnet0"
+    server_ip: "192.168.56.2"
+    lower_ip: "192.168.56.3"
+    upper_ip: "192.168.56.253"
+    netmask: "255.255.255.0"

@@ -1,0 +1,79 @@
+---
+- name: Assert this host can use this role
+  assert:
+    that: ansible_distribution in supported_distributions
+    fail_msg: "This role is not supported on your host operating system."
+- name: Assert specific box was requested by name
+  assert:
+    that:
+      - box is defined
+    fail_msg: "You need to specify which box you want to build."
+    success_msg: "{{ box }} was requested for this build."
+- name: Get list of available Vagrant base boxes
+  shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
+  register: vagrant_box_list
+  changed_when: false
+- name: Build the base box if it is currently unavailable
+  block:
+    - name: Read variables from vars/{{ box }}.yml
+      include_vars: "{{ box }}.yml"
+    - name: Ensure required variabless have been defined for {{ box }}
+      assert:
+        that:
+          #- distro is defined
+          #- version is defined
+          - guest_os_type is defined
+          - iso_checksum is defined
+          - iso_location is defined
+          #- iso_altlocation is defined
+          - iso_name is defined
+          - install_file is defined
+          - cpus is defined
+          - ram is defined
+          - disk_size is defined
+          - template is defined
+          - templateks is defined
+        fail_msg: "One or more required variables are undefined."
+    - name: Ensure the packer build directories exists before copying files there
+      # this is a bit hacky as it hardcodes a directory path for the Win10 box
+      file:
+        path: "{{ packer_build_dir }}"
+        state: directory
+        mode: '0700'
+    - name: Ensure packer build files for VirtualBox have beein installed
+      copy:
+        dest: "{{ packer_build_dir }}/"
+        src: "{{ virtualization }}/{{ item }}"
+        mode: '0644'
+      with_items:
+        - answer_files
+        - cookbooks
+        - scripts
+    - name: Ensure we have a packer JSON file for the base box
+      template:
+        dest: "{{ packer_build_dir }}/{{ box }}.json"
+        src: "{{ template }}"
+        mode: '0600'
+    - name: Ensure we have an installer file for the base box
+      template:
+        dest: "{{ packer_build_dir }}/{{ install_file }}"
+        src: "{{ templateks }}"
+        mode: '0600'
+    - name: Check if box file already exists ({{ box }})
+      stat:
+        path: "{{ packer_build_dir }}/{{ box }}.box"
+      register: boxfile
+      changed_when: false
+    - name: Build box file if missing ({{ box }})
+      command: packer build -force {{ box }}.json
+      args:
+        chdir: "{{ packer_build_dir }}"
+        creates: "{{ packer_build_dir }}/{{ box }}.box"
+      register: boxfilebuild
+      when: boxfile.stat.isreg is not defined
+    - name: Install Vagrant base box ({{ box }})
+      command: vagrant box add --name {{ box }} {{ box }}.box
+      args:
+        chdir: "{{ packer_build_dir }}"
+      when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0
+  when: box not in vagrant_box_list.stdout_lines
