@@ -4,11 +4,11 @@ In this lab, we will be looking at packets caputured in Wireshark.
 
 ## Wireshark
 
-Go ahead and start Wireshark. Upon loading, you should see all the network interfaces that you're able to capture internet traffic on. Hovering over each interface will display some key information about that interface. To start caputing, simply double click on that interface. After caputing the required packets, hit the red square on the left side of the Wireshark tool bar.
+Wireshark is a free and open-source packet analyzer, which is widely used for network troubleshooting, analysis, and communications protocol development.
 
 ## Hands-on Practice
-1. First open Wireshark. If you're unable to find Wireshark on the Dock, then press 'CMD + Spacebar' to load Spotlight, and search for Wireshark.
-2. Now that Wireshark has loaded, select the 'Open a caputre file' in the top left corner, highlighted in the follow image, and nagivate through the lab 1 packet capture file:
+1. First open Wireshark. If you're unable to find Wireshark on the Dock located at the bottom of your Macs screen, then press 'CMD + Spacebar' to load Spotlight, and search for Wireshark.
+2. Now that Wireshark has loaded, select the 'Open a caputre file' in the top left corner, highlighted in the follow image, and nagivate through the lab 1 packet capture file. This file should be found at '/Users/[USERNAME]/demo/networkplus/labfiles/lab01-1/Lab 1 Packet Capture.pcapng':
 ![lab01-01 Wireshark](lab01-1_wireshark_loading_pcap.png)
 3. Look online to find a filter so that you only view the HTTP GET request traffic in this packet capture. You will be able to find a filter at the bottom of the lab, however try to search for one. Enter the filter into the search bar at the top of Wireshark, and highlighted in this iamge:
 ![lsb01-1 Wireshark Filter](lab01-1_wireshark_filterbox.png)
@@ -24,7 +24,7 @@ Go ahead and start Wireshark. Upon loading, you should see all the network inter
 3. Stop your packet traffic
 4. From the packets you have captured, find your machines IP address, and MAC address.
 5. Look for the TCP source port number.
-6. Compare the OSI Model and the information within the packets catpured, and look for the corresponding PDU header information.
+6. Compare the OSI Model and the information within the packets catpured, and look for the corresponding PDU header/trailer information.
 
 ## Answer
 Filter : `http.request.method == "GET"`
