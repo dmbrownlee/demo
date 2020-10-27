@@ -51,7 +51,7 @@ Restoring keys, box files, and ISO image downloads can save a lot of
 time during setup.
 
 DONE
-    read -p "Would you like to retore from this backup [Y/n]? " a
+    read -p "Would you like to restore from this backup [Y/n]? " a
     if [[ ! "$a" =~ [nN][oO]* ]]; then
       utils/box-restore.sh $BACKUP_DIR
     fi
