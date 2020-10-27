@@ -32,3 +32,41 @@
   loop:
     - { src: "vboxnet0.zsh", dest: "{{ ansible_user_dir }}/.vboxnet0.zsh", mode: '0755' }
     - { src: "com.user.loginscript.plist", dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.user.loginscript.plist", mode: '0644' }
+- name: Ensure GNS3 configuration directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
+    state: directory
+    mode: '0755'
+- name: Test if gns3_controller.conf exists
+  stat:
+    path: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_controller.conf"
+  changed_when: false
+  register: gns3_controller
+- name: Ensure default gns3_controller.conf is installed when none exists
+  template:
+    src: gns3_controller.j2
+    dest: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_controller.conf"
+    mode: '0644'
+  when: not gns3_controller.stat.exists
+- name: Test if gns3_server.conf exists
+  stat:
+    path: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_server.conf"
+  changed_when: false
+  register: gns3_server
+- name: Ensure default gns3_server.conf is installed when none exists
+  template:
+    src: gns3_server.j2
+    dest: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_server.conf"
+    mode: '0644'
+  when: not gns3_server.stat.exists
+- name: Test if gns3_gui.conf exists
+  stat:
+    path: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_gui.conf"
+  changed_when: false
+  register: gns3_gui
+- name: Ensure default gns3_gui.conf is installed when none exists
+  template:
+    src: gns3_gui.j2
+    dest: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_gui.conf"
+    mode: '0644'
+  when: not gns3_gui.stat.exists

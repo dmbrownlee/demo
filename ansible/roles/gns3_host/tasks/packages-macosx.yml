@@ -15,8 +15,6 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
-- debug:
-    var: system_dmgs
 - name: Ensure system DMGs are installed
   block:
     - name: Ensure folder for software downloads exists
