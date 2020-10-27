@@ -8,6 +8,15 @@
 - name: role packages
   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
   when: ansible_pkg_mgr == "homebrew"
+# The path below may change when we go back to homebrew
+- name: Ensure ubridge ownership and permissions are correct
+  file:
+    path: /Applications/GNS3.app/Contents/MacOS/ubridge
+    state: file
+    owner: "root"
+    group: "admin"
+    mode: "04750"
+  become: yes
 - name: Ensure the GNS3 server VM is installed
   include_tasks: "gns3vm-packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure LaunchAgents directory exists
