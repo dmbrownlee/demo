@@ -75,7 +75,7 @@ When your computer sends IP packets, either IPv4 or IPv6, the IP layer determine
 
 ![ARPCapture](ARPCapture.png)
 
-    Finally, re-run:
+1. Finally, re-run:
 
     ```ip neighbor list```
 
