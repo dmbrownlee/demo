@@ -19,12 +19,19 @@ Wireshark is a free and open-source packet analyzer, which is widely used for ne
 
 ## Exercise - Looking for information
 
-1. Load Wireshark and start capturing you own traffic.
-2. Go head and load Chrome and visit www.google.com
-3. Stop your packet traffic
+1. Load Wireshark and start capturing you own traffic. There are multiple ways to start capturing packets, 1 method is to double click on the interface that you'd like to capture. Immediately after selecting the interface, packets will be captured:
+![lab01-1 selecting interface](lab01-1_wireshark_select_interface.png)
+2. When capturing packets, load Chrome and visit www.google.com
+3. After this, you can stop the capture by pressing the stop button:
+![lab01-1 stop capture](lab01-1_wireshark_stop_capture.png)
 4. From the packets you have captured, find your machines IP address, and MAC address.
 5. Look for the TCP source port number.
-6. Compare the OSI Model and the information within the packets catpured, and look for the corresponding PDU header/trailer information.
+6. Compare the OSI Model and the information within the packets catpured, and look for the corresponding PDU header/trailer information. Can you find such information as:
+- Time to live
+- Destination MAC Address
+- Port numbers
+- Checksum
+What PDU header/Trailer does this information belong to? Take some time to learn the different OSI layer PDU information as understanding this information and corresponding data is vital when working in with networks.
 
 ## Answer
 Filter : `http.request.method == "GET"`
