@@ -1,6 +1,6 @@
 # Network Addressing
 
-Throughout this lab, we will be looking at DHCP using GNS3 to capture the DORA process. We'll also walk through how to assigned an host within GNS3 with both Static and Dynamic IP address, finishing up with some subnetting questions.
+Throughout this lab, we will looking at the process of subnetting, IP address assignment, both static and dynamic, finally finishing with an introductions to DHCP and DORA.
 
 ## Subnetting
 Subnetting is an important skill for a network engineer. There are an array of tools available to an engineer to make this task easier. We will be using a Terminal utility called 'ipcalc'. By now, starting a Debian VM should be like second nature, so ahead and start an instance. Once you've signed into the machine, go ahead and load a Terminal, and install the ipcalc tool by entering `sudo apt install ipcalc`, followed by your password. The tool will take a minute or two to install.
@@ -14,15 +14,28 @@ From the output, we can see the first available host ip address available within
 
 Go ahead and use this tool with the follow examples. Confirm what the range of available IP address are, total number of of IP available, and what class the address falls into.
 
- - put examples into here
+- 10.0.0.5/19
+- 172.18.56.176/26
+- 192.168.10.50/28
 
 Though using a tool is quicker and easier, calculating this information manually is a great skill to have. Chapter 6 walked you through the steps for manaully calcualting this information. If you're unsure, go ahead and re-read this part of the chapter. Once you're ready, try to manually calculate the first, and last host IP address available, along with the broadcast and class of the following IP address:
 
- - put questions here
+### Practice
+- 10.0.0.1/8
+- 172.16.50.45/16
+- 192.168.99.90/24
+- 192.168.63.12/29
+- 128.16.132.57/27
+- 223.17.19.246/29
+
+Compare your calculations to output given by ipcalc. Mastering subnetting can take time. You can find additional practice questions at the following:
+- www.subnettingquestions.com
+- www.subnetting.org
 
 ## Static and Dynamic
-How to configure both static and dynamic.
+IP Addresses can be assigned two ways. As you've learned after reading chapter 6, a host can either be assigned with a static or dynamic address. A static address means that the machine won't change IP address, where as with dynamnic, the address many change over time. There are use cases for both methods in todays world of networking.
 
+Go ahead and open GNS3 and load this labs 'lab06-1.gns3project' file. Once oppend, start the debian1-1 VM.
 
 ## DHCP and DORA 
 
@@ -58,5 +71,3 @@ GREAT! We've just seen DORA and DCHP in action. Thought the Network+ doesn't req
 1. What does each messaging within the DORA process do?
 2. How does a new host on a network know where to send DHCP request messages? 
 3. How does the DCHP server know where to send responses if the new host doesn't have an IP address yet?
-
-# ipcalc - sudo apt install ipcalc
