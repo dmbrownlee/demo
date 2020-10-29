@@ -35,7 +35,13 @@ Compare your calculations to output given by ipcalc. Mastering subnetting can ta
 ## Static and Dynamic
 IP Addresses can be assigned two ways. As you've learned after reading chapter 6, a host can either be assigned with a static or dynamic address. A static address means that the machine won't change IP address, where as with dynamnic, the address many change over time. There are use cases for both methods in todays world of networking.
 
-Go ahead and open GNS3 and load this labs 'lab06-1.gns3project' file. Once oppend, start the debian1-1 VM.
+Go ahead and open GNS3 and load this labs 'lab06-1.gns3project' file. Once opend, start the debian1-1 VM and sign in. Once signed in, open a Terminal.
+
+To set the type of network address assignment, we'll be using 'nmcli', that is, the command-line NetworkManager tool. Using the command-line tool means that you can take advantage of auto completion. Give it ago! To set the network interface as static, using the following command `nmcli connection modify Wired\ connection\ 1 ipv4.method manual ipv4.addresses 1.1.1.100/8 ipv4.gateway 1.1.1.254 ipv4.dns 1.1.1.1`. Whilst you're typing the command in, trying pressing the tab key. If there is only one matching option, it will be auto completed. If there is more than one option available, press tab twice in rapid succession, you'll see all available options. However, if there are no options available, you won't get any output, and you'll need to check your command.
+
+To set the interface back to dynamic, using DHCP, type the following `nmcli connection modify Wired\ connection\ 1 ipv4.method auto`. Here we are setting the ipv4.method back to auto.
+
+You can see the whole nmcli connection settings by entering `nmcli connection show Wired\ connection\ 1'. Enter this command. What other information can you see?
 
 ## DHCP and DORA 
 
@@ -67,7 +73,7 @@ Compare the output in the above image to your own capture. You should first see 
 The following messages are DORA messages. Looking within the 'Info' column, you can see DORA:
 ![lab06-1 DORA](lab06-1_wireshark_DORA_column.png) 
 
-GREAT! We've just seen DORA and DCHP in action. Thought the Network+ doesn't require you to have in-depth knowledge of the workings of DHCP, hopefully you're intrigued to know more! Take some time to do some additional research into DORA, and try to answer these questions:
+GREAT! We've just seen DORA and DCHP in action. Though the Network+ doesn't require you to have in-depth knowledge of the workings of DHCP, hopefully you're intrigued to know more! Take some time to do some additional research into DORA, and try to answer these questions:
 1. What does each messaging within the DORA process do?
 2. How does a new host on a network know where to send DHCP request messages? 
 3. How does the DCHP server know where to send responses if the new host doesn't have an IP address yet?
