@@ -38,6 +38,13 @@ IP Addresses can be assigned two ways. As you've learned after reading chapter 6
 Go ahead and open GNS3 and load this labs 'lab06-1.gns3project' file. Once opend, start the debian1-1 VM and sign in. Once signed in, open a Terminal.
 
 To set the type of network address assignment, we'll be using 'nmcli', that is, the command-line NetworkManager tool. Using the command-line tool means that you can take advantage of auto completion. Give it ago! To set the network interface as static, using the following command `nmcli connection modify Wired\ connection\ 1 ipv4.method manual ipv4.addresses 1.1.1.100/8 ipv4.gateway 1.1.1.254 ipv4.dns 1.1.1.1`. Whilst you're typing the command in, trying pressing the tab key. If there is only one matching option, it will be auto completed. If there is more than one option available, press tab twice in rapid succession, you'll see all available options. However, if there are no options available, you won't get any output, and you'll need to check your command.
+![lab02-1 nmcli static](lab02-1_nmcli_static.png)
+
+Success! The network interface has now been set with a static IP address, static gateway, and static DNS server. However, how would this cause issues if you tried to connect to a different network?
+
+Try setting the network interface on your debian VM with custom settings, changi
+ng the address information in the previous command. Use your new subnetting know
+ledge to calculate suitable IP address information.
 
 To set the interface back to dynamic, using DHCP, type the following `nmcli connection modify Wired\ connection\ 1 ipv4.method auto`. Here we are setting the ipv4.method back to auto.
 
