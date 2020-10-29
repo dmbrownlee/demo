@@ -34,12 +34,5 @@ Wireshark is a free and open-source packet analyzer, which is widely used for ne
 What PDU header/Trailer does this information belong to? Take some time to learn the different OSI layer PDU information as understanding this information and corresponding data is vital when working in with networks.
 
 
-##<details><summary>Answer</summary>
-<p>
-Filter : `http.request.method == "GET"`
-</p>
-</details>
-
-
 ## Answer
 Filter : `http.request.method == "GET"`
