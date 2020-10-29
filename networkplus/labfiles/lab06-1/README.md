@@ -50,7 +50,7 @@ To set the interface back to dynamic, using DHCP, type the following `nmcli conn
 
 You can see the whole nmcli connection settings by entering `nmcli connection show Wired\ connection\ 1'. Enter this command. What other information can you see?
 
-At this point, you might be wondering why the character '\' appears throughout the command. Unfortunately, the network interface name has spaces, this can cause issues with commands on the terminal, however, nmcli requires you to enter the full interface name. To solve this we use the '\' character. This character tells the command-line to ignore the space as a special character, which allows us to use it for the name. 
+At this point, you might be wondering why the character \ appears throughout the command. Unfortunately, the network interface name has spaces, this can cause issues with commands on the terminal, however, nmcli requires you to enter the full interface name. To solve this we use the \ character. This character tells the command-line to ignore the space as a special character, which allows us to use it for the name.
 
 ## DHCP and DORA 
 
