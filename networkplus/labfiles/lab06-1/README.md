@@ -1,6 +1,6 @@
 # Network Addressing
 
-Throughout this lab, we will looking at the process of subnetting, IP address assignment, both static and dynamic, finally finishing with an introductions to DHCP and DORA.
+Throughout this lab, we will looking at the process of subnetting, IP address assignment, both static and dynamic, finally finishing with an introduction to DHCP and DORA.
 
 ## Subnetting
 Subnetting is an important skill for a network engineer. There are an array of tools available to an engineer to make this task easier. We will be using a Terminal utility called 'ipcalc'. By now, starting a Debian VM should be like second nature, so ahead and start an instance. Once you've signed into the machine, go ahead and load a Terminal, and install the ipcalc tool by entering `sudo apt install ipcalc`, followed by your password. The tool will take a minute or two to install.
