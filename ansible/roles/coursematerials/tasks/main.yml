@@ -2,36 +2,35 @@
 # tasks file for coursematerials
 - name: Include course specific variables for {{ course }}
   include_vars: "{{ course }}.yml"
-- name: Ensure top level course directories exist
+- name: Ensure course root exists
   file:
-    path: "{{ item }}"
+    path: "{{ courseroot }}{{ item }}"
     state: directory
     mode: '0755'
   loop:
-    - "{{ course_root }}"
-    - "{{ assignment_dir }}"
-    - "{{ lab_dir }}"
+    - "/"
+    - "/images"
 - name: Ensure common images exist
   copy:
     src: "{{ item }}"
-    dest: "{{ image_dir }}"
+    dest: "{{ courseroot}}/images"
   loop:
     - 'ConstructionSign.png'
-- name: Ensure assignments exist for each chapter
-  include_tasks: make-assignment.yml
+- name: Orientation Doc
+  block:
+    - name: Ensure a directory exists for the course orientation
+      file:
+        path: "{{ courseroot }}/orientation"
+        state: directory
+        mode: '0755'
+    - name: Ensure a course orientation page exists
+      template:
+        src: "orientation.md.j2"
+        dest: "{{ courseroot }}/orientation/README.md"
+        mode: '0644'
+- name: Ensure directories exist for each chapter
+  include_tasks: make-chapter.yml
   loop: "{{ study_guide.chapters }}"
   loop_control:
     loop_var: chapter
     index_var: chapter_num
-#- name: Ensure a directory exists for each lab
-#  file:
-#    path: "{{ course_root }}/labfiles/{{ item }}"
-#    state: directory
-#    mode: '0755'
-#  loop: "{{ lookup('asdf')|list }}"
-#- name: Ensure a lab page exists for each lab defined
-#  template:
-#    src: "lab.md.j2"
-#    dest:
-#    mode: '0644'
-#  loop: "{{ lookup('')|list }}"

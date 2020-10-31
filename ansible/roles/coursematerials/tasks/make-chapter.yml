@@ -1,0 +1,20 @@
+---
+- name: Ensure content for each chapter exist
+  block:
+    - name: Ensure a directory exists for chapter {{ chapter_num + 1 }}
+      file:
+        path: "{{ courseroot }}/chapter{{ chapter_num + 1 }}"
+        state: directory
+        mode: '0755'
+    - name: Ensure an assignment page exists for chapter {{ chapter_num + 1 }}
+      template:
+        src: "assignment.md.j2"
+        dest: "{{ courseroot }}/chapter{{ chapter_num + 1 }}/README.md"
+        mode: '0644'
+    - name: Ensure a lab page exists for each of chapter {{ chapter_num + 1 }} labs
+      include_tasks: make-lab.yml
+      loop: "{{ chapter.labs }}"
+      loop_control:
+        loop_var: lab
+        index_var: lab_num
+      when: chapter.labs is defined
