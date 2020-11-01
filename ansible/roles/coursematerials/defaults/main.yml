@@ -1,3 +1,5 @@
 ---
 # defaults file for coursematerials
+repo: "https://github.com/dmbrownlee/demo"
 courseroot: '{{ ansible_user_dir }}/demo/{{ course }}/coursefiles'
+schedulefile: 'schedule-template.tsv'

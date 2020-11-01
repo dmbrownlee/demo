@@ -1,7 +1,7 @@
 {% if chapter.title != '' %}
-# Assignment: Chapter {{ chapter_num + 1 }}
-# {{ chapter.title }}
-This assignment is part of a self-study course to prepare for the {{ exam }} exam.
+# Reading Assignment
+This assignment is part of a [self-study course](../README.md) to prepare for the {{ exam.certification }} exam.
+# Chapter {{ chapter_num + 1 }}: {{ chapter.title }}
 
 ## Reading
 Read chapter {{ chapter_num + 1 }} of [{{ study_guide.title }}]({{ study_guide.links.amazon }}).{% if study_guide.links.oreilly is defined and chapter.oreilly_page is defined %}  If you have an O'Reilly Online account, you can access the chapter directly [here]({{ study_guide.links.oreilly }}/{{ chapter.oreilly_page }}).{% endif %}

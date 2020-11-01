@@ -13,24 +13,23 @@
 - name: Ensure common images exist
   copy:
     src: "{{ item }}"
-    dest: "{{ courseroot}}/images"
+    dest: "{{ courseroot }}/images"
+    mode: '0644'
   loop:
     - 'ConstructionSign.png'
-- name: Orientation Doc
-  block:
-    - name: Ensure a directory exists for the course orientation
-      file:
-        path: "{{ courseroot }}/orientation"
-        state: directory
-        mode: '0755'
-    - name: Ensure a course orientation page exists
-      template:
-        src: "orientation.md.j2"
-        dest: "{{ courseroot }}/orientation/README.md"
-        mode: '0644'
+- name: Ensure a course orientation page exists
+  template:
+    src: "orientation.md.j2"
+    dest: "{{ courseroot }}/README.md"
+    mode: '0644'
 - name: Ensure directories exist for each chapter
   include_tasks: make-chapter.yml
   loop: "{{ study_guide.chapters }}"
   loop_control:
     loop_var: chapter
     index_var: chapter_num
+- name: Ensure a schedule template CSV file exists
+  template:
+    src: "schedule-template.j2"
+    dest: "{{ courseroot }}/{{ schedulefile }}"
+    mode: '0644'
