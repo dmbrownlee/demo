@@ -3,6 +3,10 @@
 {% for chapter in study_guide.chapters %}
 {% set pages = chapter.lastpage - read.pages %}
 {% set percent_complete = '%6.2f'|format(chapter.lastpage * 100 / study_guide.totalpages) %}
-""	=hyperlink("{{ repo }}/{{ course }}/coursefiles/chapter{{ loop.index }}/README.md","Chapter {{ loop.index }}: {{ chapter.title }}")	"{{ chapter.lastpage }}"	"{{ pages }}"	"{{ percent_complete }}"	""
+{% if loop.first %}
+""	=hyperlink("{{ repo }}/{{ course }}/coursefiles/README.md","{{ chapter.title }}")	""	""	""	""
+{% else %}
+""	=hyperlink("{{ repo }}/{{ course }}/coursefiles/chapter{{ loop.index - 1 }}/README.md","Chapter {{ loop.index - 1 }}: {{ chapter.title }}")	"{{ chapter.lastpage }}"	"{{ pages }}"	"{{ percent_complete }}"	""
+{% endif %}
 {% set read.pages = chapter.lastpage %}
 {% endfor %}

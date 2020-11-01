@@ -17,11 +17,6 @@
     mode: '0644'
   loop:
     - 'ConstructionSign.png'
-- name: Ensure a course orientation page exists
-  template:
-    src: "orientation.md.j2"
-    dest: "{{ courseroot }}/README.md"
-    mode: '0644'
 - name: Ensure directories exist for each chapter
   include_tasks: make-chapter.yml
   loop: "{{ study_guide.chapters }}"
