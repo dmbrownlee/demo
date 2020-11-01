@@ -14,7 +14,8 @@ orientation:
     The preconfigured virtual lab environment is where you can get hands-on practice.  We use Vagrant to make creating (and destroying) the virtual lab machines easy so you can get started quickly and focus on the material covered in the text rather than get mired in lab setup.
   labenv: |
     The instructions for setting up the lab environment are [here](../README.md).</br></br>
-    There are one or more labs for each chapter of the study guide, each with a clearly defined objective, to give you practice on the topics covered.  Certain labs may require additional setup before the lab can be started and the steps to completed that will be in the lab setup section.  Finally, the lab itself will give you a series of tasks to complete.  Most of the time these tasks will state the desired outcome without giving you the specific commands you need to complete the task.  The reason for this is that you should be learning the specific commands from the material and the labs are there to test if you can recognize when to apply them as well as recall the specific commands.
+    There are one or more labs for each chapter of the study guide, each with a clearly defined objective, to give you practice on the topics covered.  Certain labs may require additional setup before the lab can be started and the steps to completed that will be in the lab setup section.  Finally, the lab itself will give you a series of tasks to complete.  Most of the time these tasks will state the desired outcome without giving you the specific commands you need to complete the task.  The reason for this is that you should be learning the specific commands from the material and the labs are there to test if you can recognize when to apply them as well as recall the specific commands.</br></br>
+    Go ahead and start your first labs now!
 study_guide:
   title: "Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition"
   totalpages: 540
