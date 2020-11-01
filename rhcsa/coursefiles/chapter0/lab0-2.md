@@ -1,5 +1,5 @@
 # lab0-2: Install the virtual lab environment
-## Sorry, this is only a placeholder for a lab that has yet to be written.
+## Sorry, this lab has not be reviewed recently and may contain outdated material, spelling and grammar errors, and/or poor markdown formatting.
 
 ![Image of construction sign](../images/ConstructionSign.png)
 
@@ -9,7 +9,7 @@ Spell out the lab objective here.
 
 ## SETUP
 
-Describe which hosts will be used here and list any setup steps.
+There are no special setup steps for this lab.
 
 ## STEPS
 

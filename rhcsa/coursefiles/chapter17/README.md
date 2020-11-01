@@ -4,3 +4,5 @@ This assignment is part of a [self-study course](../README.md) to prepare for th
 
 ## Reading
 Read chapter 17 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition](https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification-dp-0135938139/dp/0135938139).
+## Labs
+[lab17-1: Change the default runlevel](lab17-1.md)</br>
