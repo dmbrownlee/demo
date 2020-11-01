@@ -1,2 +1,19 @@
-# Some cool Orientation Doc
+# Welcome to the {{ exam.certification }} self-study course!
+{% if orientation.course is defined %}
+
+## The Course
+{{ orientation.course }}
+{% endif %}
+
+{% if orientation.resources is defined %}
+
+## The Resources
+{{ orientation.resources }}
+{% endif %}
+
+{% if orientation.labenv is defined %}
+
+## The Lab Environment
+{{ orientation.labenv }}
+{% endif %}
 

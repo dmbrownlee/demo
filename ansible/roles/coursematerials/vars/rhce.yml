@@ -1,44 +1,73 @@
 ---
 # vars file for coursematerials
-exam: "RHCE (EX294)"
+exam:
+  certification: "RHCE (EX294)"
+  objectives: "https://www.redhat.com/en/services/training/ex294-red-hat-certified-engineer-rhce-exam-red-hat-enterprise-linux-8?section=Objectives"
+orientation:
+  course: |
+    An interesting intro...</br></br>
+  resources: |
+    There are a few main resources here to help you with your studies.  First, there is a study schedule template to help you set deadlines for yourself.  The [study schedule template]({{ schedulefile }}) is a tab seperated values (TSV) file you can import into a spreadsheet.  After importing the template, fill in the date column for when you would like to finish the chapter.  Depending on your time line, you might aim for one or two chapters a week.  The chapters in the schedule are hyperlinks back to the assignment pages which themselves contain all the links to the study material and labs.  This makes the schedule your one stop for finding everything else.</br></br>
+    Next, there are the assignment pages.  These are basically just a single page for organizing all the links for a particular assignment in one place to make them easy to find.  There are handy links to the online study guide (requires an O'Reilly Online account) and other online material as well a links to lab docs that give you objectives to practice within the virtual lab environment.</br></br>
+    The preconfigured virtual lab environment is where you can get hands-on practice.  We use Vagrant to make creating (and destroying) the virtual lab machines easy so you can get started quickly and focus on the material covered in the text rather than get mired in lab setup.
+  labenv: |
+    The instructions for setting up the lab environment are [here](../README.md).</br></br>
+    There are one or more labs for each chapter of the study guide, each with a clearly defined objective, to give you practice on the topics covered.  Certain labs may require additional setup before the lab can be started and the steps to completed that will be in the lab setup section.  Finally, the lab itself will give you a series of tasks to complete.  Most of the time these tasks will state the desired outcome without giving you the specific commands you need to complete the task.  The reason for this is that you should be learning the specific commands from the material and the labs are there to test if you can recognize when to apply them as well as recall the specific commands.
 study_guide:
   title: "Red Hat RHCE 8 (EX294) Cert Guide (Certification Guide) 1st Edition"
+  totalpages: 160
   links:
     amazon: "https://www.amazon.com/RHCE-EX294-Cert-Guide-Certification/dp/0136872433"
     oreilly: "https://learning.oreilly.com/library/view/Red+Hat+RHCE+8+(EX294)+Cert+Guide/9780136872481"
   chapters:
     - title: "Understanding Configuration Management"
+      lastpage: 10
       oreilly_page: "ch01.html#ch01"
       labs:
         - title: "Learn to create a git repository"
         - title: "Some other important lesson"
     - title: "Installing Ansible"
+      lastpage: 20
       oreilly_page: "ch02.html#ch02"
     - title: "Setting Up an Ansible Managed Environment"
+      lastpage: 30
       oreilly_page: "ch03.html#ch03"
     - title: "Using Ad Hoc Commands"
+      lastpage: 40
       oreilly_page: "ch04.html#ch04"
     - title: "Getting Started with Playbooks"
+      lastpage: 50
       oreilly_page: "ch05.html#ch05"
     - title: "Working with Variables and Facts"
+      lastpage: 60
       oreilly_page: "ch06.html#ch06"
     - title: "Using Task Control"
+      lastpage: 70
       oreilly_page: "ch07.html#ch07"
     - title: "Deploying Files"
+      lastpage: 80
       oreilly_page: "ch08.html#ch08"
     - title: "Using Ansible Roles"
+      lastpage: 90
       oreilly_page: "ch09.html#ch09"
     - title: "Using Ansible in Large Environments"
+      lastpage: 100
       oreilly_page: "ch10.html#ch10"
     - title: "Troubleshooting Ansible"
+      lastpage: 110
       oreilly_page: "ch11.html#ch11"
     - title: "Managing Software with Ansible"
+      lastpage: 120
       oreilly_page: "ch12.html#ch12"
     - title: "Managing Users"
+      lastpage: 130
       oreilly_page: "ch13.html#ch13"
     - title: "Managing Processes and Tasks"
+      lastpage: 140
       oreilly_page: "ch14.html#ch14"
     - title: "Managing Storage"
+      lastpage: 150
       oreilly_page: "ch15.html#ch15"
     - title: "Final Preparation"
+      lastpage: 160
       oreilly_page: "ch16.html#ch16"
