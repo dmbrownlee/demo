@@ -21,3 +21,12 @@
 [lab{{ chapter_num }}-{{ loop.index }}: {{ lab.title }}](chapter{{ chapter_num }}/lab{{ chapter_num }}-{{ loop.index }}.md)</br>
 {% endfor %}
 {% endif %}
+{% if study_guide.chapters is defined %}
+
+## Assignment Page Listing
+{% for chapter in study_guide.chapters %}
+{% if not loop.first %}
+[Chapter {{ loop.index - 1 }}: {{ chapter.title }}](chapter{{ loop.index - 1 }}/README.md)</br>
+{% endif %}
+{% endfor %}
+{% endif %}
