@@ -4,16 +4,20 @@
 ## The Course
 {{ orientation.course }}
 {% endif %}
-
 {% if orientation.resources is defined %}
 
 ## The Resources
 {{ orientation.resources }}
 {% endif %}
-
 {% if orientation.labenv is defined %}
 
 ## The Lab Environment
 {{ orientation.labenv }}
 {% endif %}
+{% if chapter.labs is defined %}
 
+## Labs
+{% for lab in chapter.labs %}
+[lab{{ chapter_num }}-{{ loop.index }}: {{ lab.title }}](chapter{{ chapter_num }}/lab{{ chapter_num }}-{{ loop.index }}.md)</br>
+{% endfor %}
+{% endif %}
