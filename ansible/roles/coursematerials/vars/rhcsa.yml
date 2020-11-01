@@ -32,77 +32,128 @@ study_guide:
       lastpage: 27
       oreilly_page: "ch01.xhtml"
       labs:
-        - title: "Learn to create a git repository"
-        - title: "Some other important lesson"
+        - title: "Installing CentOS"
     - title: 'Using Essential Tools'
       lastpage: 51
       oreilly_page: 'ch02.xhtml'
+      labs:
+        - title: "Using Essential Tools - Vim"
     - title: 'Essential File Management Tools'
       lastpage: 79
       oreilly_page: 'ch03.xhtml'
+      labs:
+        - title: "Essential Tools - links"
     - title: 'Working with Text Files'
       lastpage: 97
       oreilly_page: 'ch04.xhtml'
+      labs:
+        - title: "Working With Text Files"
     - title: 'Connecting to Red Hat Enterprise Linux'
       lastpage: 119
       oreilly_page: 'ch05.xhtml'
+      labs:
+        - title: "Using virtula consoles to work with multiple users"
     - title: 'User and Group Management'
       lastpage: 141
       oreilly_page: 'ch06.xhtml'
+      labs:
+        - title: "Users and Group Management"
     - title: 'Permissions Management'
       lastpage: 165
       oreilly_page: 'ch07.xhtml'
+      labs:
+        - title: "Configuring Permissions"
     - title: 'Configuring Networking'
       lastpage: 195
       oreilly_page: 'ch08.xhtml'
+      labs:
+        - title: "Network Configuration"
     - title: 'Managing Software'
       lastpage: 231
       oreilly_page: 'ch09.xhtml'
+      labs:
+        - title: "Manageing Software"
     - title: 'Managing Processes'
       lastpage: 251
       oreilly_page: 'ch10.xhtml'
+      labs:
+        - title: "Managing Processes"
     - title: 'Working with Systemd'
       lastpage: 269
       oreilly_page: 'ch11.xhtml'
+      labs:
+        - title: "Working with systemd"
     - title: 'Scheduling Tasks'
       lastpage: 283
       oreilly_page: 'ch12.xhtml'
+      labs:
+        - title: "Practice scheduling a cronhjob"
     - title: 'Configuring Logging'
       lastpage: 307
       oreilly_page: 'ch13.xhtml'
+      labs:
+        - title: "Practice configuring rsyslogd"
+        - title: "Make sure the journal survives a reboot"
     - title: 'Managing Storage'
       lastpage: 337
       oreilly_page: 'ch14.xhtml'
+      labs:
+        - title: "Managing Partitions"
     - title: 'Managing Advanced Storage'
       lastpage: 365
       oreilly_page: 'ch15.xhtml'
+      labs:
+        - title: "Practice LVM"
     - title: 'Basic Kernel Management'
       lastpage: 383
       oreilly_page: 'ch16.xhtml'
+      labs:
+        - title: "Learn Basic Kernel Management"
     - title: 'Managing and Understanding the Boot Procedure'
       lastpage: 399
       oreilly_page: 'ch17.xhtml'
+      labs:
+        - title: "Change the default runlevel"
     - title: 'Essential Troubleshooting Skills'
       lastpage: 421
       oreilly_page: 'ch18.xhtml'
+      labs:
+        - title: "GRUB troubleshooting"
+        - title: "Troubleshoot the boot process"
     - title: 'An Introduction to Bash Shell Scripting'
       lastpage: 441
       oreilly_page: 'ch19.xhtml'
+      labs:
+        - title: "Bash Shell Scripting"
     - title: 'Configuring SSH'
       lastpage: 455
       oreilly_page: 'ch20.xhtml'
+      labs:
+        - title: "Lock down sshd"
     - title: 'Managing Apache HTTP Services'
       lastpage: 469
       oreilly_page: 'ch21.xhtml'
+      labs:
+        - title: "Apache VirtualHost"
     - title: 'Managing SELinux'
       lastpage: 495
-      oreilly_page: 'ch21.xhtml'
+      oreilly_page: 'ch22.xhtml'
+      labs:
+        - title: "Apache VirtualHost (w/SELinux)"
     - title: 'Configuring a Firewall'
       lastpage: 509
-      oreilly_page: 'ch21.xhtml'
+      oreilly_page: 'ch23.xhtml'
+      labs:
+        - title: "Firewall configuration"
     - title: 'Accessing Network Storage'
       lastpage: 525
-      oreilly_page: 'ch21.xhtml'
+      oreilly_page: 'ch24.xhtml'
+      labs:
+        - title: "Firewalls and NFS RPCs (showmount and rpcinfo)"
+        - title: "Mount NFS shares using Kerberos Security"
+        - title: "Automount Kerberized NFS home directories"
     - title: 'Configuring Time Services'
       lastpage: 540
-      oreilly_page: 'ch21.xhtml'
+      oreilly_page: 'ch25.xhtml'
+      labs:
+        - title: "Convert epoch timestamps to human readable timestamps"
