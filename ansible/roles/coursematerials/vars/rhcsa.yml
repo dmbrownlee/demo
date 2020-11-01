@@ -1,0 +1,108 @@
+---
+# vars file for coursematerials
+exam:
+  certification: "RHCSA (EX200)"
+  objectives: "https://www.redhat.com/en/services/training/ex200-red-hat-certified-system-administrator-rhcsa-exam?section=Objectives"
+orientation:
+  course: |
+    The Red Hat Certified Systems Adminstrator certification is a highly regarded certification attained by passing a 3 hour exam which is entirely performanced based.  There are no multiple choice questions to try and guess your way through, just a list of tasks you need to complete on the provided virtual machines.  Passing the exam not only proves you know your stuff to potential employers, but it's a great confidence booster as well.</br></br>
+    The RHCSA exam covers a wide array of routine systems managment tasks which demonstrate the certification holder's knowledge of the platform and ability to complete day to day tasks my hand.  Additionally, Red Hat recently (October 2020) added introductory knowledge of managing containers to the objectives.  For a complete list of all that is expected, see the offical exam objectives.</br></br>
+    The RHCSA is the first in a series of Red Hat certifications so there are no prerequisite certifications needed.
+  resources: |
+    There are a few main resources here to help you with your studies.  First, there is a study schedule template to help you set deadlines for yourself.  The [study schedule template]({{ schedulefile }}) is a tab seperated values (TSV) file you can import into a spreadsheet.  After importing the template, fill in the date column for when you would like to finish the chapter.  Depending on your time line, you might aim for one or two chapters a week.  The chapters in the schedule are hyperlinks back to the assignment pages which themselves contain all the links to the study material and labs.  This makes the schedule your one stop for finding everything else.</br></br>
+    Next, there are the assignment pages.  These are basically just a single page for organizing all the links for a particular assignment in one place to make them easy to find.  There are handy links to the online study guide (requires an O'Reilly Online account) and other online material as well a links to lab docs that give you objectives to practice within the virtual lab environment.</br></br>
+    The preconfigured virtual lab environment is where you can get hands-on practice.  We use Vagrant to make creating (and destroying) the virtual lab machines easy so you can get started quickly and focus on the material covered in the text rather than get mired in lab setup.
+  labenv: |
+    The instructions for setting up the lab environment are [here](../README.md).</br></br>
+    There are one or more labs for each chapter of the study guide, each with a clearly defined objective, to give you practice on the topics covered.  Certain labs may require additional setup before the lab can be started and the steps to completed that will be in the lab setup section.  Finally, the lab itself will give you a series of tasks to complete.  Most of the time these tasks will state the desired outcome without giving you the specific commands you need to complete the task.  The reason for this is that you should be learning the specific commands from the material and the labs are there to test if you can recognize when to apply them as well as recall the specific commands.
+study_guide:
+  title: "Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition"
+  totalpages: 540
+  notes: "The official exam objectives are available on the Red Hat website.  There is one exam objective that was added after the publication of the book and does not appear in any of the chapters.  It is covered in its own assignment at the end of the schedule.  The lessons in the video series are by the same author as the book and their content closely follows that of the book chapters.  However, there are slight differences so the assignments follow the order of the book chapters and the video lessons are linked in the assignments based on content even if their number differs from the number of the book chapter."
+  links:
+    amazon: "https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification-dp-0135938139/dp/0135938139"
+    orielly: 'https://learning.oreilly.com/library/view/red-hat-rhcsa/9780135938058'
+  chapters:
+    - title: "Study Group Orientation"
+      lastpage: 0
+      labs:
+        - title: "Create your schedule"
+        - title: "Install the virtual lab environment"
+    - title: "Installing Red Hat Enterprise Linux"
+      lastpage: 27
+      oreilly_page: "ch01.xhtml"
+      labs:
+        - title: "Learn to create a git repository"
+        - title: "Some other important lesson"
+    - title: 'Using Essential Tools'
+      lastpage: 51
+      oreilly_page: 'ch02.xhtml'
+    - title: 'Essential File Management Tools'
+      lastpage: 79
+      oreilly_page: 'ch03.xhtml'
+    - title: 'Working with Text Files'
+      lastpage: 97
+      oreilly_page: 'ch04.xhtml'
+    - title: 'Connecting to Red Hat Enterprise Linux'
+      lastpage: 119
+      oreilly_page: 'ch05.xhtml'
+    - title: 'User and Group Management'
+      lastpage: 141
+      oreilly_page: 'ch06.xhtml'
+    - title: 'Permissions Management'
+      lastpage: 165
+      oreilly_page: 'ch07.xhtml'
+    - title: 'Configuring Networking'
+      lastpage: 195
+      oreilly_page: 'ch08.xhtml'
+    - title: 'Managing Software'
+      lastpage: 231
+      oreilly_page: 'ch09.xhtml'
+    - title: 'Managing Processes'
+      lastpage: 251
+      oreilly_page: 'ch10.xhtml'
+    - title: 'Working with Systemd'
+      lastpage: 269
+      oreilly_page: 'ch11.xhtml'
+    - title: 'Scheduling Tasks'
+      lastpage: 283
+      oreilly_page: 'ch12.xhtml'
+    - title: 'Configuring Logging'
+      lastpage: 307
+      oreilly_page: 'ch13.xhtml'
+    - title: 'Managing Storage'
+      lastpage: 337
+      oreilly_page: 'ch14.xhtml'
+    - title: 'Managing Advanced Storage'
+      lastpage: 365
+      oreilly_page: 'ch15.xhtml'
+    - title: 'Basic Kernel Management'
+      lastpage: 383
+      oreilly_page: 'ch16.xhtml'
+    - title: 'Managing and Understanding the Boot Procedure'
+      lastpage: 399
+      oreilly_page: 'ch17.xhtml'
+    - title: 'Essential Troubleshooting Skills'
+      lastpage: 421
+      oreilly_page: 'ch18.xhtml'
+    - title: 'An Introduction to Bash Shell Scripting'
+      lastpage: 441
+      oreilly_page: 'ch19.xhtml'
+    - title: 'Configuring SSH'
+      lastpage: 455
+      oreilly_page: 'ch20.xhtml'
+    - title: 'Managing Apache HTTP Services'
+      lastpage: 469
+      oreilly_page: 'ch21.xhtml'
+    - title: 'Managing SELinux'
+      lastpage: 495
+      oreilly_page: 'ch21.xhtml'
+    - title: 'Configuring a Firewall'
+      lastpage: 509
+      oreilly_page: 'ch21.xhtml'
+    - title: 'Accessing Network Storage'
+      lastpage: 525
+      oreilly_page: 'ch21.xhtml'
+    - title: 'Configuring Time Services'
+      lastpage: 540
+      oreilly_page: 'ch21.xhtml'
