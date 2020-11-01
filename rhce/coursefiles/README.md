@@ -21,3 +21,21 @@ Go ahead and start your first labs now!
 ## Labs
 [lab0-1: Create your schedule](chapter0/lab0-1.md)</br>
 [lab0-2: Install the virtual lab environment](chapter0/lab0-2.md)</br>
+
+## Assignment Page Listing
+[Chapter 1: Understanding Configuration Management](chapter1/README.md)</br>
+[Chapter 2: Installing Ansible](chapter2/README.md)</br>
+[Chapter 3: Setting Up an Ansible Managed Environment](chapter3/README.md)</br>
+[Chapter 4: Using Ad Hoc Commands](chapter4/README.md)</br>
+[Chapter 5: Getting Started with Playbooks](chapter5/README.md)</br>
+[Chapter 6: Working with Variables and Facts](chapter6/README.md)</br>
+[Chapter 7: Using Task Control](chapter7/README.md)</br>
+[Chapter 8: Deploying Files](chapter8/README.md)</br>
+[Chapter 9: Using Ansible Roles](chapter9/README.md)</br>
+[Chapter 10: Using Ansible in Large Environments](chapter10/README.md)</br>
+[Chapter 11: Troubleshooting Ansible](chapter11/README.md)</br>
+[Chapter 12: Managing Software with Ansible](chapter12/README.md)</br>
+[Chapter 13: Managing Users](chapter13/README.md)</br>
+[Chapter 14: Managing Processes and Tasks](chapter14/README.md)</br>
+[Chapter 15: Managing Storage](chapter15/README.md)</br>
+[Chapter 16: Final Preparation](chapter16/README.md)</br>

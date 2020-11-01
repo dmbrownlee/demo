@@ -21,3 +21,30 @@ Go ahead and start your first labs now!
 ## Labs
 [lab0-1: Create your schedule](chapter0/lab0-1.md)</br>
 [lab0-2: Install the virtual lab environment](chapter0/lab0-2.md)</br>
+
+## Assignment Page Listing
+[Chapter 1: Installing Red Hat Enterprise Linux](chapter1/README.md)</br>
+[Chapter 2: Using Essential Tools](chapter2/README.md)</br>
+[Chapter 3: Essential File Management Tools](chapter3/README.md)</br>
+[Chapter 4: Working with Text Files](chapter4/README.md)</br>
+[Chapter 5: Connecting to Red Hat Enterprise Linux](chapter5/README.md)</br>
+[Chapter 6: User and Group Management](chapter6/README.md)</br>
+[Chapter 7: Permissions Management](chapter7/README.md)</br>
+[Chapter 8: Configuring Networking](chapter8/README.md)</br>
+[Chapter 9: Managing Software](chapter9/README.md)</br>
+[Chapter 10: Managing Processes](chapter10/README.md)</br>
+[Chapter 11: Working with Systemd](chapter11/README.md)</br>
+[Chapter 12: Scheduling Tasks](chapter12/README.md)</br>
+[Chapter 13: Configuring Logging](chapter13/README.md)</br>
+[Chapter 14: Managing Storage](chapter14/README.md)</br>
+[Chapter 15: Managing Advanced Storage](chapter15/README.md)</br>
+[Chapter 16: Basic Kernel Management](chapter16/README.md)</br>
+[Chapter 17: Managing and Understanding the Boot Procedure](chapter17/README.md)</br>
+[Chapter 18: Essential Troubleshooting Skills](chapter18/README.md)</br>
+[Chapter 19: An Introduction to Bash Shell Scripting](chapter19/README.md)</br>
+[Chapter 20: Configuring SSH](chapter20/README.md)</br>
+[Chapter 21: Managing Apache HTTP Services](chapter21/README.md)</br>
+[Chapter 22: Managing SELinux](chapter22/README.md)</br>
+[Chapter 23: Configuring a Firewall](chapter23/README.md)</br>
+[Chapter 24: Accessing Network Storage](chapter24/README.md)</br>
+[Chapter 25: Configuring Time Services](chapter25/README.md)</br>
