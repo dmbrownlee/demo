@@ -3,4 +3,4 @@
 repo: "https://github.com/dmbrownlee/demo"
 rawrepo: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
 courseroot: '{{ ansible_user_dir }}/demo/{{ course }}/coursefiles'
-schedulefile: 'schedule-template.tsv'
+schedulefile: '{{ course }}-schedule-template.tsv'
