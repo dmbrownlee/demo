@@ -1,4 +1,4 @@
-# lab0-1: Install the virtual lab environment
+# lab0-2: Install the virtual lab environment
 ## Sorry, this is only a placeholder for a lab that has yet to be written.
 
 ![Image of construction sign](../images/ConstructionSign.png)
