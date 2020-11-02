@@ -1,0 +1,7 @@
+---
+- name: Ensure quagga is restarted
+  listen: quagga_restart
+  systemd:
+    name: zebra
+    state: restarted
+  become: yes
