@@ -3,3 +3,8 @@
   hosts: all
   roles:
     - role: vmguest
+
+- name: Quagga Router configuration
+  hosts: quagga_routers
+  roles:
+    - role: quagga_router

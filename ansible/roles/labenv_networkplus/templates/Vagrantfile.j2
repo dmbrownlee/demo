@@ -28,7 +28,7 @@ Vagrant.configure("2") do |config|
   #==========================
 
   (1..3).each do |host|
-    config.vm.define "debian#{host}" do |node|
+    config.vm.define "debian#{host}", autostart: false do |node|
       node.vm.provider "virtualbox" do |vboxvm|
         vboxvm.name = "debian#{host}"
       end
@@ -39,6 +39,33 @@ Vagrant.configure("2") do |config|
         ansible.groups = {
           "foo" => ["bar"]
         }
+      end
+    end
+  end
+
+  #==========================
+  # Debian Routers
+  #==========================
+
+  (1..3).each do |host|
+    config.vm.define "router#{host}", autostart: false do |node|
+      node.vm.provider "virtualbox" do |vboxvm|
+        vboxvm.name = "router#{host}"
+      end
+      node.vm.provision :ansible do |ansible|
+        ansible.playbook = "ansible/site.yml"
+        ansible.raw_arguments = ["-e ansible_python_interpreter=/usr/bin/python3"]
+        ansible.skip_tags = "disabled"
+        ansible.groups = {
+          "quagga_routers" => ["router1", "router2", "router3"],
+          "quagga_routers:vars" => { "q_password": "password",
+                                     "q_enable_password": "password" }
+        }
+        # ansible.host_vars = {
+        #   "router1" => {},
+        #   "router2" => {},
+        #   "router3" => {}
+        # }
       end
     end
   end
@@ -60,7 +87,7 @@ Vagrant.configure("2") do |config|
   # Windows VM
   #==========================
 
-  config.vm.define "windows" do |node|
+  config.vm.define "windows", autostart: false do |node|
     node.vm.box = "windows-10"
     node.vm.communicator = "winrm"
     node.vm.boot_timeout = 300
