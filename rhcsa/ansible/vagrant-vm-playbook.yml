@@ -7,7 +7,6 @@
 
 - name: Server with GUI
   hosts:
-    - labipa
     - server1
   roles:
     - role: server-with-gui
@@ -18,12 +17,6 @@
     - role: vagranthost
     - role: netconfig-lab
     - role: labhost
-
-- name: Configure FreeIPA hosts
-  hosts: ipa_server
-  roles:
-    - role: vagrant-freeipa
-    - role: vagrant-freeipa-users
 
 - name: Exam hosts
   hosts: examhost
