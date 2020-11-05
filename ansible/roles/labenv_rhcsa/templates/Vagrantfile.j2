@@ -63,9 +63,18 @@ Vagrant.configure("2") do |config|
   config.vm.define "server2" do |node|
     node.vm.box = "centos-8.2.2004"
 {% if virtualization == "virtualbox" %}
+    disk = "/Users/user/VirtualBox VMs/rhcsa_server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_server2"
-      # virtualbox.storage :file, :bus => :sata
+      # Create and attach a new, empty disk with the same name
+      virtualbox.customize ['createhd', '--filename', disk, '--variant',
+        'Standard', '--size', 20 * 1024]
+      virtualbox.customize ["storageattach", :id,
+        "--storagectl", "SATA Controller",
+        "--type", "hdd",
+        "--port", "1",
+        "--device", "0",
+        "--medium", disk]
     end
 {% endif %}
   end
@@ -78,9 +87,9 @@ Vagrant.configure("2") do |config|
 #}
 {% if virtualization == "virtualbox" %}
   #=== installhost ===
-  disk = "/Users/user/VirtualBox VMs/rhcsa_installhost/centos-8.2.2004-disk001.vmdk"
   config.vm.define "installhost", autostart: false do |node|
     node.vm.box = "centos-8.2.2004"
+    disk = "/Users/user/VirtualBox VMs/rhcsa_installhost/centos-8.2.2004-disk001.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_installhost"
       virtualbox.gui = true
