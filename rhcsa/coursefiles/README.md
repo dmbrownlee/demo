@@ -23,7 +23,7 @@ Go ahead and start your first labs now!
 [lab0-2: Install the virtual lab environment](chapter0/lab0-2.md)</br>
 
 ## Assignment Page Listing
-[Chapter 1: Installing Red Hat Enterprise Linux](chapter1/README.md)</br>
+[Chapter 1: Practice manually installing the OS](chapter1/README.md)</br>
 [Chapter 2: Using Essential Tools](chapter2/README.md)</br>
 [Chapter 3: Essential File Management Tools](chapter3/README.md)</br>
 [Chapter 4: Working with Text Files](chapter4/README.md)</br>

@@ -29,7 +29,7 @@ study_guide:
       labs:
         - title: "Create your schedule"
         - title: "Install the virtual lab environment"
-    - title: "Installing Red Hat Enterprise Linux"
+    - title: "Practice manually installing the OS"
       lastpage: 27
       oreilly_page: "ch01.xhtml"
       labs:
