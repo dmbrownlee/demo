@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
   end
 {% endif %}
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "ansible/vagrant-vm-playbook.yml"
+    ansible.playbook = "ansible/site.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
       "rhcsa8" => [
