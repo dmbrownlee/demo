@@ -1,6 +1,6 @@
 "Due Date"	"Assignment"	"Last Page"	"Pages"	"% Complete"	"Scheduling Notes"
 ""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/README.md","Study Group Orientation")	""	""	""	""
-""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/chapter1/README.md","Chapter 1: Installing Red Hat Enterprise Linux")	"27"	"27"	"  5.00"	""
+""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/chapter1/README.md","Chapter 1: Practice manually installing the OS")	"27"	"27"	"  5.00"	""
 ""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/chapter2/README.md","Chapter 2: Using Essential Tools")	"51"	"24"	"  9.44"	""
 ""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/chapter3/README.md","Chapter 3: Essential File Management Tools")	"79"	"28"	" 14.63"	""
 ""	=hyperlink("https://github.com/dmbrownlee/demo/rhcsa/coursefiles/chapter4/README.md","Chapter 4: Working with Text Files")	"97"	"18"	" 17.96"	""
