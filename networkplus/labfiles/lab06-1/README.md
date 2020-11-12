@@ -40,7 +40,8 @@ Go ahead and open GNS3 and load this labs 'lab06-1.gns3project' file. Once opend
 To set the type of network address assignment, we'll be using 'nmcli', that is, the command-line NetworkManager tool. Using the command-line tool means that you can take advantage of auto completion. Give it ago! To set the network interface as static, using the following command `nmcli connection modify Wired\ connection\ 1 ipv4.method manual ipv4.addresses 1.1.1.100/8 ipv4.gateway 1.1.1.254 ipv4.dns 1.1.1.1`. Whilst you're typing the command in, trying pressing the tab key. If there is only one matching option, it will be auto completed. If there is more than one option available, press tab twice in rapid succession, you'll see all available options. However, if there are no options available, you won't get any output, and you'll need to check your command.
 ![lab06-1 nmcli static](lab06-1_nmcli_static.png)
 
-Now that you have created the configuration for the network interface card, the last step is to activate it.ip addre
+Now that you have created the configuration for the network interface card, the last step is to activate it. Enter `nmcli connection up Wired\ connection\ 1`
+![lab06-1 nmcli activate configuration](lab06-1_activate_connection.png)
 
 Success! The network interface has now been set with a static IP address, static gateway, and static DNS server. However, how would this cause issues if you tried to connect to a different network?
 
