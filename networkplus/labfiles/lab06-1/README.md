@@ -46,7 +46,7 @@ Success! The network interface has now been set with a static IP address, static
 
 Try setting the network interface on your debian VM with your own custom settings, changing the address information in the previous command. Use your new subnetting knowledge to calculate suitable IP address information.
 
-To set the interface back to dynamic, using DHCP, type the following `nmcli connection delete Wired\ connection\ 1`. Here we are deleting the custom settings that we've set. Then we need to restart the Network Manager to update out connection: `nmcli connection up Wired\ connection\ 1`.
+To set the interface back to dynamic, using DHCP, type the following `nmcli connection delete Wired\ connection\ 1`. Here we are deleting the custom settings that we've set. Then we need Network Manager to apply our updated connection to the NIC: `nmcli connection up Wired\ connection\ 1`.
 
 You can see the whole nmcli connection settings by entering `nmcli connection show Wired\ connection\ 1'. Enter this command. What other information can you see?
 
