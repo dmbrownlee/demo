@@ -38,7 +38,10 @@ study_guide:
       lastpage: 51
       oreilly_page: 'ch02.xhtml'
       labs:
-        - title: "Using Essential Tools - Vim"
+        - title: "Bash: Word splitting and expansion"
+        - title: "Bash: Command types revisited"
+        - title: "Learning Vim"
+        - title: "Customizing Vim"
     - title: 'Essential File Management Tools'
       lastpage: 79
       oreilly_page: 'ch03.xhtml'

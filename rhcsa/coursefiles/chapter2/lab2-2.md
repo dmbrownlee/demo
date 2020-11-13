@@ -1,4 +1,4 @@
-# lab2-1: Bash: Word splitting and expansion
+# lab2-2: Bash: Command types revisited
 ## Sorry, this is only a placeholder for a lab that has yet to be written.
 
 ![Image of construction sign](../images/ConstructionSign.png)
