@@ -3,7 +3,17 @@
   hosts: control.example.com
   roles:
     - role: controller
-- name: Configure debansibles for ansible automation
-  hosts: debansibles
+# Firewall provides Internet access for the rest of the network so it needs
+# to be configured first.
+- name: Configure firewall for ansible managment
+  hosts: firewalls
+  gather_facts: false
   roles:
     - role: managed
+    - role: firewall
+#
+# - name: Configure routers for ansible automation
+#   hosts: debansibles
+#   gather_facts: false
+#   roles:
+#     - role: managed
