@@ -1,0 +1,9 @@
+---
+- name: Configure controler
+  hosts: control.example.com
+  roles:
+    - role: controller
+- name: Configure debansibles for ansible automation
+  hosts: debansibles
+  roles:
+    - role: managed
