@@ -1,1 +1,4 @@
 ---
+- name: Ensure there is a python interpreter installed
+  raw: apt update && apt install -y python3
+  become: yes
