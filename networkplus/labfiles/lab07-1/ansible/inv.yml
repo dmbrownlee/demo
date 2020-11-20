@@ -1,27 +1,27 @@
 all:
   hosts:
-    control:
+    control.example.com:
       ansible_connection: local
-    firewall:
+    firewall.example.com:
       ansible_host: 192.168.42.2
       ansible_user: user
-    router1:
+    router1.example.com:
       ansible_host: 192.168.42.3
       ansible_user: user
-    router2:
+    router2.example.com:
       ansible_host: 192.168.42.4
       ansible_user: user
   children:
     debansibles:
       hosts:
-        firewall.example.com
-        router1.example.com
-        router2.example.com
+        firewall.example.com:
+        router1.example.com:
+        router2.example.com:
     ospfrouters:
       hosts:
-        firewall.example.com
-        router1.example.com
-        router2.example.com
+        firewall.example.com:
+        router1.example.com:
+        router2.example.com:
     firewalls:
       hosts:
-        firewall
+        firewall.example.com:
