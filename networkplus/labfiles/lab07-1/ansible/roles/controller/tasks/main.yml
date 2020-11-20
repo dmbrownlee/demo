@@ -9,3 +9,21 @@
     - 192.168.42.3 router1.example.com router1
     - 192.168.42.4 router2.example.com router2
   become: yes
+- name: Ensure iptables is installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - iptables
+    - iptables-persistent
+  become: yes
+- name: Ensure NAT to Internet is enabled
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    src_range: 192.168.42.1-192.168.42.254
+    out_interface: eth1
+    jump: MASQUERADE
+  become: yes
+
+
