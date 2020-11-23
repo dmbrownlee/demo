@@ -38,6 +38,7 @@ all:
           method: static
           address: 192.168.41.2
           netmask: 255.255.255.252
+          gateway: 192.168.41.1
         eth2:
           description: "Server Network (MDF)"
           method: static
@@ -62,6 +63,7 @@ all:
           method: static
           address: 192.168.41.6
           netmask: 255.255.255.252
+          gateway: 192.168.41.5
   children:
     managed:
       hosts:
