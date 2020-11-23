@@ -1,0 +1,6 @@
+---
+- name: Ensure quagga routing suite is installed
+  apt:
+    name: quagga
+    state: latest
+  become: yes
