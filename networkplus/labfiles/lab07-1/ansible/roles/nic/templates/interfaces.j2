@@ -1,0 +1,14 @@
+{% for name, attr in interfaces.iteritems() %}
+auto {{ name }}
+{% if attr.description is defined %}
+# {{ attr.description }}
+{% endif %}
+iface {{ name }} inet {{ attr.method }}
+{% if attr.method == "static" %}
+  address {{ attr.address }}
+  netmask {{ attr.netmask }}
+{% if attr.gateway is defined %}
+  gateway {{ attr.gateway }}
+{% endif %}
+{% endif %}
+{% endfor %}
