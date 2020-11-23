@@ -1,6 +1,19 @@
 ---
-- name: Ensure quagga routing suite is installed
-  apt:
-    name: quagga
-    state: latest
+- name: Ensure quagga configuration directory is moved to persistent storage
+  file:
+    path: /etc/network/quagga
+    state: directory
+    owner: quagga
+    group: quaggavty
+    mode: '0775'
+  become: yes
+- name: Ensure there is a link back to the expected location for quagga configs
+  file:
+    path: /etc/quagga
+    src: /etc/network/quagga
+    state: link
+    force: yes
+    owner: quagga
+    group: quaggavty
+    mode: '0775'
   become: yes
