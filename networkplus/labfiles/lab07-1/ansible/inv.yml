@@ -5,12 +5,63 @@ all:
     firewall.example.com:
       ansible_host: 192.168.42.2
       ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.2
+          netmask: 255.255.255.0
+        eth1:
+          description: "Internet"
+          method: dhcp
+        eth2:
+          description: "DMZ"
+          method: static
+          address: 192.168.43.254
+          netmask: 255.255.255.0
+        eth3:
+          description: "Intranet"
+          method: static
+          address: 192.168.41.1
+          netmask: 255.255.255.252
     router1.example.com:
       ansible_host: 192.168.42.3
       ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.3
+          netmask: 255.255.255.0
+        eth1:
+          description: "To Firewall"
+          method: static
+          address: 192.168.41.2
+          netmask: 255.255.255.252
+        eth2:
+          description: "Server Network (MDF)"
+          method: static
+          address: 192.168.44.254
+          netmask: 255.255.255.0
+        eth3:
+          description: "Intranet"
+          method: static
+          address: 192.168.41.5
+          netmask: 255.255.255.252
     router2.example.com:
       ansible_host: 192.168.42.4
       ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.4
+          netmask: 255.255.255.0
+        eth1:
+          description: "To Router1"
+          method: static
+          address: 192.168.41.6
+          netmask: 255.255.255.252
   children:
     managed:
       hosts:
