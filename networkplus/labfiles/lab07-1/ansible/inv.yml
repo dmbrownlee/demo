@@ -24,6 +24,10 @@ all:
           method: static
           address: 192.168.41.1
           netmask: 255.255.255.252
+      system_packages:
+        - iptables
+        - iptables-persistent
+        - quagga
     router1.example.com:
       ansible_host: 192.168.42.3
       ansible_user: user
@@ -49,6 +53,8 @@ all:
           method: static
           address: 192.168.41.5
           netmask: 255.255.255.252
+      system_packages:
+        - quagga
     router2.example.com:
       ansible_host: 192.168.42.4
       ansible_user: user
@@ -64,6 +70,8 @@ all:
           address: 192.168.41.6
           netmask: 255.255.255.252
           gateway: 192.168.41.5
+      system_packages:
+        - quagga
   children:
     managed:
       hosts:

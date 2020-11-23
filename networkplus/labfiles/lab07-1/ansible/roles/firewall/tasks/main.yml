@@ -1,12 +1,4 @@
 ---
-- name: Ensure iptables is installed
-  apt:
-    name: "{{ item }}"
-    state: latest
-  loop:
-    - iptables
-    - iptables-persistent
-  become: yes
 - name: Ensure NAT to Internet is enabled
   iptables:
     table: nat
