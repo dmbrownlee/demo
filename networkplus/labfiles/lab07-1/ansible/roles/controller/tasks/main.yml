@@ -9,6 +9,10 @@
     - 192.168.42.3 router1.example.com router1
     - 192.168.42.4 router2.example.com router2
   become: yes
+- name: Ensure apt cache is updated before installing packages
+  apt:
+    update_cache: yes
+  become: yes
 - name: Ensure iptables is installed
   apt:
     name: "{{ item }}"
