@@ -24,10 +24,10 @@
   gather_facts: false
   roles:
     - role: nic
-    # - role: router
+    - role: router
 - name: Configure router2
   hosts: router2.example.com
   gather_facts: false
   roles:
     - role: nic
-    # - role: router
+    - role: router
