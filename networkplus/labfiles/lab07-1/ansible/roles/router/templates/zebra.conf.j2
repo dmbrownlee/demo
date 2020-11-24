@@ -1,3 +1,17 @@
 hostname {{ ansible_hostname }}
 password zebra
 enable password zebra
+!
+! Logging settings
+!
+log trap informational
+no log stdout
+no log file
+no log syslog
+log monitor
+!
+{% if quagga.zebra is defined %}
+{% for line in quagga.zebra %}
+{{ line }}
+{% endfor %}
+{% endif %}

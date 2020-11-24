@@ -2,5 +2,17 @@ hostname {{ ansible_hostname }}
 password zebra
 enable password zebra
 !
-!router ospf
-!  network 192.168.42.0/24 area 0
+! Logging settings
+!
+log trap informational
+no log stdout
+no log file
+no log syslog
+log monitor
+!
+{% if quagga.ospfd is defined %}
+router ospf
+{% for line in quagga.ospfd %}
+{{ line }}
+{% endfor %}
+{% endif %}

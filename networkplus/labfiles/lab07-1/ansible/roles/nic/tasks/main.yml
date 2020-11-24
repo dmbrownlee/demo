@@ -13,8 +13,3 @@
   command: ip route del 0.0.0.0/0 via 192.168.42.1
   when: "'default via 192.168.42.1 dev eth0 ' in default_routes.stdout_lines"
   become: yes
-- name: Restart any interface that specifies a gateway
-  shell: /gns3/bin/busybox ifdown -f {{ item.key }} && /gns3/bin/busybox ifup -f {{ item.key }}
-  when: item.value.gateway is defined
-  loop: "{{ interfaces | dict2items }}"
-  become: yes
