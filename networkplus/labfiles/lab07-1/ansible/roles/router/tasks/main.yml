@@ -17,3 +17,41 @@
     group: quaggavty
     mode: '0775'
   become: yes
+- name: Ensure zebra configuration is current
+  template:
+    dest: /etc/network/quagga/zebra.conf
+    src: "zebra.conf.j2"
+    owner: quagga
+    group: quagga
+    mode: '0644'
+  notify: restart_zebra
+  become: yes
+- name: Ensure vtysh configuration is current
+  template:
+    dest: /etc/network/quagga/vtysh.conf
+    src: "vtysh.conf.j2"
+    owner: quagga
+    group: quaggavty
+    mode: '0644'
+  become: yes
+- name: Ensure ospfd configuration is current
+  template:
+    dest: /etc/network/quagga/ospfd.conf
+    src: "ospfd.conf.j2"
+    owner: quagga
+    group: quagga
+    mode: '0644'
+  notify: restart_ospfd
+  become: yes
+- name: Start zebra daemon
+  service:
+    name: "zebra"
+    state: started
+    enabled: yes
+  become: yes
+- name: Start OSPF daemon
+  service:
+    name: "ospfd"
+    state: started
+    enabled: yes
+  become: yes
