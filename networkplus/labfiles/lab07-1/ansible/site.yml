@@ -17,17 +17,14 @@
 # and the Internet.
 - name: Configure firewall
   hosts: firewall.example.com
-  gather_facts: false
   roles:
     - role: firewall
     - role: router
 - name: Configure router1
   hosts: router1.example.com
-  gather_facts: false
   roles:
     - role: router
 - name: Configure router2
   hosts: router2.example.com
-  gather_facts: false
   roles:
     - role: router
