@@ -69,6 +69,20 @@ all:
           method: static
           address: 192.168.42.4
           netmask: 255.255.255.0
+        vlan1:
+          method: static
+          address: 192.168.45.254
+          netmask: 255.255.255.0
+          vlan:
+            id: 1
+            device: eth2
+        vlan2:
+          method: static
+          address: 192.168.46.254
+          netmask: 255.255.255.0
+          vlan:
+            id: 2
+            device: eth2
       system_packages:
         - quagga
       quagga:

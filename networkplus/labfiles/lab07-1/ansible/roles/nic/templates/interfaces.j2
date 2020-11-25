@@ -7,6 +7,10 @@ iface {{ name }} inet {{ attr.method }}
 {% if attr.method == "static" %}
   address {{ attr.address }}
   netmask {{ attr.netmask }}
+{% if attr.vlan is defined %}
+  pre-up ip link add link {{ attr.vlan.device }} name {{ name }} type vlan id {{ attr.vlan.id }} protocol 802.1Q
+  post-down ip link del dev {{ name }}
+{% endif %}
 {% if attr.gateway is defined %}
   gateway {{ attr.gateway }}
 {% endif %}
