@@ -2,12 +2,8 @@
 - name: Ensure /ets/hosts contains static IPs for network gear
   lineinfile:
     path: /etc/hosts
-    line: "{{ item }}"
-  loop:
-    - 192.168.42.1 control.example.com control
-    - 192.168.42.2 firewall.example.com firewall
-    - 192.168.42.3 router1.example.com router1
-    - 192.168.42.4 router2.example.com router2
+    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }} {{ item.value.inventory_hostname_short }}"
+  loop: "{{ hostvars | dict2items }}"
   become: yes
 - name: Ensure apt cache is updated before installing packages
   apt:

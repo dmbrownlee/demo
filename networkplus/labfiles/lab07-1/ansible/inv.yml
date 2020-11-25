@@ -2,6 +2,7 @@ all:
   hosts:
     control.example.com:
       ansible_connection: local
+      ansible_host: 192.168.42.1
     firewall.example.com:
       ansible_host: 192.168.42.2
       ansible_user: user
