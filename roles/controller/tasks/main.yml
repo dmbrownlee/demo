@@ -1,0 +1,42 @@
+---
+- name: Ensure /ets/hosts contains static IPs for network gear
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }} {{ item.value.inventory_hostname_short }}"
+  loop: "{{ hostvars | dict2items }}"
+  become: yes
+- name: Ensure apt cache is updated before installing packages
+  apt:
+    update_cache: yes
+  become: yes
+- name: Ensure iptables is installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - iptables
+    - iptables-persistent
+  become: yes
+- name: Ensure NAT to Internet is enabled
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    src_range: 192.168.42.1-192.168.42.254
+    out_interface: eth1
+    jump: MASQUERADE
+  become: yes
+- name: Ensure useful vim-tiny is removed
+  apt:
+    name: vim-tiny
+    state: absent
+  become: yes
+- name: Ensure useful vim is installed
+  apt:
+    name: vim
+    state: latest
+  become: yes
+- name: Ensure useful iproute2 is installed
+  apt:
+    name: iproute2
+    state: latest
+  become: yes

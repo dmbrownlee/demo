@@ -1,0 +1,111 @@
+all:
+  hosts:
+    control.example.com:
+      ansible_connection: local
+      ansible_host: 192.168.42.1
+    firewall.example.com:
+      ansible_host: 192.168.42.2
+      ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.2
+          netmask: 255.255.255.0
+        eth1:
+          description: "Internet"
+          method: dhcp
+      system_packages:
+        - iptables
+        - iptables-persistent
+        - quagga
+      quagga:
+        zebra:
+          - "ip route 0.0.0.0/0 192.168.122.1"
+          - "interface eth2"
+          - "  description DMZ"
+          - "  ip address 192.168.43.254/24"
+          - "interface eth3"
+          - "  description Internal"
+          - "  ip address 192.168.41.1/30"
+        ospfd:
+          - "  ospf router-id 1.1.1.1"
+          - "  network 192.168.43.0/24 area 0"
+          - "  network 192.168.41.0/30 area 0"
+          - "  default-information originate always"
+    router1.example.com:
+      ansible_host: 192.168.42.3
+      ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.3
+          netmask: 255.255.255.0
+      system_packages:
+        - quagga
+      quagga:
+        zebra:
+          - "interface eth1"
+          - "  description Backbone"
+          - "  ip address 192.168.41.2/30"
+          - "interface eth2"
+          - "  description MDF"
+          - "  ip address 192.168.44.254/24"
+          - "interface eth3"
+          - "  description Backbone"
+          - "  ip address 192.168.41.5/30"
+        ospfd:
+          - "  ospf router-id 2.2.2.2"
+          - "  network 192.168.44.0/24 area 0"
+          - "  network 192.168.41.0/30 area 0"
+          - "  network 192.168.41.4/30 area 0"
+    router2.example.com:
+      ansible_host: 192.168.42.4
+      ansible_user: user
+      interfaces:
+        eth0:
+          description: "Provisioning Interface"
+          method: static
+          address: 192.168.42.4
+          netmask: 255.255.255.0
+        vlan1:
+          method: static
+          address: 192.168.45.254
+          netmask: 255.255.255.0
+          vlan:
+            id: 1
+            device: eth2
+        vlan2:
+          method: static
+          address: 192.168.46.254
+          netmask: 255.255.255.0
+          vlan:
+            id: 2
+            device: eth2
+      system_packages:
+        - quagga
+      quagga:
+        zebra:
+          - "interface eth1"
+          - "  description Backbone"
+          - "  ip address 192.168.41.6/30"
+          # - "interface eth2"
+          # - "  description Office and Labs"
+          # - "  ip address 192.168.44.254/24"
+        ospfd:
+          - "  ospf router-id 3.3.3.3"
+          - "  network 192.168.41.4/30 area 0"
+  children:
+    managed:
+      hosts:
+        firewall.example.com:
+        router1.example.com:
+        router2.example.com:
+    firewalls:
+      hosts:
+        firewall.example.com:
+    routers:
+      hosts:
+        router1.example.com:
+        router2.example.com:

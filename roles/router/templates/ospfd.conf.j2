@@ -1,0 +1,18 @@
+hostname {{ ansible_hostname }}
+password zebra
+enable password zebra
+!
+! Logging settings
+!
+log trap informational
+no log stdout
+no log file
+no log syslog
+log monitor
+!
+{% if quagga.ospfd is defined %}
+router ospf
+{% for line in quagga.ospfd %}
+{{ line }}
+{% endfor %}
+{% endif %}
