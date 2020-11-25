@@ -1,0 +1,10 @@
+---
+- name: Bootstrap network interfaces
+  gather_facts: false
+  hosts:
+    - firewalls
+    - routers
+  roles:
+    - role: bootstrap
+    - role: system-packages
+    - role: nic

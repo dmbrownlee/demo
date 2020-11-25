@@ -1,0 +1,5 @@
+---
+- name: Configure controler
+  hosts: control.example.com
+  roles:
+    - role: controller

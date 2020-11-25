@@ -1,17 +1,4 @@
 ---
-- name: Configure controler
-  hosts: control.example.com
-  roles:
-    - role: controller
-- name: Bootstrap network interfaces
-  gather_facts: false
-  hosts:
-    - firewalls
-    - routers
-  roles:
-    - role: bootstrap
-    - role: system-packages
-    - role: nic
 # After bootstrapping, the network devices need to be cofigured from the
 # outside to the inside as any device will depend on the devices between it
 # and the Internet.
