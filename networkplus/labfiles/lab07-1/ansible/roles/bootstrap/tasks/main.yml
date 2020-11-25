@@ -8,6 +8,6 @@
   changed_when: false
   become: yes
 - name: Ensure python3 is installed
-  raw: apt update && apt install -y python3
+  raw: apt update && apt install -y python3 python3-apt
   changed_when: false
   become: yes
