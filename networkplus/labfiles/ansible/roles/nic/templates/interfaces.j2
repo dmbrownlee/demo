@@ -1,4 +1,4 @@
-{% for name, attr in interfaces.iteritems() %}
+{% for name, attr in interfaces.items() %}
 auto {{ name }}
 {% if attr.description is defined %}
 # {{ attr.description }}
