@@ -25,6 +25,28 @@
     out_interface: eth1
     jump: MASQUERADE
   become: yes
+- name: Check if /etc/iptables.rules exists
+  stat:
+    path: /etc/iptables.rules
+  register: iptables_rules
+  changed_when: false
+- name: Ensure default /etc/iptables.rules installed if needed
+  template:
+    dest: /etc/iptables.rules
+    src: iptables.rules.j2
+    owner: root
+    group: root
+    mode: "0640"
+  become: yes
+  when: not iptables_rules.stat.exists
+- name: Ensure persistent iptables rules get loaded
+  template:
+    dest: /etc/network/if-pre-up.d/firewall
+    src: firewall.j2
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
 - name: Ensure useful vim-tiny is removed
   apt:
     name: vim-tiny
