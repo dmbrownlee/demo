@@ -12,6 +12,7 @@ all:
     firewall.networkplus.test:
       ansible_host: 192.168.42.2
       ansible_user: user
+      bootstrap_through_control: true
       interfaces:
         eth0:
           comment: "Provisioning Interface"
@@ -43,6 +44,7 @@ all:
     router1.networkplus.test:
       ansible_host: 192.168.42.3
       ansible_user: user
+      bootstrap_through_control: true
       interfaces:
         eth0:
           comment: "Provisioning Interface"
@@ -71,6 +73,7 @@ all:
     router2.networkplus.test:
       ansible_host: 192.168.42.4
       ansible_user: user
+      bootstrap_through_control: true
       interfaces:
         eth0:
           comment: "Provisioning Interface"
