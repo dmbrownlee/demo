@@ -33,3 +33,11 @@
     group: root
     mode: '0644'
   become: yes
+- name: Ensure persistent iptables rules get loaded
+  template:
+    dest: /etc/network/if-pre-up.d/firewall
+    src: firewall.j2
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
