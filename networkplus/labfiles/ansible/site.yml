@@ -2,16 +2,12 @@
 # After bootstrapping, the network devices need to be cofigured from the
 # outside to the inside as any device will depend on the devices between it
 # and the Internet.
-- name: Configure firewall
-  hosts: firewall.example.com
+- name: Configure firewalls
+  hosts: firewalls
   roles:
     - role: firewall
     - role: router
-- name: Configure router1
-  hosts: router1.example.com
-  roles:
-    - role: router
-- name: Configure router2
-  hosts: router2.example.com
+- name: Configure routers
+  hosts: routers
   roles:
     - role: router
