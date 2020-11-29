@@ -8,12 +8,12 @@ all:
       ansible_user: user
       interfaces:
         eth0:
-          description: "Provisioning Interface"
+          comment: "Provisioning Interface"
           method: static
           address: 192.168.42.2
           netmask: 255.255.255.0
         eth1:
-          description: "Internet"
+          comment: "Internet"
           method: dhcp
       system_packages:
         - iptables
@@ -38,7 +38,7 @@ all:
       ansible_user: user
       interfaces:
         eth0:
-          description: "Provisioning Interface"
+          comment: "Provisioning Interface"
           method: static
           address: 192.168.42.3
           netmask: 255.255.255.0
@@ -65,24 +65,23 @@ all:
       ansible_user: user
       interfaces:
         eth0:
-          description: "Provisioning Interface"
+          comment: "Provisioning Interface"
           method: static
           address: 192.168.42.4
           netmask: 255.255.255.0
-        vlan1:
-          method: static
-          address: 192.168.45.254
-          netmask: 255.255.255.0
-          vlan:
-            id: 1
-            device: eth2
-        vlan2:
-          method: static
-          address: 192.168.46.254
-          netmask: 255.255.255.0
-          vlan:
-            id: 2
-            device: eth2
+        eth2:
+          method: manual
+          vlan_ifaces:
+            vlan1:
+              method: static
+              address: 192.168.45.254
+              netmask: 255.255.255.0
+              vlan: 100
+            vlan2:
+              method: static
+              address: 192.168.46.254
+              netmask: 255.255.255.0
+              vlan: 200
       system_packages:
         - quagga
       quagga:
