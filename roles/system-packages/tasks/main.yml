@@ -9,3 +9,4 @@
     state: latest
   loop: "{{ system_packages }}"
   become: yes
+  when: system_packages is defined
