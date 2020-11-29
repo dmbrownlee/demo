@@ -3,3 +3,5 @@
   hosts: control.example.com
   roles:
     - role: controller
+    - role: system-packages
+    - role: router

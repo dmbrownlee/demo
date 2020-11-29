@@ -3,6 +3,12 @@ all:
     control.example.com:
       ansible_connection: local
       ansible_host: 192.168.42.1
+      system_packages:
+        - quagga
+      quagga:
+        ospfd:
+          - "  ospf router-id 1.1.1.1"
+          - "  network 192.168.42.0/24 area 0"
     firewall.example.com:
       ansible_host: 192.168.42.2
       ansible_user: user
@@ -29,8 +35,9 @@ all:
           - "  description Internal"
           - "  ip address 192.168.41.1/30"
         ospfd:
-          - "  ospf router-id 1.1.1.1"
+          - "  ospf router-id 2.2.2.2"
           - "  network 192.168.43.0/24 area 0"
+          - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
           - "  default-information originate always"
     router1.example.com:
@@ -56,8 +63,9 @@ all:
           - "  description Backbone"
           - "  ip address 192.168.41.5/30"
         ospfd:
-          - "  ospf router-id 2.2.2.2"
+          - "  ospf router-id 3.3.3.3"
           - "  network 192.168.44.0/24 area 0"
+          - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
           - "  network 192.168.41.4/30 area 0"
     router2.example.com:
@@ -93,7 +101,8 @@ all:
           # - "  description Office and Labs"
           # - "  ip address 192.168.44.254/24"
         ospfd:
-          - "  ospf router-id 3.3.3.3"
+          - "  ospf router-id 4.4.4.4"
+          - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.4/30 area 0"
   children:
     managed:
