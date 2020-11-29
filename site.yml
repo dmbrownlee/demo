@@ -11,3 +11,9 @@
   hosts: routers
   roles:
     - role: router
+- name: Bootstrap managed hosts
+  gather_facts: false
+  hosts: managed_hosts
+  roles:
+    - role: bootstrap
+    - role: system-packages

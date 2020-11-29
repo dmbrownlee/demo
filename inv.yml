@@ -108,11 +108,6 @@ all:
       ansible_host: 192.168.44.1
       ansible_user: user
   children:
-    managed:
-      hosts:
-        firewall.example.com:
-        router1.example.com:
-        router2.example.com:
     firewalls:
       hosts:
         firewall.example.com:
@@ -120,3 +115,6 @@ all:
       hosts:
         router1.example.com:
         router2.example.com:
+    managed_hosts:
+      hosts:
+        dhcp1.example.com:
