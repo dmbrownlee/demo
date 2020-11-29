@@ -1,4 +1,23 @@
 ---
+- name: Configure controler
+  hosts: control.networkplus.test
+  roles:
+    - role: controller
+    - role: system-packages
+    - role: router
+  tags:
+    - controller
+- name: Bootstrap network interfaces
+  gather_facts: false
+  hosts:
+    - firewalls
+    - routers
+  roles:
+    - role: bootstrap
+    - role: system-packages
+    - role: nic
+  tags:
+    - bootstrap
 # After bootstrapping, the network devices need to be cofigured from the
 # outside to the inside as any device will depend on the devices between it
 # and the Internet.
