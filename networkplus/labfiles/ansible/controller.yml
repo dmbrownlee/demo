@@ -1,6 +1,6 @@
 ---
 - name: Configure controler
-  hosts: control.example.com
+  hosts: control.networkplus.test
   roles:
     - role: controller
     - role: system-packages
