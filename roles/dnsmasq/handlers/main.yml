@@ -1,0 +1,8 @@
+---
+- name: Ensure dhsmasq is restarted on a config change
+  listen: restart_dnsmasq
+  service:
+    name: dnsmasq
+    state: restarted
+    enabled: yes
+  become: yes

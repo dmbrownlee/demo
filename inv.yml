@@ -110,6 +110,8 @@ all:
     dhcp1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
+      system_packages:
+        - dnsmasq
   children:
     firewalls:
       hosts:
@@ -119,5 +121,8 @@ all:
         router1.networkplus.test:
         router2.networkplus.test:
     managed_hosts:
+      hosts:
+        dhcp1.networkplus.test:
+    dnsmasq_servers:
       hosts:
         dhcp1.networkplus.test:

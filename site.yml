@@ -36,3 +36,8 @@
   roles:
     - role: bootstrap
     - role: system-packages
+- name: Configure dnsmasq servers
+  hosts: dnsmasq_servers
+  roles:
+    - role: dnsmasq
+
