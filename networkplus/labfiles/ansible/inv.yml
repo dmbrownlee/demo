@@ -1,6 +1,6 @@
 all:
   hosts:
-    control.example.com:
+    control.networkplus.test:
       ansible_connection: local
       ansible_host: 192.168.42.1
       system_packages:
@@ -9,7 +9,7 @@ all:
         ospfd:
           - "  ospf router-id 1.1.1.1"
           - "  network 192.168.42.0/24 area 0"
-    firewall.example.com:
+    firewall.networkplus.test:
       ansible_host: 192.168.42.2
       ansible_user: user
       interfaces:
@@ -40,7 +40,7 @@ all:
           - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
           - "  default-information originate always"
-    router1.example.com:
+    router1.networkplus.test:
       ansible_host: 192.168.42.3
       ansible_user: user
       interfaces:
@@ -68,7 +68,7 @@ all:
           - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
           - "  network 192.168.41.4/30 area 0"
-    router2.example.com:
+    router2.networkplus.test:
       ansible_host: 192.168.42.4
       ansible_user: user
       interfaces:
@@ -104,17 +104,17 @@ all:
           - "  ospf router-id 4.4.4.4"
           - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.4/30 area 0"
-    dhcp1.example.com:
+    dhcp1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
   children:
     firewalls:
       hosts:
-        firewall.example.com:
+        firewall.networkplus.test:
     routers:
       hosts:
-        router1.example.com:
-        router2.example.com:
+        router1.networkplus.test:
+        router2.networkplus.test:
     managed_hosts:
       hosts:
-        dhcp1.example.com:
+        dhcp1.networkplus.test:
