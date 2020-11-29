@@ -1,8 +1,0 @@
----
-- name: Ensure NAT to Internet is enabled
-  iptables:
-    table: nat
-    chain: POSTROUTING
-    out_interface: eth1
-    jump: MASQUERADE
-  become: yes
