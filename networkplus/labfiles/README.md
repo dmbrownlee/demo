@@ -12,15 +12,8 @@ After the GNS3 is installed in the step above, launch GNS3 and wait for the GNS3
 1. Open control's console (you may have to wait 30 seconds for the container to fully start) and run</br>
     <code>cd && git clone https://github.com/dmbrownlee/networkplus.test.git</code></br>to fetch the ansible playbooks needed to configure your network devices.
 1. Configure the ```control``` container first with</br>
-    <code>cd ~/networkplus.test && ansible-playbook -K controller.yml</code></br>
+    <code>cd ~/networkplus.test && ansible-playbook -K site.yml</code></br>
     (you will be prompted for your password).
-1. After the control container is configured, start the ```firewall```, ```router1```, and ```router2``` containers and then, in ```control```'s console, run</br>
-    <code>cd ~/ansible && ansible-playbook -K bootstrap.yml</code></br>
-    to install the software necessary to manage these containers remotely from the control container.
-1. Restart the ```firewall```, ```router1```, and ```router2``` containers.
-1. Finally, in ```control```'s console, run</br>
-    <code>cd ~/ansible && ansible-playbook -K bootstrap.yml</code></br>
-    to configure the other containers.
 
 > Note: This network model is still a work in progress
 
