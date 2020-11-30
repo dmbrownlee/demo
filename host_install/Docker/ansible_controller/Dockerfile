@@ -18,4 +18,5 @@ sshpass git tmux iptables \
 && echo "cd /tmp && git clone https://github.com/dmbrownlee/demo.git && cp -a /tmp/demo/networkplus/labfiles/ansible ~" >> /root/.getconfs
 
 VOLUME [ "/root", "/usr" ]
+CP labnetwork.setup /root
 CMD [ "sh", "-c", "cd; exec bash -i" ]

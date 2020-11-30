@@ -1,0 +1,15 @@
+#!/bin/bash
+# This script is preinstalled in the docker image
+if [ ! -d $HOME/networkplus.test ]; then
+  cd $HOME &&
+  git clone https://github.com/dmbrownlee/networkplus.test.git &&
+  cd networkplus.test
+else
+  cd $HOME/networkplus.test
+  git pull
+fi
+
+echo "Make sure all the switches are started before running the Ansible playbook!"
+read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
+
+ansible-playbook -K site.yml
