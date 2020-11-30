@@ -30,9 +30,16 @@
   hosts: routers
   roles:
     - role: router
+# Once the network is up (and we wait it a pre_task for OSPF to converge,
+# we can begin configuring the hosts.
 - name: Bootstrap managed hosts
   gather_facts: false
   hosts: managed_hosts
+  pre_tasks:
+    - name: Delay to give the newly configured OSPF routers time to converge
+      wait_for_connection:
+        delay: 30
+        timeout: 60
   roles:
     - role: bootstrap
     - role: system-packages
