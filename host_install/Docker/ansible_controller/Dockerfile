@@ -4,7 +4,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install telnet curl openssh-client vim \
 iputils-ping build-essential libssl-dev libffi-dev python3-pip python3-dev \
 python3-setuptools net-tools python3 software-properties-common iproute2 \
-sshpass git tmux iptables \
+sshpass git tmux iptables procps dnsutils mtr \
 && update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
 && update-alternatives --config python \
 && pip3 install wheel \
@@ -13,10 +13,16 @@ sshpass git tmux iptables \
 && pip3 install ansible \
 && mkdir -m 0700 /root/.ssh \
 && chown -R root /root/.ssh/ \
-&& echo "curl -fsSLo /root/.vimrc https://raw.githubusercontent.com/dmbrownlee/home/master/ansible/roles/baseline/templates/vimrc.j2" > /root/.getconfs \
-&& echo "curl -fsSLo /root/.tmux.conf https://raw.githubusercontent.com/dmbrownlee/home/master/ansible/roles/baseline/templates/tmux.conf.j2" >> /root/.getconfs \
-&& echo "cd /tmp && git clone https://github.com/dmbrownlee/demo.git && cp -a /tmp/demo/networkplus/labfiles/ansible ~" >> /root/.getconfs
+&& useradd -m -G sudo user
 
-VOLUME [ "/root", "/usr" ]
-CP labnetwork.setup /root
+COPY --chown=user:user labnetwork.setup /home/user/labnetwork.setup
+
+COPY --chown=user:user myconfig.sh /home/user/.myconfig.sh
+
+RUN chmod 755 /home/user/labnetwork.setup /home/user/.myconfig.sh
+
+VOLUME [ "/root", "/usr", "/home" ]
+
+USER user
+
 CMD [ "sh", "-c", "cd; exec bash -i" ]
