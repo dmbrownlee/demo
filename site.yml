@@ -7,13 +7,20 @@
     - role: router
   tags:
     - controller
-- name: Bootstrap network interfaces
-  gather_facts: false
+- name: Bootstrap network devices (1 - python)
   hosts:
     - firewalls
     - routers
   roles:
     - role: bootstrap
+  tags:
+    - bootstrap
+- name: Bootstrap managed hosts (2 - keys)
+  hosts:
+    - firewalls
+    - routers
+  roles:
+    - role: bootstrap-keys
     - role: system-packages
     - role: nic
   tags:
@@ -32,16 +39,20 @@
     - role: router
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
-- name: Bootstrap managed hosts
-  gather_facts: false
+- name: Bootstrap managed hosts (1 - python)
   hosts: managed_hosts
+  gather_facts: false
   pre_tasks:
-    - name: Delay to give the newly configured OSPF routers time to converge
-      wait_for_connection:
-        delay: 30
+    - name: Delay 60 seconds so new OSPF routers have time to share routes
+      wait_for:
         timeout: 60
+      delegate_to: localhost
   roles:
     - role: bootstrap
+- name: Bootstrap managed hosts (2 - keys)
+  hosts: managed_hosts
+  roles:
+    - role: bootstrap-keys
     - role: system-packages
 - name: Configure dnsmasq servers
   hosts: dnsmasq_servers

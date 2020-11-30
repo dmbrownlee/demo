@@ -41,3 +41,13 @@
     group: root
     mode: "0755"
   become: yes
+- name: Ensure a .ssh directory exists for SSH keys
+  file:
+    path: "{{ ansible_user_dir }}/.ssh"
+    state: directory
+    mode: '0700'
+- name: Ensure ssh key exists
+  openssh_keypair:
+    path: "{{ ansible_user_dir }}/.ssh/user"
+    state: present
+    comment: "user@networkplus.test"

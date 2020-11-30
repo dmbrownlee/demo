@@ -1,0 +1,6 @@
+---
+- name: Ensure public key is copied to authorized keys on host
+  authorized_key:
+    user: user
+    state: present
+    key: "{{ lookup('file', '/root/.ssh/user.pub') }}"
