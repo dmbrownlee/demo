@@ -3,17 +3,22 @@ FROM debian:latest
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install telnet curl openssh-client vim \
 iputils-ping build-essential libssl-dev libffi-dev python3-pip python3-dev \
-python3-setuptools net-tools python3 software-properties-common iproute2 \
-sshpass git tmux iptables procps dnsutils mtr \
+python3-setuptools net-tools python3 software-properties-common \
 && update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
 && update-alternatives --config python \
 && pip3 install wheel \
 && pip3 install cryptography netmiko napalm pyntc \
 && pip3 install --upgrade paramiko \
-&& pip3 install ansible \
-&& mkdir -m 0700 /root/.ssh \
+&& pip3 install ansible
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
+&& apt-get -y --no-install-recommends install sshpass git tmux iptables \
+procps dnsutils mtr iproute2 sudo
+
+RUN mkdir -m 0700 /root/.ssh \
 && chown -R root /root/.ssh/ \
-&& useradd -m -G sudo user
+&& useradd -m -G sudo user \
+&& echo 'password\npassword\n' | passwd user
 
 COPY --chown=user:user labnetwork.setup /home/user/labnetwork.setup
 
