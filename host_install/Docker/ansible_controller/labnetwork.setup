@@ -12,4 +12,4 @@ fi
 echo "Make sure all the switches are started before running the Ansible playbook!"
 read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
 
-ansible-playbook -K site.yml
+ansible-playbook -k -K site.yml
