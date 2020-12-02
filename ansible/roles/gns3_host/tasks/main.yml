@@ -24,6 +24,11 @@
     path: "{{ ansible_user_dir }}/Library/LaunchAgents"
     state: directory
     mode: '0755'
+- name: Ensure workaround for PyQt5 bug is installed
+  copy:
+    dest: "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
+    src: "setenv.QT_MAC_WANTS_LAYER.plist"
+    mode: "0644"
 - name: Ensure the script to start vboxnet0 at login is installed
   copy:
     dest: "{{ item.dest }}"
