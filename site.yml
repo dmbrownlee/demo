@@ -8,6 +8,7 @@
   tags:
     - controller
 - name: Bootstrap network devices (1 - python)
+  gather_facts: false
   hosts:
     - firewalls
     - routers
@@ -40,8 +41,8 @@
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
 - name: Bootstrap managed hosts (1 - python)
-  hosts: managed_hosts
   gather_facts: false
+  hosts: managed_hosts
   pre_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
