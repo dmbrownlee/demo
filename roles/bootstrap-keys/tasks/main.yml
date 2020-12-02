@@ -3,4 +3,4 @@
   authorized_key:
     user: user
     state: present
-    key: "{{ lookup('file', '/root/.ssh/user.pub') }}"
+    key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
