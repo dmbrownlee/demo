@@ -29,13 +29,17 @@
     dest: "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
     src: "setenv.QT_MAC_WANTS_LAYER.plist"
     mode: "0644"
-- name: Ensure the script to start vboxnet0 at login is installed
-  copy:
+- name: Ensure there is a directory for the vboxnet LaunchAgent logs
+  file:
+    path: "{{ ansible_user_dir }}/.vboxnet"
+    state: directory
+- name: Ensure the script to start vboxnet at login is installed
+  template:
     dest: "{{ item.dest }}"
     src: "{{ item.src }}"
     mode: "{{ item.mode }}"
   loop:
-    - { src: "vboxnet0.zsh", dest: "{{ ansible_user_dir }}/.vboxnet0.zsh", mode: '0755' }
+    - { src: "vboxnet.zsh", dest: "{{ ansible_user_dir }}/.vboxnet/vboxnet.zsh", mode: '0755' }
     - { src: "com.user.loginscript.plist", dest: "{{ ansible_user_dir }}/Library/LaunchAgents/com.user.loginscript.plist", mode: '0644' }
 - name: Ensure GNS3 configuration directory exists
   file:
