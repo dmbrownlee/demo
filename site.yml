@@ -15,7 +15,7 @@
   roles:
     - role: bootstrap
   tags:
-    - bootstrap
+    - bootstrap_netdev
 - name: Bootstrap managed hosts (2 - keys)
   hosts:
     - firewalls
@@ -23,7 +23,7 @@
   roles:
     - role: bootstrap-keys
   tags:
-    - bootstrap
+    - bootstrap_netdev
 # After bootstrapping, the network devices need to be cofigured from the
 # outside to the inside as any device will depend on the devices between it
 # and the Internet.
@@ -34,22 +34,26 @@
     - role: nic
     - role: firewall
     - role: router
+  tags:
+    - firewall
 - name: Configure routers
   hosts: routers
   roles:
     - role: system-packages
     - role: nic
     - role: router
+  post_tasks:
+    - name: Delay 60 seconds so new OSPF routers have time to share routes
+      wait_for:
+        timeout: 60
+      delegate_to: localhost
+  tags:
+    - routers
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
 - name: Bootstrap managed hosts (1 - python)
   gather_facts: false
   hosts: managed_hosts
-  pre_tasks:
-    - name: Delay 60 seconds so new OSPF routers have time to share routes
-      wait_for:
-        timeout: 60
-      delegate_to: localhost
   roles:
     - role: bootstrap
 - name: Bootstrap managed hosts (2 - keys)
