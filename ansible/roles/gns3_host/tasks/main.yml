@@ -26,7 +26,7 @@
     mode: '0755'
 - name: Ensure workaround for PyQt5 bug is installed
   copy:
-    dest: "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
+    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/setenv.QT_MAC_WANTS_LAYER.plist"
     src: "setenv.QT_MAC_WANTS_LAYER.plist"
     mode: "0644"
 - name: Ensure there is a directory for the vboxnet LaunchAgent logs
@@ -79,3 +79,10 @@
     dest: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_gui.conf"
     mode: '0644'
   when: not gns3_gui.stat.exists
+- name: Ensure obsolete files have been cleaned up
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ ansible_user_dir }}/.vboxnet0.zsh"
+    - "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
