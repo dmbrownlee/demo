@@ -1,0 +1,8 @@
+---
+virtualization: virtualbox
+system_packages:
+  - packer
+  - python3-jmespath
+  - vagrant
+internet_packages:
+  - https://download.virtualbox.org/virtualbox/6.1.16/virtualbox-6.1_6.1.16-140961~Debian~buster_amd64.deb
