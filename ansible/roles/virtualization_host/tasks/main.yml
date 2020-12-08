@@ -32,6 +32,8 @@
   block:
     - name: Get current hostkey setting
       shell: set -o pipefail && VBoxManage getextradata global GUI/Input/HostKeyCombination | awk '{ print $2; }'
+      args:
+        executable: "{{ ansible_user_shell }}"
       register: hostkey
       changed_when: false
     - name: Set hostkey to right command key if needed

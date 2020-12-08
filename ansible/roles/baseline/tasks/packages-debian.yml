@@ -1,0 +1,10 @@
+---
+- name: Ensure system packages are installed
+  apt:
+    deb: "{{ item }}"
+    state: present
+  loop: "{{ system_packages }}"
+  when:
+    - system_packages is defined
+    - (system_packages | length > 0)
+  become: yes

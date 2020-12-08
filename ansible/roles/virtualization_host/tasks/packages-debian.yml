@@ -1,0 +1,19 @@
+---
+- name: Ensure system packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_packages }}"
+  when:
+    - system_packages is defined
+    - (system_packages | length > 0)
+  become: yes
+- name: Ensure Internet packages are installed
+  apt:
+    deb: "{{ item }}"
+    state: present
+  loop: "{{ internet_packages }}"
+  when:
+    - internet_packages is defined
+    - (internet_packages | length > 0)
+  become: yes
