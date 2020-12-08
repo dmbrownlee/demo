@@ -5,7 +5,6 @@
   args:
     executable: "{{ ansible_user_shell }}"
   changed_when: false
-  failed_when: false
   register: existing_hostonlyifs
 - debug:
     var: "{{ hostonlyifs | json_query('[*].name') }}"
