@@ -1,4 +1,8 @@
 ---
+- name: Assert homebrew is installed
+  assert:
+    that: ansible_pkg_mgr == "homebrew"
+    fail_msg: "A homebrew installation is required."
 - name: Ensure system brews are installed
   homebrew:
     name: "{{ item }}"
