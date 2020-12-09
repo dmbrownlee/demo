@@ -1,6 +1,7 @@
 ---
 supported_distributions:
   - MacOSX
+  - Debian
 # Note:
 # It is possible these values are overridden for specific
 # platforms in ../vars/{{ ansible_distribution }}-vars.yml.
