@@ -7,7 +7,6 @@
   include_vars: "{{ ansible_distribution | lower }}.yml"
 - name: role packages
   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
-  when: ansible_pkg_mgr == "homebrew"
 # The path below may change when we go back to homebrew
 - name: Ensure ubridge ownership and permissions are correct
   file:
