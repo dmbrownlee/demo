@@ -34,13 +34,16 @@
     remote_src: yes
   when: packer_override is defined
   become: yes
-# - name: Copy newer packer into place
-#   copy:
-#     dest: /usr/bin/packer
-#     src: "{{ download_dir }}/{{ packer_override.basename }}/packer"
-#     remote_src: yes
-#     owner: "root"
-#     group: "root"
-#     mode: "0755"
-#   when: packer_override is defined
-#   become: yes
+- name: Get a list of existing Vagrant plugins
+  shell: set -o pipefail && vagrant plugin list | awk '{ print $1 }'
+  args:
+    executable: "{{ ansible_user_shell }}"
+  changed_when: false
+  register: vagrant_plugins
+- name: Ensure vagrant plugins have been built and installed
+  command: vagrant plugin install {{ item }}
+  when: item not in vagrant_plugins.stdout_lines
+  loop:
+    - winrm
+    - winrm-elevated
+
