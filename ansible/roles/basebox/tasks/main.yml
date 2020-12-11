@@ -11,6 +11,8 @@
     success_msg: "{{ box }} was requested for this build."
 - name: Get list of available Vagrant base boxes
   shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
+  args:
+    executable: "{{ ansible_user_shell }}"
   register: vagrant_box_list
   changed_when: false
 - name: Build the base box if it is currently unavailable
