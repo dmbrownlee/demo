@@ -17,23 +17,34 @@
     - internet_packages is defined
     - (internet_packages | length > 0)
   become: yes
-- name: Fetch more recent packer
-  get_url:
-    dest: "{{ download_dir }}/{{ packer_override.basename }}.zip"
-    url: "{{ packer_override.url }}"
-    checksum: "{{ packer_override.checksum }}"
+- name: Replace system packer with newer version if needed
+  block:
+  - name: Ensure more recent packer has been downloaded
+    get_url:
+      dest: "{{ download_dir }}/{{ packer_override.basename }}.zip"
+      url: "{{ packer_override.url }}"
+      checksum: "{{ packer_override.checksum }}"
+    delegate_to: localhost
+  - name: Ensure more recent packer is unszipped
+    unarchive:
+      dest: "{{ download_dir }}"
+      src: "{{ download_dir }}/{{ packer_override.basename }}.zip"
+      creates: "{{ download_dir }}/packer"
+    delegate_to: localhost
+  - name: Ensure more recent packer is installed
+    copy:
+      dest: "/usr/bin/packer"
+      src: "{{ download_dir }}/packer"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+    become: yes
   when: packer_override is defined
-- name: Unpack more recent packer
-  unarchive:
-    dest: "/usr/bin"
-    src: "{{ download_dir }}/{{ packer_override.basename }}.zip"
-    creates: "/usr/bin/packer"
-    owner: "root"
-    group: "root"
-    mode: "0755"
-    remote_src: yes
-  when: packer_override is defined
+- name: Replace system vagrant with newer version if needed
+  apt:
+    deb: "{{ vagrant_override.url }}"
   become: yes
+  when: vagrant_override is defined
 - name: Get a list of existing Vagrant plugins
   shell: set -o pipefail && vagrant plugin list | awk '{ print $1 }'
   args:
@@ -46,4 +57,3 @@
   loop:
     - winrm
     - winrm-elevated
-
