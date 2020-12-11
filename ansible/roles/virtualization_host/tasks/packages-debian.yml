@@ -8,10 +8,23 @@
     - system_packages is defined
     - (system_packages | length > 0)
   become: yes
+- name: Ensure apt sources updated for virtualbox
+  lineinfile:
+    path: /etc/apt/sources.list
+    line: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian buster contrib"
+    state: present
+    backup: yes
+  become: yes
+- name: Ensure Oracle's apt key is also installed
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+  become: yes
 - name: Ensure Internet packages are installed
   apt:
     deb: "{{ item }}"
     state: present
+    update_cache: yes
   loop: "{{ internet_packages }}"
   when:
     - internet_packages is defined
