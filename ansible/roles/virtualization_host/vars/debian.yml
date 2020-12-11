@@ -1,6 +1,8 @@
 ---
 virtualization: virtualbox
 system_packages:
+  - dkms
+  - linux-headers
   - packer
   - python3-jmespath
   - vagrant
