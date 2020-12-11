@@ -17,6 +17,12 @@
     - internet_packages is defined
     - (internet_packages | length > 0)
   become: yes
+- name: Ensure user is a member of vboxusers
+  user:
+    name: "{{ ansible_user_id }}"
+    append: yes
+    groups: vboxusers
+  become: yes
 - name: Replace system packer with newer version if needed
   block:
   - name: Ensure more recent packer has been downloaded
