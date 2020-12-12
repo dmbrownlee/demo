@@ -116,7 +116,7 @@
     path: "{{ gns3_config_dir }}"
     state: directory
     owner: "{{ ansible_user_id }}"
-    group: user
+    group: "{{ ansible_user_id }}"
     mode: 0755
 #- name: Update GNS3 configuration files
 #  template:
