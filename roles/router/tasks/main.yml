@@ -43,6 +43,36 @@
     mode: '0644'
   notify: restart_ospfd
   become: yes
+- name: Ensure directories for runit support exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+  loop:
+    - "/etc/sv/zebra/log"
+    - "/etc/sv/ospfd/log"
+- name: Ensure /var/service is a link to default /etc/service location
+  file:
+    path: "/var/service"
+    state: link
+    src: "/etc/service"
+  become: yes
+- name: Ensure runit scripts for starting quagga services are installed
+  template:
+    src: runit_quagga.j2
+    dest: "/etc/sv/{{ quagga_server }}/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+  loop:
+    - "zebra"
+    - "ospfd"
+  loop_control:
+    loop_var: quagga_server
 - name: Start zebra daemon
   service:
     name: "zebra"

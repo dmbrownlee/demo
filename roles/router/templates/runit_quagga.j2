@@ -1,0 +1,23 @@
+#!/bin/bash
+# The bits of /etc/init.d/{{ quagga_server }} that runit needs
+. /etc/default/quagga
+
+RETVAL=0
+PROG="{{ quagga_server }}"
+cmd=/usr/sbin/{{ quagga_server }}
+LOCK_FILE=/var/lock/quagga/{{ quagga_server }}
+CONF_FILE=/etc/quagga/{{ quagga_server }}.conf
+
+[ -d /var/lock/quagga ] || mkdir /var/lock/quagga
+[ -d /run/quagga ] || ( mkdir /run/quagga && chown quagga:quagga /run/quagga )
+
+# if the config file doesn't exist, exit immediately
+[ -f "$CONF_FILE" ] || exit 0
+
+	if [ `id -u` -ne 0 ]; then
+		echo $"Insufficient privilege" 1>&2
+		exit 4
+	fi
+
+	/sbin/ip route flush proto {{ quagga_server }}
+  $cmd ${{ quagga_server | upper() }}_OPTS -f $CONF_FILE
