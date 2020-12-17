@@ -1,5 +1,6 @@
 ---
-system_brews: []
+system_brews:
+  - telnet
 system_casks:
   - wireshark
     #- gns3
