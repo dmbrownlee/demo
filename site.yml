@@ -16,7 +16,7 @@
     - role: bootstrap
   tags:
     - bootstrap_netdev
-- name: Bootstrap managed hosts (2 - keys)
+- name: Bootstrap network devices (2 - keys)
   hosts:
     - firewalls
     - routers
