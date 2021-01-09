@@ -24,11 +24,6 @@
     path: "{{ ansible_user_dir }}/Library/LaunchAgents"
     state: directory
     mode: '0755'
-- name: Ensure workaround for PyQt5 bug is installed
-  copy:
-    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/setenv.QT_MAC_WANTS_LAYER.plist"
-    src: "setenv.QT_MAC_WANTS_LAYER.plist"
-    mode: "0644"
 - name: Ensure there is a directory for the vboxnet LaunchAgent logs
   file:
     path: "{{ ansible_user_dir }}/.vboxnet"
@@ -86,3 +81,18 @@
   loop:
     - "{{ ansible_user_dir }}/.vboxnet0.zsh"
     - "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
+- name: Ensure workaround for PyQt5 bug is installed
+  copy:
+    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/setenv.QT_MAC_WANTS_LAYER.plist"
+    src: "setenv.QT_MAC_WANTS_LAYER.plist"
+    mode: "0644"
+  register: qtmacenv
+- name: Notify user the about the need to reboot
+  block:
+    - name: Display message to reboot if environment changed
+      fail:
+        msg: "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
+      ignore_errors: true
+    - name: Speak message to reboot if environment changed
+      command: say "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
+  when: qtmacenv.changed
