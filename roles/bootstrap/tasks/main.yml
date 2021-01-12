@@ -4,3 +4,7 @@
     user: user
     state: present
     key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
+- name: Ensure FQDN is set on host
+  hostname:
+    name: "{{ inventory_hostname }}"
+  become: yes
