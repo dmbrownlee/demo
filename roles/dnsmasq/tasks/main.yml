@@ -1,4 +1,10 @@
 ---
+- name: Ensure /ets/hosts contains static IPs for network gear
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }} {{ item.value.inventory_hostname_short }}"
+  loop: "{{ hostvars | dict2items }}"
+  become: yes
 - name: Ensure the dnsmasq config file is current
   template:
     dest: /etc/dnsmasq.d/{{ ansible_hostname }}.conf
