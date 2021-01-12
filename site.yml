@@ -21,7 +21,7 @@
     - firewalls
     - routers
   roles:
-    - role: bootstrap-keys
+    - role: bootstrap
   tags:
     - bootstrap_netdev
 # After bootstrapping, the network devices need to be cofigured from the
@@ -59,7 +59,7 @@
 - name: Bootstrap managed hosts (2 - keys)
   hosts: managed_hosts
   roles:
-    - role: bootstrap-keys
+    - role: bootstrap
     - role: system-packages
 - name: Configure dnsmasq servers
   hosts: dnsmasq_servers
