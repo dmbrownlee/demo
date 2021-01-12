@@ -107,6 +107,9 @@ all:
           - "  ospf router-id 4.4.4.4"
           - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.4/30 area 0"
+      isc_dhcp_relay:
+        dhcp_server: "192.168.44.1"
+        interfaces: "eth2"
     dhcp1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user

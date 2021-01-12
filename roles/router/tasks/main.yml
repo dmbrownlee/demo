@@ -85,3 +85,19 @@
     state: started
     enabled: yes
   become: yes
+- name: Ensure isc-dhcp-relay is installed and configured if needed
+  block:
+    - name: Install isc-dhcp-relay
+      apt:
+        name: isc-dhcp-relay
+        state: present
+      become: yes
+    - name: Configure isc-dhcp-relay
+      template:
+        src: isc-dhcp-relay.j2
+        dest: /etc/default/isc-dhcp-relay
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+  when: isc_dhcp_relay is defined
