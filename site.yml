@@ -13,7 +13,7 @@
     - firewalls
     - routers
   roles:
-    - role: bootstrap
+    - role: bootstrap-python
   tags:
     - bootstrap_netdev
 - name: Bootstrap network devices (2 - keys)
@@ -55,7 +55,7 @@
   gather_facts: false
   hosts: managed_hosts
   roles:
-    - role: bootstrap
+    - role: bootstrap-python
 - name: Bootstrap managed hosts (2 - keys)
   hosts: managed_hosts
   roles:
