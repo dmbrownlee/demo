@@ -65,4 +65,7 @@
   hosts: dnsmasq_servers
   roles:
     - role: dnsmasq
-
+- name: Configure web servers
+  hosts: web_servers
+  roles:
+    - role: webserver

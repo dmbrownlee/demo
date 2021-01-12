@@ -115,6 +115,9 @@ all:
       ansible_user: user
       system_packages:
         - dnsmasq
+    www1.networkplus.test:
+      ansible_host: 192.168.43.1
+      ansible_user: user
   children:
     firewalls:
       hosts:
@@ -126,6 +129,10 @@ all:
     managed_hosts:
       hosts:
         dhcp1.networkplus.test:
+        www1.networkplus.test:
     dnsmasq_servers:
       hosts:
         dhcp1.networkplus.test:
+    web_servers:
+      hosts:
+        www1.networkplus.test:
