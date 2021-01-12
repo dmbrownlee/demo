@@ -1,10 +1,27 @@
 ---
+- name: Ensure apt cache is updated before installing packages
+  apt:
+    update_cache: yes
+  become: yes
+- name: Ensure hostname is set to FQDN
+  hostname:
+    name: "{{ inventory_hostname }}"
+  become: yes
+- name: Ensure FQDN is resolvable via /etc/hosts
+  replace:
+    path: /etc/hosts
+    regexp: '^(127.0.1.1\s+)(\S+)$'
+    replace: '\1\2.networkplus.test \2'
+  become: yes
+- name: Ensure /ets/hosts contains static IPs for network gear
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }} {{ item.value.inventory_hostname_short }}"
+  loop: "{{ hostvars | dict2items }}"
+  become: yes
+  when: populate_hosts_file is defined and populate_hosts_file
 - name: Ensure public key is copied to authorized keys on host
   authorized_key:
     user: user
     state: present
     key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
-- name: Ensure FQDN is set on host
-  hostname:
-    name: "{{ inventory_hostname }}"
-  become: yes

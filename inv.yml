@@ -23,8 +23,6 @@ all:
           comment: "Internet"
           method: dhcp
       system_packages:
-        - iptables
-        - iptables-persistent
         - quagga
       quagga:
         zebra:

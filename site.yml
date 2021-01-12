@@ -3,6 +3,11 @@
   hosts: control.networkplus.test
   roles:
     - role: controller
+    - role: bootstrap
+      populate_hosts_file: true
+    - role: nat
+      nat_src_range: "192.168.42.1-192.168.42.254"
+      nat_out_interface: "eth1"
     - role: system-packages
     - role: router
   tags:
@@ -32,7 +37,8 @@
   roles:
     - role: system-packages
     - role: nic
-    - role: firewall
+    - role: nat
+      nat_out_interface: "eth1"
     - role: router
   tags:
     - firewall
@@ -56,16 +62,15 @@
   hosts: managed_hosts
   roles:
     - role: bootstrap-python
-- name: Bootstrap managed hosts (2 - keys)
-  hosts: managed_hosts
-  roles:
-    - role: bootstrap
-    - role: system-packages
 - name: Configure dnsmasq servers
   hosts: dnsmasq_servers
   roles:
+    - role: bootstrap
+      populate_hosts_file: true
+    - role: system-packages
     - role: dnsmasq
 - name: Configure web servers
   hosts: web_servers
   roles:
+    - role: bootstrap
     - role: webserver

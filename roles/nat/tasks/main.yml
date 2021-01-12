@@ -1,0 +1,33 @@
+---
+- name: Ensure iptables is installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - iptables
+    - iptables-persistent
+  become: yes
+- name: Ensure NAT is enabled
+  iptables:
+    table: nat
+    chain: POSTROUTING
+    src_range: "{{ nat_src_range | default(omit) }}"
+    out_interface: "{{ nat_out_interface }}"
+    jump: MASQUERADE
+  become: yes
+- name: Ensure iptables rules persist across reboots
+  template:
+    dest: /etc/iptables/rules.v4
+    src: iptables_rules.v4.j2
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+- name: Ensure persistent iptables rules get loaded
+  template:
+    dest: /etc/network/if-pre-up.d/firewall
+    src: firewall.j2
+    owner: root
+    group: root
+    mode: "0755"
+  become: yes
