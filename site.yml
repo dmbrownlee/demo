@@ -6,67 +6,56 @@
       control_host: true
       populate_hosts_file: true
     - role: nat
-      nat_src_range: "192.168.42.1-192.168.42.254"
-      nat_out_interface: "eth1"
     - role: router
   tags:
-    - controller
-- name: Bootstrap network devices (1 - python)
+    - tier0
+# === Tier 1 devices ===
+# These devices are accessible to the control host without needing to
+# configure intermediary devices.  This includes the firewall and 
+# backbone routers. Bootstrapping Python is a separate play because
+# gathering facts has to be disabled as it depends on Python.
+- name: Bootstrap Python onto tier 1 devices
   gather_facts: false
-  hosts:
-    - firewalls
-    - routers
+  hosts: tier1
   roles:
     - role: bootstrap-python
   tags:
-    - bootstrap_netdev
-- name: Bootstrap network devices (2 - keys)
-  hosts:
-    - firewalls
-    - routers
+    - tier1
+- name: Configure tier 1 devices
+  hosts: tier1
   roles:
     - role: bootstrap
-  tags:
-    - bootstrap_netdev
-# After bootstrapping, the network devices need to be cofigured from the
-# outside to the inside as any device will depend on the devices between it
-# and the Internet.
-- name: Configure firewalls
-  hosts: firewalls
-  roles:
-    - role: nic
     - role: nat
-      nat_out_interface: "eth1"
     - role: router
-  tags:
-    - firewall
-- name: Configure routers
-  hosts: routers
-  roles:
-    - role: nic
-    - role: router
+    - role: TEA_disable
   post_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
         timeout: 60
       delegate_to: localhost
   tags:
-    - routers
+    - tier1
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
 - name: Bootstrap managed hosts (1 - python)
   gather_facts: false
-  hosts: managed_hosts
+  hosts: tier2
   roles:
     - role: bootstrap-python
+  tags:
+    - tier2
 - name: Configure dnsmasq servers
   hosts: dnsmasq_servers
   roles:
     - role: bootstrap
       populate_hosts_file: true
     - role: dnsmasq
+  tags:
+    - tier2
 - name: Configure web servers
   hosts: web_servers
   roles:
     - role: bootstrap
     - role: webserver
+  tags:
+    - tier2

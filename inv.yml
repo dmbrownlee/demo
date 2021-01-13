@@ -3,6 +3,7 @@ all:
     control.networkplus.test:
       ansible_connection: local
       ansible_host: 192.168.42.1
+      nat_out_interface: "eth1"
       interfaces:
         eth0:
           method: static
@@ -18,7 +19,8 @@ all:
     firewall.networkplus.test:
       ansible_host: 192.168.42.2
       ansible_user: user
-      bootstrap_through_control: true
+      bootstrap_gateway: 192.168.42.1
+      nat_out_interface: "eth1"
       interfaces:
         eth0:
           comment: "Provisioning Interface"
@@ -46,7 +48,7 @@ all:
     router1.networkplus.test:
       ansible_host: 192.168.42.3
       ansible_user: user
-      bootstrap_through_control: true
+      bootstrap_gateway: 192.168.42.1
       interfaces:
         eth0:
           comment: "Provisioning Interface"
@@ -73,7 +75,7 @@ all:
     router2.networkplus.test:
       ansible_host: 192.168.42.4
       ansible_user: user
-      bootstrap_through_control: true
+      bootstrap_gateway: 192.168.42.1
       interfaces:
         eth0:
           comment: "Provisioning Interface"
@@ -115,6 +117,15 @@ all:
       ansible_host: 192.168.43.1
       ansible_user: user
   children:
+    tier1:
+      hosts:
+        firewall.networkplus.test:
+        router1.networkplus.test:
+        router2.networkplus.test:
+    tier2:
+      hosts:
+        dhcp1.networkplus.test:
+        www1.networkplus.test:
     firewalls:
       hosts:
         firewall.networkplus.test:
@@ -122,10 +133,6 @@ all:
       hosts:
         router1.networkplus.test:
         router2.networkplus.test:
-    managed_hosts:
-      hosts:
-        dhcp1.networkplus.test:
-        www1.networkplus.test:
     dnsmasq_servers:
       hosts:
         dhcp1.networkplus.test:
