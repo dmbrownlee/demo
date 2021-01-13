@@ -103,8 +103,6 @@ all:
     dhcp1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
-      system_packages:
-        - dnsmasq
     www1.networkplus.test:
       ansible_host: 192.168.43.1
       ansible_user: user

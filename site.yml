@@ -8,7 +8,6 @@
     - role: nat
       nat_src_range: "192.168.42.1-192.168.42.254"
       nat_out_interface: "eth1"
-    - role: system-packages
     - role: router
   tags:
     - controller
@@ -35,7 +34,6 @@
 - name: Configure firewalls
   hosts: firewalls
   roles:
-    - role: system-packages
     - role: nic
     - role: nat
       nat_out_interface: "eth1"
@@ -45,7 +43,6 @@
 - name: Configure routers
   hosts: routers
   roles:
-    - role: system-packages
     - role: nic
     - role: router
   post_tasks:
@@ -67,7 +64,6 @@
   roles:
     - role: bootstrap
       populate_hosts_file: true
-    - role: system-packages
     - role: dnsmasq
 - name: Configure web servers
   hosts: web_servers
