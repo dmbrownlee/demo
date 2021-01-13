@@ -1,8 +1,21 @@
 ---
-- name: Ensure apt cache is updated before installing packages
-  apt:
-    update_cache: yes
-  become: yes
+- name: Ensure a .ssh directory exists for SSH keys
+  file:
+    path: "{{ ansible_user_dir }}/.ssh"
+    state: directory
+    mode: '0700'
+  when: control_host is defined and control_host
+- name: Ensure ssh key exists
+  openssh_keypair:
+    path: "{{ ansible_user_dir }}/.ssh/user"
+    state: present
+    comment: "user@networkplus.test"
+  when: control_host is defined and control_host
+- name: Ensure public key is copied to authorized keys on host
+  authorized_key:
+    user: user
+    state: present
+    key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
 - name: Ensure hostname is set to FQDN
   hostname:
     name: "{{ inventory_hostname }}"
@@ -20,8 +33,16 @@
   loop: "{{ hostvars | dict2items }}"
   become: yes
   when: populate_hosts_file is defined and populate_hosts_file
-- name: Ensure public key is copied to authorized keys on host
-  authorized_key:
-    user: user
-    state: present
-    key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
+- name: Ensure network interfaces config file exists
+  template:
+    src: "interfaces.j2"
+    dest: /etc/network/interfaces
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  notify: restart_interfaces
+- name: Ensure apt cache is updated before installing packages
+  apt:
+    update_cache: yes
+  become: yes

@@ -2,8 +2,8 @@
 - name: Configure controler
   hosts: control.networkplus.test
   roles:
-    - role: controller
     - role: bootstrap
+      control_host: true
       populate_hosts_file: true
     - role: nat
       nat_src_range: "192.168.42.1-192.168.42.254"

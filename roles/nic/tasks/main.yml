@@ -1,13 +1,4 @@
 ---
-- name: Ensure network interfaces config file exists
-  template:
-    src: "interfaces.j2"
-    dest: /etc/network/interfaces
-    owner: root
-    group: root
-    mode: '0644'
-  become: yes
-  notify: restart_interfaces
 - name: Get list of default routes
   command: ip route list 0.0.0.0/0
   changed_when: false
