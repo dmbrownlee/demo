@@ -29,8 +29,9 @@
 - name: Ensure /ets/hosts contains static IPs for network gear
   lineinfile:
     path: /etc/hosts
-    line: "{{ item.value.ansible_host }} {{ item.value.inventory_hostname }} {{ item.value.inventory_hostname_short }}"
-  loop: "{{ hostvars | dict2items }}"
+    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname }} {{ hostvars[item].inventory_hostname_short }}"
+  with_inventory_hostnames:
+    - all
   become: yes
   when: populate_hosts_file is defined and populate_hosts_file
 - name: Ensure network interfaces config file exists
