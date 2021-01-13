@@ -1,4 +1,9 @@
 ---
+- name: Ensure the quagga packages are installed
+  apt:
+    name: quagga
+    state: present
+  become: yes
 - name: Ensure quagga configuration directory is moved to persistent storage
   file:
     path: /etc/network/quagga

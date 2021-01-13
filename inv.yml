@@ -3,8 +3,6 @@ all:
     control.networkplus.test:
       ansible_connection: local
       ansible_host: 192.168.42.1
-      system_packages:
-        - quagga
       quagga:
         ospfd:
           - "  ospf router-id 1.1.1.1"
@@ -22,8 +20,6 @@ all:
         eth1:
           comment: "Internet"
           method: dhcp
-      system_packages:
-        - quagga
       quagga:
         zebra:
           - "ip route 0.0.0.0/0 192.168.122.1"
@@ -49,8 +45,6 @@ all:
           method: static
           address: 192.168.42.3
           netmask: 255.255.255.0
-      system_packages:
-        - quagga
       quagga:
         zebra:
           - "interface eth1"
@@ -91,8 +85,6 @@ all:
               address: 192.168.46.254
               netmask: 255.255.255.0
               vlan: 200
-      system_packages:
-        - quagga
       quagga:
         zebra:
           - "interface eth1"
