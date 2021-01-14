@@ -3,8 +3,6 @@
   hosts: control.networkplus.test
   roles:
     - role: bootstrap
-      control_host: true
-      populate_hosts_file: true
     - role: nat
     - role: router
   tags:
@@ -37,25 +35,28 @@
     - tier1
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
-- name: Bootstrap managed hosts (1 - python)
+- name: Bootstrap Python onto tier 2 devices
   gather_facts: false
   hosts: tier2
   roles:
     - role: bootstrap-python
   tags:
     - tier2
-- name: Configure dnsmasq servers
-  hosts: dnsmasq_servers
+- name: Configure bootstrap on tier 2 devices
+  hosts: tier2
   roles:
     - role: bootstrap
-      populate_hosts_file: true
-    - role: dnsmasq
   tags:
     - tier2
+- name: Configure DNS servers
+  hosts: dns_servers
+  roles:
+    - role: dns-server
+  tags:
+    - dnsservers
 - name: Configure web servers
   hosts: web_servers
   roles:
-    - role: bootstrap
-    - role: webserver
+    - role: web-server
   tags:
-    - tier2
+    - webservers
