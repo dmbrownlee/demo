@@ -19,10 +19,13 @@
     - role: bootstrap-python
   tags:
     - tier1
-- name: Configure tier 1 devices
+- name: Configure bootstrap on tier 1 devices
   hosts: tier1
   roles:
     - role: bootstrap
+- name: Configure services on tier 1 devices
+  hosts: tier1
+  roles:
     - role: nat
     - role: router
     - role: TEA_disable

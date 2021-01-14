@@ -3,5 +3,7 @@
   listen: restart_interfaces
   shell: /gns3/bin/busybox ifdown -f {{ item }} && /gns3/bin/busybox ifup -f {{ item }}
   become: yes
-  when: item.key != "lo" and item.key != "eth0" and item.value.method != "dhcp"
+  when:
+    - item.key != "lo"
+    - item.key != "eth0"
   loop: "{{ interfaces | dict2items }}"
