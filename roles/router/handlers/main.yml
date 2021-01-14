@@ -11,3 +11,4 @@
     name: "ospfd"
     state: restarted
   become: yes
+  register: ospf_restarted

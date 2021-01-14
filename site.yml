@@ -31,6 +31,7 @@
       wait_for:
         timeout: 60
       delegate_to: localhost
+      when: ospf_restarted is defined
   tags:
     - tier1
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
