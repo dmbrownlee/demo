@@ -3,7 +3,9 @@ all:
     control.networkplus.test:
       ansible_connection: local
       ansible_host: 192.168.42.1
+      control_host: true
       nat_out_interface: "eth1"
+      populate_hosts_file: true
       interfaces:
         eth0:
           method: static
@@ -113,9 +115,22 @@ all:
     dhcp1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
+      populate_hosts_file: true
+      interfaces:
+        eth0:
+          method: static
+          address: 192.168.44.1
+          netmask: 255.255.255.0
+          gateway: 192.168.44.254
     www1.networkplus.test:
       ansible_host: 192.168.43.1
       ansible_user: user
+      interfaces:
+        eth0:
+          method: static
+          address: 192.168.43.1
+          netmask: 255.255.255.0
+          gateway: 192.168.43.254
   children:
     tier1:
       hosts:
@@ -133,7 +148,7 @@ all:
       hosts:
         router1.networkplus.test:
         router2.networkplus.test:
-    dnsmasq_servers:
+    dns_servers:
       hosts:
         dhcp1.networkplus.test:
     web_servers:
