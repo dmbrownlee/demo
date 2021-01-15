@@ -1,4 +1,15 @@
 ---
+- name: Ensure the runit package is installed
+  apt:
+    name: runit
+    state: present
+  become: yes
+- name: Ensure /var/service is a link to default /etc/service location
+  file:
+    path: "/var/service"
+    state: link
+    src: "/etc/service"
+  become: yes
 - name: Ensure the quagga packages are installed
   apt:
     name: quagga
@@ -59,13 +70,22 @@
   loop:
     - "/etc/sv/zebra/log"
     - "/etc/sv/ospfd/log"
-- name: Ensure /var/service is a link to default /etc/service location
-  file:
-    path: "/var/service"
-    state: link
-    src: "/etc/service"
+- name: Ensure runit scripts for quagga daemon logging exist
+  copy:
+    content: |
+      #!/bin/sh -euC
+      svlogd -tt /var/log/svlogd
+    dest: "/etc/sv/{{ quagga_server }}/log/run"
+    owner: root
+    group: root
+    mode: '0755'
   become: yes
-- name: Ensure runit scripts for starting quagga services are installed
+  loop:
+    - "zebra"
+    - "ospfd"
+  loop_control:
+    loop_var: quagga_server
+- name: Ensure runit scripts for quagga daemons exist
   template:
     src: runit_quagga.j2
     dest: "/etc/sv/{{ quagga_server }}/run"
@@ -117,7 +137,7 @@
       copy:
         content: |
           #!/bin/sh -euC
-          svlogd -tt .
+          svlogd -tt /var/log/svlogd
         dest: /etc/sv/isc-dhcp-relay/log/run
         owner: root
         group: root
@@ -127,7 +147,8 @@
       copy:
         content: |
           #!/bin/sh
-          /usr/sbin/dhcrelay -d -i {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}
+          exec 2>&1
+          exec chpst /usr/sbin/dhcrelay -d -i {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}
         dest: /etc/sv/isc-dhcp-relay/run
         owner: root
         group: root
