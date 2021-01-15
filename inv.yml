@@ -15,9 +15,17 @@ all:
           comment: "Private connection to Internet for bootstrap"
           method: dhcp
       quagga:
+        zebra:
+          - "ip route 0.0.0.0/0 192.168.122.1"
+          - "interface eth0"
+          - "  description Provisioning"
+          - "  ip address 192.168.42.1/24"
+          - "interface eth1"
+          - "  description Internet"
         ospfd:
           - "  ospf router-id 1.1.1.1"
           - "  network 192.168.42.0/24 area 0"
+          - "  passive-interface eth1"
     firewall.networkplus.test:
       ansible_host: 192.168.42.2
       ansible_user: user
@@ -35,6 +43,11 @@ all:
       quagga:
         zebra:
           - "ip route 0.0.0.0/0 192.168.122.1"
+          - "interface eth0"
+          - "  description Provisioning"
+          - "  ip address 192.168.42.2/24"
+          - "interface eth1"
+          - "  description Internet"
           - "interface eth2"
           - "  description DMZ"
           - "  ip address 192.168.43.254/24"
@@ -46,6 +59,8 @@ all:
           - "  network 192.168.43.0/24 area 0"
           - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
+          - "  passive-interface eth1"
+          - "  passive-interface eth2"
           - "  default-information originate always"
     router1.networkplus.test:
       ansible_host: 192.168.42.3
@@ -59,6 +74,9 @@ all:
           netmask: 255.255.255.0
       quagga:
         zebra:
+          - "interface eth0"
+          - "  description Provisioning"
+          - "  ip address 192.168.42.3/24"
           - "interface eth1"
           - "  description Backbone"
           - "  ip address 192.168.41.2/30"
@@ -70,10 +88,11 @@ all:
           - "  ip address 192.168.41.5/30"
         ospfd:
           - "  ospf router-id 3.3.3.3"
-          - "  network 192.168.44.0/24 area 0"
-          - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.0/30 area 0"
           - "  network 192.168.41.4/30 area 0"
+          - "  network 192.168.42.0/24 area 0"
+          - "  network 192.168.44.0/24 area 0"
+          - "  passive-interface eth2"
     router2.networkplus.test:
       ansible_host: 192.168.42.4
       ansible_user: user
@@ -84,31 +103,36 @@ all:
           method: static
           address: 192.168.42.4
           netmask: 255.255.255.0
-        eth2:
-          method: manual
-          vlan_ifaces:
-            vlan1:
-              method: static
-              address: 192.168.45.254
-              netmask: 255.255.255.0
-              vlan: 100
-            vlan2:
-              method: static
-              address: 192.168.46.254
-              netmask: 255.255.255.0
-              vlan: 200
+#        eth2:
+#          method: manual
+#          vlan_ifaces:
+#            vlan1:
+#              method: static
+#              address: 192.168.45.254
+#              netmask: 255.255.255.0
+#              vlan: 100
+#            vlan2:
+#              method: static
+#              address: 192.168.46.254
+#              netmask: 255.255.255.0
+#              vlan: 200
       quagga:
         zebra:
+          - "interface eth0"
+          - "  description Provisioning"
+          - "  ip address 192.168.42.4/24"
           - "interface eth1"
           - "  description Backbone"
           - "  ip address 192.168.41.6/30"
-          # - "interface eth2"
-          # - "  description Office and Labs"
-          # - "  ip address 192.168.44.254/24"
+          - "interface eth2"
+          - "  description Office and Labs"
+          - "  ip address 192.168.45.254/24"
         ospfd:
           - "  ospf router-id 4.4.4.4"
-          - "  network 192.168.42.0/24 area 0"
           - "  network 192.168.41.4/30 area 0"
+          - "  network 192.168.42.0/24 area 0"
+          - "  network 192.168.45.0/24 area 0"
+          - "  passive-interface eth2"
       isc_dhcp_relay:
         dhcp_server: "192.168.44.1"
         interfaces: "eth2"
