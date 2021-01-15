@@ -135,7 +135,7 @@ all:
           - "  passive-interface eth2"
       isc_dhcp_relay:
         dhcp_server: "192.168.44.1"
-        interfaces: "eth2"
+        interfaces: "eth1 eth2"
     dns1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
