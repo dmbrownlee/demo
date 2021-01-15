@@ -112,7 +112,7 @@ all:
       isc_dhcp_relay:
         dhcp_server: "192.168.44.1"
         interfaces: "eth2"
-    dhcp1.networkplus.test:
+    dns1.networkplus.test:
       ansible_host: 192.168.44.1
       ansible_user: user
       populate_hosts_file: true
@@ -139,7 +139,7 @@ all:
         router2.networkplus.test:
     tier2:
       hosts:
-        dhcp1.networkplus.test:
+        dns1.networkplus.test:
         www1.networkplus.test:
     firewalls:
       hosts:
@@ -150,7 +150,7 @@ all:
         router2.networkplus.test:
     dns_servers:
       hosts:
-        dhcp1.networkplus.test:
+        dns1.networkplus.test:
     web_servers:
       hosts:
         www1.networkplus.test:
