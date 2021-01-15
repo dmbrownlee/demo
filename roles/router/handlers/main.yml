@@ -1,13 +1,13 @@
 ---
 - name: Restart zebra daemon
-  listen: restart_zebra
-  service:
+  listen: restart_router
+  community.general.runit:
     name: "zebra"
     state: restarted
   become: yes
 - name: Restart OSPF daemon
-  listen: restart_ospfd
-  service:
+  listen: restart_router
+  community.general.runit:
     name: "ospfd"
     state: restarted
   become: yes

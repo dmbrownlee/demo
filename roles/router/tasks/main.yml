@@ -29,7 +29,7 @@
     owner: quagga
     group: quagga
     mode: '0644'
-  notify: restart_zebra
+  notify: restart_router
   become: yes
 - name: Ensure vtysh configuration is current
   template:
@@ -46,7 +46,7 @@
     owner: quagga
     group: quagga
     mode: '0644'
-  notify: restart_ospfd
+  notify: restart_router
   become: yes
 - name: Ensure directories for runit support exist
   file:
