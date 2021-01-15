@@ -33,32 +33,19 @@
     group: quaggavty
     mode: '0775'
   become: yes
-- name: Ensure zebra configuration is current
+- name: Ensure quagga configurations are current
   template:
-    dest: /etc/network/quagga/zebra.conf
-    src: "zebra.conf.j2"
+    dest: /etc/network/quagga/{{ item.service }}.conf
+    src: "{{ item.service }}.conf.j2"
     owner: quagga
-    group: quagga
+    group: "{{ item.group }}"
     mode: '0644'
   notify: restart_router
   become: yes
-- name: Ensure vtysh configuration is current
-  template:
-    dest: /etc/network/quagga/vtysh.conf
-    src: "vtysh.conf.j2"
-    owner: quagga
-    group: quaggavty
-    mode: '0644'
-  become: yes
-- name: Ensure ospfd configuration is current
-  template:
-    dest: /etc/network/quagga/ospfd.conf
-    src: "ospfd.conf.j2"
-    owner: quagga
-    group: quagga
-    mode: '0644'
-  notify: restart_router
-  become: yes
+  loop:
+    - { service: zebra, group: quagga }
+    - { service: vtysh, group: quaggavty }
+    - { service: ospfd, group: quagga }
 - name: Ensure directories for runit support exist
   file:
     path: "{{ item }}"
