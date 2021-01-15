@@ -1,15 +1,47 @@
 ---
+- name: Ensure /var/service is a link to default /etc/service location
+  file:
+    path: "/var/service"
+    state: link
+    src: "/etc/service"
+  become: yes
 - name: Ensure the web server package is installed
   apt:
     name: nginx
     state: present
   become: yes
-# - name: Ensure the dnsmasq config file is current
-#   template:
-#     dest: /etc/dnsmasq.d/{{ ansible_hostname }}.conf
-#     src: "{{ ansible_hostname }}.conf"
-#     owner: root
-#     group: root
-#     mode: '0644'
-#   become: yes
-#   notify: restart_dnsmasq
+- name: Ensure runit directory for nginx exists
+  file:
+    path: /etc/sv/nginx/log
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit script for nginx logging exists
+  copy:
+    content: |
+      #!/bin/sh -euC
+      svlogd -tt /var/log/svlogd
+    dest: /etc/sv/nginx/log/run
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit script for nginx exists
+  copy:
+    content: |
+      #!/bin/sh
+      exec 2>&1
+      exec chpst /usr/sbin/nginx -g "daemon off;"
+    dest: /etc/sv/nginx/run
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure nginx started
+  community.general.runit:
+    name: nginx
+    state: started
+    enabled: yes
+  become: yes
