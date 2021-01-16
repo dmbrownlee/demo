@@ -4,6 +4,7 @@
   roles:
     - role: bootstrap
     - role: nat
+    - role: runit
     - role: router
   tags:
     - tier0
@@ -27,6 +28,7 @@
   hosts: tier1
   roles:
     - role: nat
+    - role: runit
     - role: router
     - role: TEA_disable
   post_tasks:
@@ -61,6 +63,7 @@
 - name: Configure web servers
   hosts: web_servers
   roles:
+    - role: runit
     - role: web-server
   tags:
     - webservers

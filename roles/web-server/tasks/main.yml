@@ -1,10 +1,4 @@
 ---
-- name: Ensure /var/service is a link to default /etc/service location
-  file:
-    path: "/var/service"
-    state: link
-    src: "/etc/service"
-  become: yes
 - name: Ensure the web server package is installed
   apt:
     name: nginx

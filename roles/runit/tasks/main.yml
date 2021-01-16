@@ -1,0 +1,20 @@
+---
+- name: Ensure the runit package is installed
+  apt:
+    name: runit
+    state: present
+  become: yes
+- name: Ensure /var/service is a link to default /etc/service location
+  file:
+    path: "/var/service"
+    state: link
+    src: "/etc/service"
+  become: yes
+- name: Ensure directory for runit logging exists
+  file:
+    path: /var/log/svlogd
+    state: directory
+    owner: root
+    group: root
+    mode: '0775'
+  become: yes
