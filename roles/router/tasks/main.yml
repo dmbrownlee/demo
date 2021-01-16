@@ -15,14 +15,17 @@
     name: quagga
     state: present
   become: yes
-- name: Ensure quagga configuration directory is moved to persistent storage
+- name: Ensure directories for quagga exist
   file:
-    path: /etc/network/quagga
+    path: "{{ item.path }}"
     state: directory
     owner: quagga
-    group: quaggavty
+    group: "{{ item.group }}"
     mode: '0775'
   become: yes
+  loop:
+    - { path: /etc/network/quagga, group: quaggavty }
+    - { path: /run/quagga, group: quagga }
 - name: Ensure there is a link back to the expected location for quagga configs
   file:
     path: /etc/quagga
