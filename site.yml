@@ -3,14 +3,16 @@
   hosts: control.networkplus.test
   roles:
     - role: bootstrap
+      tags: [bootstrap]
     - role: nat
+      tags: [nat]
     - role: runit
+      tags: [runit]
     - role: router
-  tags:
-    - tier0
+      tags: [router]
 # === Tier 1 devices ===
 # These devices are accessible to the control host without needing to
-# configure intermediary devices.  This includes the firewall and 
+# configure intermediary devices.  This includes the firewall and
 # backbone routers. Bootstrapping Python is a separate play because
 # gathering facts has to be disabled as it depends on Python.
 - name: Bootstrap Python onto tier 1 devices
@@ -18,27 +20,29 @@
   hosts: tier1
   roles:
     - role: bootstrap-python
-  tags:
-    - tier1
+      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 1 devices
   hosts: tier1
   roles:
     - role: bootstrap
+      tags: [bootstrap]
 - name: Configure services on tier 1 devices
   hosts: tier1
   roles:
     - role: nat
+      tags: [nat]
     - role: runit
+      tags: [runit]
     - role: router
+      tags: [router]
     - role: TEA_disable
+      tags: [TEA_disable]
   post_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
         timeout: 60
       delegate_to: localhost
       when: ospf_restarted is defined
-  tags:
-    - tier1
 # Once the network is up (and we wait it a pre_task for OSPF to converge,
 # we can begin configuring the hosts.
 - name: Bootstrap Python onto tier 2 devices
@@ -46,24 +50,21 @@
   hosts: tier2
   roles:
     - role: bootstrap-python
-  tags:
-    - tier2
+      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 2 devices
   hosts: tier2
   roles:
     - role: bootstrap
-  tags:
-    - tier2
+      tags: [bootstrap]
 - name: Configure DNS servers
   hosts: dns_servers
   roles:
     - role: dns-server
-  tags:
-    - dnsservers
+      tags: [dns-server]
 - name: Configure web servers
   hosts: web_servers
   roles:
     - role: runit
+      tags: [runit]
     - role: web-server
-  tags:
-    - webservers
+      tags: [web-server]
