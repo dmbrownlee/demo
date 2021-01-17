@@ -13,21 +13,23 @@ iface {{ name }} inet {{ attr.method }}
 {% elif attr.method == "manual" %}
   pre-up ip link set {{ name }} up
 {% endif %}
-{% if attr.vlan_ifaces is defined %}
-{% for vname, vattr in attr.vlan_ifaces.items() %}
-  post-up ip link add link {{ name }} name {{ vname }} type vlan id {{ vattr.vlan }} protocol 802.1Q || true
-  post-up /gns3/bin/busybox ifup -f {{ vname }} || true
-  pre-down /gns3/bin/busybox ifdown -f {{ vname }} || true
-  pre-down ip link del dev {{ vname }} || true
+{% if attr.vlans is defined %}
+{% for vname, vlan in attr.vlans.items() %}
+  post-up ip link add link {{ name }} name {{ name }}.{{ vlan.id }} type vlan id {{ vlan.id }} || true
+  #post-up /gns3/bin/busybox ifup -f {{ vname }} || true
+  #pre-down /gns3/bin/busybox ifdown -f {{ vname }} || true
+  pre-down ip link del dev {{ name }}.{{ vlan.id }} || true
 {% endfor %}
   post-down ip link set {{ name }} down
-{% for vname, vattr in attr.vlan_ifaces.items() %}
-iface {{ vname }} inet {{ vattr.method }}
-{% if vattr.method == "static" %}
-  address {{ vattr.address }}
-  netmask {{ vattr.netmask }}
-{% elif vattr.method == "manual" %}
-  pre-up ip link set {{ vname }} up
+{% for vname, vlan in attr.vlans.items() %}
+
+# {{ vname }} VLAN
+iface {{ name }}.{{ vlan.id }} inet {{ vlan.method }}
+{% if vlan.method == "static" %}
+  address {{ vlan.address }}
+  netmask {{ vlan.netmask }}
+{% elif vlan.method == "manual" %}
+  pre-up ip link set {{ name }}.{{ vlan.id }} up
 {% endif %}
 {% endfor %}
 {% endif %}
