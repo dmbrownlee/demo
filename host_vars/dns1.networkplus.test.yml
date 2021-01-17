@@ -1,0 +1,8 @@
+---
+populate_hosts_file: true
+interfaces:
+  eth0:
+    method: static
+    address: 192.168.44.1
+    netmask: 255.255.255.0
+    gateway: 192.168.44.254

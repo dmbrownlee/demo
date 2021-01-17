@@ -1,0 +1,26 @@
+---
+control_host: true
+nat_out_interface: "eth1"
+populate_hosts_file: true
+interfaces:
+  eth0:
+    method: static
+    address: 192.168.42.1
+    netmask: 255.255.255.0
+  eth1:
+    comment: "Private connection to Internet for bootstrap"
+    method: dhcp
+quagga:
+  zebra:
+    - "ip route 0.0.0.0/0 192.168.122.1"
+    - "interface eth0"
+    - "  description Provisioning"
+    - "  ip address 192.168.42.1/24"
+    - "interface eth1"
+    - "  description Internet"
+  ospfd_interfaces:
+    - { name: eth0, ospf_cost: 25 }
+  ospfd:
+    - "  ospf router-id 1.1.1.1"
+    - "  network 192.168.42.0/24 area 0"
+    - "  passive-interface eth1"

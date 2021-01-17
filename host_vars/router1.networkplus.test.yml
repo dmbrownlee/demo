@@ -1,0 +1,31 @@
+---
+bootstrap_gateway: 192.168.42.1
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.3
+    netmask: 255.255.255.0
+quagga:
+  zebra:
+    - "interface eth0"
+    - "  description Provisioning"
+    - "  ip address 192.168.42.3/24"
+    - "interface eth1"
+    - "  description Backbone"
+    - "  ip address 192.168.41.2/30"
+    - "interface eth2"
+    - "  description MDF"
+    - "  ip address 192.168.44.254/24"
+    - "interface eth3"
+    - "  description Backbone"
+    - "  ip address 192.168.41.5/30"
+  ospfd_interfaces:
+    - { name: eth0, ospf_cost: 25 }
+  ospfd:
+    - "  ospf router-id 3.3.3.3"
+    - "  network 192.168.41.0/30 area 0"
+    - "  network 192.168.41.4/30 area 0"
+    - "  network 192.168.42.0/24 area 0"
+    - "  network 192.168.44.0/24 area 0"
+    - "  passive-interface eth2"

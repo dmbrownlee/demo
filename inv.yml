@@ -3,170 +3,20 @@ all:
     control.networkplus.test:
       ansible_connection: local
       ansible_host: 192.168.42.1
-      control_host: true
-      nat_out_interface: "eth1"
-      populate_hosts_file: true
-      interfaces:
-        eth0:
-          method: static
-          address: 192.168.42.1
-          netmask: 255.255.255.0
-        eth1:
-          comment: "Private connection to Internet for bootstrap"
-          method: dhcp
-      quagga:
-        zebra:
-          - "ip route 0.0.0.0/0 192.168.122.1"
-          - "interface eth0"
-          - "  description Provisioning"
-          - "  ip address 192.168.42.1/24"
-          - "interface eth1"
-          - "  description Internet"
-        ospfd_interfaces:
-          - { name: eth0, ospf_cost: 25 }
-        ospfd:
-          - "  ospf router-id 1.1.1.1"
-          - "  network 192.168.42.0/24 area 0"
-          - "  passive-interface eth1"
     firewall.networkplus.test:
       ansible_host: 192.168.42.2
-      ansible_user: user
-      bootstrap_gateway: 192.168.42.1
-      nat_out_interface: "eth1"
-      interfaces:
-        eth0:
-          comment: "Provisioning Interface"
-          method: static
-          address: 192.168.42.2
-          netmask: 255.255.255.0
-        eth1:
-          comment: "Internet"
-          method: dhcp
-      quagga:
-        zebra:
-          - "ip route 0.0.0.0/0 192.168.122.1"
-          - "interface eth0"
-          - "  description Provisioning"
-          - "  ip address 192.168.42.2/24"
-          - "interface eth1"
-          - "  description Internet"
-          - "interface eth2"
-          - "  description DMZ"
-          - "  ip address 192.168.43.254/24"
-          - "interface eth3"
-          - "  description Internal"
-          - "  ip address 192.168.41.1/30"
-        ospfd_interfaces:
-          - { name: eth0, ospf_cost: 25 }
-        ospfd:
-          - "  ospf router-id 2.2.2.2"
-          - "  network 192.168.43.0/24 area 0"
-          - "  network 192.168.42.0/24 area 0"
-          - "  network 192.168.41.0/30 area 0"
-          - "  passive-interface eth1"
-          - "  passive-interface eth2"
-          - "  default-information originate always"
     router1.networkplus.test:
       ansible_host: 192.168.42.3
-      ansible_user: user
-      bootstrap_gateway: 192.168.42.1
-      interfaces:
-        eth0:
-          comment: "Provisioning Interface"
-          method: static
-          address: 192.168.42.3
-          netmask: 255.255.255.0
-      quagga:
-        zebra:
-          - "interface eth0"
-          - "  description Provisioning"
-          - "  ip address 192.168.42.3/24"
-          - "interface eth1"
-          - "  description Backbone"
-          - "  ip address 192.168.41.2/30"
-          - "interface eth2"
-          - "  description MDF"
-          - "  ip address 192.168.44.254/24"
-          - "interface eth3"
-          - "  description Backbone"
-          - "  ip address 192.168.41.5/30"
-        ospfd_interfaces:
-          - { name: eth0, ospf_cost: 25 }
-        ospfd:
-          - "  ospf router-id 3.3.3.3"
-          - "  network 192.168.41.0/30 area 0"
-          - "  network 192.168.41.4/30 area 0"
-          - "  network 192.168.42.0/24 area 0"
-          - "  network 192.168.44.0/24 area 0"
-          - "  passive-interface eth2"
     router2.networkplus.test:
       ansible_host: 192.168.42.4
-      ansible_user: user
-      bootstrap_gateway: 192.168.42.1
-      interfaces:
-        eth0:
-          comment: "Provisioning Interface"
-          method: static
-          address: 192.168.42.4
-          netmask: 255.255.255.0
-        eth2:
-          comment: "Default VLAN"
-          method: static
-          address: 192.168.45.254
-          netmask: 255.255.255.0
-          vlans:
-            office:
-              method: static
-              address: 192.168.46.254
-              netmask: 255.255.255.0
-              id: 100
-            lab:
-              method: static
-              address: 192.168.47.254
-              netmask: 255.255.255.0
-              id: 200
-      quagga:
-        zebra:
-          - "interface eth0"
-          - "  description Provisioning"
-          - "  ip address 192.168.42.4/24"
-          - "interface eth1"
-          - "  description Backbone"
-          - "  ip address 192.168.41.6/30"
-          - "interface eth2"
-          - "  description Office and Labs"
-          - "  ip address 192.168.45.254/24"
-        ospfd_interfaces:
-          - { name: eth0, ospf_cost: 25 }
-        ospfd:
-          - "  ospf router-id 4.4.4.4"
-          - "  network 192.168.41.4/30 area 0"
-          - "  network 192.168.42.0/24 area 0"
-          - "  network 192.168.45.0/24 area 0"
-          - "  passive-interface eth2"
-      isc_dhcp_relay:
-        dhcp_server: "192.168.44.1"
-        interfaces: "-iu eth1 -id eth2"
     dns1.networkplus.test:
       ansible_host: 192.168.44.1
-      ansible_user: user
-      populate_hosts_file: true
-      interfaces:
-        eth0:
-          method: static
-          address: 192.168.44.1
-          netmask: 255.255.255.0
-          gateway: 192.168.44.254
     www1.networkplus.test:
       ansible_host: 192.168.43.1
-      ansible_user: user
-      interfaces:
-        eth0:
-          method: static
-          address: 192.168.43.1
-          netmask: 255.255.255.0
-          gateway: 192.168.43.254
   children:
+    tier9:
+      hosts:
+        control.networkplus.test:
     tier1:
       hosts:
         firewall.networkplus.test:

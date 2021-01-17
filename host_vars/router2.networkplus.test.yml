@@ -1,0 +1,46 @@
+---
+bootstrap_gateway: 192.168.42.1
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.4
+    netmask: 255.255.255.0
+  eth2:
+    comment: "Default VLAN"
+    method: static
+    address: 192.168.45.254
+    netmask: 255.255.255.0
+    vlans:
+      office:
+        method: static
+        address: 192.168.46.254
+        netmask: 255.255.255.0
+        id: 100
+      lab:
+        method: static
+        address: 192.168.47.254
+        netmask: 255.255.255.0
+        id: 200
+quagga:
+  zebra:
+    - "interface eth0"
+    - "  description Provisioning"
+    - "  ip address 192.168.42.4/24"
+    - "interface eth1"
+    - "  description Backbone"
+    - "  ip address 192.168.41.6/30"
+    - "interface eth2"
+    - "  description Office and Labs"
+    - "  ip address 192.168.45.254/24"
+  ospfd_interfaces:
+    - { name: eth0, ospf_cost: 25 }
+  ospfd:
+    - "  ospf router-id 4.4.4.4"
+    - "  network 192.168.41.4/30 area 0"
+    - "  network 192.168.42.0/24 area 0"
+    - "  network 192.168.45.0/24 area 0"
+    - "  passive-interface eth2"
+isc_dhcp_relay:
+  dhcp_server: "192.168.44.1"
+  interfaces: "-iu eth1 -id eth2"
