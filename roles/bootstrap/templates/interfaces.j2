@@ -16,14 +16,13 @@ iface {{ name }} inet {{ attr.method }}
 {% if attr.vlans is defined %}
 {% for vname, vlan in attr.vlans.items() %}
   post-up ip link add link {{ name }} name {{ name }}.{{ vlan.id }} type vlan id {{ vlan.id }} || true
-  #post-up /gns3/bin/busybox ifup -f {{ vname }} || true
-  #pre-down /gns3/bin/busybox ifdown -f {{ vname }} || true
   pre-down ip link del dev {{ name }}.{{ vlan.id }} || true
 {% endfor %}
   post-down ip link set {{ name }} down
 {% for vname, vlan in attr.vlans.items() %}
 
 # {{ vname }} VLAN
+auto {{ name }}.{{ vlan.id }}
 iface {{ name }}.{{ vlan.id }} inet {{ vlan.method }}
 {% if vlan.method == "static" %}
   address {{ vlan.address }}
