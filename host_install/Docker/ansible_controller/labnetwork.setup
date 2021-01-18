@@ -1,11 +1,11 @@
 #!/bin/bash
 # This script is preinstalled in the docker image
-if [ ! -d $HOME/networkplus.test ]; then
+if [ ! -d $HOME/labnetwork ]; then
   cd $HOME &&
-  git clone https://github.com/dmbrownlee/networkplus.test.git &&
-  cd networkplus.test
+  git clone https://github.com/dmbrownlee/labnetwork.git &&
+  cd labnetwork
 else
-  cd $HOME/networkplus.test
+  cd $HOME/labnetwork
   git pull
 fi
 
