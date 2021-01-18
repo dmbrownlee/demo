@@ -4,7 +4,9 @@
   connection: local
   roles:
     - role: baseline
+      tags: baseline
     - role: virtualization_host
+      tags: virtualization_host
   tags:
     - default
 
@@ -13,15 +15,19 @@
   connection: local
   roles:
     - role: gns3_host
+      tags: gns3_host
     - role: basebox
+      tags: basebox
       vars:
         box: "debian-10.6.0"
       when: buildvms|bool
     - role: basebox
+      tags: basebox
       vars:
         box: "windows-10"
       when: buildvms|bool
     - role: labenv_networkplus
+      tags: labenv_networkplus
   tags:
     - networkplus
 
@@ -30,10 +36,12 @@
   connection: local
   roles:
     - role: basebox
+      tags: basebox
       vars:
         box: "centos-8.2.2004"
       when: buildvms|bool
     - role: labenv_rhcsa
+      tags: labenv_rhcsa
   tags:
     - rhcsa
 
@@ -42,9 +50,11 @@
   connection: local
   roles:
     - role: basebox
+      tags: basebox
       vars:
         box: "centos-8.2.2004"
       when: buildvms|bool
     - role: labenv_rhce
+      tags: labenv_rhce
   tags:
     - rhce
