@@ -43,6 +43,16 @@
     mode: '0644'
   become: yes
   notify: restart_interfaces
+- name: Ensure default user account exists
+  user:
+    name: user
+    # this is the encrypted string for 'password'
+    password: "$6$QlSquosLAxXGp45n$9ZAVVuPzX1fcB.ZX9M4xMkmqCUt/dCfYeYlzPc7M2ofgi2IDONi0d2RHF0BHsfgCFjxuwxWHKFAVxtsOtsLum/"
+    groups: sudo
+    append: yes
+    shell: /bin/bash
+    update_password: on_create
+  become: yes
 - name: Ensure apt cache is updated before installing packages
   apt:
     update_cache: yes
