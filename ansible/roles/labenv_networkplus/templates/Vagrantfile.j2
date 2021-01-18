@@ -27,7 +27,7 @@ Vagrant.configure("2") do |config|
   # Debian VMs
   #==========================
 
-  (1..3).each do |host|
+  (1..2).each do |host|
     config.vm.define "debian#{host}", autostart: false do |node|
       node.vm.provider "virtualbox" do |vboxvm|
         vboxvm.name = "debian#{host}"
