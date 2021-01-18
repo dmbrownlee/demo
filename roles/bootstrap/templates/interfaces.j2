@@ -14,22 +14,8 @@ iface {{ name }} inet {{ attr.method }}
   pre-up ip link set {{ name }} up
 {% endif %}
 {% if attr.vlans is defined %}
-{% for vname, vlan in attr.vlans.items() %}
-  post-up ip link add link {{ name }} name {{ name }}.{{ vlan.id }} type vlan id {{ vlan.id }} || true
-  pre-down ip link del dev {{ name }}.{{ vlan.id }} || true
-{% endfor %}
-  post-down ip link set {{ name }} down
-{% for vname, vlan in attr.vlans.items() %}
-
-# {{ vname }} VLAN
-auto {{ name }}.{{ vlan.id }}
-iface {{ name }}.{{ vlan.id }} inet {{ vlan.method }}
-{% if vlan.method == "static" %}
-  address {{ vlan.address }}
-  netmask {{ vlan.netmask }}
-{% elif vlan.method == "manual" %}
-  pre-up ip link set {{ name }}.{{ vlan.id }} up
-{% endif %}
+{% for id in attr.vlans %}
+  post-up ip link {{ name }}.{{ id }} || ip link add link {{ name }} name {{ name }}.{{ id }} type vlan id {{ id }}
 {% endfor %}
 {% endif %}
 

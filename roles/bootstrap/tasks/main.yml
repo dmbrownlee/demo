@@ -43,6 +43,11 @@
     mode: '0644'
   become: yes
   notify: restart_interfaces
+- name: Ensure VLAN interfaces exist, are configured, and are up
+  shell: ip link add link {{ item.key.split('.')[0] }} name {{ item.key.split('.')[0] }}.{{ item.key.split('.')[1] }} type vlan id {{ item.key.split('.')[1] }} && ip address add {{ item.value.address }}/{{ item.value.netmask }} dev {{ item.key }} && ip link set dev {{ item.key }} up
+  loop: "{{ interfaces | dict2items }}"
+  when: item.key not in ansible_interfaces and item.key is regex('\.\d+$')
+  become: yes
 - name: Ensure default user account exists
   user:
     name: user

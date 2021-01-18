@@ -12,16 +12,18 @@ interfaces:
     address: 192.168.45.254
     netmask: 255.255.255.0
     vlans:
-      office:
-        method: static
-        address: 192.168.46.254
-        netmask: 255.255.255.0
-        id: 100
-      lab:
-        method: static
-        address: 192.168.47.254
-        netmask: 255.255.255.0
-        id: 200
+      - 100
+      - 200
+  eth2.100:
+    comment: "Eng VLAN"
+    method: static
+    address: 192.168.46.254
+    netmask: 255.255.255.0
+  eth2.200:
+    comment: "Lab VLAN"
+    method: static
+    address: 192.168.47.254
+    netmask: 255.255.255.0
 quagga:
   zebra:
     - "interface eth0"
@@ -47,4 +49,4 @@ quagga:
     - "  passive-interface eth2.200"
 isc_dhcp_relay:
   dhcp_server: "192.168.44.1"
-  interfaces: "-iu eth1 -id eth2"
+  interfaces: "-iu eth1 -id eth2 -id eth2.100 -id eth2.200"
