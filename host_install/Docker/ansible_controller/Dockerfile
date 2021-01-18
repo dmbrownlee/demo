@@ -56,11 +56,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && pip3 install --upgrade paramiko \
 && pip3 install ansible
 
-COPY --chown=ansible:ansible labnetwork.setup /home/ansible/labnetwork.setup
+COPY --chown=ansible:ansible setup /home/ansible/setup
 
 COPY --chown=ansible:ansible myconfig.sh /home/ansible/.myconfig.sh
 
-RUN chmod 755 /home/ansible/labnetwork.setup /home/ansible/.myconfig.sh
+RUN chmod 755 /home/ansible/setup /home/ansible/.myconfig.sh
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \
