@@ -1,0 +1,8 @@
+---
+- name: Ensure localhost is configured as a virtualization host
+  hosts: localhost
+  roles:
+    - role: baseline
+      tags: baseline
+    - role: virtualization_host
+      tags: virtualization_host
