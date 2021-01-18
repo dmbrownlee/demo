@@ -9,8 +9,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get autoremove \
 && rm -rf /var/lib/apt/lists/* \
 && chmod 4511 /usr/bin/sudo \
-&& useradd -m -G sudo -s /bin/bash user \
-&& echo 'password\npassword\n' | passwd user \
+&& useradd -m -G sudo -s /bin/bash ansible \
+&& echo 'password\npassword\n' | passwd ansible \
 && mkdir -p /etc/sv/console/log \
 && echo '#!/bin/sh -euC\n\
 # Disable service, if /dev/tty{N} does not exist. See #914788.\n\
@@ -56,11 +56,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && pip3 install --upgrade paramiko \
 && pip3 install ansible
 
-COPY --chown=user:user labnetwork.setup /home/user/labnetwork.setup
+COPY --chown=ansible:ansible labnetwork.setup /home/ansible/labnetwork.setup
 
-COPY --chown=user:user myconfig.sh /home/user/.myconfig.sh
+COPY --chown=ansible:ansible myconfig.sh /home/ansible/.myconfig.sh
 
-RUN chmod 755 /home/user/labnetwork.setup /home/user/.myconfig.sh
+RUN chmod 755 /home/ansible/labnetwork.setup /home/ansible/.myconfig.sh
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \

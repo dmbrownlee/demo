@@ -9,8 +9,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get autoremove \
 && rm -rf /var/lib/apt/lists/* \
 && chmod 4511 /usr/bin/sudo \
-&& useradd -m -G sudo -s /bin/bash user \
-&& echo 'password\npassword\n' | passwd user \
+&& useradd -m -G sudo -s /bin/bash ansible \
+&& echo 'password\npassword\n' | passwd ansible \
 && mkdir -p /etc/sv/console/log \
 && echo '#!/bin/sh -euC\n\
 # Disable service, if /dev/tty{N} does not exist. See #914788.\n\
