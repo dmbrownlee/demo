@@ -13,6 +13,8 @@ all:
       ansible_host: 192.168.44.1
     www1.networkplus.test:
       ansible_host: 192.168.43.1
+    lab1.lab.networkplus.test:
+      ansible_host: 192.168.47.1
   children:
     tier9:
       hosts:
