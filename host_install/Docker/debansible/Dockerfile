@@ -23,7 +23,7 @@ chmod 4511 /usr/bin/sudo\n\
 pgrep -x getty -t pts/0 && exit 163\n\
 pgrep -x agetty -t pts/0 && exit 163\n\
 ! type fgetty >/dev/null 2>&1 || exec chpst -P fgetty pts/0\n\
-exec /usr/bin/chpst -P getty pts/0\n' > /etc/sv/console/run \
+exec /usr/bin/chpst -P getty pts/0 linux\n' > /etc/sv/console/run \
 && chmod 755 /etc/sv/console/run \
 && echo '#!/bin/sh -euC\n\
 svlogd -tt .' > /etc/sv/console/log/run \
