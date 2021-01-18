@@ -7,15 +7,15 @@
   when: control_host is defined and control_host
 - name: Ensure ssh key exists
   openssh_keypair:
-    path: "{{ ansible_user_dir }}/.ssh/user"
+    path: "{{ ansible_user_dir }}/.ssh/ansible"
     state: present
-    comment: "user@networkplus.test"
+    comment: "Ansible configuration account"
   when: control_host is defined and control_host
 - name: Ensure public key is copied to authorized keys on host
   authorized_key:
-    user: user
+    user: ansible
     state: present
-    key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/user.pub') }}"
+    key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/ansible.pub') }}"
 - name: Ensure hostname is set to FQDN
   hostname:
     name: "{{ inventory_hostname }}"
