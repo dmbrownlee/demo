@@ -1,0 +1,5 @@
+---
+- name: Ensure changes to firewall are applied
+  listen: fw_rules_updated
+  shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
+  become: yes

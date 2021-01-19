@@ -1,5 +1,14 @@
 ---
 bootstrap_gateway: 192.168.42.1
+fw:
+  trusted_ifaces:
+    - eth0
+    - eth2
+    - eth3
+  tcp_forwarding_rules:
+    - { iface: eth1, port: 80, dest: "192.168.43.1:80" }
+  snat_ifaces:
+    - eth1
 nat_out_interface: "eth1"
 interfaces:
   eth0:

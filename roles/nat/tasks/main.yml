@@ -1,5 +1,5 @@
 ---
-- name: Ensure NAT is configured
+- name: Ensure iptables is configured and persists reboots
   block:
     - name: Ensure iptables is installed
       apt:
@@ -9,7 +9,7 @@
         - iptables
         - iptables-persistent
       become: yes
-    - name: Ensure iptables rules persist across reboots
+    - name: Ensure iptables rules file exists
       template:
         dest: /etc/iptables/rules.v4
         src: iptables_rules.v4.j2
@@ -17,7 +17,8 @@
         group: root
         mode: '0644'
       become: yes
-    - name: Ensure persistent iptables rules get loaded
+      notify: fw_rules_updated
+    - name: Ensure persistent iptables rules get loaded at boot
       template:
         dest: /etc/network/if-pre-up.d/firewall
         src: firewall.j2
@@ -25,11 +26,4 @@
         group: root
         mode: "0755"
       become: yes
-    - name: Ensure NAT is enabled
-      iptables:
-        table: nat
-        chain: POSTROUTING
-        out_interface: "{{ nat_out_interface }}"
-        jump: MASQUERADE
-      become: yes
-  when: nat_out_interface is defined
+  when: fw is defined

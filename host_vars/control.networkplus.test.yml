@@ -1,6 +1,10 @@
 ---
 control_host: true
-nat_out_interface: "eth1"
+fw:
+  trusted_ifaces:
+    - eth0
+  snat_ifaces:
+    - eth1
 populate_hosts_file: true
 interfaces:
   eth0:
