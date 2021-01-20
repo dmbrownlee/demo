@@ -1,41 +1,64 @@
-auth-server=networkplus.test,eth0
-interface-name=networkplus.test,eth0
-auth-zone=networkplus.test,192.168.0.0/16,eth0
+auth-server={{ ansible_domain }},eth0
 domain-needed
 bogus-priv
 no-resolv
-interface=eth0
-bind-interfaces
-server=8.8.8.8
-local=/networkplus.test/192.168.44.1
+no-negcache
+{% if dnsmasq.upstream_dns_servers is defined %}
+{% for server in dnsmasq.upstream_dns_servers %}
+server={{ server }}
+{% endfor %}
+{% endif %}
 rev-server=192.168.0.0/16,192.168.44.1
-cname=dns.networkplus.test,dns1.networkplus.test
-cname=dhcp.networkplus.test,dns1.networkplus.test
-cname=pxe.networkplus.test,dns1.networkplus.test
-cname=www.networkplus.test,www1.networkplus.test
-#==========
-# default VLAN
-#==========
-domain=networkplus.test,192.168.0.0/16,local
-dhcp-range=set:default_vlan,192.168.45.100,192.168.45.150,255.255.255.0,4h
-dhcp-option=tag:default_vlan,option:router,192.168.45.254
-dhcp-option=tag:default_vlan,option:dns-server,192.168.44.1
-dhcp-option=tag:default_vlan,option:domain-search,networkplus.test
-dhcp-option-force=tag:default_vlan,option:tftp-server,pxe.networkplus.test
-dhcp-option-force=tag:default_vlan,option:bootfile-name,somebootablefile
-#==========
-# Eng VLAN
-#==========
-domain=eng.networkplus.test,192.168.46.0/24,local
-dhcp-range=set:eng_vlan,192.168.46.100,192.168.46.150,255.255.255.0,4h
-dhcp-option=tag:eng_vlan,option:router,192.168.46.254
-dhcp-option=tag:eng_vlan,option:dns-server,192.168.44.1
-dhcp-option=tag:eng_vlan,option:domain-search,eng.networkplus.test,lab.networkplus.test,networkplus.test
-#==========
-# Lab VLAN
-#==========
-domain=lab.networkplus.test,192.168.47.0/24,local
-dhcp-range=set:lab_vlan,192.168.47.100,192.168.47.150,255.255.255.0,4h
-dhcp-option=tag:lab_vlan,option:router,192.168.47.254
-dhcp-option=tag:lab_vlan,option:dns-server,192.168.44.1
-dhcp-option=tag:lab_vlan,option:domain-search,lab.networkplus.test
+mx-target=smtp.networkplus.test
+localmx
+# ============
+# DNS Settings
+# ============
+{% for zone in dnsmasq.dns_zones %}
+{% if zone.name is defined %}
+#
+# {{ zone.name }} zone settings
+#
+local=/{{ zone.name }}/
+{% if zone.netblock is defined %}
+domain={{ zone.name }},{{ zone.netblock }},local
+{% if zone.netblock is defined and zone.interface is defined %}
+auth-zone={{ zone.name }},{{ zone.netblock }},{{ zone.interface }}
+interface-name={{ zone.name }},{{ zone.interface }}
+{% endif %}
+{% endif %}
+{% if zone.cnames is defined %}
+{% for cname in zone.cnames %}
+cname={{ cname.cnames | join(',') }},{{ cname.target }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+# =============
+# DHCP Settings
+# =============
+{% for dhcp in dnsmasq.dhcp_netblocks %}
+{% if dhcp.name is defined and dhcp.network is defined %}
+#
+# DHCP settings for {{ dhcp.network }}
+{% if dhcp.pool_start is defined and dhcp.pool_end is defined and dhcp.netmask is defined and dhcp.lease_time is defined %}
+dhcp-range=set:{{ dhcp.name }},{{ dhcp.pool_start }},{{ dhcp.pool_end }},{{ dhcp.netmask }},{{ dhcp.lease_time }}
+{% endif %}
+{% if dhcp.router is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:router,{{ dhcp.router }}
+{% endif %}
+{% if dhcp.dns_server is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:dns-server,{{ dhcp.dns_server }}
+{% endif %}
+{% if dhcp.domain_search is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:domain-search,{{ dhcp.domain_search | join(',') }}
+{% endif %}
+{% if dhcp.tftp_server is defined %}
+dhcp-option-force=tag:{{ dhcp.name }},option:tftp-server,{{ dhcp.tftp_server }}
+{% endif %}
+{% if dhcp.bootfile_name is defined %}
+dhcp-option-force=tag:{{ dhcp.name }},option:bootfile-name,{{ dhcp.bootfile_name }}
+{% endif %}
+{% endif %}
+{% endfor %}
