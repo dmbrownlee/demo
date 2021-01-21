@@ -11,6 +11,13 @@ If you need help, see the ```README.md``` in [demo](https://github.com/dmbrownle
 1. Launch the GNS3 app and wait for the GNS3 VM in VirtualBox to fully boot
   ![Ensure GNS3 VM has the green light](gns3vm_booted.png)
 1. Once the GNS3 VM has booted, in the GNS3 app, go to ```File > Import portable project``` and import the [```~/demo/networkplus/labfiles/labnetwork.gns3project```](labnetwork.gns3project) file
+
+GNS3 will open the model when it has finished importing.
+## Adding the Virtual Machines
+VirtualBox VMs cannot be included in a portable project file.  You will need to add the VMs to the model manually after you import the project.  You typically only need to do this once and there is text in the model showing you where to place the icons and to which switch ports to connect them.  If you close and reopen the project, the project, the VMs will still be there and will have saved all their state (i.e. any changes you make in the VMs will be saved when you close the model).  GNS3 assigns each VM a unique identifier.  This means if you delete  and recreate the debian1 VM, for example, then you will have to remove debian1-1 from the model and add it back again because the original icon in the model references the unique identifier of the VM you deleted.
+## Opening and using the network model
+Follow these steps after opening the network model.
+> ***IMPORTANT!*** This model makes extensive use of Docker containers.  When you quit GNS3 or open a different model, GNS3 will close this model and remove its containers.  These containers do not save (all) their state when removed which means you will need to run the steps below every time you open the model.
 1. Start all the network nodes by clicking the green triangle in the top button bar and wait for all the links to turn green
 1. Open the console on the ```control``` host within the provisioning network (you may have to wait several seconds before you get a login prompt) and login as the provisioning user (```ansible```):
   ```
