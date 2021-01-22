@@ -1,0 +1,14 @@
+#!/bin/zsh
+# This file needs to be sourced, not run.
+unction bp () {
+  IP=192.168.56.101
+  if [ $# -eq 1 ]; then
+    IP=$1
+  fi
+  IMG="$(basename $PWD)"
+  docker build --no-cache -t dmbrownlee/${IMG}:latest . &&
+  docker save dmbrownlee/${IMG}:latest -o $IMG.tar &&
+  scp -i ~/keys/gns3 $IMG.tar gns3@${IP}:/home/gns3/ &&
+  echo "$IMG.tar has been uploaded to GNS3 VM at $IP" &&
+  rm $IMG.tar
+}

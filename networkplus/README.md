@@ -1,17 +1,14 @@
 # The CompTIA Network+ virtual lab environment
 
 # Getting Started
-> NOTE: This virtual lab environment is only working on Mac OS X and Debian (Buster)
+> NOTE: This virtual lab environment is only tested on Mac OS X and Debian (Buster)
 
-## Configure the virtualization environment for a specific lab (Network+)
-If you haven't already done so, run the ```setup``` script in the parent directory with ```networkplus``` as the only argument to setup this virtual lab environment.  See the ```README.md``` in [demo](https://github.com/dmbrownlee/demo) for more details.
+## Configure the virtualization environment for the Network+ study group
+These instructions are for machines that already have the demo project installed.  If you have not installed the demo project yet, follow the instructions in the demo project's [```README.md```](https://github.com/dmbrownlee/demo/blob/master/README.md) first.
+
+These instructions will install additional software (GNS3, Wireshark, etc.) and the Vagrantfile needed to build the VirtualBox VMs for the Network+ study group.
 
 > On either Linux or Mac:  
 > ```cd ~/demo && ./setup networkplus```  
 
 Once the setup has completed successfully, you should reboot the host before attempting to use GNS3.
-
-## Using GNS3
-TODO: document using GNS3 and the labs
-
-# Happy Learning!
