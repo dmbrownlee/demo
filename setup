@@ -2,7 +2,8 @@
 # This script installs Ansible if on MacOSX and it is not already installed and
 # then runs the playbook to configure the virtualization software on the host.
 
-APARGS="-K --skip-tags disabled -t default"
+APARGS="-K --skip-tags disabled"
+PLAYBOOK="site.yml"
 
 # if [[ "$(uname)" != "Darwin" ]]; then
 #   echo "This setup script only supports Mac."
@@ -31,14 +32,13 @@ done
 
 shift $(($OPTIND - 1))
 
-while [[ $# -gt 0 ]]; do
-  if [[ ! -d "ansible/roles/labenv_$1" ]]; then
-    echo "$1 is not a valid course name."
+if [[ $# -gt 0 ]]; then
+  PLAYBOOK="$1.yml"
+  if [[ ! -f "ansible/$PLAYBOOK" ]]; then
+    echo "$1 is not a valid lab environment."
     exit 1;
   fi
-  APARGS="$APARGS -t $1"
-  shift
-done
+fi
 
 function restore_backup() {
   BACKUP_DIR="$1"
@@ -119,7 +119,7 @@ DONE
       cd $HOME/demo
     fi
     cd ./ansible &&
-    caffeinate -dsu ansible-playbook $APARGS setup.yml
+    caffeinate -dsu ansible-playbook $APARGS $PLAYBOOK
     ;;
   "Linux")
     if [[ -f /etc/debian_version ]]; then
@@ -167,7 +167,7 @@ DONE
       cd $HOME/demo
     fi
     cd ./ansible &&
-    ansible-playbook $APARGS setup.yml
+    ansible-playbook $APARGS $PLAYBOOK
     ;;
   "*")
     echo "This setup script does not work with your host operating system."
