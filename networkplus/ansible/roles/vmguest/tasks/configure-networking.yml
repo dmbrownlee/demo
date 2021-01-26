@@ -1,7 +1,0 @@
----
-- name: Ensure we use Google public DNS servers
-  replace:
-    path: '/etc/dhcp/dhclient.conf'
-    regexp: '^#supersede .*$'
-    replace: 'supersede domain-name-servers 8.8.8.8;'
-  become: yes
