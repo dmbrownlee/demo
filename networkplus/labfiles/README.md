@@ -8,7 +8,7 @@ These instructions assume you have already installed and configured the software
 If you need help, see the ```README.md``` in [demo](https://github.com/dmbrownlee/demo/README.md) for more details.
 
 ## Import the network model into GNS3
-1. Launch the GNS3 app and wait for the GNS3 VM in VirtualBox to fully boot
+1. Launch the GNS3 app and wait for the GNS3 VM in VirtualBox to fully boot</br>
   ![Ensure GNS3 VM has the green light](gns3vm_booted.png)
 1. Once the GNS3 VM has booted, in the GNS3 app, go to ```File > Import portable project``` and import the [```~/demo/networkplus/labfiles/networkplus.test.gns3project```](networkplus.test.gns3project) file
 
