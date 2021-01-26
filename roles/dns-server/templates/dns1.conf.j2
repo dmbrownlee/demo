@@ -1,5 +1,6 @@
-auth-server={{ ansible_domain }},eth0
+#auth-server={{ ansible_domain }},eth0
 domain-needed
+expand-hosts
 bogus-priv
 no-resolv
 no-negcache
@@ -11,6 +12,9 @@ server={{ server }}
 rev-server=192.168.0.0/16,192.168.44.1
 mx-target=smtp.networkplus.test
 localmx
+{% if dnsmasq.interface is defined %}
+interface={{ dnsmasq.interface }}
+{% endif %}
 # ============
 # DNS Settings
 # ============
@@ -23,7 +27,7 @@ local=/{{ zone.name }}/
 {% if zone.netblock is defined %}
 domain={{ zone.name }},{{ zone.netblock }},local
 {% if zone.netblock is defined and zone.interface is defined %}
-auth-zone={{ zone.name }},{{ zone.netblock }},{{ zone.interface }}
+#auth-zone={{ zone.name }},{{ zone.netblock }},{{ zone.interface }}
 interface-name={{ zone.name }},{{ zone.interface }}
 {% endif %}
 {% endif %}
