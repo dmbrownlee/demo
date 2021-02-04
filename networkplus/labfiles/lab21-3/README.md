@@ -1,4 +1,4 @@
-# LAB 21-1 Network troubleshooting practice
+# LAB 21-3 Network troubleshooting practice
 
 ## OBJECTIVE
 
@@ -16,7 +16,7 @@ Here are the steps to begin the lab.
 1. Login to the control host as the ```ansible``` user and run the following command:
 
   ```
-  cd && ./breakfix networkplus 21-1
+  cd && ./breakfix networkplus 21-3
   ```
 
 1. The command in the step above will break something and then print a description of the problem.
@@ -26,7 +26,7 @@ Here are the steps to begin the lab.
 1.  When you think you have solved the problem, you can fix it by running this command on the control host (the -u is for "undo"):
 
   ```
-  cd && ./breakfix -u networkplus 21-1
+  cd && ./breakfix -u networkplus 21-3
   ```
 
 ## CONFIRMATION
