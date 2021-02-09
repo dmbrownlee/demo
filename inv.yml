@@ -16,7 +16,7 @@ all:
     lab1.lab.networkplus.test:
       ansible_host: 192.168.47.1
   children:
-    tier9:
+    tier0:
       hosts:
         control.networkplus.test:
     tier1:
