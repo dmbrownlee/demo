@@ -1,9 +1,4 @@
 ---
-- name: Ensure the Vagrantfile exists
-  template:
-    dest: "{{ demo_root }}/networkplus/Vagrantfile"
-    src: "Vagrantfile.j2"
-    mode: '0644'
 - name: Get the list of Vagrant VMs not yet created
   shell: set -o pipefail && vagrant status | awk '/not created/ { print $1 }'
   args:
