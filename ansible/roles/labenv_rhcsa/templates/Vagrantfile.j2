@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
-  config.vm.box = "centos-8.2.2004"
+  config.vm.box = "centos-8.3.2011"
   config.vm.synced_folder "labfiles/", "/labfiles"
   config.vm.synced_folder "coursefiles/", "/coursefiles"
   config.vm.synced_folder ".", "/vagrant", disabled: true
@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== server1 ==
   config.vm.define "server1" do |node|
-    node.vm.box = "centos-8.2.2004"
+    node.vm.box = "centos-8.3.2011"
 {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_server1"
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
 
   #=== server2 ===
   config.vm.define "server2" do |node|
-    node.vm.box = "centos-8.2.2004"
+    node.vm.box = "centos-8.3.2011"
 {% if virtualization == "virtualbox" %}
     disk = "/Users/user/VirtualBox VMs/rhcsa_server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -88,8 +88,8 @@ Vagrant.configure("2") do |config|
 {% if virtualization == "virtualbox" %}
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
-    node.vm.box = "centos-8.2.2004"
-    disk = "/Users/user/VirtualBox VMs/rhcsa_installhost/centos-8.2.2004-disk001.vmdk"
+    node.vm.box = "centos-8.3.2011"
+    disk = "/Users/user/VirtualBox VMs/rhcsa_installhost/centos-8.3.2011-disk001.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "rhcsa_installhost"
       virtualbox.gui = true
@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "/Users/user/Downloads/CentOS-8.2.2004-x86_64-boot.iso"]
+        "--medium", "/Users/user/Downloads/CentOS-8.3.2011-x86_64-boot.iso"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
@@ -142,11 +142,11 @@ Vagrant.configure("2") do |config|
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
-    node.vm.box = "centos-8.2.2004"
+    node.vm.box = "centos-8.3.2011"
   end
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
-    node.vm.box = "centos-8.2.2004"
+    node.vm.box = "centos-8.3.2011"
   end
 end
