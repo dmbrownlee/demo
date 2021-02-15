@@ -1,4 +1,4 @@
-# lab5-1: Using virtula consoles to work with multiple users
+# lab5-1: Using virtual consoles to work with multiple users
 ## Sorry, this lab has not be reviewed recently and may contain outdated material, spelling and grammar errors, and/or poor markdown formatting.
 
 ![Image of construction sign](../images/ConstructionSign.png)
