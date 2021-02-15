@@ -1,7 +1,7 @@
 # lab2-1: Bash: Word splitting and expansion
-## Sorry, this is only a placeholder for a lab that has yet to be written.
-
-![Image of construction sign](../images/ConstructionSign.png)
+## <img align="left" src="../images/ConstructionSign.png">Sorry, this lab has not been reviewed recently and may contain:
+  - outdated technical informatiom
+  - spelling errors, grammar errors, and poor markdown formatting
 
 ## OBJECTIVE
 
