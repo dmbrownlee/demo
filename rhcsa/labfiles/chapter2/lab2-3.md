@@ -14,7 +14,7 @@ We are not going to cover basic navigation and editing here. If you have not alr
 <code>vimtutor</code></br></br>
 This will open a copy of the tutorial in Vim which you can edit as it you read it (Don't worry, it's just a copy so you don't have to worry about messing it up).
 
-## STEPS
+## BACKGROUND
 
 Vim has several modes.  When you start Vim, it starts in ```normal``` mode.  In normal mode, your computer keys are mapped to movement, commands, or operators.  The philosophy behind Vim is that people spend more time editing existing files rather than writing new files so having lots of editing commands at your fingertips is super efficient.  Here is one of many Vim keyboard cheatsheets from the Internet:</br></br>
 ![Vim Normal Mode Cheatsheet](vim-cheat-sheet.png)
@@ -73,9 +73,9 @@ With the cursor under the 'i' in "string", ```yiw``` would copy the word "string
 
 With the cursor under the 'i' again, ```yit``` would copy "some underlined text" to the paste buffer. ```yat``` would copy everything between &lt;div&gt; and &lt;/div&gt; and, by adding a repetition modifier, ```y2at``` would copy the &lt;div&gt; tags as well (two levels of tags).
 
-### Practice!
+## STEPS
 
-Open the ```template.py``` file in this lab's directory and do the following:
+Download the [```template.py```](template.py) file in this lab's directory, open it in Vim, and do the following:
 
 1.  Go to line 33 with three keystrokes, jump to the semicolon with two keystrokes, and replace the semicolon with an apostrophe with two keystrokes.
 1.  Go to line 7, remove the text been the triple double quotes (it's a Python docstring), and place yourself in insert mode so you can type a new docstring.  Do all this in just six keystrokes.
@@ -83,3 +83,13 @@ Open the ```template.py``` file in this lab's directory and do the following:
 1.  Starting with the cursor at the top of the file (```gg``` to go there), try to move the definition of the "usage" function above the "Greeter" class definition in ten keystrokes or fewer.
 
 Use this file to practice moving by different text objects on your own until you are comfortable with it.  Then use different movement commands in conjunction with change, delete, and yank.
+
+## CONFIRMATION
+
+You will have completed this lab successfully when the following are true:
+
+  1. You can start the vim editor with or without a file already loaded into the buffer.
+  1. You can exit the vim editor with or without saving your changes.
+  1. You can save the current buffer under a different file name.
+  1. You are comfortable moving the cursor by character, word, line, sentence, and paragraph.
+
