@@ -61,7 +61,7 @@ study_guide:
       lastpage: 141
       oreilly_page: 'ch06.xhtml'
       labs:
-        - title: "Users and Group Management"
+        - title: "User and Group Management"
     - title: 'Permissions Management'
       lastpage: 165
       oreilly_page: 'ch07.xhtml'

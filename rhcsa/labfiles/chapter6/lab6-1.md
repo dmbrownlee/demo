@@ -1,4 +1,4 @@
-# lab6-1: Users and Group Management
+# lab6-1: User and Group Management
 ## Sorry, this lab has not be reviewed recently and may contain outdated material, spelling and grammar errors, and/or poor markdown formatting.
 
 ![Image of construction sign](../images/ConstructionSign.png)
