@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
     node.vm.box = "centos-8.3.2011"
 {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
-      virtualbox.name = "rhcsa_server1"
+      virtualbox.name = "server1"
     end
 {% endif %}
   end
@@ -63,9 +63,9 @@ Vagrant.configure("2") do |config|
   config.vm.define "server2" do |node|
     node.vm.box = "centos-8.3.2011"
 {% if virtualization == "virtualbox" %}
-    disk = "/Users/user/VirtualBox VMs/rhcsa_server2/server2_disk2.vmdk"
+    disk = "/Users/user/VirtualBox VMs/server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
-      virtualbox.name = "rhcsa_server2"
+      virtualbox.name = "server2"
       # Create and attach a new, empty disk with the same name
       virtualbox.customize ['createhd', '--filename', disk, '--variant',
         'Standard', '--size', 20 * 1024]
@@ -89,9 +89,9 @@ Vagrant.configure("2") do |config|
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
     node.vm.box = "centos-8.3.2011"
-    disk = "/Users/user/VirtualBox VMs/rhcsa_installhost/centos-8.3.2011-disk001.vmdk"
+    disk = "/Users/user/VirtualBox VMs/installhost/centos-8.3.2011-disk001.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
-      virtualbox.name = "rhcsa_installhost"
+      virtualbox.name = "installhost"
       virtualbox.gui = true
       virtualbox.memory = 2048
       # Dettach and destroy original disk
