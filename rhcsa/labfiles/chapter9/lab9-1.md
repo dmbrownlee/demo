@@ -1,4 +1,4 @@
-# lab9-1: Manageing Software
+# lab9-1: Managing Software
 ## Sorry, this lab has not be reviewed recently and may contain outdated material, spelling and grammar errors, and/or poor markdown formatting.
 
 ![Image of construction sign](../images/ConstructionSign.png)

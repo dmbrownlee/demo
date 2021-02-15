@@ -76,7 +76,7 @@ study_guide:
       lastpage: 231
       oreilly_page: 'ch09.xhtml'
       labs:
-        - title: "Manageing Software"
+        - title: "Managing Software"
     - title: 'Managing Processes'
       lastpage: 251
       oreilly_page: 'ch10.xhtml'
