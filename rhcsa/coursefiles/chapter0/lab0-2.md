@@ -138,6 +138,14 @@ You can quickly shutdown all the running virtual machines with ```vagrant halt``
 
 Similarly, you can use ```vagrant reload``` to reboot one or all the virtual machines.  This is equivalent to running ```vagrant halt``` followed by ```vagrant up```.
 
+Try these commands out now:
+
+```
+vagrant reload
+vagrant halt server2
+vagrant status
+```
+
 ### Destroying virtual machines
 
 Since it is easy to quickly create virtual machines, there isn't much reason to keep them around when you're done with them if they don't contain data you want to save.  You can completely remove the virtual machines with ```vagrant destroy``` and that will delete all the virtual machines, including removing their virtual disks, so you can free up disk space on your host.  Since this is a destructive command and there is no way to get back any data that might be in the virtual machines' disks, you will be asked if you are sure you want to do this.  Just type 'y' and press enter to confirm.  If you find these warning prompts annoying, you can disable them by using ```vagrant destroy -f``` (-f for "force") and Vagrant will remote the virtual machine without hesitation.
@@ -145,6 +153,15 @@ Since it is easy to quickly create virtual machines, there isn't much reason to 
 > Tip: You do not need to halt the virtual machines before destroying them, the destroy command will first halt any running virtual machines.
 
 > Note: ```vagrant destroy``` removes virtual machines but does not remove the base boxes used to create them so they are easy to recreate.
+
+Try these commands out now:
+
+```
+vagrant destroy server2
+vagrant status
+vagrant up server2
+vagrant status
+```
 
 ### Updating Vagrant base boxes
 
@@ -167,3 +184,13 @@ cd ~/demo/ansible/packer && packer build centos-8.3.2011.json
 ```
 
 The ```packer build``` command uses the instructions in the ```.json``` file to download the installation media, create a virtual machine, install the operating system and customize it for use with Vagrant, shutdown the virtual machine, and, finally, package the virtual machine's hard disk file into a Vagrant base box file with a ```.box``` extension.  This base box file can be added to Vagrant's base box repository with the ```vagrant box add``` command.
+
+## CONFIRMATION
+
+You will know you have completed this lab successfully when the following are true:
+
+  1. You recognize when Vagrant says you're in the wrong directory and know which file to look for to confirm you are in the correct directory.
+  1. You know how to check the current status of your virtual machines from the command line.
+  1. You can create one or more virtual machines with a single command
+  1. You can quickly stop and reboot your virtual machines
+  1. You can destroy remove your virtual machines from the command line when you no longer need them.
