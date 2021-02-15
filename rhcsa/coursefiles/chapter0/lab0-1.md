@@ -35,3 +35,10 @@ To help you with this, we have provided a tab separated values (TSV) document wi
 1. Finally, do whatever is necessary to create a workable study environment.
 
   > Tip: If you will be taking the exam remotely, you might take a look at the requirements for the remote exam environment as mentioned in [Red Hat's FAQ](https://www.redhat.com/en/resources/certification-remote-exams-FAQ) and then configure your study environment to meet the requirements so the environment is comfortable by the time you take the test.
+
+## CONFIRMATION
+
+You will know you have completed this lab successfully when the following are true:
+
+  1. You have committed to a study schedule
+  1. You can quickly find your schedule, source material, and labs
