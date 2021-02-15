@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
-  config.vm.box = "centos-8.2.2004"
+  config.vm.box = "centos-8.3.2011"
   config.vm.synced_folder "labfiles/", "/labfiles"
   config.vm.synced_folder ".", "/vagrant", disabled: true
   {% if virtualization == "virtualbox" %}
@@ -74,10 +74,10 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== labipa ===
   config.vm.define "labipa" do |node|
-    node.vm.box = "centos-8.2.2004"
+    node.vm.box = "centos-8.3.2011"
     {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
-      virtualbox.name = "rhcsa_labipa"
+      virtualbox.name = "labipa"
       virtualbox.memory = 2048
     end
     {% elif virtualization == "libvirt" %}
