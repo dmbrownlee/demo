@@ -91,7 +91,7 @@ study_guide:
       lastpage: 283
       oreilly_page: 'ch12.xhtml'
       labs:
-        - title: "Practice scheduling a cronhjob"
+        - title: "Practice scheduling a cronjob"
     - title: 'Configuring Logging'
       lastpage: 307
       oreilly_page: 'ch13.xhtml'
