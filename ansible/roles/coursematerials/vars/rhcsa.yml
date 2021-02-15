@@ -56,7 +56,7 @@ study_guide:
       lastpage: 119
       oreilly_page: 'ch05.xhtml'
       labs:
-        - title: "Using virtula consoles to work with multiple users"
+        - title: "Using virtual consoles to work with multiple users"
     - title: 'User and Group Management'
       lastpage: 141
       oreilly_page: 'ch06.xhtml'
