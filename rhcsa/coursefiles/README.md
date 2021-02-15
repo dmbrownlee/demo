@@ -20,7 +20,7 @@ Go ahead and start your first labs now!
 
 ## Labs
 [lab0-1: Create your schedule](chapter0/lab0-1.md)</br>
-[lab0-2: Install the virtual lab environment](chapter0/lab0-2.md)</br>
+[lab0-2: Using the virtual lab environment](chapter0/lab0-2.md)</br>
 
 ## Assignment Page Listing
 [Chapter 1: Practice manually installing the OS](chapter1/README.md)</br>
