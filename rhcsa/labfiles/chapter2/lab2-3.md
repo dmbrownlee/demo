@@ -16,24 +16,26 @@ This will open a copy of the tutorial in Vim which you can edit as it you read i
 
 ## BACKGROUND
 
-Vim has several modes.  When you start Vim, it starts in ```normal``` mode.  In normal mode, your computer keys are mapped to movement, commands, or operators.  The philosophy behind Vim is that people spend more time editing existing files rather than writing new files so having lots of editing commands at your fingertips is super efficient.  Here is one of many Vim keyboard cheatsheets from the Internet:</br></br>
+Vim has several modes.  When you start Vim, it starts in ***normal*** mode.  In normal mode, your computer keys are mapped to movements, commands, or operators.  The philosophy behind Vim is that people spend more time editing existing files rather than writing new files so having lots of editing commands at your fingertips is super efficient.  Here is one of many Vim keyboard cheatsheets from the Internet:</br></br>
 ![Vim Normal Mode Cheatsheet](vim-cheat-sheet.png)
 ### Movement
-First, notice there are many keys for movement besides ```h```, ```j```,```k```, and ```l```.  Besides moving one charater left or right, with ```h``` and ```l```, or one line up or down, with ```k``` and ```j```, there are also movements relative to text objects within the file.  Examples of "text objects" are words, sentences, paragraphs and various types of blocks and knowing what Vim considers a specific text object is helpful when using these movements.
-* A ```word``` is a sequence of letters, numbers and underscores (_), **or** a sequence of *other* non-blank characters, separated by spaces, tabs, or newlines. (```:help word```).
-* A ```WORD``` is a sequence of non-blank characters separated by blank characters but doesn't distinguish between the types of non-blank characters like ```word``` does.  That is to say, "Owl-flavored" (one of David Letterman's top 10 least used hyphenated words) is three ```words``` but only one ```WORD```. (```:help WORD```).
-* A ```sentence``` is a sequence of characters ending in '.', '!', or '?', and then followed by a newline, space, or tab.  Trailing quotes immediately after the punctuation are also part of the sentence (```:help sentence```).
-* Vim considers adjacent lines containing text, separated by blank one or more blank lines, to be ```paragraphs```. (```:help paragraph```).
-* A ```block``` may start with a ```(```, ```[```, ```{```, ```<```, or HTML tag and continues until the matching closing character or HTML tag. (```:help sentence```).
-* Text within quotes, either ```'``` or ```"```, is also block of text.
+First, notice there are many keys for movement besides ```h```, ```j```,```k```, and ```l```.  Besides moving one charater left or right, with ```h``` and ```l```, or one line up or down, with ```k``` and ```j```, there are also movements relative to text objects within the file.  Examples of "text objects" are ***words***, ***sentences***, ***paragraphs*** and various types of ***blocks*** and knowing what Vim considers a specific text object is helpful when using these movements.
+* A ***word*** is a sequence of letters, numbers and underscores (_), or a sequence of *other* non-blank characters, separated by spaces, tabs, or newlines. (```:help word```).
+* A ***WORD*** is a sequence of non-blank characters separated by blank characters but doesn't distinguish between the types of non-blank characters like a *word* does.  That is to say, "Owl-flavored" (one of David Letterman's top 10 least used hyphenated words) is three *words* but only one *WORD*. (```:help WORD```).
+* A ***sentence*** is a sequence of characters ending in '.', '!', or '?', and then followed by a newline, space, or tab.  Trailing quotes immediately after the punctuation are also part of the *sentence* (```:help sentence```).
+* Vim considers adjacent lines containing text, separated by one or more blank lines, to be ***paragraphs***. (```:help paragraph```).
+* A ***block*** may start with a ```(```, ```[```, ```{```, ```<```, or HTML tag and continues until the matching closing character or HTML tag. (```:help sentence```).
+* Text within quotes, either ```'``` or ```"```, is also a *block* of text.
 
 Now that you know Vim's definition for these text objects, you can move around faster than one column or line at a time with these keys:
 These are the movement commands related to text objects:
-* ```w```/```W```: move to the begging of the next ```word```/```WORD```
-* ```b```/```B```: move to the begging of the current (or previous if already at the beggining of current) ```word```/```WORD```
-* ```e```/```E```: move to the end of the current (or next if already at the end of current) ```word```/```WORD```
-* ```(```/```)```: move backward/forward a sentence (the cheat sheet says "sequence").
-* ```{```/```}```: move backward/forward a paragraph.
+* ```w```/```W```: move to the begging of the next *word*/*WORD*
+* ```b```/```B```: move to the begging of the current (or previous if already at the beggining of current) *word*/*WORD*
+* ```e```/```E```: move to the end of the current (or next if already at the end of current) *word*/*WORD*
+* ```(```/```)```: move backward/forward a *sentence*
+
+  > Note: The cheat sheet says "sequence". I'm using *sentence* to be consistent with Vim's online help.
+* ```{```/```}```: move backward/forward a *paragraph*.
 
 You can also move forwards and backwards to the next or previous instance of a character you specify with:
 * ```F```*x*/```f```*x*: move backwards/forwards to the next occurance of *x*
@@ -91,5 +93,8 @@ You will have completed this lab successfully when the following are true:
   1. You can start the vim editor with or without a file already loaded into the buffer.
   1. You can exit the vim editor with or without saving your changes.
   1. You can save the current buffer under a different file name.
-  1. You are comfortable moving the cursor by character, word, line, sentence, and paragraph.
-
+  1. You are comfortable moving the cursor forwards and backwards by character, word, line, sentence, and paragraph.
+  1. You can yank, change, and delete from within text objects.
+  1. You can paste previously yanked or deleted text
+  1. You can undo and redo changes you've made
+  1. You can do simple find and replace operations
