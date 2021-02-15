@@ -9,15 +9,21 @@
     src: "orientation.md.j2"
     dest: "{{ courseroot }}/README.md"
     mode: '0644'
+    force: no
   when: chapter_num == 0
 - name: Ensure an assignment page exists for chapter {{ chapter_num }}
   template:
     src: "assignment.md.j2"
     dest: "{{ courseroot }}/chapter{{ chapter_num }}/README.md"
     mode: '0644'
+    force: no
   when: chapter_num != 0
-- name: Ensure a lab page exists for each lab of chapter {{ chapter_num }}
-  include_tasks: make-lab.yml
+- name: Ensure lab{{ chapter_num }}-{{ lab_num + 1 }} exists
+  template:
+    src: "lab.md.j2"
+    dest: "{{ courseroot }}/chapter{{ chapter_num }}/lab{{ chapter_num }}-{{ lab_num + 1 }}.md"
+    mode: '0644'
+    force: no
   loop: "{{ chapter.labs }}"
   loop_control:
     loop_var: lab
