@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "server2" do |node|
     node.vm.box = "centos-8.3.2011"
 {% if virtualization == "virtualbox" %}
-    disk = "/Users/user/VirtualBox VMs/server2/server2_disk2.vmdk"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server2"
       # Create and attach a new, empty disk with the same name
@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
     node.vm.box = "centos-8.3.2011"
-    disk = "/Users/user/VirtualBox VMs/installhost/centos-8.3.2011-disk001.vmdk"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/centos-8.3.2011-disk001.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "installhost"
       virtualbox.gui = true
@@ -117,7 +117,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "/Users/user/Downloads/CentOS-8.3.2011-x86_64-boot.iso"]
+        "--medium", "#{ENV["HOME"]}/Downloads/CentOS-8.3.2011-x86_64-boot.iso"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
