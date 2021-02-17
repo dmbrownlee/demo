@@ -194,3 +194,4 @@ You will know you have completed this lab successfully when the following are tr
   1. You can create one or more virtual machines with a single command
   1. You can quickly stop and reboot your virtual machines
   1. You can destroy remove your virtual machines from the command line when you no longer need them.
+  1. You have only two virtual machines, server1 and server2 (the others are not created automatically when you run ```vagrant up``` and you don't need them yet)
