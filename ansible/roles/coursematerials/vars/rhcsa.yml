@@ -97,8 +97,17 @@ study_guide:
         - text: 'Lesson 24 Lab Solution: Automating Installations (2:12)'
           type: link
           url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_07'
+        - text: 'Red Hat Documentation'
+          type: heading
+        - text: 'Performing a standard RHEL installation'
+          type: link
+          url: 'https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/index'
+        - text: 'Performing an advanced RHEL installation'
+          type: link
+          url: 'https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_an_advanced_rhel_installation/index'
       labs:
         - title: "Installing CentOS"
+        - title: "Automated Installs Using Kickstart"
     - title: 'Using Essential Tools'
       lastpage: 51
       oreilly_page: 'ch02.xhtml'

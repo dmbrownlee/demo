@@ -2,7 +2,7 @@
 This assignment is part of a [self-study course](../README.md) to prepare for the RHCSA (EX200) exam.
 # Chapter 1: Practice manually installing the OS
 
-## Reading
+## Primary Resource
 Read chapter 1 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition](https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification-dp-0135938139/dp/0135938139).
 ## Addtional Resources
 
@@ -34,5 +34,10 @@ Read chapter 1 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st E
 - [Lesson 24 Lab: Automating Installations (0:41)](https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_06)
 - [Lesson 24 Lab Solution: Automating Installations (2:12)](https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_07)
 
+### Red Hat Documentation
+- [Performing a standard RHEL installation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_a_standard_rhel_installation/index)
+- [Performing an advanced RHEL installation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_an_advanced_rhel_installation/index)
+
 ## Labs
 [lab1-1: Installing CentOS](lab1-1.md)</br>
+[lab1-2: Automated Installs Using Kickstart](lab1-2.md)</br>
