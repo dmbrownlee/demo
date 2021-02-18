@@ -32,11 +32,123 @@ study_guide:
     - title: "Practice manually installing the OS"
       lastpage: 27
       oreilly_page: "ch01.xhtml"
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Red Hat Certified System Administrator (RHCSA): Introduction'
+          type: subheading
+        - text: 'Red Hat Certified System Administrator (RHCSA): Introduction (2:38)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_00_00_00'
+        - text: 'Module 1: Performing Basic System Management Tasks'
+          type: subheading
+        - text: 'Module 1: Performing Basic System Management Tasks (0:47)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_00_00'
+        - text: 'Lesson 1: Installing Red Hat Enterprise Linux Server'
+          type: subheading
+        - text: 'Learning objectives (0:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_00'
+        - text: '1.1 Understanding Server Requirements (3:37)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_01'
+        - text: '1.2 Performing a Basic Installation (11:49)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_02'
+        - text: '1.3 Installing with Custom Partitioning (4:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_03'
+        - text: '1.4 Logging into the Server (5:48)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_04'
+        - text: '1.5 Deploying RHEL in Cloud (6:59)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_05'
+        - text: 'Lesson 1 Lab: Installing Red Hat Enterprise Linux (0:51)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_06'
+        - text: 'Lesson 1 Lab Solution: Installing Red Hat Enterprise Linux (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_01_07'
+        - text: 'Lesson 24: Automating Installations'
+          type: subheading
+        - text: 'Learning objectives (0:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_00'
+        - text: '24.1 Understanding Automated Installations Solutions (2:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_01'
+        - text: '24.2 Creating a Kickstart File (2:31)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_02'
+        - text: '24.3 Using the Kickstart File for Automatic Installations (2:15)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_03'
+        - text: '24.4 Using Kickstart Files in Fully Automated Datacenters (1:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_04'
+        - text: '24.5 Using Vagrant to Set Up Virtual Machines (1:40)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_05'
+        - text: 'Lesson 24 Lab: Automating Installations (0:41)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_06'
+        - text: 'Lesson 24 Lab Solution: Automating Installations (2:12)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_24_07'
       labs:
         - title: "Installing CentOS"
     - title: 'Using Essential Tools'
       lastpage: 51
       oreilly_page: 'ch02.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 2: Using Essential Tools'
+          type: subheading
+        - text: 'Learning objectives (0:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_00'
+        - text: '2.1 Getting Started with Linux Commands (5:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_01'
+        - text: '2.2 Working with the Bash Shell (10:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_02'
+        - text: '2.3 Understanding I/O Redirection and Piping (2:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_03'
+        - text: '2.4 Using I/O Redirection and Piping (4:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_04'
+        - text: '2.5 Understanding the Linux File System Hierarchy (11:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_05'
+        - text: '2.6 Using man (10:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_06'
+        - text: '2.7 Finding the right man page (4:49)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_07'
+        - text: '2.8 Understanding vim (2:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_08'
+        - text: '2.9 Using vim (9:57)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_09'
+        - text: '2.10 Using Globbing and Wildcards (4:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_10'
+        - text: '2.11 Using Cockpit (4:29)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_11'
+        - text: 'Lesson 2 Lab: Using Essential Tools (1:00)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_12'
+        - text: 'Lesson 2 Lab Solution: Using Essential Tools (5:38)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_13'
       labs:
         - title: "Bash: Word splitting and expansion"
         - title: "Bash: Command types revisited"
@@ -45,113 +157,883 @@ study_guide:
     - title: 'Essential File Management Tools'
       lastpage: 79
       oreilly_page: 'ch03.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 3: Essential File Management Tools'
+          type: subheading
+        - text: 'Learning objectives (0:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_00'
+        - text: '3.1 Essential File Management Tasks (6:51)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_01'
+        - text: '3.2 Finding Files (8:50)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_02'
+        - text: '3.3 Understanding Mounts (1:44)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_03'
+        - text: '3.4 Understanding Links (3:46)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_04'
+        - text: '3.5 Working with Links (4:59)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_05'
+        - text: '3.6 Working with tar (6:37)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_06'
+        - text: '3.7 Working with Compressed Files (5:11)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_07'
+        - text: 'Lesson 3 Lab: Essential File Management Tools (0:57)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_08'
+        - text: 'Lesson 3 Lab Solution: Essential File Management Tools (7:05)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_03_09'
       labs:
         - title: "Essential Tools - links"
     - title: 'Working with Text Files'
       lastpage: 97
       oreilly_page: 'ch04.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 4: Working with Text Files'
+          type: subheading
+        - text: 'Learning objectives (0:30)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_00'
+        - text: '4.1 Using Common Text Tools (8:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_01'
+        - text: '4.2 Using grep (3:58)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_02'
+        - text: '4.3 Understanding Regular Expressions (8:01)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_03'
+        - text: '4.4 Using awk (3:07)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_04'
+        - text: '4.5 Using sed (3:06)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_05'
+        - text: 'Lesson 4 Lab: Working with Text Files (1:06)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_06'
+        - text: 'Lesson 4 Lab Solution: Working with Text Files (4:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_04_07'
       labs:
         - title: "Working With Text Files"
     - title: 'Connecting to Red Hat Enterprise Linux'
       lastpage: 119
       oreilly_page: 'ch05.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 5: Connecting to a RHEL Server'
+          type: subheading
+        - text: 'Learning objectives (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_00'
+        - text: '5.1 Understanding the Root User (2:20)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_01'
+        - text: '5.2 Logging in to the GUI (1:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_02'
+        - text: '5.3 Logging in to the Console (0:52)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_03'
+        - text: '5.4 Understanding Virtual Terminals (2:56)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_04'
+        - text: '5.5 Switching Between Virtual Terminals (2:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_05'
+        - text: '5.6 Using su to Work as Another User (2:47)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_06'
+        - text: '5.7 Using sudo to Perform Administrator Tasks (7:52)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_07'
+        - text: '5.8 Using ssh to Log in Remotely (3:56)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_08'
+        - text: 'Lesson 5 Lab: Connecting to a RHEL Server (0:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_09'
+        - text: 'Lesson 5 Lab Solution: Connecting to a RHEL Server (2:03)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_05_10'
       labs:
         - title: "Using virtual consoles to work with multiple users"
     - title: 'User and Group Management'
       lastpage: 141
       oreilly_page: 'ch06.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 6: Managing Users and Groups'
+          type: subheading
+        - text: 'Learning objectives (0:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_00'
+        - text: '6.1 Understanding the Need for User Accounts (1:41)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_01'
+        - text: '6.2 Understanding User Properties (2:47)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_02'
+        - text: '6.3 Creating and Managing Users (6:03)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_03'
+        - text: '6.4 Managing User Default Settings (6:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_04'
+        - text: '6.5 Understanding /etc/passwd and /etc/shadow (6:41)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_05'
+        - text: '6.6 Understanding Group Membership (2:44)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_06'
+        - text: '6.7 Creating and Managing Groups (2:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_07'
+        - text: '6.8 Managing Password Properties (3:15)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_08'
+        - text: 'Lesson 6 Lab: Managing Users and Groups (0:53)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_09'
+        - text: 'Lesson 6 Lab Solution: Managing User and Groups (3:50)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_06_10'
       labs:
         - title: "User and Group Management"
     - title: 'Permissions Management'
       lastpage: 165
       oreilly_page: 'ch07.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 7: Managing Permissions'
+          type: subheading
+        - text: 'Learning objectives (0:38)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_00'
+        - text: '7.1 Understanding Ownership (2:15)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_01'
+        - text: '7.2 Changing File Ownership (2:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_02'
+        - text: '7.3 Understanding Basic Permissions (1:58)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_03'
+        - text: '7.4 Managing Basic Permissions (2:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_04'
+        - text: '7.5 Understanding umask (4:12)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_05'
+        - text: '7.6 Understanding Special Permissions (1:48)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_06'
+        - text: '7.7 Managing Special Permissions (8:38)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_07'
+        - text: '7.8 Understanding ACLs (2:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_08'
+        - text: '7.9 Managing ACLs (4:57)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_09'
+        - text: '7.10 Troubleshooting Permissions (6:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_10'
+        - text: 'Lesson 7 Lab: Managing Permissions (1:10)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_11'
+        - text: 'Lesson 7 Lab Solution: Managing Permissions (4:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_07_12'
       labs:
         - title: "Configuring Permissions"
     - title: 'Configuring Networking'
       lastpage: 195
       oreilly_page: 'ch08.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 8: Configuring Networking'
+          type: subheading
+        - text: 'Learning objectives (0:35)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_00'
+        - text: '8.1 Understanding IPv4 Networking (7:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_01'
+        - text: '8.2 Understanding NIC Naming (3:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_02'
+        - text: '8.3 Managing Runtime Configuration with ip (9:12)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_03'
+        - text: '8.4 Understanding RHEL 8 Networking (2:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_04'
+        - text: '8.5 Managing Persistent Networking with nmcli (9:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_05'
+        - text: '8.6 Managing Persistent Networking with nmtui (5:09)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_06'
+        - text: '8.7 Verifying Network Configuration Files (2:10)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_07'
+        - text: '8.8 Testing Network Connections (7:01)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_08'
+        - text: 'Lesson 8 Lab: Configuring Networking (0:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_09'
+        - text: 'Lesson 8 Lab Solution: Configuring Networking (2:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_08_10'
       labs:
         - title: "Network Configuration"
     - title: 'Managing Software'
       lastpage: 231
       oreilly_page: 'ch09.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Module 2: Operating Running Systems'
+          type: subheading
+        - text: 'Module 2: Operating Running Systems (0:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_00_00'
+        - text: 'Lesson 10: Managing Software'
+          type: subheading
+        - text: 'Learning objectives (0:49)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_00'
+        - text: '10.1 Understanding RPM Packages (2:01)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_01'
+        - text: '10.2 Setting up Repository Access (8:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_02'
+        - text: '10.3 Understanding Modules and Application Streams (1:46)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_03'
+        - text: '10.4 Managing Packages with yum (6:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_04'
+        - text: '10.5 Managing Modules and Application Streams (7:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_05'
+        - text: '10.6 Using yum Groups (2:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_06'
+        - text: '10.7 Managing yum updates and yum history (1:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_07'
+        - text: '10.8 Using RPM Queries (5:56)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_08'
+        - text: '10.9 Using Red Hat Subscription Manager (3:21)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_09'
+        - text: 'Lesson 10 Lab: Managing Software (0:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_10'
+        - text: 'Lesson 10 Lab Solution: Managing Software (5:57)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_10_11'
       labs:
         - title: "Managing Software"
     - title: 'Managing Processes'
       lastpage: 251
       oreilly_page: 'ch10.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 9: Managing Processes'
+          type: subheading
+        - text: 'Learning objectives (0:43)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_00'
+        - text: '9.1 Understanding Jobs and Processes (1:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_01'
+        - text: '9.2 Managing Shell Jobs (3:45)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_02'
+        - text: '9.3 Getting Process Information with ps (9:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_03'
+        - text: '9.4 Understanding Memory Usage (3:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_04'
+        - text: '9.5 Understanding CPU Load (4:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_05'
+        - text: '9.6 Monitoring System Activity with top (7:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_06'
+        - text: '9.7 Sending Signals to Processes (7:37)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_07'
+        - text: '9.8 Managing Priorities and Niceness (7:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_08'
+        - text: '9.9 Using Tuned Profiles (2:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_09'
+        - text: 'Lesson 9 Lab: Managing Processes (0:46)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_10'
+        - text: 'Lesson 9 Lab Solution: Managing Processes (2:06)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_09_11'
       labs:
         - title: "Managing Processes"
     - title: 'Working with Systemd'
       lastpage: 269
       oreilly_page: 'ch11.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 11: Working with Systemd'
+          type: subheading
+        - text: 'Learning objectives (0:29)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_00'
+        - text: '11.1 Understanding Systemd Units (3:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_01'
+        - text: '11.2 Managing Systemd Services (3:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_02'
+        - text: '11.3 Modifying Systemd Service Configuration (5:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_03'
+        - text: 'Lesson 11 Lab: Working with Systemd (0:23)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_04'
+        - text: 'Lesson 11 Lab Solution: Working with Systemd (1:47)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_11_05'
       labs:
         - title: "Working with systemd"
     - title: 'Scheduling Tasks'
       lastpage: 283
       oreilly_page: 'ch12.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 12: Scheduling Tasks'
+          type: subheading
+        - text: 'Learning objectives (0:44)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_00'
+        - text: '12.1 Understanding cron and at (1:07)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_01'
+        - text: '12.2 Understanding cron Scheduling Options (3:22)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_02'
+        - text: '12.3 Understanding anacron (2:41)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_03'
+        - text: '12.4 Scheduling with cron (3:51)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_04'
+        - text: '12.5 Scheduling Tasks with Systemd Timers (3:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_05'
+        - text: '12.6 Using at (2:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_06'
+        - text: '12.7 Managing Temporary Files (10:06)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_07'
+        - text: 'Lesson 12 Lab: Using at (0:30)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_08'
+        - text: 'Lesson 12 Lab Solution: Using at (4:20)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_12_09'
       labs:
         - title: "Practice scheduling a cronjob"
     - title: 'Configuring Logging'
       lastpage: 307
       oreilly_page: 'ch13.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 13: Configuring Logging'
+          type: subheading
+        - text: 'Learning objectives (0:45)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_00'
+        - text: '13.1 Understanding RHEL 8 Logging Options (3:16)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_01'
+        - text: '13.2 Configuring Rsyslog Logging (7:22)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_02'
+        - text: '13.3 Working with systemd-journald (4:09)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_03'
+        - text: '13.4 Preserving the Systemd Journal (3:48)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_04'
+        - text: '13.5 Configuring Logrotate (2:43)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_05'
+        - text: 'Lesson 13 Lab: Configuring Logging (0:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_06'
+        - text: 'Lesson 13 Lab Solution: Configuring Logging (3:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_13_07'
       labs:
         - title: "Practice configuring rsyslogd"
         - title: "Make sure the journal survives a reboot"
     - title: 'Managing Storage'
       lastpage: 337
       oreilly_page: 'ch14.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 14: Managing Storage'
+          type: subheading
+        - text: 'Learning objectives (0:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_00'
+        - text: '14.1 Understanding Disk Layout (7:52)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_01'
+        - text: '14.2 Understanding Linux Storage Options (1:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_02'
+        - text: '14.3 Understanding GPT and MBR Partitions (2:58)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_03'
+        - text: '14.4 Creating Partitions with parted (6:08)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_04'
+        - text: '14.5 Creating MBR Partitions with fdisk (5:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_05'
+        - text: '14.6 Understanding File System Differences (3:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_06'
+        - text: '14.7 Making and Mounting File Systems (7:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_07'
+        - text: '14.8 Mounting Partitions through /etc/fstab (3:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_08'
+        - text: '14.9 Managing Persistent Naming Attributes (11:38)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_09'
+        - text: '14.10 Managing Systemd Mounts (9:18)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_10'
+        - text: '14.11 Managing XFS File Systems (1:35)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_11'
+        - text: '14.12 Creating a Swap Partition (6:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_12'
+        - text: 'Lesson 14 Lab: Managing Storage (1:06)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_13'
+        - text: 'Lesson 14 Lab Solution: Managing Storage (7:30)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_14_14'
       labs:
         - title: "Managing Partitions"
     - title: 'Managing Advanced Storage'
       lastpage: 365
       oreilly_page: 'ch15.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 15: Managing Advanced Storage'
+          type: subheading
+        - text: 'Learning objectives (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_00'
+        - text: '15.1 Understanding LVM, Stratis, and VDO (2:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_01'
+        - text: '15.2 Understanding LVM Setup (2:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_02'
+        - text: '15.3 Creating an LVM Logical Volume (10:05)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_03'
+        - text: '15.4 Understanding Device Mapper and LVM Device Names (2:47)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_04'
+        - text: '15.5 Resizing LVM Logical Volumes (5:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_05'
+        - text: '15.6 Understanding Stratis Setup (2:40)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_06'
+        - text: '15.7 Creating Stratis Volumes (6:50)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_07'
+        - text: '15.8 Managing Stratis Storage Features (10:31)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_08'
+        - text: '15.9 Understanding VDO (1:37)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_09'
+        - text: '15.10 Configuring VDO Volumes (5:01)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_10'
+        - text: '15.11 Understanding LUKS Encrypted Volumes (2:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_11'
+        - text: '15.12 Configuring LUKS Encrypted Volumes (6:58)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_12'
+        - text: 'Lesson 15 Lab: Managing Advanced Storage (0:54)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_13'
+        - text: 'Lesson 15 Lab Solution: Managing Advanced Storage (9:45)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_14'
       labs:
         - title: "Practice LVM"
     - title: 'Basic Kernel Management'
       lastpage: 383
       oreilly_page: 'ch16.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Module 3: Performing Advanced System Administration Tasks'
+          type: subheading
+        - text: 'Module 3: Performing Advanced System Administration Tasks (0:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_00_00'
+        - text: 'Lesson 16: Basic Kernel Management'
+          type: subheading
+        - text: 'Learning objectives (0:22)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_00'
+        - text: '16.1 Understanding the Linux Kernel (2:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_01'
+        - text: '16.2 Working with Kernel Modules (2:01)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_02'
+        - text: '16.3 Using modprobe (2:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_03'
+        - text: '16.4 Using /proc to Tune Kernel Behavior (6:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_04'
+        - text: '16.5 Updating the Kernel (1:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_05'
+        - text: 'Lesson 16 Lab: Managing the Kernel (0:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_06'
+        - text: 'Lesson 16 Lab Solution: Managing the Kernel (2:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_16_07'
       labs:
         - title: "Learn Basic Kernel Management"
     - title: 'Managing and Understanding the Boot Procedure'
       lastpage: 399
       oreilly_page: 'ch17.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 17: Managing the Boot Procedure'
+          type: subheading
+        - text: 'Learning objectives (0:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_00'
+        - text: '17.1 Understanding the Boot Procedure (1:49)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_01'
+        - text: '17.2 Modifying Grub2 Runtime Parameters (6:09)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_02'
+        - text: '17.3 Modifying Grub2 Persistent Parameters (4:02)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_03'
+        - text: '17.4 Managing Systemd Targets (6:02)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_04'
+        - text: '17.5 Setting the Default Systemd Target (1:53)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_05'
+        - text: '17.6 Booting into a Specific Target (3:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_06'
+        - text: 'Lesson 17 Lab: Managing the Boot Procedure (0:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_07'
+        - text: 'Lesson 17 Lab Solution: Managing the Boot Procedure (2:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_17_08'
       labs:
         - title: "Change the default runlevel"
     - title: 'Essential Troubleshooting Skills'
       lastpage: 421
       oreilly_page: 'ch18.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 18: Essential Troubleshooting Skills'
+          type: subheading
+        - text: 'Learning objectives (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_00'
+        - text: '18.1 Understanding Troubleshooting Modes (4:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_01'
+        - text: '18.2 Changing the Root Password (5:45)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_02'
+        - text: '18.3 Troubleshooting Filesystem Issues (6:05)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_03'
+        - text: '18.4 Troubleshooting Networking Issues (4:18)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_04'
+        - text: '18.5 Troubleshooting Performance Issues (4:11)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_05'
+        - text: '18.6 Troubleshooting Software Issues (2:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_06'
+        - text: '18.7 Troubleshooting Memory Shortage (2:31)'
+          type: linkÂ
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_07'
+        - text: '18.8 Consulting Red Hat Websites for Troubleshooting Tips (3:00)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_08'
+        - text: 'Lesson 18 Lab: Applying Troubleshooting Skills (0:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_18_09'
       labs:
         - title: "GRUB troubleshooting"
         - title: "Troubleshoot the boot process"
     - title: 'An Introduction to Bash Shell Scripting'
       lastpage: 441
       oreilly_page: 'ch19.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 19 Introducing Bash Shell Scripting'
+          type: subheading
+        - text: 'Learning objectives (0:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_00'
+        - text: '19.1 Understanding Bash Shell Scripts (3:24)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_01'
+        - text: '19.2 Essential Shell Script Components (7:23)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_02'
+        - text: '19.3 Using Loops in Shell Scripts Part 1 (7:16)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_03'
+        - text: '19.4 Using Loops in Shell Scripts Part 2 (7:55)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_04'
+        - text: 'Lesson 19 Lab: Writing Shell Scripts (0:41)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_05'
+        - text: 'Lesson 19 Lab Solution: Writing Shell Scripts (11:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_03_19_06'
       labs:
         - title: "Bash Shell Scripting"
     - title: 'Configuring SSH'
       lastpage: 455
       oreilly_page: 'ch20.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Module 4: Managing Network Services'
+          type: subheading
+        - text: 'Module 4: Managing Network Services (0:40)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_00_00'
+        - text: 'Lesson 20: Managing SSH'
+          type: subheading
+        - text: 'Learning objectives (0:27)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_00'
+        - text: '20.1 Understanding SSH Key-based Login (2:16)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_01'
+        - text: '20.2 Setting up SSH Key-based Login (5:56)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_02'
+        - text: '20.3 Changing Common SSH Server Options (4:52)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_03'
+        - text: '20.4 Securely Copying Files (6:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_04'
+        - text: '20.5 Securely Synchronizing Files (3:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_05'
+        - text: 'Lesson 20 Lab: Managing SSH (0:25)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_06'
+        - text: 'Lesson 20 Lab Solution: Managing SSH (3:36)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_20_07'
       labs:
         - title: "Lock down sshd"
     - title: 'Managing Apache HTTP Services'
       lastpage: 469
       oreilly_page: 'ch21.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 21: Managing HTTP Services'
+          type: subheading
+        - text: 'Learning objectives (0:29)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_21_00'
+        - text: '21.1 Understanding Apache Configuration (4:09)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_21_01'
+        - text: '21.2 Creating a Basic Website (0:58)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_21_02'
+        - text: 'Lesson 21 Lab:  Managing HTTP Services (0:31)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_21_03'
+        - text: 'Lesson 21 Lab Solution:  Managing HTTP Services (0:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_21_04'
       labs:
         - title: "Apache VirtualHost"
     - title: 'Managing SELinux'
       lastpage: 495
       oreilly_page: 'ch22.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 22: Managing SELinux'
+          type: subheading
+        - text: 'Learning objectives (0:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_00'
+        - text: '22.1 Understanding the Need for SELinux (1:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_01'
+        - text: '22.2 Managing SELinux Modes (6:08)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_02'
+        - text: '22.3 Understanding SELinux Context Labels and Booleans (6:32)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_03'
+        - text: '22.4 Using File Context Labels (7:23)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_04'
+        - text: '22.5 Analyzing SELinux Log Messages (5:17)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_05'
+        - text: '22.6 Resetting the Root Password and SELinux (3:16)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_06'
+        - text: 'Lesson 22 Lab: Managing SELinux (0:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_07'
+        - text: 'Lesson 22 Lab Solution: Managing SELinux (2:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_22_08'
       labs:
         - title: "Apache VirtualHost (w/SELinux)"
     - title: 'Configuring a Firewall'
       lastpage: 509
       oreilly_page: 'ch23.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 23: Managing Network Security'
+          type: subheading
+        - text: 'Learning objectives (0:29)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_00'
+        - text: '23.1 Understanding RHEL 8 Firewalling (1:37)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_01'
+        - text: '23.2 Understanding Firewalld Components (2:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_02'
+        - text: '23.3 Configuring a Firewall with firewall-cmd (2:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_03'
+        - text: '23.4 Using firewall-config (3:11)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_04'
+        - text: 'Lesson 23 Lab: Configuring a Firewall (0:20)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_05'
+        - text: 'Lesson 23 Lab Solution:  Configuring a Firewall (1:46)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_23_06'
       labs:
         - title: "Firewall configuration"
     - title: 'Accessing Network Storage'
       lastpage: 525
       oreilly_page: 'ch24.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 26: Accessing Remote File Systems'
+          type: subheading
+        - text: 'Learning objectives (0:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_00'
+        - text: '26.1 Configuring a Base NFS Server (5:15)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_01'
+        - text: '26.2 Mounting NFS Shares (3:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_02'
+        - text: '26.3 Configuring a Base Samba Server (5:57)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_03'
+        - text: '26.4 Mounting Samba Shares (5:45)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_04'
+        - text: '26.5 Understanding Automount (2:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_05'
+        - text: '26.6 Configuring Automount (5:20)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_06'
+        - text: '26.7 Configuring Automount for Home Directories (4:34)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_07'
+        - text: 'Lesson 26 Lab: Configuring Automount (0:49)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_08'
+        - text: 'Lesson 26 Lab Solution: Configuring Automount (3:02)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_26_09'
       labs:
         - title: "Firewalls and NFS RPCs (showmount and rpcinfo)"
         - title: "Mount NFS shares using Kerberos Security"
@@ -159,5 +1041,62 @@ study_guide:
     - title: 'Configuring Time Services'
       lastpage: 540
       oreilly_page: 'ch25.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 25: Configuring Time Services'
+          type: subheading
+        - text: 'Learning objectives (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_25_00'
+        - text: '25.1 Understanding Linux Time (2:52)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_25_01'
+        - text: '25.2 Setting Time with timedatectl (3:39)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_25_02'
+        - text: 'Lesson 25 Lab: Configuring Time Services (0:28)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_25_03'
+        - text: 'Lesson 25 Lab Solution: Configuring Time Services (2:03)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_25_04'
       labs:
         - title: "Convert epoch timestamps to human readable timestamps"
+  # - text: 'Module 5: Sample Exam'
+  #   type: subheading
+  # - text: 'Module 5: Sample Exam (0:14)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_00_00'
+  # - text: 'Lesson 27: Sample Exam'
+  #   type: subheading
+  # - text: 'Learning objectives (0:38)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_00'
+  # - text: '27.1 RHCSA Sample Exam Assignments (4:38)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_01'
+  # - text: '27.2 Setting up a Base Server Solution (4:57)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_02'
+  # - text: '27.3 Resetting the Root Password Solution (2:33)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_03'
+  # - text: '27.4 Configuring a Repository Solution (4:19)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_04'
+  # - text: '27.5 Managing Partitions Solution (4:14)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_05'
+  # - text: '27.6 Managing LVM Logical Volumes Solution (5:11)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_06'
+  # - text: '27.7 Creating Users and Groups Solution (2:17)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_07'
+  # - text: '27.8 Managing Permissions Solution (4:11)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_08'
+  # - text: '27.9 Scheduling Jobs Solution (2:57)'
+  #   type: link
+  #   url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_05_27_09'
