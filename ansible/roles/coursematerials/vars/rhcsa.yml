@@ -106,6 +106,8 @@ study_guide:
           type: link
           url: 'https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_an_advanced_rhel_installation/index'
       labs:
+        - title: "Creating USB Installation Media (Linux instructions)"
+        - title: "Creating USB Installation Media (Mac instructions)"
         - title: "Installing CentOS"
         - title: "Automated Installs Using Kickstart"
     - title: 'Using Essential Tools'

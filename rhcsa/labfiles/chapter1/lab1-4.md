@@ -1,4 +1,4 @@
-# lab1-2: Automated Installs Using Kickstart
+# lab1-4: Automated Installs Using Kickstart
 
 ## OBJECTIVE
 
