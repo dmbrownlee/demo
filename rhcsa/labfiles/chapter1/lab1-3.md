@@ -1,4 +1,4 @@
-# lab1-1: Installing CentOS
+# lab1-3: Installing CentOS
 
 ## OBJECTIVE
 

@@ -39,5 +39,7 @@ Read chapter 1 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st E
 - [Performing an advanced RHEL installation](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/performing_an_advanced_rhel_installation/index)
 
 ## Labs
-[lab1-1: Installing CentOS](lab1-1.md)</br>
-[lab1-2: Automated Installs Using Kickstart](lab1-2.md)</br>
+[lab1-1: Creating USB Installation Media (Linux instructions)](lab1-1.md)</br>
+[lab1-2: Creating USB Installation Media (Mac instructions)](lab1-2.md)</br>
+[lab1-3: Installing CentOS](lab1-3.md)</br>
+[lab1-4: Automated Installs Using Kickstart](lab1-4.md)</br>
