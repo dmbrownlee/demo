@@ -15,7 +15,7 @@
     - role: basebox
       tags: basebox
       vars:
-        box: "debian-10.6.0"
+        box: "debian-10.8.0"
       when: buildvms|bool
     - role: basebox
       tags: basebox
