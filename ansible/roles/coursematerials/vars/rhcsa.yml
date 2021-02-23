@@ -161,7 +161,7 @@ study_guide:
           type: link
           url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_01_02_13'
       labs:
-        - title: "Bash: Word splitting and expansion"
+        - title: "Bash: Shell Operations"
         - title: "Bash: Command types revisited"
         - title: "Learning Vim"
         - title: "Customizing Vim"
