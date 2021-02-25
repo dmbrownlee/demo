@@ -235,7 +235,7 @@ Up to this point, we have controlled how the shell splits up lines through the u
   
 # CONFIRMATION
 There is a lot of information above and you do not have to memorize the various transmutations or in what order they occur.  You will have completed this lab successfully when:
-  - You have a better idea of when you need to use each kind of quote to control how the shell interprest your command.
+  - You have a better idea of when you need to use each kind of quote to control how the shell interprets your command.
   - You know which characters need to be escaped in order to disable special interpretation by the shell.
   - You understand how file globbing can help you specify a list of filenames on the command line by using a pattern.
   - You can do math calculations on the command line.
