@@ -1,7 +1,7 @@
 ---
 - name: Adding user account
   user:
-    name: 'user'
+    name: "{{ item }}"
     comment: 'user'
     createhome: yes
     append: yes
@@ -10,4 +10,7 @@
     state: present
     password: '$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'
     system: no
+  loop:
+    - user
+    - student
   become: true
