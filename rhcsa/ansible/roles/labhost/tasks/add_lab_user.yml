@@ -2,7 +2,7 @@
 - name: Adding user account
   user:
     name: "{{ item }}"
-    comment: 'user'
+    comment: "{{ item }}"
     createhome: yes
     append: yes
     groups:
