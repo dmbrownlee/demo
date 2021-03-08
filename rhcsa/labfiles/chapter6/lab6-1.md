@@ -1,7 +1,4 @@
 # lab6-1: User and Group Management
-## <img align="left" src="../images/ConstructionSign.png">Sorry, this lab has not been reviewed recently and may contain:
-  - outdated technical informatiom
-  - spelling errors, grammar errors, and poor markdown formatting
 
 ## OBJECTIVE
 
@@ -17,13 +14,35 @@ There are no special setup steps for this lab.
 
 Login to server2
 
-1.  Create a file named WELCOME.txt (the contents can be anything you want)
-2.  Copy WELCOME.txt to the directory that serves as a template for home
-    directories when new users are created
-3.  Add a new user named "patrick" and set the password to "password"
-4.  Login as patrick and verify WELCOME.txt exists in patrick's home directory
-5.  Logout of patrick's account
-6.  Configure the account so that patrick will have to set a new password on
-    the next login
-7.  Login as patrick again and verify you did step 6 correctly
+1.  Create a file named vimrc with the following contents:
+
+  ```
+  " Comments in .vimrc begin with a double quote like on this line
+  set number
+  set relativenumber
+  set hlsearch
+  set smartindent
+  set tabstop=2
+  set shiftwidth=2
+  set smarttab
+  set expandtab
+  colorscheme blue
+  ```
+
+1.  Copy vimrc to .vimrc (note, the leading ```.``` makes the copy a hidden file) in the directory that serves as a template for home directories when new users are created
+1.  Add a new user named "patrick" and set the password to "password"
+1.  Switch to another virtual console
+1.  Login as patrick and start ```vim```
+1.  Within vim, type ```:set``` and press enter to verify you have the new system settings and/or run ```:edit $MYVIMRC``` to open the ~/.vimrc file within vim
+1.  Quit vim without saving
+1.  Switch back to the original virtual terminal
+1.  Add patrick to the "itap" group (create the group if you need to)
+1.  Configure the account so that patrick will have to set a new password on the next login
+1.  Switch back to the virtual terminal where you are logged in as patrick
+1.  Run ```id``` and note your group membership has **not** changed (group membership is set at the time you login)
+1.  Logout of patrick's account
+1.  Login as patrick again and verify you need to set a new password
+1.  Run ```id``` and verify patrick is now a member of the itap group
+1.  Logout and switch back to the original virtual terminal
+1.  Delete patrick's user account and home directory with a single command
 
