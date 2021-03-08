@@ -1,14 +1,8 @@
 # lab5-1: Using virtual consoles to work with multiple users
-## <img align="left" src="../images/ConstructionSign.png">Sorry, this lab has not been reviewed recently and may contain:
-  - outdated technical informatiom
-  - spelling errors, grammar errors, and poor markdown formatting
 
 ## OBJECTIVE
 
-In this lab, you will practice working with different user accounts. Rather
-than switching back and forth between two users using su (or worse, logging in
-and out), it is more efficient to have each user logged in on a separate
-terminal and switch terminals as needed using keyboard hotkeys.
+In this lab, you will practice working with different virtual terminals and setting up SSH for password-less logins.
 
 ## SETUP
 
@@ -16,15 +10,19 @@ There are no special setup steps for this lab.
 
 ## STEPS
 
-1.  Make sure your virtual machines are started
-2.  Open the console for server1 and login
-3.  Use ctrl-alt-F2 to switch to virtual console 2 on the host OS
-4.  This isn't what you want to switch back to the GUI on virtual console 1
-5.  Use the "Send Key" menu at the top of the server1 console to send
-    ctrl-alt-F2 to server1
-6.  Login to the first text console (console 2) on server1
-7.  Change to the second text console (console 3) on server1
-8.  Login again and then use "sudo -i" to get a root shell
-9.  Practice switching back an forth between the GUI on console 1, the shell
-    on console 2, and the root shell on console 3
+1.  Make sure both the server1 and server2 virtual machines are started
+1.  Open the console for server1 and login as the user "user"
+1.  Open a terminal and verify your ID
+1.  Verify you can ping server2 with
 
+  ```ping -c 3 server2```
+
+1.  Use Ctrl-Alt-F3 (fn-control-option-fn-F3 on Mac laptops) to switch to virtual console 3 on server1 and login as "student"
+1.  Verify you can SSH to server2 and then logout of server2 to get back to your shell on server1
+1.  Generate a keypair for ssh and install the public key in the student user's authorized_hosts on server2 (hint: there is a single command that can do this for you and ensures the permissions will be set correctly)
+1.  Verify the student user can ssh to server2 and get logged in without a password
+1.  Now, use the same keys to enable password-less login on server1 (from server1)
+1.  Switch back to the graphical desktop on server1
+1.  Since you are currently logged into the graphical desktop as user, open another terminal and become the "student" user in just that terminal (verify your ID)
+1.  In your "student" terminal, verify you can still ssh to server2 without a password
+1.  In your "user" terminal, generate a keypair for "user" and enable password-less ssh to server2 just like you did for the "student" user
