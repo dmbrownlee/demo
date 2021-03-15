@@ -3,7 +3,7 @@ This assignment is part of a [self-study course](../README.md) to prepare for th
 # Chapter 2: Using Essential Tools
 
 ## Primary Resource
-Read chapter 2 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 1st Edition](https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification-dp-0135938139/dp/0135938139).
+Read chapter 2 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 2nd Edition](https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification/dp/0137341628/).
 ## Addtional Resources
 
 ### Red Hat Certified System Administrator (RHCSA), 3/e
