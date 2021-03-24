@@ -1,8 +1,4 @@
 # lab8-1: Network Configuration
-## <img align="left" src="../images/ConstructionSign.png">Sorry, this lab has not been reviewed recently and may contain:
-  - outdated technical informatiom
-  - spelling errors, grammar errors, and poor markdown formatting
-
 ## OBJECTIVE
 
 In this lab, you will practice viewing network settings and configuring
@@ -14,15 +10,11 @@ There are no special setup steps for this lab.
 
 ## STEPS
 
-Practice the following commands on server1.
+On server2:
+  1. Check your network settings to find out which network interface you're using to get to the Internet
+  1. Create a new network connection using the same interface and gateway address, but using 192.168.4.20/24 as the IPv4 address and netmask
+  1. Activate the new connection
+  1. Change the hostname of server2 to newserver
 
-- View your network interfaces and identify which interfaces are up and what
-  IP addresses they are using
-- Verify server1 can reach server2 over the network
-- View your hostname settings
-- View your Network Manager connections
-  - Which connections are active?
-  - Which network interfaces do they use?
-- Create a new connection named "Wired Home Network" that uses ethernet with 
-  an IPv4 address 192.168.0.4/24, a gateway of 192.168.0.1, and a DNS name
-  server of 8.8.8.8
+On server1:
+  1. Change any settings you need to in order to SSH to newserver by name
