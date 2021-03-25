@@ -1,0 +1,38 @@
+---
+- name: Configure server1
+  gather_facts: false
+  hosts:
+    - server1
+  tasks:
+    - name: Creating the practice question doc...
+      copy:
+        dest: "/root/chapter8-practice.txt"
+        content: |+
+          # Practice for chapters 7 and 8
+          # - create a group named "projectx"
+          # - add "student" to the projectx group
+          # - create a /var/data/projectx directory and ensure only projectx members can use it
+      become: yes
+
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Creating the practice question doc...
+      copy:
+        dest: "/root/chapter8-practice.txt"
+        content: |+
+          # Practice for chapters 7 and 8
+          # - create a network manager connection named "example_com" with these settings
+          #   - interface: enp0s8
+          #   - IPv4 address: 192.168.4.220/24
+          #   - gateway: 192.168.4.1
+          # - Ensure this connection is active after a reboot
+          # - SSH to server1 and follow the directions in /root/chapter8-practice.txt there
+      become: yes
+    - name: Changing something...
+      nmcli:
+        conn_name: "example_com"
+        state: absent
+      become: yes
