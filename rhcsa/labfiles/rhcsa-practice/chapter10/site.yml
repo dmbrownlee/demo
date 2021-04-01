@@ -1,0 +1,45 @@
+---
+- name: Configure server1
+  gather_facts: false
+  hosts:
+    - server1
+  tasks:
+    - name: Doing something...
+      file:
+        path: "/usr/share/man/man1/ps.1.gz"
+        state: absent
+      become: yes
+    - name: Doing something...
+      file:
+        path: "/usr/share/man/man1p/ps.1p.gz"
+        state: absent
+      become: yes
+
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Doing something...
+      yum:
+        name: nginx
+        state: present
+      become: yes
+    - name: Doing something...
+      command: tuned-adm profile balanced
+      become: yes
+    - name: Doing something...
+      file:
+        path: "/usr/share/man/man1/ps.1.gz"
+        state: absent
+      become: yes
+    - name: Doing something...
+      file:
+        path: "/usr/share/man/man1p/ps.1p.gz"
+        state: absent
+      become: yes
+    - name: Doing something...
+      file:
+        path: "/etc/yum.repos.d/CentOS-Linux-BaseOS.repo"
+        state: absent
+      become: yes
