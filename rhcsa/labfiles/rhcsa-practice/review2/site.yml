@@ -1,0 +1,25 @@
+---
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure firewall allows DNS, DHCP, TFTP and HTTP traffic
+      firewalld:
+        service: "{{ item }}"
+        state: enabled
+        permanent: yes
+        zone: internal
+        immediate: yes
+      loop:
+        - dns
+        - dhcp
+        - tftp
+        - http
+        - https
+      become: yes
+    - name: Ensure SELinux is in permissive mode
+      selinux:
+        policy: targeted
+        state: permissive
+      become: yes
