@@ -15,7 +15,7 @@
     opts: tcp,ro,async,noatime,_netdev
     state: present
     passno: "0"
-    dump: "0"
+    dump: "2"
   become: yes
   notify: reboot
   when: ansible_virtualization_type == 'kvm'
@@ -26,7 +26,7 @@
     fstype: vboxsf
     opts: defaults
     state: present
-    passno: "0"
+    passno: "2"
     dump: "0"
   become: yes
   notify: reboot
