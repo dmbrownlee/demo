@@ -5,11 +5,11 @@ system_casks:
   - wireshark
     #- gns3
 system_dmgs:
-  - file: "GNS3-2.2.13.dmg"
-    url: "https://github.com/GNS3/gns3-gui/releases/download/v2.2.13/GNS3-2.2.13.dmg"
-    checksum: "sha256:70de4580044340f066c424483e706d9bf3e61993428d4c265766c8c06a96cdd6"
+  - file: "GNS3-2.2.20.dmg"
+    url: "https://github.com/GNS3/gns3-gui/releases/download/v2.2.20/GNS3-2.2.20.dmg"
+    checksum: "sha256:f8f56ec3e2a518f5769a9610e5b30458bb921ae8556c63894b76dfcdd0b3025e"
     contents: "GNS3.app"
-    mount: "GNS3 2.2.13"
+    mount: "GNS3 2.2.20"
     content_type: "app"
     artifact: "/Applications/GNS3.app"
 dockitems_to_add:
