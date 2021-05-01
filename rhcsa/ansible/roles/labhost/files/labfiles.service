@@ -1,0 +1,10 @@
+[Unit]
+Documentation=man:fstab(5) man:systemd-fstab-generator(8)
+Before=remote-fs.target
+
+[Service]
+Type=simple
+ExecStart=/sbin/mount.vboxsf labfiles /labfiles -o uid=1000,gid=1000,_netdev
+
+[Install]
+WantedBy=local-fs.target
