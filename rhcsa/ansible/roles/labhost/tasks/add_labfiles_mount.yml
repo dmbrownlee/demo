@@ -19,15 +19,19 @@
   become: yes
   notify: reboot
   when: ansible_virtualization_type == 'kvm'
-- name: Ensure /labfiles will be remounted in the case of a reboot (VirtualBox)
-  mount:
-    path: /labfiles
-    src: labfiles
-    fstype: vboxsf
-    opts: defaults
-    state: present
-    passno: "2"
-    dump: "0"
+- name: Ensure labfiles.service file exists to work around systemd bug (VirtualBox)
+  copy:
+    dest: /etc/systemd/system/labfiles.service
+    src: labfiles.service
+    owner: root
+    group: root
+    mode: "0755"
   become: yes
-  notify: reboot
+  when: ansible_virtualization_type == 'virtualbox'
+- name: Ensure labfiles.service is enabled (VirtualBox)
+  systemd:
+    name: labfiles
+    enabled: yes
+    state: started
+  become: yes
   when: ansible_virtualization_type == 'virtualbox'
