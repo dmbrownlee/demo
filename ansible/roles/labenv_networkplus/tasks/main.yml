@@ -10,6 +10,3 @@
     dest: "{{ demo_root }}/networkplus/Vagrantfile"
     src: "Vagrantfile.j2"
     mode: 0644
-- name: Ensure virtual machines exist and have been added to GNS3
-  include_tasks: "vagrant-vm-check.yml"
-  when: buildvms
