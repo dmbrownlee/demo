@@ -10,7 +10,6 @@ For this lab, we're going to be viewing the TCP Three-way handshake. You should 
 The Three-way handshake consists of the following steps: SYN, SYN-ACK, ACK. Your challenge within this lab is to find the first occurance of this process. By now, you should have a good understanding of filtering in Wireshark. Try and answer the following questions:
 
 Question 1 : What is the packet number of the first SYN request?
-
 Question 2 : What is the packet number of the last ACK request?
 Question 3 : What is the port number on the local machine? 
 Question 4 : What is the port number on the remote machine? And why?
