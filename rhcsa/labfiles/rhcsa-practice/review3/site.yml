@@ -1,0 +1,111 @@
+---
+- name: Configure server1 as a yum repo
+  gather_facts: false
+  hosts:
+    - server1
+  tasks:
+    - block:
+        - name: Ensure packages are installed
+          yum:
+            name: "{{ packages }}"
+            state: present
+          vars:
+            packages:
+              - nginx
+              - createrepo
+          register: pkgadd
+        - name: Ensure web server is started and enabled
+          systemd:
+            name: nginx
+            enabled: yes
+            state: started
+        - name: Ensure http traffic is allowed through the firewall
+          firewalld:
+            service: http
+            state: enabled
+            permanent: yes
+            zone: internal
+            immediate: yes
+        - name: Ensure a repo directory exists
+          file:
+            #path: /usr/share/nginx/html/repo/BaseOS/x86_64/os/Packages
+            path: /usr/share/nginx/html/repo/Packages
+            state: directory
+            owner: root
+            group: root
+            mode: "0755"
+        - name: Add packages to repo
+          get_url:
+            url: http://mirror.centos.org/centos/8.3.2011/BaseOS/x86_64/os/Packages/{{ item }}
+              #dest: /usr/share/nginx/html/repo/BaseOS/x86_64/os/Packages
+            dest: /usr/share/nginx/html/repo/Packages
+          loop:
+            - bash-completion-2.7-5.el8.noarch.rpm
+        - name: Run createrepo on the repo directory
+          command: createrepo /usr/share/nginx/html/repo
+      become: yes
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - block:
+        - name: Breaking something
+          file:
+            path: /var/cache/man/{{ item }}
+            state: absent
+          loop:
+            - index.db
+            - overrides/index.db
+        - name: Breaking something
+          file:
+            path: /etc/yum.repos.d/{{ item }}
+            state: absent
+          loop:
+            - CentOS-Linux-AppStream.repo
+            - CentOS-Linux-BaseOS.repo
+            - CentOS-Linux-ContinuousRelease.repo
+            - CentOS-Linux-Debuginfo.repo
+            - CentOS-Linux-Devel.repo
+            - CentOS-Linux-Extras.repo
+            - CentOS-Linux-FastTrack.repo
+            - CentOS-Linux-HighAvailability.repo
+            - CentOS-Linux-Media.repo
+            - CentOS-Linux-Plus.repo
+            - CentOS-Linux-PowerTools.repo
+            - CentOS-Linux-Sources.repo
+            - epel-modular.repo
+            - epel-playground.repo
+            - epel.repo
+            - epel-testing-modular.repo
+            - epel-testing.repo
+        # - name: Breaking something
+        #   shell: rm /boot/initramfs-*
+        - name: Breaking something
+          replace:
+            path: /etc/default/grub
+            regexp: 'rhgb quiet.*"$'
+            replace: 'rhgb quiet init=/bin/false"'
+          register: grubconf
+        - name: Breaking something
+          command: grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+          when: grubconf.changed
+        - name: Breaking something
+          command: grub2-mkconfig -o /boot/grub2/grub.cfg
+          when: grubconf.changed
+        - name: Breaking something
+          replace:
+            path: /etc/group
+            regexp: '^wheel:x:10:.*$'
+            replace: 'wheel:x:10:vagrant'
+        - name: Breaking something
+          user:
+            name: root
+            password: "{{ 'somerandompassword' | password_hash('sha512', 'randomsalt') }}"
+        - name: Breaking something
+          nmcli:
+            conn_name: example_com
+            state: absent
+        - name: Rebooting
+          shell: reboot
+      become: yes
