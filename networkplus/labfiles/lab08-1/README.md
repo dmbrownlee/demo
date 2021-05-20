@@ -7,7 +7,7 @@ For this lab, please load the '/Users/[USERNAME]/demo/networkplus/labfiles/lab08
 
 For this lab, we're going to be viewing the TCP Three-way handshake. You should already know from the chapter that this process is used to establish a reliable connection between two machine for transferring data such as webpages.
 
-The Three-way handsack consists of the following steps: SYN, SYN-ACK, ACK. Your challenge within this lab is to find the first occurance of this process. By now, you should have a good understanding of filtering in Wireshark. Try and answer the following questions:
+The Three-way handshake consists of the following steps: SYN, SYN-ACK, ACK. Your challenge within this lab is to find the first occurance of this process. By now, you should have a good understanding of filtering in Wireshark. Try and answer the following questions:
 
 Question 1 : What is the packet number of the first SYN request?
 Question 2 : What is the packet number of the last ACK request?
