@@ -1,4 +1,4 @@
-# Viewing the TCP hank shake process
+# Viewing the TCP Three-Way handshake | Four-way Disconnect process
 
 ## Setup
 For this lab, please load the '/Users/[USERNAME]/demo/networkplus/labfiles/lab08-1/Lab 8 Packet Capture.pcapng' into Wireshark.
