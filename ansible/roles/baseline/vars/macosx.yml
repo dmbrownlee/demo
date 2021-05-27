@@ -4,8 +4,8 @@
 #=====================
 system_brews:
   - dockutil
-system_casks:
-  - google-chrome
+# system_casks:
+#   - google-chrome
 dockitems_to_add:
   - name: Google Chrome
     path: "/Applications/Google Chrome.app"
