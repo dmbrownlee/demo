@@ -54,6 +54,7 @@ Vagrant.configure("2") do |config|
 {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
+      virtualbox.memory = 2048
     end
 {% endif %}
   end
