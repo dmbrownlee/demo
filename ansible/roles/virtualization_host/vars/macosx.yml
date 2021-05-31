@@ -5,8 +5,8 @@ system_brews:
   - packer
   - packer-completion
   - vagrant-completion
-system_casks:
-  - vagrant
+# system_casks:
+  # - vagrant (2.2.15 installed separately due to bug in 2.2.16)
   # - virtualbox (installed separately due to kernel ext failure)
 dockitems_to_add:
   - name: VirtualBox
