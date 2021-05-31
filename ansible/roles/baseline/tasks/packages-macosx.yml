@@ -19,6 +19,18 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
+- name: Ensure Google Chrome is installed
+  block:
+    - name: Check if Chrome already exists
+      stat:
+        path: "/Applications/Google Chrome.app"
+      changed_when: false
+      register: google_chrome
+    - name: Ensure Google Chrome is installed
+      homebrew_cask:
+        name: google-chrome
+        state: present
+      when: not google_chrome.stat.exists
 - name: Ensure icons are added to the Dock
   shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
   register: dockadd
