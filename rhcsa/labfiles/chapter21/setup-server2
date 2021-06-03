@@ -3,11 +3,8 @@
   tasks:
   - name: Ensure web server packages are installed
     yum:
-      name: "{{ item }}"
+      name: ['httpd', 'php']
       state: present
-    with_items:
-      - "@^Basic Web Server"
-      - php
     become: yes
   - name: Ensure VirtualHost DocumentRoot exists
     file:
@@ -33,7 +30,22 @@
         <body><h1>Welcome to testweb</body>
         </html>
     become: yes
+  - name: Ensure firewall service is started
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    become: yes
+  - name: Ensure firewall allows http traffic
+    firewalld:
+      service: http
+      state: enabled
+      immediate: yes
+      permanent: yes
+      zone: internal
+    become: yes
   - name: Disable SELinux
     selinux:
       policy: targeted
       state: permissive
+    become: yes
