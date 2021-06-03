@@ -1,0 +1,83 @@
+---
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure web server packages are installed
+      yum:
+        name: ['httpd', 'php']
+        state: present
+      become: yes
+    - name: Ensure server2 can resolve testweb.example.com to its own IP
+      replace:
+        path: /etc/hosts
+        regexp: '^(192.168.4.220 server2.example.com server2)$'
+        replace: '\1 testweb.example.com testweb'
+      become: yes
+    - name: Ensure testweb virtual host exists
+      copy:
+        src: testweb.conf
+        dest: /etc/httpd/conf.d/testweb.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+    - name: Ensure VirtualHost DocumentRoot exists
+      file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - /var/www-testweb
+        - /var/www-testweb/html
+        - /var/www-testweb/cgi-bin
+      become: yes
+    - name: Ensure PHP content page exists
+      copy:
+        dest: /var/www-testweb/html/phpinfo.php
+        content: |
+          <?php phpinfo(); ?>
+      become: yes
+    - name: Ensure testweb has a different landing page
+      copy:
+        dest: /var/www-testweb/html/index.html
+        content: |
+          <html>
+          <title>Welcome to testweb</title>
+          <body><h1>Welcome to testweb</body>
+          </html>
+      become: yes
+    - name: Ensure firewall service is started
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+      become: yes
+    - name: Doing something...
+      selinux:
+        policy: targeted
+        state: permissive
+      become: yes
+    - name: Doing something...
+      command: firewall-cmd --set-default-zone=public
+      become: yes
+    - name: Doing something...
+      firewalld:
+        interface: enp0s3
+        state: enabled
+        immediate: yes
+        permanent: yes
+        zone: public
+      become: yes
+    - name: Doing something...
+      service:
+        name: firewalld
+        state: stopped
+        enabled: no
+      become: yes
+    - name: Doing something...
+      service:
+        name: httpd
+        state: stopped
+        enabled: no
+      become: yes
