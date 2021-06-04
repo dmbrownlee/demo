@@ -1,4 +1,5 @@
 # Sorry, there is no lab yet
 You may mark this lab as completed in your workbook.
+fff
 
-![Image of construction sign](../ConstructionSign.png)
+
