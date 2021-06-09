@@ -67,7 +67,7 @@
       register: boxfile
       changed_when: false
     - name: Build box file if missing ({{ box }})
-      command: packer build -force {{ box }}.json
+      command: packer build -color=false -force {{ box }}.json
       args:
         chdir: "{{ packer_build_dir }}"
         creates: "{{ packer_build_dir }}/{{ box }}.box"
