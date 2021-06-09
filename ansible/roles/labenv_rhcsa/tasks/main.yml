@@ -5,8 +5,24 @@
     fail_msg: "This role is not supported on your host operating system."
 - name: Include host distribution specific variables
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Ensure the Vagrantfile exists
+- name: Ensure the CentOS Vagrantfile exists
   template:
-    dest: "{{ demo_root }}/rhcsa/Vagrantfile"
+    dest: "{{ demo_root }}/rhcsa/Vagrantfile.centos"
     src: "Vagrantfile.j2"
     mode: 0644
+  vars:
+    box_name: centos-8.3.2011
+    box_iso: CentOS-8.3.2011-x86_64-boot.iso
+- name: Ensure the AlmaLinux Vagrantfile exists
+  template:
+    dest: "{{ demo_root }}/rhcsa/Vagrantfile.almalinux"
+    src: "Vagrantfile.j2"
+    mode: 0644
+  vars:
+    box_name: almalinux-8.4
+    box_iso: AlmaLinux-8.4-x86_64-boot.iso
+- name: Ensure Vagrantfile is linked to CentOS Vagrantfile (for now)
+  file:
+    path: "{{ demo_root }}/rhcsa/Vagrantfile"
+    src: "{{ demo_root }}/rhcsa/Vagrantfile.centos"
+    state: link
