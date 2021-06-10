@@ -1,0 +1,28 @@
+---
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure NFS server packages are installed
+      yum:
+        name: nfs-utils
+        state: present
+      become: yes
+    - name: Ensure config to export /home via NFS exists
+      copy:
+        dest: /etc/exports.d/home.exports
+        content: "/home 192.168.4.0/24(sync,rw,root_squash,no_all_squash)"
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+- name: Configure server1
+  hosts:
+    - server1
+  tasks:
+    - name: Breaking something...
+      timezone:
+        name: Pacific/Tahiti
+      become: yes
+      ignore_errors: yes

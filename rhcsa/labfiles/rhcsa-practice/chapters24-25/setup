@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+ansible-playbook -k -K site.yml
