@@ -21,6 +21,14 @@
   vars:
     box_name: almalinux-8.4
     box_iso: AlmaLinux-8.4-x86_64-boot.iso
+- name: Ensure the Rocky Vagrantfile exists
+  template:
+    dest: "{{ demo_root }}/rhcsa/Vagrantfile.rocky"
+    src: "Vagrantfile.j2"
+    mode: 0644
+  vars:
+    box_name: rocky-8.4
+    box_iso: Rocky-8.4-x86_64-boot.iso
 - name: Ensure Vagrantfile is linked to CentOS Vagrantfile (for now)
   file:
     path: "{{ demo_root }}/rhcsa/Vagrantfile"
