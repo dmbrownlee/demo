@@ -20,5 +20,10 @@
       vars:
         box: almalinux-8.4
       when: buildvms|bool
+    - role: basebox
+      tags: basebox
+      vars:
+        box: rocky-8.4
+      when: buildvms|bool
     - role: labenv_rhcsa
       tags: labenv_rhcsa
