@@ -4,15 +4,18 @@ Follow these steps in order:
      IP Address: 192.168.4.101
      Netmask: 255.255.255.0
      Gateway: 192.168.4.1
-     DNS: 192.168.4.200
-     (HINT: If you reboot, the hostname should be set correctly)
+     DNS: 8.8.8.8
 
-2. Verify you can SSH to exam2.example.com as root (password: password)
+2. Add the following entries to /etc/hosts:
+     192.168.4.101 exam1.example.com exam1
+     192.168.4.102 exam2.example.com exam2
 
-3. Logout of exam2 and, back on exam1, generate an SSH keypair, upload the
+3. Verify you can SSH to exam2.example.com as root (password: password)
+
+4. Logout of exam2 and, back on exam1, generate an SSH keypair, upload the
    public key to exam2, and verify you can login to exam2 without a password
 
-4. After completing the steps above, SSH to exam2.example.com as root and
+5. After completing the steps above, SSH to exam2.example.com as root and
    complete the tasks in /root/README
 
 Note: You will not be able to login to the console on exam2 so you must get
