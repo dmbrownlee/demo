@@ -5,7 +5,7 @@ complete the tasks may make the exam esier or harder).
 
 - Make sure the firewall is enabled.
 
-- Configure sshd to listen to port 2022 and disable password authentication.
+- Configure sshd to listen to port 2022
 
 #==============================================================================
 # Ignore this task.  It is not currently possible with the existing base box
