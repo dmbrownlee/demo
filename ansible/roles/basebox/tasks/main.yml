@@ -78,4 +78,9 @@
       args:
         chdir: "{{ packer_build_dir }}"
       when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0
+    - name: Remove the box file after it has been installed to the cache
+      file:
+        path: "{{ packer_build_dir }}/{{ box }}.box"
+        state: absent
+      when: boxfile.stat.isreg is not defined
   when: box not in vagrant_box_list.stdout_lines
