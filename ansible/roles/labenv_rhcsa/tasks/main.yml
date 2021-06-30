@@ -24,5 +24,5 @@
 - name: Ensure Vagrantfile is linked to CentOS Vagrantfile (for now)
   file:
     path: "{{ demo_root }}/rhcsa/Vagrantfile"
-    src: "{{ demo_root }}/rhcsa/Vagrantfile.centos"
+    src: "{{ demo_root }}/rhcsa/Vagrantfile.rocky"
     state: link
