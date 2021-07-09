@@ -5,20 +5,30 @@ complete the tasks may make the exam esier or harder).
 
 - Make sure the firewall is enabled.
 
-- Configure sshd to listen to port 2022 and disable password authentication.
+- Configure sshd to listen to port 2022
 
-- Create a 4GB logical volume named tftpboot in the existing volume group,
-  format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
-  the system is booted.
+#==============================================================================
+# Ignore this task.  It is not currently possible with the existing base box
+#
+# - Create a 4GB logical volume named tftpboot in the existing volume group,
+#   format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
+#   the system is booted.
+#
+#==============================================================================
 
-- Your yum repo for BaseOS should use this mirrorlist URL:                       
+- Your yum repo for BaseOS should use this mirrorlist URL:
   http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra
-  (Tip: After this, reinstall the centos-release (or centos-repos in 8.1)
-  package to reenable the other default yum repositories).
 
-- Install the syslinux package, the Apache server, xinetd, and a TFTP server.
+  (Note: if you are using Rocky or AlmaLinux instead of CentOS, your repo URL will be
+  different.  In that case, look at the repos configured on exam1)
 
-- Ensure the Apache web server, xinetd, and tftp are started when the system 
+  (Tip: After you have configured the repo for the BaseOS, run "yum update" and
+  reinstall the package that provides the default repo config files to reenable
+  the other default yum repositories).
+
+- Install the syslinux package, the Apache server, and a TFTP server.
+
+- Ensure the Apache web server and tftp are started when the system
   boots and are accessible through the firewall.
 
 - Extract the files in /root/pxeconf.tar relative to the /var directory.
@@ -34,17 +44,22 @@ complete the tasks may make the exam esier or harder).
   http://mirror.centos.org/centos/8/BaseOS/x86_64/os/isolinux/ and move them to
   /var/lib/tftpboot/pxelinux/.
 
-- Create a 2GB logical volume named data in the existing volume group,
-  format it with ext4, and make sure it gets mounted on /var/data by UUID when
-  the system is booted.
+#==============================================================================
+# Ignore this task.  It is not currently possible with the existing base box
+#
+# - Create a 2GB logical volume named data in the existing volume group,
+#   format it with ext4, and make sure it gets mounted on /var/data by UUID when
+#   the system is booted.
+#
+#==============================================================================
 
 - Create users xavier, jed, and hastin.  Make xavier and jed members of a group
   named accounting and hastin a member of a group named auditors.  Set their
-  passwords to "password" and force them to change their passwords on the next 
+  passwords to "password" and force them to change their passwords on the next
   login.
 
-- Ensure all current and future files under /var/data will belong to the
-  accounting group.
+  (Note: consider creating another user who is not in either group to verify
+  access restrictions for "other")
 
 - Ensure all current and future files under /var/data are readable and writable
   by members of accounting and readable by members of auditors.  Nobody outside
@@ -55,22 +70,3 @@ complete the tasks may make the exam esier or harder).
   following message on every login:
   "Welcome to FQDN!  Use of this private system is subject to
    corporate policy." (replace FQDN with the full name of the host)
-
-=================
-==  Finished!  ==
-=================
-The practice exam objectives above include the steps necessary to configure
-an server to support network installs of PXE clients.  You can check if you
-completed at least those steps correctly by attempting to install another VM
-over the virtual network:
-
-On the host machine, ensure you are connected to the Internet, verify at least
-labipa and exam2 are running, and then do the following:
-
-  cd ~/demo/rhcsa &&
-  vagrant up pxeclient
-
-If you open the consule window on the pxeclient machine, you should see it is
-attempting to boot from the network.  You should see a blue menu which allows
-you to install by selecting the first option.
-

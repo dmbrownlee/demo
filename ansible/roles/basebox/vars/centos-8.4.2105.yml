@@ -1,0 +1,14 @@
+---
+distro: "centos"
+version: "8.4.2105"
+guest_os_type: "RedHat_64"
+iso_checksum: "sha256:c79921e24d472144d8f36a0d5f409b12bd016d9d7d022fd703563973ca9c375c"
+iso_location: "http://centos.s.uw.edu/centos/8.4.2105/isos/x86_64"
+iso_altlocation: "http://distro.ibiblio.org/centos/8.4.2105/isos/x86_64"
+iso_name: "CentOS-8.4.2105-x86_64-boot.iso"
+install_file: "centos-8.4.2105-ks.cfg"
+cpus: 1
+ram: 1024
+disk_size: "20480"
+template: "packer-centos.j2"
+templateks: "packer-centos-ks.j2"

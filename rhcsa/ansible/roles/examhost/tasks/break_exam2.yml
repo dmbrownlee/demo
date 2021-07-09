@@ -25,8 +25,8 @@
   file:
     state: "{{ item }}"
     path: "/etc/yum.repos.d"
-    owner: 0
-    group: 0
+    owner: root
+    group: root
     mode: '0755'
   become: yes
   with_items:
@@ -40,4 +40,19 @@
 - file:
     path: /etc/securetty
     state: touch
+  become: yes
+- name: Ensure accounts for user and student do not exist
+  user:
+    name: "{{ item }}"
+    state: absent
+    remove: yes
+  become: yes
+  loop:
+    - user
+    - student
+- name: Ensure root password is "password" (obviously not for production)
+  user:
+    name: root
+    update_password: always
+    password: "$6$superfoo$3IVX1XHH.9sjUofpwlkQa8g91Y1VNxww4utLchyhSFG6RYPflXfwWcg4EVdZyJs8uEdy6r0TpYmcor0/k//lg1"
   become: yes
