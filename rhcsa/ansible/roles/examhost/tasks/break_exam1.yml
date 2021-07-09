@@ -18,3 +18,13 @@
     name: root
     password: '!'
   become: yes
+- name: Ensure accounts for user and student do not exist
+  user:
+    name: "{{ item }}"
+    state: absent
+    remove: yes
+  become: yes
+  loop:
+    - user
+    - student
+

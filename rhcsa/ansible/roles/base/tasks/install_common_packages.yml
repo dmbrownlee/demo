@@ -1,13 +1,22 @@
 ---
-- name: Ensure we accept the GPG keys (CentOS 7)
+- name: Ensure we accept the GPG keys (Rocky 8)
   rpm_key:
     state: present
     key: /etc/pki/rpm-gpg/{{ item }}
   with_items:
-    - RPM-GPG-KEY-CentOS-7
-    - RPM-GPG-KEY-EPEL-7
+    - RPM-GPG-KEY-rockyofficial
+    - RPM-GPG-KEY-EPEL-8
   become: yes
-  when: ansible_distribution_major_version == "7"
+  when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"
+- name: Ensure we accept the GPG keys (AlmaLinux 8)
+  rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/{{ item }}
+  with_items:
+    - RPM-GPG-KEY-AlmaLinux
+    - RPM-GPG-KEY-EPEL-8
+  become: yes
+  when: ansible_distribution == "AlmaLinux" and ansible_distribution_major_version == "8"
 - name: Ensure we accept the GPG keys (CentOS 8)
   rpm_key:
     state: present
@@ -16,4 +25,4 @@
     - RPM-GPG-KEY-centosofficial
     - RPM-GPG-KEY-EPEL-8
   become: yes
-  when: ansible_distribution_major_version == "8"
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"

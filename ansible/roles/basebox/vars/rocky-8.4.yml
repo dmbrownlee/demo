@@ -1,0 +1,13 @@
+---
+distro: "rocky"
+version: "8.4"
+guest_os_type: "RedHat_64"
+iso_checksum: "sha256:53a62a72881b931bdad6b13bcece7c3a2d4ca9c4a2f1e1a8029d081dd25ea61f"
+iso_location: "https://download.rockylinux.org/pub/rocky/8/isos/x86_64"
+iso_name: "Rocky-8.4-x86_64-boot.iso"
+install_file: "rocky-8.4-ks.cfg"
+cpus: 1
+ram: 1024
+disk_size: "20480"
+template: "packer-centos.j2"
+templateks: "packer-rocky-ks.j2"

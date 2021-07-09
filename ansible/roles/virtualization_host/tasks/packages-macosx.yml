@@ -19,6 +19,37 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
+# Installing Vagrant this way since lated Vagrant (2.2.16) installed by
+# Homebrew has a bug and we need to pin to 2.2.15 until it is resolved.
+- name: Check if vagrant binary already exists
+  stat:
+    path: /usr/local/bin/vagrant
+  changed_when: false
+  register: vagrant
+- name: Ensure Vagrant is installed
+  block:
+    - name: Download Vagrant 2.2.15
+      get_url:
+        url: https://releases.hashicorp.com/vagrant/2.2.15/vagrant_2.2.15_x86_64.dmg
+        dest: "{{ ansible_user_dir }}/Downloads"
+        checksum: "sha256:https://releases.hashicorp.com/vagrant/2.2.15/vagrant_2.2.15_SHA256SUMS"
+    - name: Ensure a Vagrant dmg isn't already mounted
+      mount:
+        path: /Volumes/Vagrant
+        state: unmounted
+      become: yes
+    - name: Open the 2.2.15 dmg
+      command: open {{ ansible_user_dir }}/Downloads/vagrant_2.2.15_x86_64.dmg
+    - name: Ensure the pkg file inside the dmg is installed
+      command:
+        cmd: "installer -pkg '/Volumes/Vagrant/vagrant.pkg' -target /"
+      become: yes
+    - name: Ensure the vagrant 2.2.15 dmg is unmounted again
+      mount:
+        path: /Volumes/Vagrant
+        state: unmounted
+      become: yes
+  when: not vagrant.stat.exists
 - name: Ensure VirtualBox is installed
   # VirtualBox is a special case as we know it fails on installation due to
   # installing kernel extensions

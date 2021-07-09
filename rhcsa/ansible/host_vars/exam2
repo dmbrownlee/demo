@@ -3,6 +3,6 @@ hostname: exam2
 host_vagrant_net_iface: ens5
 host_vagrant_net_conn_name: vagrant
 host_lab_net_conn_name: example_com
-host_lab_net_iface: ens6
+host_lab_net_iface: enp0s8
 host_lab_net_ipv4_addresses: "192.168.4.102/24"
 exam_config: exam2

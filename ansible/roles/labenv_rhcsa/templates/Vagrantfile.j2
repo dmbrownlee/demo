@@ -4,7 +4,7 @@
 Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
-  config.vm.box = "centos-8.3.2011"
+  config.vm.box = "{{ box_name }}"
   config.vm.synced_folder "labfiles/", "/labfiles"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 {% if virtualization == "virtualbox" %}
@@ -45,22 +45,23 @@ Vagrant.configure("2") do |config|
     }
   end
 
-  #==============================
-  #==  CentOS 8.x Lab Machines ==
-  #==============================
+  #====================
+  #==  Lab Machines  ==
+  #====================
   #=== server1 ==
   config.vm.define "server1" do |node|
-    node.vm.box = "centos-8.3.2011"
+    node.vm.box = "{{ box_name }}"
 {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
+      virtualbox.memory = 2048
     end
 {% endif %}
   end
 
   #=== server2 ===
   config.vm.define "server2" do |node|
-    node.vm.box = "centos-8.3.2011"
+    node.vm.box = "{{ box_name }}"
 {% if virtualization == "virtualbox" %}
     disk = "#{ENV["HOME"]}/VirtualBox VMs/server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -89,8 +90,8 @@ Vagrant.configure("2") do |config|
 {% if virtualization == "virtualbox" %}
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
-    node.vm.box = "centos-8.3.2011"
-    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/centos-8.3.2011-disk001.vmdk"
+    node.vm.box = "{{ box_name }}"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/{{ box_name }}-disk001.vmdk"
     disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
     disk2 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk002.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -134,7 +135,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "#{ENV["HOME"]}/Downloads/CentOS-8.3.2011-x86_64-boot.iso"]
+        "--medium", "#{ENV["HOME"]}/Downloads/{{ box_iso }}"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
@@ -160,11 +161,17 @@ Vagrant.configure("2") do |config|
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
-    node.vm.box = "centos-8.3.2011"
+    node.vm.box = "{{ box_name }}"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "exam1"
+    end
   end
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
-    node.vm.box = "centos-8.3.2011"
+    node.vm.box = "{{ box_name }}"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "exam2"
+    end
   end
 end

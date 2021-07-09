@@ -1,5 +1,5 @@
 #version=RHEL8
-# CentOS 8 kickstart file
+# Rocky 8.4 kickstart file
 #
 # For more information on kickstart syntax and commands, refer to the
 # CentOS Installation Guide:
@@ -40,9 +40,10 @@ lang en_US.UTF-8
 # Network information
 network  --bootproto=dhcp --device=link --ipv6=auto --activate --hostname=localhost.localdomain --onboot=on
 repo --name="epel" --baseurl=https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch
-repo --name="AppStream" --mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=AppStream&infra=$infra
+repo --name=Rocky_BaseOS --mirrorlist=http://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever
+repo --name=Rocky_AppStream --mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=AppStream-$releasever
 # Use network installation
-url --mirrorlist="http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra"
+url --url=https://download.rockylinux.org/pub/rocky/8.4/BaseOS/x86_64/os/
 #Root password
 rootpw --lock
 # X Window System configuration information

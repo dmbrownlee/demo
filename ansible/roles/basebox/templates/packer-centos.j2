@@ -4,8 +4,10 @@
     "guest_os_type": "{{ guest_os_type }}",
     "iso_urls": [
       "{{ download_dir }}/{{ iso_name }}",
-      "{{ iso_location }}/{{ iso_name }}",
-      "{{ iso_altlocation }}/{{ iso_name }}"
+      "{{ iso_location }}/{{ iso_name }}"
+    {% if iso_altlocation is defined %}
+      ",{{ iso_altlocation }}/{{ iso_name }}"
+    {% endif %}
     ],
     "iso_checksum": "{{ iso_checksum }}",
     "iso_target_path": "{{ download_dir }}/{{ iso_name }}",
@@ -58,31 +60,31 @@
                   "chmod 644 /home/vagrant/.ssh/authorized_keys"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
                   "chmod 0440 /etc/sudoers.d/vagrant"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "yum -y install epel-release"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "yum -y install bzip2 make dkms kernel-devel"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "yum -y update"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "reboot"],
        "expect_disconnect": true,
        "pause_before": "10s"
     },
     {  "type": "shell",
        "only": [ "virtualbox-iso" ],
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
        "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",
                    "./VBoxLinuxAdditions.run"]
