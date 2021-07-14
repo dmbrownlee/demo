@@ -7,12 +7,12 @@
 
 - name: Server with GUI
   hosts:
-    - server1
+    - graphical_environment
   roles:
     - role: server-with-gui
 
-- name: RHCSA VM Configuration
-  hosts: rhcsa8
+- name: Vagrant VM Configuration
+  hosts: vagrant_vm
   roles:
     - role: vagranthost
     - role: netconfig-lab
