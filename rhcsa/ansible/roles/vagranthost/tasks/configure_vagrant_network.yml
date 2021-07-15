@@ -3,12 +3,6 @@
 # the 2.5 devel branch.  https://github.com/ansible/ansible/pull/34577. I will
 # revisit this when it is fixed in production.
 #
-- name: Ensure NetworkManager is started and enabled at boot
-  service:
-    name: NetworkManager
-    state: started
-    enabled: yes
-  become: yes
 - name: Check if libvirtd service is installed
   stat:
     path: /usr/lib/systemd/system/libvirtd.service
