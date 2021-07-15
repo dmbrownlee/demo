@@ -1,3 +1,32 @@
 ---
-- import_tasks: baseline_security.yml
-- import_tasks: install_common_packages.yml
+- name: Ensure we accept the GPG keys (Rocky 8)
+  rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/{{ item }}
+  with_items:
+    - RPM-GPG-KEY-rockyofficial
+    - RPM-GPG-KEY-EPEL-8
+  become: yes
+  when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"
+- name: Ensure we accept the GPG keys (CentOS 8)
+  rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/{{ item }}
+  with_items:
+    - RPM-GPG-KEY-centosofficial
+    - RPM-GPG-KEY-EPEL-8
+  become: yes
+  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"
+- name: Ensure SELinux is in enforcing mode
+  selinux:
+    policy: targeted
+    state: enforcing
+  become: yes
+  register: selinux
+  notify: reboot
+- name: Ensure firewalld is started and enabled at boot
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
