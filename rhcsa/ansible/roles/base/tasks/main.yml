@@ -19,3 +19,9 @@
     state: started
     enabled: yes
   become: yes
+- name: Ensure NetworkManager is started and enabled at boot
+  service:
+    name: NetworkManager
+    state: started
+    enabled: yes
+  become: yes
