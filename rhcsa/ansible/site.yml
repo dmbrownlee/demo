@@ -3,7 +3,7 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: base
+    - role: common
 
 - name: Server with GUI
   hosts:
