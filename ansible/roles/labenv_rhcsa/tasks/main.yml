@@ -21,7 +21,7 @@
   vars:
     box_name: rocky-8.4
     box_iso: Rocky-8.4-x86_64-boot.iso
-- name: Ensure Vagrantfile is linked to CentOS Vagrantfile (for now)
+- name: Ensure Vagrantfile defaults to using Rocky
   file:
     path: "{{ demo_root }}/rhcsa/Vagrantfile"
     src: "{{ demo_root }}/rhcsa/Vagrantfile.rocky"
