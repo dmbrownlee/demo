@@ -32,6 +32,7 @@ Vagrant.configure("2") do |config|
     ansible.skip_tags = "disabled"
     ansible.groups = {
       "vagrant_vm" => [
+        "idm1",
         "server1",
         "server2",
         "exam1",
@@ -39,6 +40,9 @@ Vagrant.configure("2") do |config|
       ],
       "graphical_environment" => [
         "server1"
+      ],
+      "idm_server" => [
+        "idm1"
       ],
       "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" },
       "examhost" => [
@@ -51,6 +55,15 @@ Vagrant.configure("2") do |config|
   #====================
   #==  Lab Machines  ==
   #====================
+  #=== idm1 ==
+  config.vm.define "idm1" do |node|
+    node.vm.box = "{{ box_name }}"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "idm1"
+      virtualbox.memory = 2048
+    end
+  end
+
   #=== server1 ==
   config.vm.define "server1" do |node|
     node.vm.box = "{{ box_name }}"

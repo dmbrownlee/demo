@@ -1,5 +1,5 @@
 ---
-hostname: labipa
+hostname: idm1
 host_vagrant_net_conn_name: vagrant
 host_vagrant_net_iface: enp0s3
 host_lab_net_conn_name: example_com
