@@ -5,18 +5,18 @@
   roles:
     - role: common
 
-- name: Server with GUI
-  hosts:
-    - graphical_environment
-  roles:
-    - role: server-with-gui
-
 - name: Vagrant VM Configuration
   hosts: vagrant_vm
   roles:
     - role: vagranthost
     - role: netconfig-lab
     - role: labhost
+
+- name: Server with GUI
+  hosts:
+    - server_with_gui
+  roles:
+    - role: server-with-gui
 
 - name: Exam hosts
   hosts: examhost
