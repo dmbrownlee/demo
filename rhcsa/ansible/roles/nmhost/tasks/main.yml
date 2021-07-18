@@ -1,6 +1,6 @@
 ---
 - name: Ensure connections are present but down
-  include_tasks: present-connection.yml
+  include_tasks: down-connection.yml
   loop: "{{ nmcons.down }}"
   loop_control:
     label: "{{ item.conn_name }}"
