@@ -5,7 +5,10 @@ Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
   config.vm.box = "{{ box_name }}"
-  config.vm.synced_folder "labfiles/", "/labfiles"
+  config.vm.synced_folder "labfiles/", "/labfiles",
+    id: "labfiles",
+    owner: "root",
+    group: "root"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 {% if virtualization == "virtualbox" %}
   config.vm.provider :virtualbox do |virtualbox|
@@ -39,7 +42,6 @@ Vagrant.configure("2") do |config|
         "exam2"
       ],
       "labhost" => [
-        "idm1",
         "server1",
         "server2"
       ],
