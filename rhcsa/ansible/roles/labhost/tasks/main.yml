@@ -1,4 +1,4 @@
 ---
-- import_tasks: install_common_packages.yml
+- import_tasks: install_packages.yml
 - import_tasks: add_lab_user.yml
 - import_tasks: configure_ansible.yml
