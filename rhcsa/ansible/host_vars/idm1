@@ -14,3 +14,78 @@ nmcons:
   absent:
     - conn_name: "System enp0s3"
     - conn_name: "Wired connection 1"
+service:
+  ftp:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+  idm:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+  nfs:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+  samba:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+# Shares
+# - name: Ensure the SELinux policy for the multi-service data directory exists
+#   sefcontext:
+#     target: '/data(/.*)?'
+#     setype: public_content_rw_t
+#     state: present
+#   become: yes
+#   notify: serestore_data
+# - name: Ensure the group owner for the data directory exists
+#   group:
+#     name: dir_data
+#     state: present
+#   become: yes
+# - name: Ensure the multi-service data directory exists
+#   file:
+#     path: '/data'
+#     owner: root
+#     group: dir_data
+#     mode: '02775'
+#     state: directory
+#   become: yes
+# - name: Ensure there is a README file in the /data directory
+#   copy:
+#     dest: /data/README.data
+#     content: 'This directory is writable by members of the dir_data group.'
+#     mode: '0644'
+#   become: yes
+# - name: Ensure data directory is exported via NFS
+#   copy:
+#     content: '/data *(rw)'
+#     dest: /etc/exports.d/data.exports
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   become: yes
+# - name: Ensure example Samba share exists in Samba config file
+#   blockinfile:
+#     path: /etc/samba/smb.conf
+#     marker: '# {mark} ANSIBLE MANAGED BLOCK: data share'
+#     block: |
+#       [data]
+#         comment = data share
+#         path = /data
+#         guest ok = yes
+#         read only = yes
+#   become: yes

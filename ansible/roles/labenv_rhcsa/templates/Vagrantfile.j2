@@ -34,28 +34,37 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/site.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "nmhost" => [
+      "nmhosts" => [
         "idm1",
         "server1",
         "server2",
         "exam1",
         "exam2"
       ],
-      "labhost" => [
+      "labhosts" => [
         "server1",
         "server2"
       ],
-      "server_with_gui" => [
+      "servers_with_gui" => [
         "server1"
       ],
-      "idm_server" => [
+      "ftp_servers" => [
         "idm1"
       ],
-      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" },
-      "examhost" => [
+      "nfs_servers" => [
+        "idm1"
+      ],
+      "samba_servers" => [
+        "idm1"
+      ],
+      "idm_servers" => [
+        "idm1"
+      ],
+      "examhosts" => [
         "exam1",
         "exam2"
-      ]
+      ],
+      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" }
     }
   end
 

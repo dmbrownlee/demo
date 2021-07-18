@@ -1,0 +1,29 @@
+---
+- name: Ensure Samba server and client is installed
+  yum:
+    name: [samba, samba-client, samba-common-tools]
+    state: present
+  become: yes
+# Server configuration goes here
+# - name: Ensure Samba has initial smb.conf
+#   copy:
+#     dest: /etc/samba/smb.conf
+#     src: smb.conf
+#   become: yes
+- name: Ensure Samba systemd service is configured
+  service:
+    name: smb
+    state: "{{ service.samba.state }}"
+    enabled: "{{ service.samba.enabled }}"
+  become: yes
+- name: Ensure Samba traffic is allowed through firewall
+  firewalld:
+    service: "{{ item }}"
+    state: "{{ service.samba.fw_state }}"
+    permanent: "{{ service.samba.fw_permanent }}"
+    immediate: "{{ service.samba.fw_immediate }}"
+    zone: "{{ service.samba.fw_zone }}"
+  loop:
+    - samba
+    - samba-client
+  become: yes
