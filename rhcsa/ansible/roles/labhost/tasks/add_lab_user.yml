@@ -1,8 +1,8 @@
 ---
-- name: Adding user account
+- name: Adding student account for learner
   user:
-    name: "{{ item }}"
-    comment: "{{ item }}"
+    name: student
+    comment: student
     createhome: yes
     append: yes
     groups:
@@ -10,7 +10,4 @@
     state: present
     password: '$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'
     system: no
-  loop:
-    - user
-    - student
   become: true
