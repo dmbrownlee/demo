@@ -1,3 +1,4 @@
+# vi: ft=yaml
 ---
 hostname: server2
 nmcons:

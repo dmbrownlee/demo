@@ -1,3 +1,4 @@
+# vi: ft=yaml
 ---
 nmcons:
   present:
