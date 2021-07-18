@@ -1,7 +1,0 @@
----
-vagrant_net_type: ethernet
-vagrant_net_autoconnect: yes
-vagrant_net_zone: internal
-vagrant_net_ipv4_method: auto
-vagrant_net_ipv4_never_default: yes
-vagrant_net_ipv6_method: ignore

@@ -5,11 +5,14 @@
   roles:
     - role: common
 
-- name: Vagrant VM Configuration
-  hosts: vagrant_vm
+- name: Configure Network Manager connections
+  hosts: nmhost
   roles:
-    - role: vagranthost
-    - role: netconfig-lab
+    - role: nmhost
+
+- name: Configure access to labfiles from within the VM
+  hosts: labhost
+  roles:
     - role: labhost
 
 - name: Server with GUI
@@ -21,7 +24,6 @@
 - name: Exam hosts
   hosts: examhost
   roles:
-    - role: netconfig-lab
     - role: examhost
 
 - name: Reboot

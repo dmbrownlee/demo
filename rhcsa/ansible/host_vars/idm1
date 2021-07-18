@@ -1,21 +1,16 @@
 ---
-hostname: idm1
-host_vagrant_net_conn_name: vagrant
-host_vagrant_net_iface: enp0s3
-host_lab_net_conn_name: example_com
-host_lab_net_iface: enp0s8
-host_lab_net_ipv4_addresses: "192.168.4.200/24"
-lab_connection:
-  connection:
-    id: example_com
-    type: ethernet
-    interface_name: enp0s8
-    autoconnect: yes
-    zone: internal
-  ipv4:
-    method: manual
-    dns: 192.168.4.200
-    addresses: 192.168.4.200/24
-    gateway: 192.168.4.1
-    ignore_auto_dns: yes
-    never_default: no
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhcsa
+      ifname: enp0s8
+      autoconnect: yes
+      ip4: 192.168.4.200/24
+      gw4: 192.168.4.1
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"
