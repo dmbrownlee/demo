@@ -1,0 +1,19 @@
+---
+- name: Ensure connections are present but down
+  include_tasks: present-connection.yml
+  loop: "{{ nmcons.down }}"
+  loop_control:
+    label: "{{ item.conn_name }}"
+  when: nmcons.down is defined
+- name: Ensure connections are present and up
+  include_tasks: present-connection.yml
+  loop: "{{ nmcons.present }}"
+  loop_control:
+    label: "{{ item.conn_name }}"
+  when: nmcons.present is defined
+- name: Ensure connections are absent
+  include_tasks: absent-connection.yml
+  loop: "{{ nmcons.absent }}"
+  loop_control:
+    label: "{{ item.conn_name }}"
+  when: nmcons.absent is defined

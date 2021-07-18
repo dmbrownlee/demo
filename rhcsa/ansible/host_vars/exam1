@@ -1,9 +1,17 @@
 ---
 hostname: exam1
-host_vagrant_net_iface: enp0s3
-host_vagrant_net_conn_name: "vagrant"
-host_lab_net_conn_name: example_com
-host_lab_net_iface: enp0s8
-host_lab_net_ipv4_addresses: "192.168.4.101/24"
-host_iface_netconfig_disabled: enp0s8
 exam_config: exam1
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhcsa
+      ifname: enp0s8
+      autoconnect: no
+      ip4: 192.168.4.230/24
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"

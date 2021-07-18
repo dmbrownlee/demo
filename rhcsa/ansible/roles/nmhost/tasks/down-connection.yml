@@ -1,0 +1,33 @@
+---
+- name: Ensure network variables are set ({{ item.netvars }})
+  include_vars:
+    file: "netcfg-{{ item.netvars }}.yml"
+    name: netcfg
+  when: item.netvars is defined
+- name: Ensure {{ item.conn_name }} connection is present
+  nmcli:
+    conn_name: "{{ item.conn_name }}"
+    state: present
+    autoconnect: "{{ item.autoconnect | default(omit) }}"
+    dns4: "{{ netcfg.dns4 | default(omit) }}"
+    dns4_ignore_auto: "{{ netcfg.dns4_ignore_auto | default(omit) }}"
+    gw4: "{{ netcfg.gw4 | default(omit) }}"
+    ifname: "{{ item.ifname | default(omit) }}"
+    ip4: "{{ item.ip4 | default(omit) }}"
+    method4: "{{ netcfg.method4 | default(omit) }}"
+    method6: "{{ netcfg.method6 | default(omit) }}"
+    never_default4: "{{ netcfg.never_default4 | default(omit) }}"
+    type: "{{ netcfg.type | default(omit) }}"
+    zone: "{{ netcfg.zone | default(omit) }}"
+  become: yes
+  debugger: on_failed
+- name: Ensure {{ item.conn_name }} connection is down
+  command: nmcli c down {{ item.conn_name }}
+  become: yes
+- name: Ensure /etc/hosts includes static additions for {{ item.netvars }}
+  blockinfile:
+    path: /etc/hosts
+    block: "{{ netcfg.hostfile_additions }}"
+    marker: "# {mark} static entries for {{ item.netvars }} network"
+  become: yes
+  when: netcfg.hostfile_additions is defined

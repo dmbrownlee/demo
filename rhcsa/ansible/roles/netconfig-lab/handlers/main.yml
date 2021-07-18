@@ -1,5 +1,0 @@
----
-- name: Ensure the lab connection is up
-  listen: new_lab_connection
-  command: nmcli c up "{{ host_lab_net_conn_name }}"
-  become: yes

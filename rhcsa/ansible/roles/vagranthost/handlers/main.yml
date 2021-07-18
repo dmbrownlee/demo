@@ -1,5 +1,0 @@
----
-- name: Ensure the new vagrant connection is up
-  listen: new_vagrant_connection
-  command: nmcli c up "{{ host_vagrant_net_conn_name }}"
-  become: yes

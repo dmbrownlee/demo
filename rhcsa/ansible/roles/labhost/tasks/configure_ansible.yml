@@ -2,5 +2,5 @@
 - name: Ensure this host recognizes its own hostname as local
   lineinfile:
     path: /etc/ansible/hosts
-    line: "{{ hostname }} ansible_connection=local"
+    line: "{{ inventory_hostname }} ansible_connection=local"
   become: yes
