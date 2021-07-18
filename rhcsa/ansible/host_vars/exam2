@@ -1,3 +1,4 @@
+# vi: ft=yaml
 ---
 hostname: exam2
 exam_config: exam2
