@@ -1,4 +1,9 @@
 ---
+- name: Ensure the hostname is set
+  hostname:
+    name: "{{ inventory_hostname }}"
+  become: yes
+  notify: restart_getty
 - name: Ensure we accept the RPM GPG keys
   rpm_key:
     state: present
