@@ -39,8 +39,3 @@
   hosts: examhosts
   roles:
     - role: examhost
-
-- name: Reboot
-  hosts: all
-  roles:
-    - role: vagrant-vm-reboot
