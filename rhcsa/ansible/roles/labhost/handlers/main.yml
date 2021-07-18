@@ -1,6 +1,7 @@
 ---
-- name: Ensure the host is rebooted
-  listen: reboot
-  reboot:
-    reboot_timeout: 600
+- name: Ensure gdm is restarted
+  listen: restart_gdm
+  systemd:
+    name: gdm
+    state: reloaded
   become: yes
