@@ -1,4 +1,36 @@
 ---
-- import_tasks: install_packages.yml
-- import_tasks: add_lab_user.yml
-- import_tasks: configure_ansible.yml
+- name: Ensure necessary packages are installed
+  yum:
+    #name: [nss-pam-ldapd, ipa-client, tcpdump, bind-utils, vim, screen, net-tools, nfs-utils, git]
+    name:
+      - tmux
+      - vim
+      - git
+      - net-tools
+      - bind-utils
+      - tcpdump
+    state: present
+  become: yes
+- name: Ensure ansible is installed
+  package:
+    name: ansible
+    state: present
+  become: yes
+- name: Adding student account for learner
+  user:
+    name: student
+    comment: student
+    createhome: yes
+    append: yes
+    groups:
+      - wheel
+    state: present
+    password: '$1$51eeJY/K$2FziL6ac0k.XRQCVuLsUY.'
+    system: no
+  become: true
+  notify: restart_gdm
+- name: Ensure this host recognizes its own hostname as local
+  lineinfile:
+    path: /etc/ansible/hosts
+    line: "{{ inventory_hostname }} ansible_connection=local"
+  become: yes
