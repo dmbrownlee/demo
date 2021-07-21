@@ -1,0 +1,24 @@
+---
+- name: Ensure an SELinux policy exists for the NFS share ({{ share.sharename }})
+  sefcontext:
+    target: "{{ share.seregex }}"
+    setype: "{{ share.setype }}"
+    state: present
+  become: yes
+- name: Ensure top level directory exists for the NFS share ({{ share.sharename }})
+  file:
+    path: "{{ share.path }}"
+    owner: "{{ share.owner | default('root') }}"
+    group: "{{ share.group | default('root') }}"
+    mode: "{{ share.mode | default('0755') }}"
+    state: directory
+    setype: "{{ share.setype }}"
+  become: yes
+- name: Ensure an exports file exists for the NFS share ({{ share.sharename }})
+  copy:
+    dest: /etc/exports.d/{{ share.sharename }}.exports
+    content: "{{ share.path }}	{{ share.export_options }})"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes

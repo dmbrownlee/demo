@@ -5,13 +5,12 @@
     state: present
   become: yes
 - name: Ensure host-specific shares have been configured
-  include_tasks:
-    file: "{{ lookup('first_found', ffargs, errors='ignore') }}"
-  vars:
-    ffargs:
-      files:
-        - shares-{{ inventory_hostname }}.yml
-        - no-shares.yml
+  include_tasks: add-nfs-share.yml
+  loop: "{{ service.nfs.shares }}"
+  loop_control:
+    loop_var: share
+    label: "{{ share.sharename }}"
+  when: service.nfs.shares is defined
 - name: Ensure nfs-server systemd service is configured
   service:
     name: nfs-server

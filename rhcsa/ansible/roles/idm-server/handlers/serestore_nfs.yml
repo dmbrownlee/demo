@@ -1,5 +1,0 @@
----
-- name: Ensure selinux policy is applied to new NFS share
-  listen: "serestore_nfs"
-  command: restorecon -ir /srv/nfsexport
-  become: yes
