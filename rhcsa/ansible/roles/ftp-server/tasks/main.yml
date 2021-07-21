@@ -1,17 +1,16 @@
 ---
-- name: Ensure packages for the IPA server are installed
+- name: Ensure packages for the FTP server are installed
   yum:
     name: vsftpd
     state: present
   become: yes
 - name: Ensure host-specific shares have been configured
-  include_tasks:
-    file: "{{ lookup('first_found', ffargs, errors='ignore') }}"
-  vars:
-    ffargs:
-      files:
-        - shares-{{ inventory_hostname }}.yml
-        - no-shares.yml
+  include_tasks: add-ftp-share.yml
+  loop: "{{ service.ftp.shares }}"
+  loop_control:
+    loop_var: share
+    label: "{{ share.path }}"
+  when: service.ftp.shares is defined
 - name: Ensure vsftpd systemd service is configured
   service:
     name: vsftpd
