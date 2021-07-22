@@ -24,7 +24,7 @@
     loop_var: chapter
     index_var: chapter_num
     label: "{{ chapter.title }}"
-- name: Ensure a schedule template CSV file exists
+- name: Ensure a schedule template TSV file exists
   template:
     src: "schedule-template.j2"
     dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/{{ schedulefile }}"
