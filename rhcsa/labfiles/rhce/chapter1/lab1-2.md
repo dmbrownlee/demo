@@ -1,4 +1,4 @@
-# lab1-1: Some other important lesson
+# lab1-2: Some other important lesson
 ## Sorry, this is only a placeholder for a lab that has yet to be written.
 
 ![Image of construction sign](../images/ConstructionSign.png)
@@ -11,9 +11,18 @@ Spell out the lab objective here.
 
 Describe which hosts will be used here and list any setup steps.
 
+## BACKGROUND
+
+Additional information if needed.  This section may be removed if not needed.
+
 ## STEPS
 
 Describe the steps needed to complete the lab in non-specific terms (i.e. give
 tasks to complete, not commands to run.
 
-Optionally, include instructions to verify work.
+## CONFIRMATION
+
+You will know you have completed this lab successfully when the following are true:
+
+  1. ...
+  1. ...
