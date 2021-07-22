@@ -8,10 +8,10 @@ nmcons:
       ifname: enp0s3
       autoconnect: yes
     - conn_name: example_com
-      netvars: rhcsa
+      netvars: rhce
       ifname: enp0s8
       autoconnect: yes
-      ip4: 192.168.4.202/24
+      enthod4: auto
   absent:
     - conn_name: "System enp0s3"
     - conn_name: "Wired connection 1"

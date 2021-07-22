@@ -1,0 +1,14 @@
+---
+autoconnect: yes
+method4: auto
+method6: ignore
+type: ethernet
+zone: internal
+hostfile_additions: |
+  192.168.4.200 idm1.example.com idm1
+  192.168.4.201 ansible1.example.com ansible1
+  192.168.4.202 ansible2.example.com ansible2
+  192.168.4.203 control.example.com control
+  192.168.4.210 server1.example.com server1
+  192.168.4.220 server2.example.com server2
+  192.168.4.230 testnetinstall.example.com testnetinstall
