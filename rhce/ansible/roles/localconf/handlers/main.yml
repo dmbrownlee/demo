@@ -1,7 +1,0 @@
----
-- name: Ensure selinux policy is applied to new directories
-  listen: "serestorecon"
-  command: restorecon -ir {{ item.restorecon_root }}
-  become: yes
-  when: sefcontext_updates is defined
-  loop: "{{ sefcontext_updates }}"
