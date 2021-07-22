@@ -21,7 +21,7 @@ Wireshark is a free and open-source packet analyzer, which is widely used for ne
 
 1. Load Wireshark and start capturing you own traffic. There are multiple ways to start capturing packets, 1 method is to double click on the interface that you'd like to capture. Immediately after selecting the interface, packets will be captured:
 ![lab01-1 selecting interface](lab01-1_wireshark_selecting_interface.png)
-2. When capturing packets, load Chrome and visit www.google.com
+2. When capturing packets, load Chrome and visit www.google.com / a page that you haven't visited on this machine before to avoid caching. (Why would caching cause an issue?)
 3. After this, you can stop the capture by pressing the stop button:
 ![lab01-1 stop capture](lab01-1_wireshark_stop_capture.png)
 4. From the packets you have captured, find your machines IP address, and MAC address.
