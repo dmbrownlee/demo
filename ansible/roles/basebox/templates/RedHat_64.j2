@@ -1,7 +1,8 @@
 {
   "variables": {
     "username": "vagrant",
-    "password": "vagrant"
+    "password": "vagrant",
+    "checksum": "{{ iso_checksum }}"
   },
   "builders": [{
     "type": "virtualbox-iso",
@@ -13,7 +14,7 @@
       ",{{ iso_altlocation }}/{{ iso_name }}"
     {% endif %}
     ],
-    "iso_checksum": "{{ iso_checksum }}",
+    "iso_checksum": "{{ '{{' }} user `checksum` }}",
     "iso_target_path": "{{ download_dir }}/{{ iso_name }}",
 
     "http_directory" : ".",
