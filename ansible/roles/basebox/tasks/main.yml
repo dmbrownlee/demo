@@ -31,7 +31,6 @@
       - cpus is defined
       - ram is defined
       - disk_size is defined
-      - template is defined
       - templateks is defined
     fail_msg: "One or more required variables are undefined."
 - name: Ensure the packer build directories exists before copying files there
@@ -52,7 +51,7 @@
 - name: Ensure we have a packer JSON file for the base box
   template:
     dest: "{{ packer_build_dir }}/{{ box }}.json"
-    src: "{{ template }}"
+    src: "{{ guest_os_type }}.j2"
     mode: '0600'
 - name: Ensure we have an installer file for the base box
   template:

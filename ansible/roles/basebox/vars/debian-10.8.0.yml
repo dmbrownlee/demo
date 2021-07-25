@@ -10,5 +10,4 @@ install_file: "debian-10.8.0-preseed.cfg"
 cpus: 1
 ram: 1024
 disk_size: "20480"
-template: "packer-debian.j2"
 templateks: "packer-debian-preseed.j2"
