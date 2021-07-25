@@ -10,11 +10,6 @@
 - name: Ensure virtual lab environment for rhcsa is configured
   hosts: localhost
   roles:
-    # - role: basebox
-    #   tags: basebox
-    #   vars:
-    #     box: centos-8.4.2105
-    #   when: buildvms|bool
     - role: basebox
       tags: basebox
       vars:
