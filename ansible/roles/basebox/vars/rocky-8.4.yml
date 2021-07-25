@@ -9,5 +9,4 @@ install_file: "rocky-8.4-ks.cfg"
 cpus: 1
 ram: 1024
 disk_size: "20480"
-template: "packer-centos.j2"
 templateks: "packer-rocky-ks.j2"
