@@ -55,15 +55,7 @@ services --enabled="chronyd"
 timezone America/Los_Angeles --isUtc
 user --groups=wheel --name=vagrant --plaintext --password=vagrant
 
-%packages
-@^minimal-environment
-ansible
-epel-release
-git-core
-tmux
-rhel-system-roles
-%end
-
+{{ package_section }}
 %post
 yum -y update
 %end

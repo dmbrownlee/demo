@@ -14,6 +14,19 @@
       tags: basebox
       vars:
         box: rocky-8.4
+        configuration: core
+      when: buildvms|bool
+    - role: basebox
+      tags: basebox
+      vars:
+        box: rocky-8.4
+        configuration: minimal
+      when: buildvms|bool
+    - role: basebox
+      tags: basebox
+      vars:
+        box: rocky-8.4
+        configuration: gse
       when: buildvms|bool
     - role: labenv_rhcsa
       tags: labenv_rhcsa
