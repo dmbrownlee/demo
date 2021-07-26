@@ -26,7 +26,7 @@
     "ssh_wait_timeout": "40m",
     "disk_size" : "{{ disk_size }}",
     "memory": {{ ram }},
-    "vm_name": "{{ box }}",
+    "vm_name": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}",
     "headless": true,
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
@@ -48,7 +48,7 @@
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ install_file }}<leftCtrlOn>x"
+      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}-ks.cfg<leftCtrlOn>x"
     ],
     "shutdown_command": "echo {{ '{{' }} user `password` }} | sudo -S shutdown -P now"
   }],
@@ -95,6 +95,6 @@
   ],
   "post-processors": [{
     "type": "vagrant",
-    "output": "{{ box }}.box"
+    "output": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}.box"
   }]
 }
