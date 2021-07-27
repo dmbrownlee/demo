@@ -5,3 +5,4 @@
     name: gdm
     state: reloaded
   become: yes
+  when: "'servers_with_gui' in group_names"
