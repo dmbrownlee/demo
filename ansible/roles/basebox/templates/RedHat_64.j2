@@ -1,7 +1,7 @@
 {
   "variables": {
-    "username": "vagrant",
-    "password": "vagrant",
+    "username": "{{ provisioning_user }}",
+    "password": "{{ provisioning_password }}",
     "checksum": "{{ iso_checksum }}"
   },
   "builders": [{
