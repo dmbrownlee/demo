@@ -17,17 +17,13 @@
     path: "{{ key_dir }}"
     state: directory
     mode: 0700
-- name: Test if {{ key_dir }}/vagrant already installed
-  stat:
-    path: "{{ key_dir }}/vagrant"
-  register: vagrant_key
-  changed_when: false
 - name: Ensure key pair in {{ key_dir }}
-  command: ssh-keygen -t rsa -b 4096 -f vagrant -N "" -C "vagrant public key created by vagrantbox setup"
-  args:
-    chdir: "{{ key_dir }}"
-    creates: "{{ key_dir }}/vagrant"
-  when: not vagrant_key.stat.exists
+  openssh_keypair:
+    path: "{{ key_dir }}/{{ provisioning_user }}"
+    state: present
+    type: rsa
+    size: 4096
+    comment: "{{ provisioning_user }} key created by Ansible"
 - name: Ensure host key is swapped to right command key
   block:
     - name: Get current hostkey setting
