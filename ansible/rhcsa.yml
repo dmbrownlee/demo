@@ -15,12 +15,13 @@
       include_role:
         name: basebox
       vars:
-        box: "{{ this.box }}"
+        distro: "{{ this.distro }}"
+        version: "{{ this.version }}"
         configuration: "{{ this.configuration }}"
       loop:
-        - { box: rocky-8.4, configuration: core }
-        - { box: rocky-8.4, configuration: minimal }
-        - { box: rocky-8.4, configuration: gse }
+        - { distro: rocky, version: "8.4", configuration: core }
+        - { distro: rocky, version: "8.4", configuration: minimal }
+        - { distro: rocky, version: "8.4", configuration: gse }
       loop_control:
         loop_var: this
       tags: basebox

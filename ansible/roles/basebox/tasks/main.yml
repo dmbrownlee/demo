@@ -6,18 +6,13 @@
 - name: Assert specific box was requested by name
   assert:
     that:
-      - box is defined
+      - distro is defined
+      - version is defined
     fail_msg: "You need to specify which box you want to build."
-    success_msg: "{{ box }} was requested for this build."
-- name: Get list of available Vagrant base boxes
-  shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
-  args:
-    executable: "{{ ansible_user_shell }}"
-  register: vagrant_box_list
-  changed_when: false
-- name: Read variables from vars/{{ box }}.yml
-  include_vars: "{{ box }}.yml"
-- name: Ensure required variabless have been defined for {{ box }}
+    success_msg: "{{ distro }}-{{ version }}-{{ configuration }} was requested for this build."
+- name: Read variables from vars/{{ distro }}-{{ version }}.yml
+  include_vars: "{{ distro }}-{{ version }}.yml"
+- name: Ensure required variabless have been defined for {{ distro }}-{{ version }}
   assert:
     that:
       #- distro is defined
@@ -48,9 +43,9 @@
     - answer_files
     - cookbooks
     - scripts
-- name: Ensure we have a packer JSON file for the base box
+- name: Ensure we have a packer JSON file for {{ distro }}-{{ version }}
   template:
-    dest: "{{ packer_build_dir }}/{{ box }}.json"
+    dest: "{{ packer_build_dir }}/{{ distro }}-{{ version }}.json"
     src: "{{ guest_os_type }}.j2"
     mode: '0600'
 - name: Ensure we import the variables for the {{ configuration }} configuration
@@ -61,28 +56,35 @@
     dest: "{{ packer_build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
+- name: Test if box {{ distro }}-{{ version }}-{{ configuration }} is already available
+  shell: set -o pipefail && vagrant box list | grep -q {{ distro }}-{{ version }}-{{ configuration }}
+  args:
+    executable: "{{ ansible_user_shell }}"
+  ignore_errors: true
+  changed_when: false
+  register: box_already_available
 - name: Build the base box if it is currently unavailable
   block:
-    - name: Check if box file already exists ({{ box }})
+    - name: Check if box file already exists ({{ distro }}-{{ version }}-{{ configuration }})
       stat:
-        path: "{{ packer_build_dir }}/{{ box }}.box"
+        path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
       register: boxfile
       changed_when: false
-    - name: Build box file if missing ({{ box }})
-      command: packer build -color=false -force {{ box }}.json
+    - name: Build box file ({{ distro }}-{{ version }}-{{ configuration }})
+      command: packer build -color=false -force -var "configuration={{ configuration }}" -var "username={{ provisioning_user }}" -var "password={{ provisioning_password }}" {{ distro }}-{{ version }}.json
       args:
         chdir: "{{ packer_build_dir }}"
-        creates: "{{ packer_build_dir }}/{{ box }}.box"
+        creates: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
       register: boxfilebuild
       when: boxfile.stat.isreg is not defined
-    - name: Install Vagrant base box ({{ box }})
-      command: vagrant box add --name {{ box }} {{ box }}.box
+    - name: Install Vagrant base box ({{ distro }}-{{ version }}-{{ configuration }})
+      command: vagrant box add --name {{ distro }}-{{ version }}-{{ configuration }} {{ distro }}-{{ version }}-{{ configuration }}.box
       args:
         chdir: "{{ packer_build_dir }}"
       when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0
     - name: Remove the box file after it has been installed to the cache
       file:
-        path: "{{ packer_build_dir }}/{{ box }}.box"
+        path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
         state: absent
       when: boxfile.stat.isreg is not defined
-  when: box not in vagrant_box_list.stdout_lines
+  when: box_already_available.failed
