@@ -9,24 +9,22 @@
 
 - name: Ensure virtual lab environment for rhcsa is configured
   hosts: localhost
+
+  pre_tasks:
+    - name: Ensure the required Vagrant baseboxes have been built
+      include_role:
+        name: basebox
+      vars:
+        box: "{{ this.box }}"
+        configuration: "{{ this.configuration }}"
+      loop:
+        - { box: rocky-8.4, configuration: core }
+        - { box: rocky-8.4, configuration: minimal }
+        - { box: rocky-8.4, configuration: gse }
+      loop_control:
+        loop_var: this
+      tags: basebox
+
   roles:
-    - role: basebox
-      tags: basebox
-      vars:
-        box: rocky-8.4
-        configuration: core
-      when: buildvms|bool
-    - role: basebox
-      tags: basebox
-      vars:
-        box: rocky-8.4
-        configuration: minimal
-      when: buildvms|bool
-    - role: basebox
-      tags: basebox
-      vars:
-        box: rocky-8.4
-        configuration: gse
-      when: buildvms|bool
     - role: labenv_rhcsa
       tags: labenv_rhcsa
