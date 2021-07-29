@@ -1,10 +1,19 @@
 ---
-- name: Get the current connection for the disabled interface
-  command: nmcli -t -f GENERAL.CONNECTION device show {{ host_iface_netconfig_disabled }}
-  register: iface_connection
-  changed_when: false
+- name: Ensure example_com connection has been removed
+  nmcli:
+    conn_name: "example_com"
+    state: absent
+  become: yes
 - name: Ensure unconfigured connection is configured for practice
-  command: "nmcli c mod {{ iface_connection.stdout | replace('GENERAL.CONNECTION:','') }} connection.id unconfigured connection.autoconnect no ipv4.addresses '10.1.1.1/24' ipv4.dns '' ipv4.gateway '' ipv4.never-default 'yes'"
+  nmcli:
+    conn_name: "unconfigured"
+    state: present
+    autoconnect: "no"
+    ifname: "enp0s8"
+    ip4: "10.1.1.1/24"
+    method4: "manual"
+    never_default4: "yes"
+    type: "ethernet"
   become: yes
 - name: Copy exam files to root's homedir
   copy:
@@ -18,13 +27,4 @@
     name: root
     password: '!'
   become: yes
-- name: Ensure accounts for user and student do not exist
-  user:
-    name: "{{ item }}"
-    state: absent
-    remove: yes
-  become: yes
-  loop:
-    - user
-    - student
-
+  notify: reboot
