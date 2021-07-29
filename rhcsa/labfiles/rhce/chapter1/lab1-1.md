@@ -1,7 +1,7 @@
 # lab1-1: Learn to create a git repository
 ## Sorry, this is only a placeholder for a lab that has yet to be written.
 
-![Image of construction sign](../images/ConstructionSign.png)
+![Image of construction sign](../../images/ConstructionSign.png)
 
 ## OBJECTIVE
 
