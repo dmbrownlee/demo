@@ -14,16 +14,13 @@
     - name: Ensure the required Vagrant baseboxes have been built
       include_role:
         name: basebox
+        apply:
+          tags: basebox
       vars:
-        distro: "{{ this.distro }}"
-        version: "{{ this.version }}"
-        configuration: "{{ this.configuration }}"
-      loop:
-        - { distro: rocky, version: "8.4", configuration: core }
-        - { distro: rocky, version: "8.4", configuration: minimal }
-        - { distro: rocky, version: "8.4", configuration: gse }
-      loop_control:
-        loop_var: this
+        boxes:
+          - { distro: rocky, version: "8.4", configuration: core }
+          - { distro: rocky, version: "8.4", configuration: minimal }
+          - { distro: rocky, version: "8.4", configuration: gse }
       tags: basebox
 
   roles:

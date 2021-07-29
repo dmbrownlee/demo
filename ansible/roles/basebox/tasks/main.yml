@@ -1,39 +1,22 @@
 ---
+# do one time only
 - name: Assert this host can use this role
   assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
-- name: Assert specific box was requested by name
-  assert:
-    that:
-      - distro is defined
-      - version is defined
-    fail_msg: "You need to specify which box you want to build."
-    success_msg: "{{ distro }}-{{ version }}-{{ configuration }} was requested for this build."
-- name: Read variables from vars/{{ distro }}-{{ version }}.yml
-  include_vars: "{{ distro }}-{{ version }}.yml"
-- name: Ensure required variabless have been defined for {{ distro }}-{{ version }}
-  assert:
-    that:
-      #- distro is defined
-      #- version is defined
-      - guest_os_type is defined
-      - iso_checksum is defined
-      - iso_location is defined
-      #- iso_altlocation is defined
-      - iso_name is defined
-      - install_file is defined
-      - cpus is defined
-      - ram is defined
-      - disk_size is defined
-      - templateks is defined
-    fail_msg: "One or more required variables are undefined."
 - name: Ensure the packer build directories exists before copying files there
   # this is a bit hacky as it hardcodes a directory path for the Win10 box
   file:
     path: "{{ packer_build_dir }}"
     state: directory
     mode: '0700'
+- name: Get the list of currently available Vagrant base boxes
+  shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
+  args:
+    executable: "{{ ansible_user_shell }}"
+  changed_when: false
+  register: vagrant_box_list
+# This is a hack for Windows until we can treat it like a first class distro
 - name: Ensure packer build files for VirtualBox have beein installed
   copy:
     dest: "{{ packer_build_dir }}/"
@@ -43,48 +26,12 @@
     - answer_files
     - cookbooks
     - scripts
-- name: Ensure we have a packer JSON file for {{ distro }}-{{ version }}
-  template:
-    dest: "{{ packer_build_dir }}/{{ distro }}-{{ version }}.json"
-    src: "{{ guest_os_type }}.j2"
-    mode: '0600'
-- name: Ensure we import the variables for the {{ configuration }} configuration
-  include_vars:
-    file: rocky-{{ configuration }}-packages.yml
-- name: Ensure we have an installer file ({{ install_file }})
-  template:
-    dest: "{{ packer_build_dir }}/{{ install_file }}"
-    src: "{{ templateks }}"
-    mode: '0600'
-- name: Test if box {{ distro }}-{{ version }}-{{ configuration }} is already available
-  shell: set -o pipefail && vagrant box list | grep -q {{ distro }}-{{ version }}-{{ configuration }}
-  args:
-    executable: "{{ ansible_user_shell }}"
-  ignore_errors: true
-  changed_when: false
-  register: box_already_available
-- name: Build the base box if it is currently unavailable
-  block:
-    - name: Check if box file already exists ({{ distro }}-{{ version }}-{{ configuration }})
-      stat:
-        path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
-      register: boxfile
-      changed_when: false
-    - name: Build box file ({{ distro }}-{{ version }}-{{ configuration }})
-      command: packer build -color=false -force -var "configuration={{ configuration }}" -var "username={{ provisioning_user }}" -var "password={{ provisioning_password }}" {{ distro }}-{{ version }}.json
-      args:
-        chdir: "{{ packer_build_dir }}"
-        creates: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
-      register: boxfilebuild
-      when: boxfile.stat.isreg is not defined
-    - name: Install Vagrant base box ({{ distro }}-{{ version }}-{{ configuration }})
-      command: vagrant box add --name {{ distro }}-{{ version }}-{{ configuration }} {{ distro }}-{{ version }}-{{ configuration }}.box
-      args:
-        chdir: "{{ packer_build_dir }}"
-      when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0
-    - name: Remove the box file after it has been installed to the cache
-      file:
-        path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
-        state: absent
-      when: boxfile.stat.isreg is not defined
-  when: box_already_available.failed
+- name: Build the requested base boxes
+  include_tasks: configurebox.yml
+  vars:
+    distro: "{{ this.distro }}"
+    version: "{{ this.version }}"
+    configuration: "{{ this.configuration }}"
+  loop: "{{ boxes }}"
+  loop_control:
+    loop_var: this
