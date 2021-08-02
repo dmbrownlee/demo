@@ -32,6 +32,9 @@
     distro: "{{ this.distro }}"
     version: "{{ this.version }}"
     configuration: "{{ this.configuration }}"
+    box: "{{ this.distro }}-{{ this.version }}-{{ this.configuration }}"
   loop: "{{ boxes }}"
   loop_control:
     loop_var: this
+    label: "{{ box }}"
+  when: box not in vagrant_box_list.stdout_lines
