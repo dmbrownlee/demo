@@ -1,4 +1,9 @@
 {
+  "variables": {
+    "username": "{{ provisioning_user }}",
+    "password": "{{ provisioning_password }}",
+    "checksum": "{{ iso_checksum }}"
+  },
   "builders": [{
     "vm_name": "{{ box }}",
     "type": "virtualbox-iso",
@@ -8,18 +13,18 @@
       "{{ iso_location }}/{{ iso_name }}",
       "{{ iso_altlocation }}/{{ iso_name }}"
     ],
-    "iso_checksum": "{{ iso_checksum }}",
+    "iso_checksum": "{{ '{{' }} user `checksum` }}",
     "iso_target_path": "{{ download_dir }}/{{ iso_name }}",
 
     "http_directory" : ".",
     "http_port_min" : 9001,
     "http_port_max" : 9001,
 
-    "ssh_username": "vagrant",
-    "ssh_password": "vagrant",
+    "ssh_username": "{{ '{{' }} user `username` }}",
+    "ssh_password": "{{ '{{' }} user `password` }}",
     "ssh_wait_timeout": "60m",
     "headless": true,
-    
+
     "cpus": "{{ cpus }}",
     "memory": {{ ram }},
     "disk_size" : "{{ disk_size }}",
@@ -60,37 +65,35 @@
         "grub-installer/bootdev=/dev/sda <wait>",
         "<enter><wait>"
     ],
-    "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
+    "shutdown_command": "echo {{ '{{' }} user `password` }} | sudo -S shutdown -P now"
   }],
   "provisioners": [
     {  "type": "file",
-       "source": "{{ key_dir }}/vagrant.pub",
-       "destination": "/tmp/vagrant.pub"
-    },
-    {% raw %}
-    {  "type": "shell",
-       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
-                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
-                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+       "source": "{{ key_dir }}/{{ '{{' }} user `username` }}.pub",
+       "destination": "/tmp/{{ '{{' }} user `username` }}.pub"
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
-                  "chmod 0440 /etc/sudoers.d/vagrant"]
+       "inline": ["mkdir -m 0700 /home/{{ '{{' }} user `username` }}/.ssh",
+                  "mv /tmp/{{ '{{' }} user `username` }}.pub /home/{{ '{{' }} user `username` }}/.ssh/authorized_keys",
+                  "chmod 644 /home/{{ '{{' }} user `username` }}/.ssh/authorized_keys"]
     },
     {  "type": "shell",
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "echo '{{ '{{' }} user `username` }} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ '{{' }} user `username` }}",
+                  "chmod 0440 /etc/sudoers.d/{{ '{{' }} user `username` }}"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
        "inline": [ "apt-get install -y python-apt" ]
     },
     {  "type": "shell",
        "only": [ "virtualbox-iso" ],
-       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh '{{ .Path }}'",
-       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/{{ '{{' }} user `username` }}/VBoxGuestAdditions.iso /mnt",
                    "cd /mnt",
                    "apt-get install -y linux-headers-$(uname -r)",
                    "./VBoxLinuxAdditions.run || /bin/true"]
     }
-    {% endraw %}
   ],
   "post-processors": [{
     "type": "vagrant",

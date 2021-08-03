@@ -9,18 +9,21 @@
 
 - name: Ensure virtual lab environment for networkplus is configured
   hosts: localhost
+
+  pre_tasks:
+    - name: Ensure the required Vagrant baseboxes have been built
+      include_role:
+        name: basebox
+        apply:
+          tags: basebox
+      vars:
+        boxes:
+          - { distro: debian, version: "10.8.0", configuration: default }
+          - { distro: windows, version: "10", configuration: default }
+      tags: basebox
+
   roles:
     - role: gns3_host
       tags: gns3_host
-    - role: basebox
-      tags: basebox
-      vars:
-        box: "debian-10.8.0"
-      when: buildvms|bool
-    - role: basebox
-      tags: basebox
-      vars:
-        box: "windows-10"
-      when: buildvms|bool
     - role: labenv_networkplus
       tags: labenv_networkplus
