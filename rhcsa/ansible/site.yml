@@ -3,28 +3,39 @@
 - name: Common configuration
   hosts: all
   roles:
-    - role: base
+    - role: common
+
+- name: Configure Network Manager connections
+  hosts: nmhosts
+  roles:
+    - role: nmhost
 
 - name: Server with GUI
-  hosts:
-    - server1
+  hosts: servers_with_gui
   roles:
     - role: server-with-gui
 
-- name: RHCSA VM Configuration
-  hosts: rhcsa8
+- name: FTP Servers
+  hosts: ftp_servers
   roles:
-    - role: vagranthost
-    - role: netconfig-lab
+    - role: ftp-server
+
+- name: NFS Servers
+  hosts: nfs_servers
+  roles:
+    - role: nfs-server
+
+- name: Samba Servers
+  hosts: samba_servers
+  roles:
+    - role: samba-server
+
+- name: Configure access to labfiles from within the VM
+  hosts: labhosts
+  roles:
     - role: labhost
 
 - name: Exam hosts
-  hosts: examhost
+  hosts: examhosts
   roles:
-    - role: netconfig-lab
     - role: examhost
-
-- name: Reboot
-  hosts: all
-  roles:
-    - role: vagrant-vm-reboot

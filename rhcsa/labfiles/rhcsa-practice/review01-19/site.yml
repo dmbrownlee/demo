@@ -36,7 +36,7 @@
             mode: "0755"
         - name: Add packages to repo
           get_url:
-            url: http://mirror.centos.org/centos/8.3.2011/BaseOS/x86_64/os/Packages/{{ item }}
+            url: https://download.rockylinux.org/pub/rocky/8.4/BaseOS/x86_64/os/Packages/{{ item }}
               #dest: /usr/share/nginx/html/repo/BaseOS/x86_64/os/Packages
             dest: /usr/share/nginx/html/repo/Packages
           loop:
@@ -88,7 +88,7 @@
             replace: 'rhgb quiet init=/bin/false"'
           register: grubconf
         - name: Breaking something
-          command: grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
+          command: grub2-mkconfig -o /boot/efi/EFI/rocky/grub.cfg
           when: grubconf.changed
         - name: Breaking something
           command: grub2-mkconfig -o /boot/grub2/grub.cfg

@@ -10,6 +10,7 @@ supported_distributions:
 # ===========================================
 download_dir: "{{ ansible_user_dir }}/Downloads"
 key_dir: "{{ ansible_user_dir }}/keys"
+provisioning_user: vagrant
 demo_root: "{{ ansible_user_dir }}/demo"
 # ===========================================
 # directories relative to the demo root dir

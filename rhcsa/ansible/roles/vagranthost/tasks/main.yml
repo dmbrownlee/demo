@@ -1,3 +1,0 @@
----
-- import_tasks: configure_vagrant_network.yml
-- import_tasks: hide_vagrant_user.yml

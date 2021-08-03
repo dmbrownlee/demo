@@ -4,6 +4,13 @@
     name: "@Server with GUI"
     state: present
   become: yes
-- name: Ensure default systemd target is graphical
-  command: "systemctl set-default graphical.target"
+  notify:
+    - set_graphical_default
+    - start_gui
+- name: Ensure vagrant user is hidden from gdm login screen
+  copy:
+    src: vagrant
+    dest: /var/lib/AccountsService/users
+    mode: '0600'
   become: yes
+  when: "'servers_with_gui' in group_names"

@@ -1,5 +1,0 @@
----
-- name: Ensure the host is rebooted
-  reboot:
-    reboot_timeout: 300
-  become: yes

@@ -1,0 +1,100 @@
+{
+  "variables": {
+    "username": "{{ provisioning_user }}",
+    "password": "{{ provisioning_password }}",
+    "checksum": "{{ iso_checksum }}"
+  },
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "{{ guest_os_type }}",
+    "iso_urls": [
+      "{{ download_dir }}/{{ iso_name }}",
+      "{{ iso_location }}/{{ iso_name }}"
+    {% if iso_altlocation is defined %}
+      ",{{ iso_altlocation }}/{{ iso_name }}"
+    {% endif %}
+    ],
+    "iso_checksum": "{{ '{{' }} user `checksum` }}",
+    "iso_target_path": "{{ download_dir }}/{{ iso_name }}",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "{{ '{{' }} user `username` }}",
+    "ssh_password": "{{ '{{' }} user `password` }}",
+    "ssh_wait_timeout": "40m",
+    "disk_size" : "{{ disk_size }}",
+    "memory": {{ ram }},
+    "vm_name": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}",
+    "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
+{% if virtualization == "virtualbox" %}
+{# Note: We actually want all the {{ ... }} in this JSON block
+         in the output so we are escaping the block between {% raw %}
+         and {% endraw %}
+#}
+{% raw %}
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--vram", "64"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+      ["modifyvm", "{{.Name}}", "--firmware", "EFI"],
+      ["setextradata", "{{.Name}}", "GUI/ScaleFactor", "2.0"]
+    ],
+    {% endraw %}
+    {% endif %}
+    "boot_command": [
+    {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
+      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}-ks.cfg<leftCtrlOn>x"
+    ],
+    "shutdown_command": "echo {{ '{{' }} user `password` }} | sudo -S shutdown -P now"
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{ key_dir }}/{{ '{{' }} user `username` }}.pub",
+       "destination": "/tmp/{{ '{{' }} user `username` }}.pub"
+    },
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/{{ '{{' }} user `username` }}/.ssh",
+                  "mv /tmp/{{ '{{' }} user `username` }}.pub /home/{{ '{{' }} user `username` }}/.ssh/authorized_keys",
+                  "chmod 644 /home/{{ '{{' }} user `username` }}/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "echo '{{ '{{' }} user `username` }} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ '{{' }} user `username` }}",
+                  "chmod 0440 /etc/sudoers.d/{{ '{{' }} user `username` }}"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "yum -y install bzip2 make dkms kernel-devel"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "yum -y update"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "reboot"],
+       "expect_disconnect": true,
+       "pause_before": "10s"
+    },
+    {  "type": "shell",
+       "only": [ "virtualbox-iso" ],
+       "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/{{ '{{' }} user `username` }}/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "output": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}.box"
+  }]
+}
