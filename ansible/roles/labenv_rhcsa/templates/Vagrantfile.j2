@@ -4,8 +4,11 @@
 Vagrant.configure("2") do |config|
   config.ssh.private_key_path = "{{ key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
-  config.vm.box = "{{ box_name }}"
-  config.vm.synced_folder "labfiles/", "/labfiles"
+  config.vm.box = "{{ distro }}-{{ version }}-minimal"
+  config.vm.synced_folder "labfiles/", "/labfiles",
+    id: "labfiles",
+    owner: "root",
+    group: "root"
   config.vm.synced_folder ".", "/vagrant", disabled: true
 {% if virtualization == "virtualbox" %}
   config.vm.provider :virtualbox do |virtualbox|
@@ -20,6 +23,18 @@ Vagrant.configure("2") do |config|
 {% endif %}
   end
 {% elif virtualization == "libvirt" %}
+  config.vm.network :private_network,
+    :type => "dhcp",
+    :libvirt__network_name => "vagrant-private-dhcp",
+    :libvirt__domain_name => "example.com",
+    :libvirt__network_address => "192.168.4.0",
+    :libvirt__netmask => "255.255.255.0",
+    :libvirt__dhcp_enabled => true,
+    :libvirt__host_ip => "192.168.4.1",
+    :libvirt__dhcp_start => "192.168.4.2",
+    :libvirt__dhcp_stop => "192.168.4.99",
+    :libvirt__dhcp_bootp_file => "pxelinux/pxelinux.0",
+    :libvirt__dhcp_bootp_server => "192.168.4.102"
   config.vm.provider :libvirt do |libvirt|
     libvirt.driver = "kvm"
     libvirt.host = "localhost"
@@ -31,26 +46,95 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "ansible/site.yml"
     ansible.skip_tags = "disabled"
     ansible.groups = {
-      "rhcsa8" => [
+      "nmhosts" => [
+        "idm1",
+        "control",
+        "ansible1",
+        "ansible2",
         "server1",
         "server2",
         "exam1",
         "exam2"
       ],
-      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" },
-      "examhost" => [
+      "labhosts" => [
+        "server1",
+        "server2"
+      ],
+      "servers_with_gui" => [
+        "server1"
+      ],
+      "ftp_servers" => [
+        "idm1"
+      ],
+      "nfs_servers" => [
+        "idm1"
+      ],
+      "samba_servers" => [
+        "idm1"
+      ],
+      "idm_servers" => [
+        "idm1"
+      ],
+      "examhosts" => [
         "exam1",
         "exam2"
-      ]
+      ],
+      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" }
     }
   end
 
   #====================
   #==  Lab Machines  ==
   #====================
+  #=== idm1 ==
+  config.vm.define "idm1" do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "idm1"
+      virtualbox.memory = 2048
+    end
+{% elif virtualization == "libvirt" %}
+    node.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
+    end
+{% endif %}
+  end
+
+  #=== control ==
+  config.vm.define "control", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "control"
+      virtualbox.memory = 2048
+    end
+{% endif %}
+  end
+
+  #=== ansible1 ===
+  config.vm.define "ansible1", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible1"
+    end
+{% endif %}
+  end
+
+  #=== ansible2 ===
+  config.vm.define "ansible2", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible2"
+    end
+{% endif %}
+  end
+
   #=== server1 ==
   config.vm.define "server1" do |node|
-    node.vm.box = "{{ box_name }}"
+    node.vm.box = "{{ distro }}-{{ version }}-gse"
 {% if virtualization == "virtualbox" %}
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
@@ -61,7 +145,7 @@ Vagrant.configure("2") do |config|
 
   #=== server2 ===
   config.vm.define "server2" do |node|
-    node.vm.box = "{{ box_name }}"
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
 {% if virtualization == "virtualbox" %}
     disk = "#{ENV["HOME"]}/VirtualBox VMs/server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -90,8 +174,8 @@ Vagrant.configure("2") do |config|
 {% if virtualization == "virtualbox" %}
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
-    node.vm.box = "{{ box_name }}"
-    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/{{ box_name }}-disk001.vmdk"
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/{{ distro }}-{{ version }}-disk001.vmdk"
     disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
     disk2 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk002.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -135,7 +219,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "#{ENV["HOME"]}/Downloads/{{ box_iso }}"]
+        "--medium", "#{ENV["HOME"]}/Downloads/{{ iso_name }}"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
@@ -161,7 +245,7 @@ Vagrant.configure("2") do |config|
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
-    node.vm.box = "{{ box_name }}"
+    node.vm.box = "{{ distro }}-{{ version }}-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "exam1"
     end
@@ -169,7 +253,7 @@ Vagrant.configure("2") do |config|
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
-    node.vm.box = "{{ box_name }}"
+    node.vm.box = "{{ distro }}-{{ version }}-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "exam2"
     end

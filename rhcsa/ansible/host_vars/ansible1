@@ -1,7 +1,17 @@
+# vi: ft=yaml
 ---
 hostname: ansible1
-host_vagrant_net_conn_name: vagrant
-host_vagrant_net_iface: ens6
-host_lab_net_conn_name: example_com                                              
-host_lab_net_iface: ens7
-host_lab_net_ipv4_addresses: "192.168.4.201/24" 
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhce
+      ifname: enp0s8
+      autoconnect: yes
+      enthod4: auto
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"

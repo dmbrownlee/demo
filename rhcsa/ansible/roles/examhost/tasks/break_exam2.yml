@@ -41,15 +41,6 @@
     path: /etc/securetty
     state: touch
   become: yes
-- name: Ensure accounts for user and student do not exist
-  user:
-    name: "{{ item }}"
-    state: absent
-    remove: yes
-  become: yes
-  loop:
-    - user
-    - student
 - name: Ensure root password is "password" (obviously not for production)
   user:
     name: root

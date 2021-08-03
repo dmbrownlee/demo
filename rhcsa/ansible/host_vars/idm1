@@ -1,0 +1,78 @@
+# vi: ft=yaml
+---
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhcsa
+      ifname: enp0s8
+      autoconnect: yes
+      ip4: 192.168.4.200/24
+      gw4: 192.168.4.1
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"
+service:
+  ftp:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+    shares:
+      - path: /var/ftp/pub
+        seregex: '/var/ftp/pub(/.*)?'
+        setype: public_content_t
+  idm:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+  nfs:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+    shares:
+      - sharename: nfshome
+        path: /home/ldap
+        seregex: '/home/ldap(/.*)?'
+        setype: nfs_t
+        export_options: '*(rw,sec=krb5p)'
+      - sharename: nfsexport
+        path: /srv/nfsexport
+        seregex:  '/srv/nfsexport(/.*)?'
+        setype: nfs_t
+        export_options: '*(rw,sec=krb5p)'
+      - sharename: data
+        path: /data
+        seregex: '/data(/.*)?'
+        setype: public_content_rw_t
+        export_options: '*(rw)'
+  samba:
+    state: started
+    enabled: yes
+    fw_state: enabled
+    fw_permanent: yes
+    fw_immediate: yes
+    fw_zone: internal
+    shares:
+      - sharename: samba
+        path: /srv/samba
+        seregex: '/srv/samba(/.*)?'
+        setype: samba_share_t
+        guest_ok: 'yes'
+      - sharename: data
+        path: /data
+        seregex: '/data(/.*)?'
+        setype: public_content_rw_t
+        guest_ok: 'yes'
+        read_only: 'yes'

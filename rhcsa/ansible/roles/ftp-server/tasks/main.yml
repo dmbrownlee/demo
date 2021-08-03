@@ -1,0 +1,27 @@
+---
+- name: Ensure packages for the FTP server are installed
+  yum:
+    name: vsftpd
+    state: present
+  become: yes
+- name: Ensure host-specific shares have been configured
+  include_tasks: add-ftp-share.yml
+  loop: "{{ service.ftp.shares }}"
+  loop_control:
+    loop_var: share
+    label: "{{ share.path }}"
+  when: service.ftp.shares is defined
+- name: Ensure vsftpd systemd service is configured
+  service:
+    name: vsftpd
+    state: "{{ service.ftp.state }}"
+    enabled: "{{ service.ftp.enabled }}"
+  become: yes
+- name: Ensure FTP traffic is allowed through firewall
+  firewalld:
+    service: ftp
+    state: "{{ service.ftp.fw_state }}"
+    permanent: "{{ service.ftp.fw_permanent }}"
+    immediate: "{{ service.ftp.fw_immediate }}"
+    zone: "{{ service.ftp.fw_zone }}"
+  become: yes

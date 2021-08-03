@@ -2,18 +2,18 @@
 # tasks file for coursematerials
 - name: Include course specific variables for {{ course }}
   include_vars: "{{ course }}.yml"
-- name: Ensure course root exists
+- name: Ensure content directories exist
   file:
-    path: "{{ courseroot }}{{ item }}"
+    path: "{{ fs_prefix_git_repo }}/{{ item }}"
     state: directory
     mode: '0755'
   loop:
-    - "/"
-    - "/images"
+    - "{{ contentdir }}"
+    - "{{ imagesdir }}"
 - name: Ensure common images exist
   copy:
     src: "{{ item }}"
-    dest: "{{ courseroot }}/images"
+    dest: "{{ fs_prefix_git_repo }}/{{ imagesdir }}"
     mode: '0644'
   loop:
     - 'ConstructionSign.png'
@@ -23,8 +23,9 @@
   loop_control:
     loop_var: chapter
     index_var: chapter_num
-- name: Ensure a schedule template CSV file exists
+    label: "{{ chapter.title }}"
+- name: Ensure a schedule template TSV file exists
   template:
     src: "schedule-template.j2"
-    dest: "{{ courseroot }}/{{ schedulefile }}"
+    dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/{{ schedulefile }}"
     mode: '0644'

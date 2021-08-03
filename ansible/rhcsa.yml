@@ -9,16 +9,20 @@
 
 - name: Ensure virtual lab environment for rhcsa is configured
   hosts: localhost
-  roles:
-    # - role: basebox
-    #   tags: basebox
-    #   vars:
-    #     box: centos-8.4.2105
-    #   when: buildvms|bool
-    - role: basebox
-      tags: basebox
+
+  pre_tasks:
+    - name: Ensure the required Vagrant baseboxes have been built
+      include_role:
+        name: basebox
+        apply:
+          tags: basebox
       vars:
-        box: rocky-8.4
-      when: buildvms|bool
+        boxes:
+          - { distro: rocky, version: "8.4", configuration: core }
+          - { distro: rocky, version: "8.4", configuration: minimal }
+          - { distro: rocky, version: "8.4", configuration: gse }
+      tags: basebox
+
+  roles:
     - role: labenv_rhcsa
       tags: labenv_rhcsa

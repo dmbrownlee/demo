@@ -1,0 +1,23 @@
+---
+- name: Check if box file already exists ({{ distro }}-{{ version }}-{{ configuration }})
+  stat:
+    path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
+  register: boxfile
+  changed_when: false
+- name: Build box file ({{ distro }}-{{ version }}-{{ configuration }})
+  command: packer build -color=false -force -var "configuration={{ configuration }}" -var "username={{ provisioning_user }}" -var "password={{ provisioning_password }}" {{ distro }}-{{ version }}.json
+  args:
+    chdir: "{{ packer_build_dir }}"
+    creates: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
+  register: boxfilebuild
+  when: boxfile.stat.isreg is not defined
+- name: Install Vagrant base box ({{ distro }}-{{ version }}-{{ configuration }})
+  command: vagrant box add --name {{ distro }}-{{ version }}-{{ configuration }} {{ distro }}-{{ version }}-{{ configuration }}.box
+  args:
+    chdir: "{{ packer_build_dir }}"
+  when: boxfile.stat.isreg is defined or boxfilebuild.rc == 0
+- name: Remove the box file after it has been installed to the cache
+  file:
+    path: "{{ packer_build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
+    state: absent
+  when: boxfile.stat.isreg is not defined

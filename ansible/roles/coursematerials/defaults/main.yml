@@ -1,7 +1,13 @@
 ---
 # defaults file for coursematerials
-repo: "https://github.com/dmbrownlee/demo"
-rawrepo: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
-contentdir: 'labfiles'
-courseroot: '{{ ansible_user_dir }}/demo/{{ course }}/{{ contentdir }}'
+#repo: "https://github.com/dmbrownlee/demo"
+url_prefix_github: "https://github.com/dmbrownlee/demo"
+#rawrepo: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
+url_prefix_raw: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
+fs_prefix_git_repo: '{{ ansible_user_dir }}/demo'
+#courseroot: '{{ ansible_user_dir }}/demo/{{ course }}'
+#courseroot: '{{ fs_prefix_git_repo }}/{{ course }}'
+contentdir: '{{ course }}/labfiles'
+imagesdir: '{{ contentdir }}/images'
+relativeimagesdir: '../images'
 schedulefile: '{{ course }}-schedule-template.tsv'
