@@ -1,16 +1,18 @@
 FROM debian:latest
-
+ARG username
+ARG password
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \
+   apt-utils \
    openssh-client \
    runit \
    runit-init \
    sudo \
-&& apt-get autoremove \
+&& apt-get autoremove -y \
 && rm -rf /var/lib/apt/lists/* \
 && chmod 4511 /usr/bin/sudo \
-&& useradd -m -G sudo -s /bin/bash ansible \
-&& echo 'password\npassword\n' | passwd ansible \
+&& useradd -m -G sudo -s /bin/bash $username \
+&& echo "$password\n$password\n" | passwd $username \
 && mkdir -p /etc/sv/console/log \
 && echo '#!/bin/sh -euC\n\
 # Disable service, if /dev/tty{N} does not exist. See #914788.\n\
@@ -34,6 +36,7 @@ svlogd -tt .' > /etc/sv/console/log/run \
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \
    build-essential \
+   cargo \
    curl \
    git \
    libffi-dev \
@@ -43,24 +46,26 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
    python3-dev \
    python3-pip \
    python3-setuptools \
+   rustc \
    software-properties-common \
    sshpass \
    tmux \
    vim \
-&& apt-get autoremove \
+&& apt-get autoremove -y \
 && rm -rf /var/lib/apt/lists/* \
 && update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
 && update-alternatives --config python \
-&& pip3 install wheel \
-&& pip3 install cryptography netmiko napalm pyntc \
-&& pip3 install --upgrade paramiko \
-&& pip3 install ansible
+&& pip3 install --no-cache-dir wheel \
+&& pip3 install --no-cache-dir cryptography netmiko napalm pyntc \
+&& pip3 install --no-cache-dir --upgrade paramiko \
+&& pip3 install --no-cache-dir ansible \
+&& apt-get purge -y rustc cargo
 
-COPY --chown=ansible:ansible setup /home/ansible/setup
+COPY --chown=$username:$username files/setup /home/$username/setup
 
-COPY --chown=ansible:ansible myconfig.sh /home/ansible/.myconfig.sh
+COPY --chown=$username:$username files/myconfig.sh /home/$username/.myconfig.sh
 
-RUN chmod 755 /home/ansible/setup /home/ansible/.myconfig.sh
+RUN chmod 755 /home/$username/setup /home/$username/.myconfig.sh
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \
@@ -71,7 +76,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
    mtr \
    net-tools \
    telnet \
-&& apt-get autoremove \
+&& apt-get autoremove -y \
 && rm -rf /var/lib/apt/lists/*
 
 VOLUME [ "/root", "/usr", "/home" ]
