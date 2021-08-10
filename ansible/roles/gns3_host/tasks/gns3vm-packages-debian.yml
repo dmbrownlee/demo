@@ -23,6 +23,12 @@
 - name: Import GNS3.VM ova file into VirtualBox
   command: "VBoxManage import '{{ download_dir }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
   when: installed_gns3vm.rc != 0
+- name: Ensure imported VM has appropriate hardware
+  command: "VBoxManage modifyvm 'GNS3 VM' --cpus 2 --memory 4096 --rtcuseutc on"
+  when: installed_gns3vm.rc != 0
+- name: Ensure imported VM has scaled display
+  command: "VBoxManage setextradata 'GNS3 VM' 'GUI/ScaleFactor' '2.0'"
+  when: installed_gns3vm.rc != 0
 - name: Ensure OVA file is removed after import
   file:
     path: "{{ download_dir }}/GNS3 VM.ova"
