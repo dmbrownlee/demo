@@ -47,6 +47,8 @@ quagga:
     - "  passive-interface eth2"
     - "  passive-interface eth2.100"
     - "  passive-interface eth2.200"
+  vtysh:
+    default_console: true
 isc_dhcp_relay:
   dhcp_server: "192.168.44.1"
   interfaces: "-iu eth1 -id eth2 -id eth2.100 -id eth2.200"

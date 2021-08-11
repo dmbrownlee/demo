@@ -29,3 +29,5 @@ quagga:
     - "  network 192.168.42.0/24 area 0"
     - "  network 192.168.44.0/24 area 0"
     - "  passive-interface eth2"
+  vtysh:
+    default_console: true

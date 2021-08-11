@@ -89,6 +89,12 @@
     state: started
     enabled: yes
   become: yes
+- name: Ensure vtysh is the default console
+  file:
+    path: /root/startvtysh
+    state: touch
+  become: yes
+  when: quagga.vtysh.default_console is defined and quagga.vtysh.default_console
 - name: Ensure isc-dhcp-relay is installed and configured if needed
   block:
     - name: Install isc-dhcp-relay
