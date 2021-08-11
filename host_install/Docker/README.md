@@ -56,13 +56,17 @@ From the same directory, you can launch a test container to see if the image wor
 ```
 docker-compose up -d
 ```
-You can verify the container is running with:</br>
+You can attach a terminal to the running container with:</br>
 ```
-docker exec -it <container id> sh
+docker container attach test
+```
+If the default entry point is buggy, you can open a shell in the container with:</br>
+```
+docker exec -it <container id> bash
 ```
 If you created a container that accepts SSH connections, you can connect to the container via ssh:</br>
 ```
-ssh -l ansible -p 2023 192.168.99.100
+ssh -l ansible -p 2023 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 192.168.99.100
 ```
 Note, the IP address belongs to the "default" virtual machine and port 2023 (or port specified in docker-compose.yml) is getting forwarded to port 22 within the test container.
 
@@ -70,7 +74,14 @@ When you're done testing, you can shutdown and remove the test container:</br>
 ```
 docker-compose down
 ```
-
+You can skip using docker compose using:</br>
+```
+docker run -it --rm -p 2023:22 --name --test debansible:test
+```
+or to run a shell within the container:</br>
+```
+docker run -it --rm -p 2023:22 --name --test debansible:test bash
+```
 ## Uploading new images to hub.docker.com
 First, create a squashed image from the original to make it smaller:</br>
 ```
