@@ -12,6 +12,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && echo "$password\n$password\n" | passwd $username \
 && service ssh start
 
+COPY --chown=root:root files/boot.sh /sbin/boot.sh
+
+RUN chmod 755 /sbin/boot.sh
+
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd", "-D"]
+CMD ["/sbin/boot.sh"]
