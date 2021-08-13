@@ -2,7 +2,7 @@
 - name: Test Internet connectivity
   raw: ping -c 1 8.8.8.8
   changed_when: false
-  ignore_errors: true
+  failed_when: false
   register: internet_ping
 - name: Ensure there is a default route using the bootstrap interface
   raw: ip route list 0.0.0.0/0 | grep default && ip route change 0.0.0.0/0 via {{ bootstrap_gateway }} || ip route add 0.0.0.0/0 via {{ bootstrap_gateway }}
