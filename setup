@@ -1,0 +1,23 @@
+#!/bin/bash
+# This script is preinstalled in the docker image
+if [ ! -d $HOME/labnetwork ]; then
+  cd $HOME &&
+  git clone https://github.com/dmbrownlee/labnetwork.git &&
+  cd labnetwork
+else
+  cd $HOME/labnetwork
+  git pull
+fi
+
+if [[ $# -ne 0 ]]; then
+  PLAYBOOK=$1
+else
+  PLAYBOOK=site.yml
+fi
+
+echo "Make sure all the devices in the network model are started before"
+echo "running the Ansible playbook!"
+echo
+read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
+
+ansible-playbook -k -K $PLAYBOOK
