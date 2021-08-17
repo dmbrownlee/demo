@@ -1,5 +1,26 @@
 #!/bin/bash
-# This script is preinstalled in the docker image
+# This script is installed in the Alpine Linux docker image if
+# ANSIBLE_CONTROLLER='true' is added to the environment when the
+# container is created.
+
+if [[ $# -ne 0 ]]; then
+  PLAYBOOK=${1}.yml
+else
+  echo "You need to pass the name of the network model you wish to configure"
+  echo "as the first argument."
+  echo
+  echo "Example:"
+  echo "./setup networkplus"
+  echo
+  exit 1
+fi
+
+# Ensure git and ansible is installed on Alpine Linux
+[ -f /etc/alpine-release ] &&
+  ( [ -h /usr/bin/git ] || sudo apk add --no-cache git ) &&
+  ( [ -h /usr/bin/ansible-playbook ] || sudo apk add --no-cache ansible )
+
+# Ensure we're working with the most recent repo commit
 if [ ! -d $HOME/labnetwork ]; then
   cd $HOME &&
   git clone https://github.com/dmbrownlee/labnetwork.git &&
@@ -9,18 +30,7 @@ else
   git pull
 fi
 
-# Ensure ansible is installed on Alpine Linux
-[ -f /etc/alpine-release ] &&
-  ( [ -h /usr/bin/ansible-playbook ] || sudo apk add --no-cache ansible )
-
-if [[ $# -ne 0 ]]; then
-  PLAYBOOK=$1
-else
-  PLAYBOOK=site.yml
-fi
-
-echo "Make sure all the devices in the network model are started before"
-echo "running the Ansible playbook!"
+echo "Make sure all the devices in the network model are started !!!"
 echo
 read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
 
