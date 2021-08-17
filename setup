@@ -9,6 +9,10 @@ else
   git pull
 fi
 
+# Ensure ansible is installed on Alpine Linux
+[ -f /etc/alpine-release ] &&
+  ( [ -h /usr/bin/ansible-playbook ] || sudo apk add --no-cache ansible )
+
 if [[ $# -ne 0 ]]; then
   PLAYBOOK=$1
 else
