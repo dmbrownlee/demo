@@ -1,0 +1,5 @@
+---
+- name: Ensure apt cache is updated before installing packages
+  apt:
+    update_cache: yes
+  become: yes

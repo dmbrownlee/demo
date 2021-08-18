@@ -48,7 +48,5 @@
   loop: "{{ interfaces | dict2items }}"
   when: item.key not in ansible_interfaces and item.key is regex('\.\d+$')
   become: yes
-- name: Ensure apt cache is updated before installing packages
-  apt:
-    update_cache: yes
-  become: yes
+- name: Ensure repo cache is updated before installing packages
+  include_tasks: repo-update-{{ ansible_distribution | lower }}.yml

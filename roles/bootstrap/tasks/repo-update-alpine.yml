@@ -1,0 +1,5 @@
+---
+- name: Ensure apk cache is updated before installing packages
+  apk:
+    update_cache: yes
+  become: yes
