@@ -25,10 +25,10 @@ Here we get a much easier to read output.
 
 Let's take the second row of output for example.
 
-`O` - indicates the route was learned via OSPF as mentioned previously
-`192.168.41.0/30` - indicates the address of the route
-`[110/10]` - the first number in the brackets indicates the administrative distance of the information source. The second number is the metric for that route.
-`eth1` - indicates the interface that this particular route can be reached through
+`O` - indicates the route was learned via OSPF as mentioned previously\
+`192.168.41.0/30` - indicates the address of the route\
+`[110/10]` - the first number in the brackets indicates the administrative distance of the information source. The second number is the metric for that route.\
+`eth1` - indicates the interface that this particular route can be reached through\
 `01:36:52` - indicates the last time the route was updated (hh:mm:ss)
 
 
