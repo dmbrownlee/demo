@@ -34,4 +34,12 @@ Let's take the second row of output for example.
 
 ### NAT
 
+For this part of the lab we'll demonstrate how NAT looks in realtime, using WireShark.
 
+1. Right click the line connecting router1 to firewall and select "Start Capture." Hit "OK" to the prompt that appears. Do the same with the line connecting NetworkTap to Internet.
+2. You should now have two WireShark windows. One capturing from router1 to firewall, and one capturing from InternetHub to NetworkTap. In both windows fill in "icmp" in the text box that reads "Apply a display filter" and hit enter. This will filter packet capture to only ICMP requests and replies (ICMP is the protocol used to send and reply to pings).
+3. Open the Quagga console on router1 using the same steps seen earlier in the lab and run the command "ping google.com." After it has sent a few pings hit Ctrl+C to cancel, and take a look at the two WireShark windows that you have open.
+
+You'll see an Echo (ping) request going from router1 to firewall with source IP 192.168.41.2. However, you'll see in the window tracking Ethernet2 to NetworkTap that the same ping request has a source IP of 192.168.122.42. This is an example of NAT. The firewall hides the IP of the local device sending the ping and translates it to a public IP before sending the packet on its way. 
+
+You can see the same thing happen in reverse here as well. Take a look at the WireShark window capturing Ethernet2 to NetworkTap. The ping reply from google.com has a destination IP of 192.168.122.42 (from its perspective, the packet came from the firewall not router1). By the time the same reply packet is traveling from the firewall to router1, the destination IP is changed to 192.168.41.2. This is an example of NAT working both ways as the firewall handles masking the origin IP address, and then forwarding the packet back to the original machine as it comes back in.  
