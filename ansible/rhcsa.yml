@@ -10,7 +10,11 @@
 - name: Ensure virtual lab environment for rhcsa is configured
   hosts: localhost
 
-  pre_tasks:
+  roles:
+    - role: labenv_rhcsa
+      tags: labenv_rhcsa
+
+  post_tasks:
     - name: Ensure the required Vagrant baseboxes have been built
       include_role:
         name: basebox
@@ -22,7 +26,3 @@
           - { distro: rocky, version: "8.4", configuration: minimal }
           - { distro: rocky, version: "8.4", configuration: gse }
       tags: basebox
-
-  roles:
-    - role: labenv_rhcsa
-      tags: labenv_rhcsa
