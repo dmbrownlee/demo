@@ -7,7 +7,7 @@ system_casks:
 system_dmgs:
   - file: "GNS3-{{ gns3_version }}.dmg"
     url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/GNS3-{{ gns3_version }}.dmg"
-    checksum: "sha256:5f1768fa766e8422c176321deb147bc925b57f28d7f93df192b3e85f0b351677"
+    checksum: "{{ gns3_dmg_checksum }}"
     contents: "GNS3.app"
     mount: "GNS3 {{ gns3_version }}"
     content_type: "app"

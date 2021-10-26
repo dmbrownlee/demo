@@ -9,6 +9,7 @@ download_dir: "{{ ansible_user_dir }}/Downloads"
 # defaults for GNS3
 gns3_vers: "2.2"
 gns3_version: "2.2.25"
+gns3_dmg_checksum:  "sha256:5f1768fa766e8422c176321deb147bc925b57f28d7f93df192b3e85f0b351677"
 gns3_user_dir: "{{ ansible_user_dir }}/GNS3"
 gns3_config_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
 # defaults for GNS3.VM for VirtualBox
