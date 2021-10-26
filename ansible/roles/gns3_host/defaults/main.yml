@@ -8,14 +8,14 @@ download_dir: "{{ ansible_user_dir }}/Downloads"
 # =================
 # defaults for GNS3
 gns3_vers: "2.2"
-gns3_version: "2.2.25"
-gns3_dmg_checksum:  "sha256:5f1768fa766e8422c176321deb147bc925b57f28d7f93df192b3e85f0b351677"
+gns3_version: "2.2.26"
+gns3_dmg_checksum:  "sha256:078d99cfb814959474b3bed73653aa1c9e0c66c63b03cb0ef42c27d9d7dc46c5"
 gns3_user_dir: "{{ ansible_user_dir }}/GNS3"
 gns3_config_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
 # defaults for GNS3.VM for VirtualBox
 gns3vm_vbox_zip: "GNS3.VM.VirtualBox.{{ gns3_version }}.zip"
 gns3vm_vbox_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/{{ gns3vm_vbox_zip }}"
-gns3vm_vbox_zip_checksum: "sha256:ee20cd33da577331343a732366702deed1c6d9a4c6f55feebe4ac6bb8a2c6480"
+gns3vm_vbox_zip_checksum: "sha256:fc86303b360fa3d86148a342b793cb08aa9992eeb0068687a5f7f65ea592700d"
 # vars for gns3_controller.j2
 g3controller_gns3vm_vmname: "GNS3 VM"
 g3controller_gns3vm_headless: "true"
