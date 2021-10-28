@@ -121,6 +121,20 @@ DONE
 DONE
       brew install ansible
     fi
+    brew list virtualbox
+    if [ $? -ne 0 ]; then
+      brew install virtualbox
+      cat <<DONE
+
+================================================================================
+Please go to "System Preferences > Security & Privacy > General" and allow
+the Oracle kernel extensions.  After you allow the kernel extensions, reboot
+and then run this setup script again.
+================================================================================
+
+DONE
+      exit
+    fi      
     BACKUPDIR="/Volumes/Backups"
     ANSIBLE_PLAYBOOK_CMD='caffeinate -dsu ansible-playbook'
     ;;
