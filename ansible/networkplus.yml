@@ -24,6 +24,6 @@
           tags: basebox
       vars:
         boxes:
-          - { distro: debian, version: "10.8.0", configuration: default }
+          - { distro: debian, version: "11.1.0", configuration: default }
           - { distro: windows, version: "10", configuration: default }
       tags: basebox

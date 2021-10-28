@@ -84,7 +84,7 @@
     },
     {  "type": "shell",
        "execute_command": "echo '{{ '{{' }} user `password` }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
-       "inline": [ "apt-get install -y python-apt" ]
+       "inline": [ "apt-get install -y python3-apt" ]
     },
     {  "type": "shell",
        "only": [ "virtualbox-iso" ],
