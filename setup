@@ -121,20 +121,6 @@ DONE
 DONE
       brew install ansible
     fi
-    brew list virtualbox
-    if [ $? -ne 0 ]; then
-      brew install virtualbox
-      cat <<DONE
-
-================================================================================
-Please go to "System Preferences > Security & Privacy > General" and allow
-the Oracle kernel extensions.  After you allow the kernel extensions, reboot
-and then run this setup script again.
-================================================================================
-
-DONE
-      exit
-    fi      
     BACKUPDIR="/Volumes/Backups"
     ANSIBLE_PLAYBOOK_CMD='caffeinate -dsu ansible-playbook'
     ;;
@@ -179,6 +165,30 @@ if [[ ! -d $DEMODIR ]]; then
   cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
 fi
 cd $DEMODIR/ansible
+
+
+# ============================================================================
+# ==
+# ==  On Mac, we install virtualbox outside of the ansible playbook
+# ==  since the kernel extensions will require a reboot
+# ==
+# ============================================================================
+if [[ $PLATFORM == "Darwin" ]]; then
+  brew list virtualbox 2>/dev/null
+  if [ $? -ne 0 ]; then
+    brew install virtualbox
+    cat <<DONE
+
+================================================================================
+Please go to "System Preferences > Security & Privacy > General" and allow
+the Oracle kernel extensions.  After you allow the kernel extensions, reboot
+and then run this setup script again.
+================================================================================
+
+DONE
+    exit
+  fi      
+fi      
 
 
 # ============================================================================
