@@ -22,3 +22,8 @@
       if [[ -d "$HOME/.zshrc.d" ]]; then
         source $HOME/.zshrc.d/*
       fi
+- name: Ensure README for the zsh snippets directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.zshrc.d/ADD_ZSH_SNIPPETS_HERE"
+    state: touch
+    mode: '0644
