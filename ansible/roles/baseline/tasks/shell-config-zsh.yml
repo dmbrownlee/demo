@@ -26,4 +26,4 @@
   file:
     path: "{{ ansible_user_dir }}/.zshrc.d/ADD_ZSH_SNIPPETS_HERE"
     state: touch
-    mode: '0644
+    mode: '0644'
