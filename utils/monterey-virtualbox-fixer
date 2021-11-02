@@ -1,0 +1,42 @@
+#!/bin/bash
+if [[ "$(uname)" != "Darwin" ]]; then
+  echo "This script is only meant to run on MacOS."
+  exit 1
+fi      
+
+cat <<DONE
+=========================================================================
+Verifying network connectivity.
+=========================================================================
+DONE
+ping -q -c 1 8.8.8.8
+if [[ $? -ne 0 ]]; then
+  echo "Unable to reach the Internet.  Please check your network connectivity."
+  exit 1;
+fi
+echo
+
+# # ============================================================================
+# # ==
+# # ==  On Mac, we install virtualbox outside of the ansible playbook
+# # ==  since the kernel extensions will require a reboot
+# # ==
+# # ============================================================================
+# brew list virtualbox 2>/dev/null
+# if [ $? -ne 0 ]; then
+#   echo "This script in only meant for systems where the demo project is installed."
+#   exit 1
+# fi      
+# brew reinstall virtualbox
+
+# ============================================================================
+# ==
+# ==  Run the Ansible playbook to complete the setup.
+# ==
+# ============================================================================
+cat <<DONE
+=========================================================================
+Running Ansible playbook
+=========================================================================
+DONE
+caffeinate -dsu ansible-playbook -K --skip-tags disabled reconfigure-virtual-networks.yml
