@@ -53,7 +53,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
    vim \
 && apt-get autoremove -y \
 && rm -rf /var/lib/apt/lists/* \
-&& update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
+&& update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1 \
 && update-alternatives --config python \
 && pip3 install --no-cache-dir wheel \
 && pip3 install --no-cache-dir cryptography netmiko napalm pyntc \
