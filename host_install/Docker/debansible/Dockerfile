@@ -1,4 +1,4 @@
-FROM debian:latest
+FROM debian:10.11
 ARG username
 ARG password
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
