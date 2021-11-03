@@ -13,7 +13,7 @@
   when: control_host is defined and control_host
 - name: Ensure public key is copied to authorized keys on host
   authorized_key:
-    user: {{ ansible_user_id }}
+    user: "{{ ansible_user_id }}"
     state: present
     key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/{{ ansible_user_id }}.pub') }}"
 - name: Ensure hostname is set to FQDN
