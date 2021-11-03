@@ -33,6 +33,8 @@ svlogd -tt .' > /etc/sv/console/log/run \
 && chmod 755 /etc/sv/console/log/run \
 && ln -s /etc/sv/console /etc/service/console
 
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && apt-get -y --no-install-recommends install \
    build-essential \
@@ -56,7 +58,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
 && update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1 \
 && update-alternatives --config python \
 && pip3 install --no-cache-dir wheel \
-&& pip3 install --no-cache-dir cryptography netmiko napalm pyntc \
+&& pip3 install --no-cache-dir cryptography==3.4.6 netmiko napalm pyntc \
 && pip3 install --no-cache-dir --upgrade paramiko \
 && pip3 install --no-cache-dir ansible \
 && apt-get purge -y rustc cargo
