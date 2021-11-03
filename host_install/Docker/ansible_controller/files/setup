@@ -10,7 +10,7 @@ else
 fi
 
 if [[ $# -ne 0 ]]; then
-  PLAYBOOK=$1
+  PLAYBOOK=${1%%.yml}.yml
 else
   PLAYBOOK=site.yml
 fi
