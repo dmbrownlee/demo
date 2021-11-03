@@ -18,7 +18,7 @@ VirtualBox VMs cannot be included in a portable project file.  If a lab requires
 
 You can find more information about using virtual machines with GNS3 in [lab-002](lab00-2/README.md).
 > Note: The Vagrant bases boxes are no longer built by default as this can take a few hours and few labs use them.  You need to created the Vagrant bases boxes before you can create the virtual machines you will manually add to the network model.  To do this, run the following command and then go watch a movie or something because it will take a few hours to complete:</br></br>
-> ```cd ~/demo && ./setup -e buildvms=true networkplus```</br></br>
+> ```cd ~/demo && ./setup networkplus```</br></br>
   Fortunately, you only have to do this once and, after that, you can create and destroy VMs at will fairly quickly.
 
 ## Opening and using the network model
@@ -27,12 +27,12 @@ Follow these steps after opening the network model.
 1. Start all the network nodes by clicking the green triangle in the top button bar and wait for all the links to turn green
 1. Open the console on the ```control``` host within the provisioning network (you may have to wait several seconds before you get a login prompt) and login as the provisioning user (```ansible```):
   ```
-  username: ansible
+  username: student
   password: password
   ```
 1. Run</br>
-  <code>./setup networkplus.yml</code></br>
-  (you will be prompted for the ansible user's password twice, once for SSH and once for become).
+  <code>./setup networkplus</code></br>
+  (you will be prompted for the student's password twice, once for SSH and once for become).
 
 ## The Network+ virtual lab environment
 ![Diagram of Network+ virtual lab environment](networkplus.test.png "Network+ Virtual Lab Environment")
