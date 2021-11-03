@@ -3,6 +3,6 @@
   copy:
     src: breakfix
     dest: "{{ ansible_user_dir }}/breakfix"
-    owner: ansible
-    group: ansible
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
     mode: '0555'
