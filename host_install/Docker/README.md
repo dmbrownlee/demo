@@ -4,96 +4,78 @@ The Network+ course uses Docker containers to simulate hosts in its GNS3 lab net
 ## Installing Docker
 1. Install the software
   ```
-  brew install docker-machine
-  brew install docker
-  brew install docker-compose
-  brew install docker-squash
+  brew install podman
   ```
-1. Create a Linux virtual machine named "default" in VirtualBox for building and testing containers
+1. Create a Linux virtual machine named "default" with qemu for building and testing containers
   ```
-  docker-machine create -d virtualbox default
+  podman machine init
   ```
-  Note: this also starts the virtual machine.
+  Note: This creates the VM but does not start it (see below)
 
-1. Set the environment variables in the current shell needed so the local docker command can communicate with the docker engine in the "default" virtual machine
+1. You can see the status of your podman VMs with:
   ```
-  eval $(docker-machine env default)
+  podman machine list
   ```
-Docker commands from the local (macos) command line will now execute on the docker engine running inside the "default" virtual machine.
+podman commands issued on the local (macos) command line will be sent to the podman machine running inside the "default" virtual machine.
 
-## Stopping and restarting the "default" virtual machine
-You can stop the "default" virtual machine with:</br>
-```
-docker-machine stop default
-```
+## Starting and stopping the "default" virtual machine
 You can start the "default" virtual machine with:</br>
 ```
-docker-machine start default
+podman machine start
 ```
-You can login to the "default" virtual machine if you want to run docker commands from the Linux command line with:</br>
+You can stop the "default" virtual machine with:</br>
 ```
-docker-machine ssh
+podman machine stop
 ```
-If you are in a new shell that does not have the necessary environment, run:</br>
+You can login to the "default" virtual machine if you want to run podman commands from the Linux command line with:</br>
 ```
-eval $(docker-machine env default)
+podman machine ssh
 ```
 ## Building an image from a Docker file
 Change into the directory containing the ```Dockerfile``` (I'll use the "debansible" image in this example):</br>
 ```
 cd debansible/
 ```
-Next, run the docker build command specifying an appropriate repo and tag and passing the current directory ('.') as the first argument:</br>
+Next, run the podman build command specifying an appropriate repo and tag and passing the current directory ('.') as the first argument:</br>
 ```
-docker build --rm --no-cache --build-arg username=ansible --build-arg password=password -t debansible:test .
+podman build --rm --no-cache --build-arg username=student --build-arg password=password -t dmbrownlee/debansible:test .
 ```
 Note, I use the tag "<image>:test" for testing.</br>
 You can verify the new image is in the "default" virtual machine's image store with:</br>
 ```
-docker images
+podman images
 ```
-From the same directory, you can launch a test container to see if the image works:</br>
+You can start a container using:</br>
 ```
-docker-compose up -d
+podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/debansible:test
 ```
 You can attach a terminal to the running container with:</br>
 ```
-docker container attach test
+podman container attach mycontainer
 ```
+Note: To detatch from a container, use Ctrl-p,Cntl-q</br>
 If the default entry point is buggy, you can open a shell in the container with:</br>
 ```
-docker exec -it <container id> bash
+podman exec -it <container id> bash
 ```
 If you created a container that accepts SSH connections, you can connect to the container via ssh:</br>
 ```
-ssh -l ansible -p 2023 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 192.168.99.100
+ssh -l student -p 2023 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null 192.168.99.100
 ```
-Note, the IP address belongs to the "default" virtual machine and port 2023 (or port specified in docker-compose.yml) is getting forwarded to port 22 within the test container.
+Note, the IP address belongs to the "default" virtual machine and port 2023 is getting forwarded to port 22 within the test container.
 
-When you're done testing, you can shutdown and remove the test container:</br>
-```
-docker-compose down
-```
-You can skip using docker compose using:</br>
-```
-docker run -it --rm -p 2023:22 --name --test debansible:test
-```
 or to run a shell within the container:</br>
 ```
-docker run -it --rm -p 2023:22 --name --test debansible:test bash
+podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/debansible:test bash
 ```
 ## Uploading new images to hub.docker.com
-First, create a squashed image from the original to make it smaller:</br>
-```
-docker-squash -v -c -t dmbrownlee/debansible:latest debansible:test
-```
 Make sure you are logged into your hub.docker.com account:</br>
 ```
-docker login
+podman login docker.io --username dmbrownlee
 ```
-Then upload the squashed image:</br>
+Then upload the image:</br>
 ```
-docker push dmbrownlee/debansible:latest
+podman push dmbrownlee/debansible:latest
 ```
 ## Updating images in GNS3 VM
 If you have already pulled an image to the GNS3 VM, it will continue to use that version of the image even if a newer version has been pushed to hub.docker.com.  Information about how to login to the GNS3 VM can be found on the VMs console.
@@ -111,7 +93,7 @@ However, the GNS3 GUI keeps track of container IDs in models.  Your best bet is 
 
 The last step will creating all new containers using the new images and include them in the model.
 
-## Docker commands you might find useful
+## Docker commands you might find useful with the GNS3 VM
 List all containers including containers that are not currently running:</br>
 ```
 docker container list -a
@@ -140,16 +122,3 @@ See the history of the layers (not useful when squashed?):</br>
 ```
 docker history dmbrownlee/debansible:latest
 ```
-## There is also ```podman``` for MacOS
-I need to look into this more someday...
-```
-brew install podman
-podman machine init default2
-podman machine start default2
-podman machine list
-podman images
-podman container list
-podman image search dmbrownlee
-podman machine stop default2
-```
-
