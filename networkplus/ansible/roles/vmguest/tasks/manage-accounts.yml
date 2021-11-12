@@ -1,8 +1,8 @@
 ---
 - name: Ensure user account exists
   user:
-    name: "user"
-    comment: "User"
+    name: "student"
+    comment: "student"
     password: "$6$sh1biwylWzIOiavR$C4YUP9KynT66ZufxJlKwx6NcqUFvVXAFSMH3lm74sZwthPxbZjGUI5.N.jPhfp7XA4y3SUWTtCaHDuwL5H4Js0"
     system: no
     append: yes
