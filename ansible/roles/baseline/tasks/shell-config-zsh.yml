@@ -23,7 +23,9 @@
         source $HOME/.zshrc.d/*
       fi
 - name: Ensure README for the zsh snippets directory exists
-  file:
+  lineinfile:
     path: "{{ ansible_user_dir }}/.zshrc.d/ADD_ZSH_SNIPPETS_HERE"
-    state: touch
+    state: present
+    create: yes
+    line: "# Add snippets of zsh code in this directory."
     mode: '0644'
