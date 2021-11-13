@@ -2,3 +2,4 @@
 supported_distributions:
   - MacOSX
   - Debian
+  - Fedora
