@@ -74,25 +74,28 @@
     dest: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}/gns3_gui.conf"
     mode: '0644'
   when: not gns3_gui.stat.exists
-- name: Ensure obsolete files have been cleaned up
-  file:
-    path: "{{ item }}"
-    state: absent
-  loop:
-    - "{{ ansible_user_dir }}/.vboxnet0.zsh"
-    - "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
-- name: Ensure workaround for PyQt5 bug is installed
-  copy:
-    dest: "{{ ansible_user_dir }}/Library/LaunchAgents/setenv.QT_MAC_WANTS_LAYER.plist"
-    src: "setenv.QT_MAC_WANTS_LAYER.plist"
-    mode: "0644"
-  register: qtmacenv
-- name: Notify user the about the need to reboot
+- name: Apply Mac specific tweaks
   block:
-    - name: Display message to reboot if environment changed
-      fail:
-        msg: "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
-      ignore_errors: true
-    - name: Speak message to reboot if environment changed
-      command: say "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
-  when: qtmacenv.changed
+    - name: Ensure obsolete files have been cleaned up
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ ansible_user_dir }}/.vboxnet0.zsh"
+        - "{{ ansible_user_dir }}/setenv.QT_MAC_WANTS_LAYER.plist"
+    - name: Ensure workaround for PyQt5 bug is installed
+      copy:
+        dest: "{{ ansible_user_dir }}/Library/LaunchAgents/setenv.QT_MAC_WANTS_LAYER.plist"
+        src: "setenv.QT_MAC_WANTS_LAYER.plist"
+        mode: "0644"
+      register: qtmacenv
+    - name: Notify user the about the need to reboot
+      block:
+        - name: Display message to reboot if environment changed
+          fail:
+            msg: "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
+          ignore_errors: true
+        - name: Speak message to reboot if environment changed
+          command: say "This playbook has updated the environment.  Please reboot when it finishes so the changes take effect."
+      when: qtmacenv.changed
+  when: ansible_distribution == "MacOSX"
