@@ -1,15 +1,12 @@
 #!/bin/bash
 DEMODIR=$HOME/demo
 PLATFORM="$(uname)"
-APARGS="-K --skip-tags disabled"
+APARGS="-K -t baseline -t virtualization_host --skip-tags disabled"
 PLAYBOOK="site.yml"
 
-# Pass -t and -e options to ansible-playbook
-while getopts "t:e:" OPT; do
+# -e options to ansible-playbook
+while getopts "e:" OPT; do
   case "$OPT" in
-    "t")
-      APARGS="$APARGS -t $OPTARG"
-      ;;
     "e")
       APARGS="$APARGS -e $OPTARG"
       ;;
@@ -27,11 +24,7 @@ done
 shift $(($OPTIND - 1))
 
 if [[ $# -gt 0 ]]; then
-  PLAYBOOK="$1.yml"
-  if [[ ! -f "$DEMODIR/ansible/$PLAYBOOK" ]]; then
-    echo "$1 is not a valid lab environment."
-    exit 1;
-  fi
+  APARGS="$APARGS -t $1"
 fi
 
 function restore_backup() {
