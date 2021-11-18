@@ -1,4 +1,4 @@
-# Sorry, there is no lab yet
-You may mark this lab as completed in your workbook.
+# No lab!
+Chapter 5 deals with physical cabling and it is difficult to come up with a physical lab in a virtual environment.
 
-![Image of construction sign](../ConstructionSign.png)
+You might want to watch [How to Terminate Ethernet Cables](https://www.youtube.com/watch?v=2OLeNqsNATQ) if you have not terminated your own cables before.
