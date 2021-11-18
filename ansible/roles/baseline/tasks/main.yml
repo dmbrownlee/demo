@@ -9,5 +9,3 @@
   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 - name: shell configuration
   include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"
-- name: Google Chrome
-  include_tasks: "google-chrome-{{ ansible_distribution | lower }}.yml"
