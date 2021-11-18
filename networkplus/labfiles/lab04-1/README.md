@@ -4,7 +4,9 @@ In this lab, we will take a look a how to find information about your Ethernet i
 ## Setup
 For this lab, we will use the debian1 virtual host.  We will need to install some additional software on the Linux VM so we will need a network map that has the Linux VM conected to a switch and with the switch connected to the Nat device to get out to the Internet.  You can import the portable project in this directory as a starting point and then drag the debian1 VM over and connect it to the switch.  After you have the debian1 VM added to the map, connected to the switch, and booted, follow these steps:
 
-1. Login to the debian1 VM as user/password
+1. Login to the debian1 VM:</br>
+  username: student</br>
+  password: password</br>
 1. Open a terminal within the debian1 VM. On Mac hosts, you can open a terminal within the debian1 VM by pressing the left command key, typing "terminal", and pressing enter.
 1. In the terminal, run ```sudo apt update``` to ensure you have the latest information about which packages are available for installation.
 1. Now run ```sudo apt install -y ethtool net-tools``` to install the software we need.
