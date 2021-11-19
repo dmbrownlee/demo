@@ -39,4 +39,4 @@ cat <<DONE
 Running Ansible playbook
 =========================================================================
 DONE
-caffeinate -dsu ansible-playbook -K --skip-tags disabled reconfigure-virtual-networks.yml
+caffeinate -dsu ansible-playbook -K --skip-tags disabled $HOME/demo/utils/reconfigure-virtual-networks.yml
