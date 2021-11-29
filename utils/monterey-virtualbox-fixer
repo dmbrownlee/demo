@@ -1,42 +1,15 @@
 #!/bin/bash
-if [[ "$(uname)" != "Darwin" ]]; then
-  echo "This script is only meant to run on MacOS."
-  exit 1
-fi      
+echo "Please shutdown any VMs and make sure VirtualBox is not running before you continue."
+read -p "Press enter to continue." a
 
-cat <<DONE
-=========================================================================
-Verifying network connectivity.
-=========================================================================
-DONE
-ping -q -c 1 8.8.8.8
-if [[ $? -ne 0 ]]; then
-  echo "Unable to reach the Internet.  Please check your network connectivity."
-  exit 1;
-fi
-echo
-
-# # ============================================================================
-# # ==
-# # ==  On Mac, we install virtualbox outside of the ansible playbook
-# # ==  since the kernel extensions will require a reboot
-# # ==
-# # ============================================================================
-# brew list virtualbox 2>/dev/null
-# if [ $? -ne 0 ]; then
-#   echo "This script in only meant for systems where the demo project is installed."
-#   exit 1
-# fi      
-# brew reinstall virtualbox
-
-# ============================================================================
-# ==
-# ==  Run the Ansible playbook to complete the setup.
-# ==
-# ============================================================================
-cat <<DONE
-=========================================================================
-Running Ansible playbook
-=========================================================================
-DONE
-caffeinate -dsu ansible-playbook -K --skip-tags disabled $HOME/demo/utils/reconfigure-virtual-networks.yml
+for d in VBoxDrv VBoxUSB VBoxNetFlt VBoxNetAdp; do
+  sudo /usr/bin/kmutil unload -b org.virtualbox.kext.$d 2> /dev/null
+  sudo /usr/bin/kmutil load -b org.virtualbox.kext.$d
+  echo -n "$d: "
+  kmutil showloaded -V release --collection aux --list-only | grep -q $d
+  if [ $? -eq 0 ]; then
+    echo "OK"
+  else
+    echo "Not loaded"
+  fi
+done
