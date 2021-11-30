@@ -48,12 +48,14 @@
   become: yes
   loop:
     - "/etc/sv/zebra/log"
+    - "/var/log/svlogd/zebra"
     - "/etc/sv/ospfd/log"
+    - "/var/log/svlogd/ospfd"
 - name: Ensure runit scripts for quagga daemon logging exist
   copy:
     content: |
       #!/bin/sh -euC
-      svlogd -tt /var/log/svlogd
+      svlogd -tt /var/log/svlogd/{{ quagga_server }}
     dest: "/etc/sv/{{ quagga_server }}/log/run"
     owner: root
     group: root
@@ -77,18 +79,17 @@
     - "ospfd"
   loop_control:
     loop_var: quagga_server
-- name: Start zebra daemon
-  service:
-    name: "zebra"
-    state: started
-    enabled: yes
+- name: Enable zebra daemon
+  file:
+    path: "/etc/runit/runsvdir/default/{{ quagga_server }}"
+    src: "/etc/sv/{{ quagga_server }}"
+    state: link
   become: yes
-- name: Start OSPF daemon
-  service:
-    name: "ospfd"
-    state: started
-    enabled: yes
-  become: yes
+  loop:
+    - "zebra"
+    - "ospfd"
+  loop_control:
+    loop_var: quagga_server
 - name: Ensure vtysh is the default console
   file:
     path: /root/startvtysh
@@ -102,19 +103,22 @@
         name: isc-dhcp-relay
         state: present
       become: yes
-    - name: Ensure runit directory for DHCP agent exists
+    - name: Ensure runit directories for DHCP agent exists
       file:
-        path: /etc/sv/dhcrelay/log
+        path: "{{ item }}"
         state: directory
         owner: root
         group: root
         mode: '0755'
       become: yes
+      loop:
+        - /etc/sv/dhcrelay/log
+        - /var/log/svlogd/dhcrelay
     - name: Ensure runit script for DHCP relay logging exists
       copy:
         content: |
           #!/bin/sh -euC
-          svlogd -tt /var/log/svlogd
+          svlogd -tt /var/log/svlogd/dhcrelay
         dest: /etc/sv/dhcrelay/log/run
         owner: root
         group: root
@@ -130,11 +134,5 @@
         owner: root
         group: root
         mode: '0755'
-      become: yes
-    - name: Ensure the DHCP relay agent is started
-      community.general.runit:
-        name: dhcrelay
-        state: started
-        enabled: yes
       become: yes
   when: isc_dhcp_relay is defined
