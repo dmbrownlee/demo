@@ -135,4 +135,10 @@
         group: root
         mode: '0755'
       become: yes
+    - name: Enable DHCP relay daemon
+      file:
+        path: "/etc/runit/runsvdir/default/dhcrelay"
+        src: "/etc/sv/dhcrelay"
+        state: link
+      become: yes
   when: isc_dhcp_relay is defined
