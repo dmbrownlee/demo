@@ -1,6 +1,6 @@
 #!/bin/bash
 
-/usr/sbin/sshd
+/usr/bin/runsvdir -P /etc/service &
 
 while true; do
   ( [ -f /root/startvtysh ] && /usr/bin/vtysh ) ||
