@@ -1,6 +1,7 @@
 ---
 - name: Reconfigure virtual networking
   hosts: localhost
+  connection: local
   vars:
     hostonlyifs:
       - name: "vboxnet0"
@@ -23,14 +24,6 @@
       assert:
         that: ansible_distribution == "MacOSX"
         fail_msg: "This playbook is only supported on MacOS"
-    - name: Ensure virtualbox is temporarily removed
-      homebrew_cask:
-        name: virtualbox
-        state: absent
-    - name: Now reinstall virtualbox
-      homebrew_cask:
-        name: virtualbox
-        state: present
     # Configure VirtualBox HostOnly Interfaces
     - name: Get the list of hostonly network interfaces
       shell: set -o pipefail && VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
@@ -82,7 +75,3 @@
         --enable
       when: item.interface not in existing_dhcpservers.stdout_lines
       loop: "{{ dhcpservers }}"
-    - name: Ensure icons are added back to the Dock
-      shell: dockutil --find 'VirtualBox' || dockutil -v --add '/Applications/VirtualBox.app'
-      register: dockadd
-      changed_when: "'item added at end' in dockadd.stdout"
