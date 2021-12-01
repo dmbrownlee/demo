@@ -39,6 +39,7 @@
       tags: [router]
     - role: TEA_disable
       tags: [TEA_disable]
+    - role: debansiblefix
   post_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
@@ -58,6 +59,7 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
+    - role: debansiblefix
 - name: Configure DNS servers
   hosts: dns_servers
   roles:

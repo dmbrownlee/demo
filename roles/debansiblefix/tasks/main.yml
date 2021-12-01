@@ -1,0 +1,35 @@
+---
+- name: Ensure runit is installed
+  apt:
+    name: runit
+    state: present
+  become: yes
+- name: Ensure runit directories for sshd exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+  loop:
+    - /run/sshd
+    - /var/log/svlogd/sshd
+    - /etc/sv/sshd/log 
+  become: yes
+- name: Ensure runit files for sshd exist
+  copy:
+    path: "{{ item.path }}"
+    src: "{{ item.src }}"
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - { path: /sbin/boot.sh, src: boot.sh }
+    - { path: /etc/sv/sshd/run, src: sshd.runit }
+    - { path: /etc/sv/sshd/log/run, src: sshd-log.runit }
+  become: yes
+- name: Ensure runit starts sshd
+  file:
+    path: "/etc/runit/runsvdir/default/sshd"
+    src: "/etc/sv/sshd"
+    state: link
+  become: yes
