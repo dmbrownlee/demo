@@ -151,14 +151,19 @@ esac
 # ============================================================================
 # ==
 # ==  If we are curling this directly from raw.githubusercontent.com, we need
-# ==  to clone this repo into the home directory before changing to it.
+# ==  to clone this repo into the home directory before changing to it.  If it
+# ==  already exists, ensure we're working with the most recent repo commit.
 # ==
 # ============================================================================
 if [[ ! -d $DEMODIR ]]; then
-  cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
+  cd $HOME &&
+  /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
+else
+  echo "Update local copy of demo project:"
+  cd $DEMODIR
+  /usr/local/bin/git pull
 fi
 cd $DEMODIR/ansible
-
 
 # ============================================================================
 # ==
