@@ -17,7 +17,7 @@
   become: yes
 - name: Ensure runit files for sshd exist
   copy:
-    path: "{{ item.path }}"
+    dest: "{{ item.path }}"
     src: "{{ item.src }}"
     owner: root
     group: root
