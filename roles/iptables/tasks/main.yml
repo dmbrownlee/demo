@@ -17,7 +17,10 @@
         group: root
         mode: '0644'
       become: yes
-      notify: fw_rules_updated
+    - name: Ensure changes to firewall are always applied immediately
+      shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
+      changed_when: false
+      become: yes
     - name: Ensure persistent iptables rules get loaded at boot
       template:
         dest: /etc/network/if-pre-up.d/firewall
