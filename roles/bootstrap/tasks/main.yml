@@ -11,7 +11,7 @@
     state: present
     comment: "Ansible configuration account"
   when: control_host is defined and control_host
-- name: Ensure public key is copied to authorized keys on host
+- name: Ensure public key is copied to authorized keys on host (if this hangs, you may have typed the wrong password)
   authorized_key:
     user: "{{ ansible_user_id }}"
     state: present
