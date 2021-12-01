@@ -2,6 +2,7 @@
 echo "Please shutdown any VMs and make sure VirtualBox is not running before you continue."
 read -p "Press enter to continue." a
 
+echo "Checking drivers:"
 for d in VBoxDrv VBoxUSB VBoxNetFlt VBoxNetAdp; do
   sudo /usr/bin/kmutil unload -b org.virtualbox.kext.$d 2> /dev/null
   sudo /usr/bin/kmutil load -b org.virtualbox.kext.$d
@@ -13,3 +14,6 @@ for d in VBoxDrv VBoxUSB VBoxNetFlt VBoxNetAdp; do
     echo "Not loaded"
   fi
 done
+# Now that the drivers are loaded, configure the networking
+echo "Configuring Virtual Networks:"
+ansible-playbook -i localhost, -e ansible_python_interpreter=/usr/bin/python ~/demo/utils/.ansible/reconfigure-virtual-networks.yml
