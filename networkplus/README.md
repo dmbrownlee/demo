@@ -12,3 +12,6 @@ These instructions will install additional software (GNS3, Wireshark, etc.) and 
 > ```cd ~/demo && ./setup networkplus```  
 
 Once the setup has completed successfully, you should reboot the host before attempting to use GNS3.
+
+## Import the virtual lab network
+Originally, labs were setup with their own networks.  In order to save you time, we are moving to a single, virtual lab network that you can use for all the labs.  Please follow the directions in this [README](https://github.com/dmbrownlee/demo/blob/master/networkplus/labfiles/README.md) to set it up.
