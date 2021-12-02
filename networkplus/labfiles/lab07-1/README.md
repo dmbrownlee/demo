@@ -189,383 +189,394 @@ Routing tables on routers work the same way as on hosts.  However, whereas hosts
 
 It should be noted that protocols used to route packets through internets, such as IPv4 and IPv6, are called "routable" protocols whereas "routing" protocals like OSPF are the protocols routers use to share their routes with other routers.  Let's take a look at a routing table on a router.
 
-1. Open the console on router2. The prompt should look like:</br>
-  ```
-  router2.networkplus.test#
-  ```
-  You are already in what is referred to as "enable mode" (or privileged EXEC mode) in Cisco iOS. Enable mode allows you to run commands that make changes to the Router's configuration.  You can run `disable` to exit privileged mode since you won't need it for this exercise.  Running `?` will show you have a reduced number of commands available and running `enable` will get you back to privileged mode when you need it.
-1. Run `show ip route` to display router2's routing table.  Your output so far should look somthing like this:</br>
-  ```
-  router2.networkplus.test# exit
+1. Open the console on router2. The prompt should look like:
+   ```
+   router2.networkplus.test#
+   ```
+   You are already in what is referred to as "enable mode" (or privileged EXEC mode) in Cisco iOS. Enable mode allows you to run commands that make changes to the Router's configuration.  You can run `disable` to exit privileged mode since you won't need it for this exercise.  Running `?` will show you have a reduced number of commands available and running `enable` will get you back to privileged mode when you need it.
 
-  Hello, this is Quagga (version 1.2.4).
-  Copyright 1996-2005 Kunihiro Ishiguro, et al.
+1. Run `show ip route` to display router2's routing table.  Your output so far should look somthing like this:
+   ```
+   router2.networkplus.test# exit
+ 
+   Hello, this is Quagga (version 1.2.4).
+   Copyright 1996-2005 Kunihiro Ishiguro, et al.
+ 
+   router2.networkplus.test#
+     clear        Reset functions
+     configure    Configuration from vty interface
+     copy         Copy from one file to another
+     debug        Debugging functions (see also 'undebug')
+     disable      Turn off privileged mode command
+     enable       Turn on privileged mode command
+     end          End current mode and change to enable mode
+     exit         Exit current mode and down to previous mode
+     list         Print command list
+     no           Negate a command or set its defaults
+     ping         Send echo messages
+     quit         Exit current mode and down to previous mode
+     show         Show running system information
+     ssh          Open an ssh connection
+     start-shell  Start UNIX shell
+     telnet       Open a telnet connection
+     terminal     Set terminal line parameters
+     test         Test
+     traceroute   Trace route to destination
+     undebug      Disable debugging functions (see also 'debug')
+     write        Write running configuration to memory, network, or terminal
+   router2.networkplus.test# disable
+   router2.networkplus.test>
+     clear       Reset functions
+     enable      Turn on privileged mode command
+     exit        Exit current mode and down to previous mode
+     list        Print command list
+     ping        Send echo messages
+     quit        Exit current mode and down to previous mode
+     show        Show running system information
+     ssh         Open an ssh connection
+     telnet      Open a telnet connection
+     terminal    Set terminal line parameters
+     traceroute  Trace route to destination
+   router2.networkplus.test> show ip route
+   Codes: K - kernel route, C - connected, S - static, R - RIP,
+         O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
+         > - selected route, * - FIB route
+ 
+   O>* 0.0.0.0/0 [110/1] via 192.168.41.5, eth1, 05:14:22
+   C>* 127.0.0.0/8 is directly connected, lo
+   O>* 192.168.41.0/30 [110/20] via 192.168.41.5, eth1, 05:14:23
+   O   192.168.41.4/30 [110/10] is directly connected, eth1, 05:15:13
+   C>* 192.168.41.4/30 is directly connected, eth1
+   O   192.168.42.0/24 [110/25] is directly connected, eth0, 05:14:58
+   C>* 192.168.42.0/24 is directly connected, eth0
+   O>* 192.168.43.0/24 [110/30] via 192.168.41.5, eth1, 05:14:23
+   O>* 192.168.44.0/24 [110/20] via 192.168.41.5, eth1, 05:14:23
+   O   192.168.45.0/24 [110/10] is directly connected, eth2, 05:15:13
+   C>* 192.168.45.0/24 is directly connected, eth2
+   O   192.168.46.0/24 [110/10] is directly connected, eth2.100, 05:15:13
+   C>* 192.168.46.0/24 is directly connected, eth2.100
+   O   192.168.47.0/24 [110/10] is directly connected, eth2.200, 05:15:13
+   C>* 192.168.47.0/24 is directly connected, eth2.200
+   router2.networkplus.test>
+   ```
+ 
+   Just like with host routing tables, each line describes a possible route. Notice the output starts with a key to explain the letter in the first column of each route. The letter indicates how the route was learned. Since the routers in our model are using OSPF to share routes, the letter in this column will either be a "C" (C for Connected, the route was learned because it is directly attached to router2) or an "O" (O for OSPF, Open Shortest Path First). A router may learn about a network using multiple methods and we see many routes were learned from a directly connected interface and via OSPF.
 
-  router2.networkplus.test#
-    clear        Reset functions
-    configure    Configuration from vty interface
-    copy         Copy from one file to another
-    debug        Debugging functions (see also 'undebug')
-    disable      Turn off privileged mode command
-    enable       Turn on privileged mode command
-    end          End current mode and change to enable mode
-    exit         Exit current mode and down to previous mode
-    list         Print command list
-    no           Negate a command or set its defaults
-    ping         Send echo messages
-    quit         Exit current mode and down to previous mode
-    show         Show running system information
-    ssh          Open an ssh connection
-    start-shell  Start UNIX shell
-    telnet       Open a telnet connection
-    terminal     Set terminal line parameters
-    test         Test
-    traceroute   Trace route to destination
-    undebug      Disable debugging functions (see also 'debug')
-    write        Write running configuration to memory, network, or terminal
-  router2.networkplus.test# disable
-  router2.networkplus.test>
-    clear       Reset functions
-    enable      Turn on privileged mode command
-    exit        Exit current mode and down to previous mode
-    list        Print command list
-    ping        Send echo messages
-    quit        Exit current mode and down to previous mode
-    show        Show running system information
-    ssh         Open an ssh connection
-    telnet      Open a telnet connection
-    terminal    Set terminal line parameters
-    traceroute  Trace route to destination
-  router2.networkplus.test> show ip route
-  Codes: K - kernel route, C - connected, S - static, R - RIP,
-        O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
-        > - selected route, * - FIB route
-
-  O>* 0.0.0.0/0 [110/1] via 192.168.41.5, eth1, 05:14:22
-  C>* 127.0.0.0/8 is directly connected, lo
-  O>* 192.168.41.0/30 [110/20] via 192.168.41.5, eth1, 05:14:23
-  O   192.168.41.4/30 [110/10] is directly connected, eth1, 05:15:13
-  C>* 192.168.41.4/30 is directly connected, eth1
-  O   192.168.42.0/24 [110/25] is directly connected, eth0, 05:14:58
-  C>* 192.168.42.0/24 is directly connected, eth0
-  O>* 192.168.43.0/24 [110/30] via 192.168.41.5, eth1, 05:14:23
-  O>* 192.168.44.0/24 [110/20] via 192.168.41.5, eth1, 05:14:23
-  O   192.168.45.0/24 [110/10] is directly connected, eth2, 05:15:13
-  C>* 192.168.45.0/24 is directly connected, eth2
-  O   192.168.46.0/24 [110/10] is directly connected, eth2.100, 05:15:13
-  C>* 192.168.46.0/24 is directly connected, eth2.100
-  O   192.168.47.0/24 [110/10] is directly connected, eth2.200, 05:15:13
-  C>* 192.168.47.0/24 is directly connected, eth2.200
-  router2.networkplus.test>
-  ```
-
-  Just like with host routing tables, each line describes a possible route. Notice the output starts with a key to explain the letter in the first column of each route. The letter indicates how the route was learned. Since the routers in our model are using OSPF to share routes, the letter in this column will either be a "C" (C for Connected, the route was learned because it is directly attached to router2) or an "O" (O for OSPF, Open Shortest Path First). A router may learn about a network using multiple methods and we see many routes were learned from a directly connected interface and via OSPF.
-1. Let's focus on just the routes we would know about if we were not using OSPF. You can use `show ip route connected` to see which networks are connected to each interface:</br>
-  ```
-  router2.networkplus.test> show ip route connected
-  Codes: K - kernel route, C - connected, S - static, R - RIP,
-        O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
-        > - selected route, * - FIB route
-
-  C>* 127.0.0.0/8 is directly connected, lo
-  C>* 192.168.41.4/30 is directly connected, eth1
-  C>* 192.168.42.0/24 is directly connected, eth0
-  C>* 192.168.45.0/24 is directly connected, eth2
-  C>* 192.168.46.0/24 is directly connected, eth2.100
-  C>* 192.168.47.0/24 is directly connected, eth2.200
-  router2.networkplus.test>
-  ```
-  You can use the `show interface` command to see the status and specific IP addresses assigned to each of the routers interfaces:</br>
-  ```
-  router2.networkplus.test> show interface
-  Interface eth0 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    Description: Provisioning
-    index 34 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 32:b0:0b:68:60:85
-    inet 192.168.42.4/24
-    inet6 fe80::30b0:bff:fe68:6085/64
-  Interface eth1 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    Description: Backbone
-    index 35 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 9a:2e:97:e2:eb:26
-    inet 192.168.41.6/30 broadcast 192.168.41.7
-    inet6 fe80::982e:97ff:fee2:eb26/64
-  Interface eth2 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    Description: Office and Labs
-    index 36 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 0a:7f:d2:b8:08:b8
-    inet 192.168.45.254/24
-    inet6 fe80::87f:d2ff:feb8:8b8/64
-  Interface eth2.100 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    index 2 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 0a:7f:d2:b8:08:b8
-    inet 192.168.46.254/24
-    inet6 fe80::87f:d2ff:feb8:8b8/64
-  Interface eth2.200 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    index 3 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 0a:7f:d2:b8:08:b8
-    inet 192.168.47.254/24
-    inet6 fe80::87f:d2ff:feb8:8b8/64
-  Interface eth3 is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    index 37 metric 0 mtu 1500
-    flags: <UP,BROADCAST,RUNNING,MULTICAST>
-    Type: Ethernet
-    HWaddr: 6a:7c:f1:5f:81:99
-    inet6 fe80::687c:f1ff:fe5f:8199/64
-  Interface lo is up, line protocol is up
-    Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
-    Link downs:     0  last: (never)
-    vrf: 0
-    index 1 metric 0 mtu 65536
-    flags: <UP,LOOPBACK,RUNNING>
-    Type: Loopback
-    inet 127.0.0.1/8
-    inet6 ::1/128
-  router2.networkplus.test>
-  ```
-  > Note: eth2 has two sub-interfaces, eth2.100 and eth2.200, each with its own IP address.  This means the eth2 network card is simultaneously connected to three different networks running on a single ethernet cable.  This is possible because this interface is a VLAN trunk line which carries traffic for multiple virtual networks (more on VLANs in a later chapter).
-
-  From the output above, we can see router2 is not directly connected to 192.168.44.0/24, the internal server network where dns1 lives, or 192.168.43.0/24, the DMZ network where www1 lives.  Also note that eth1 is directly connected to 192.168.41.4/30 which using a /30 netmask.  This can be tricky so we will come back to it later.
+1. Let's focus on just the routes we would know about if we were not using OSPF. You can use `show ip route connected` to see which networks are connected to each interface:
+   ```
+   router2.networkplus.test> show ip route connected
+   Codes: K - kernel route, C - connected, S - static, R - RIP,
+         O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
+         > - selected route, * - FIB route
+ 
+   C>* 127.0.0.0/8 is directly connected, lo
+   C>* 192.168.41.4/30 is directly connected, eth1
+   C>* 192.168.42.0/24 is directly connected, eth0
+   C>* 192.168.45.0/24 is directly connected, eth2
+   C>* 192.168.46.0/24 is directly connected, eth2.100
+   C>* 192.168.47.0/24 is directly connected, eth2.200
+   router2.networkplus.test>
+   ```
+   You can use the `show interface` command to see the status and specific IP addresses assigned to each of the routers interfaces:</br>
+   ```
+   router2.networkplus.test> show interface
+   Interface eth0 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     Description: Provisioning
+     index 34 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 32:b0:0b:68:60:85
+     inet 192.168.42.4/24
+     inet6 fe80::30b0:bff:fe68:6085/64
+   Interface eth1 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     Description: Backbone
+     index 35 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 9a:2e:97:e2:eb:26
+     inet 192.168.41.6/30 broadcast 192.168.41.7
+     inet6 fe80::982e:97ff:fee2:eb26/64
+   Interface eth2 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     Description: Office and Labs
+     index 36 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 0a:7f:d2:b8:08:b8
+     inet 192.168.45.254/24
+     inet6 fe80::87f:d2ff:feb8:8b8/64
+   Interface eth2.100 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     index 2 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 0a:7f:d2:b8:08:b8
+     inet 192.168.46.254/24
+     inet6 fe80::87f:d2ff:feb8:8b8/64
+   Interface eth2.200 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     index 3 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 0a:7f:d2:b8:08:b8
+     inet 192.168.47.254/24
+     inet6 fe80::87f:d2ff:feb8:8b8/64
+   Interface eth3 is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     index 37 metric 0 mtu 1500
+     flags: <UP,BROADCAST,RUNNING,MULTICAST>
+     Type: Ethernet
+     HWaddr: 6a:7c:f1:5f:81:99
+     inet6 fe80::687c:f1ff:fe5f:8199/64
+   Interface lo is up, line protocol is up
+     Link ups:       1  last: Wed, 01 Dec 2021 19:57:33 +0000
+     Link downs:     0  last: (never)
+     vrf: 0
+     index 1 metric 0 mtu 65536
+     flags: <UP,LOOPBACK,RUNNING>
+     Type: Loopback
+     inet 127.0.0.1/8
+     inet6 ::1/128
+   router2.networkplus.test>
+   ```
+   > Note: eth2 has two sub-interfaces, eth2.100 and eth2.200, each with its own IP address.  This means the eth2 network card is simultaneously connected to three different networks running on a single ethernet cable.  This is possible because this interface is a VLAN trunk line which carries traffic for multiple virtual networks (more on VLANs in a later chapter).
+ 
+   From the output above, we can see router2 is not directly connected to 192.168.44.0/24, the internal server network where dns1 lives, or 192.168.43.0/24, the DMZ network where www1 lives.  Also note that eth1 is directly connected to 192.168.41.4/30 which using a /30 netmask.  This can be tricky so we will come back to it later.
 
 1. Now we will switch our attention to the routes learned via OSPF.  Use `show ip route ospf` to display just the routes learned via OSPF.</br>
-  ```
-  router2.networkplus.test> show ip route ospf
-  Codes: K - kernel route, C - connected, S - static, R - RIP,
-        O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
-        > - selected route, * - FIB route
-
-  O>* 0.0.0.0/0 [110/1] via 192.168.41.5, eth1, 06:30:06
-  O>* 192.168.41.0/30 [110/20] via 192.168.41.5, eth1, 06:30:07
-  O   192.168.41.4/30 [110/10] is directly connected, eth1, 06:30:57
-  O   192.168.42.0/24 [110/25] is directly connected, eth0, 06:30:42
-  O>* 192.168.43.0/24 [110/30] via 192.168.41.5, eth1, 06:30:07
-  O>* 192.168.44.0/24 [110/20] via 192.168.41.5, eth1, 06:30:07
-  O   192.168.45.0/24 [110/10] is directly connected, eth2, 06:30:57
-  O   192.168.46.0/24 [110/10] is directly connected, eth2.100, 06:30:57
-  O   192.168.47.0/24 [110/10] is directly connected, eth2.200, 06:30:57
-  router2.networkplus.test>
-  ```
-  It is possible for a router to be directly connected to a network and not share that information with other routers.  However, in our model, router2 is sharing information about its directly connected interfaces with the other routers via OSPF.  This is why these directly connected routes show up in OSPF routes as well.
-  Let's take a closer look a the fields in the output of the OSPF routes. Notice there is a third field with two numbers in brackets. The first number is the "administrative distance".  As we have seen, a router may learn about a network via different methods.  Each routing protocol has its own method for calculating metrics to find the best route to a network.  For example, RIP just counts the number of routers between the source and destination where as OSPF is a little more complicated and considers the bandwidth of the links as well.  This means RIP metrics are only useful when comparing with other RIP routes, OSPF metrics are only useful when comparing OSPF routes, etc.  Comparing RIP metrics to OSPF metrics is comparing apples to oranges.  Therefore, when a router learns about networks from different methods, it needs to know which method is more trustworthy.  "Administrative distance" is the number used to determine how trustworthy the source of the route is with lower numbers being better.  Directly connected routes have an adminitrative distance of 0 and are the prefered route.  Static routes, that is routes manually entered by the network administrator have an administrative distance of 1 and are trusted over everything but directly connected routes.  The various routing protocols all have default administrative distances with OSPF having an administrative distance of 110 which is lower (more trustworthy) than RIP with an administrative distance of 120.</br>
+   ```
+   router2.networkplus.test> show ip route ospf
+   Codes: K - kernel route, C - connected, S - static, R - RIP,
+         O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
+         > - selected route, * - FIB route
+ 
+   O>* 0.0.0.0/0 [110/1] via 192.168.41.5, eth1, 06:30:06
+   O>* 192.168.41.0/30 [110/20] via 192.168.41.5, eth1, 06:30:07
+   O   192.168.41.4/30 [110/10] is directly connected, eth1, 06:30:57
+   O   192.168.42.0/24 [110/25] is directly connected, eth0, 06:30:42
+   O>* 192.168.43.0/24 [110/30] via 192.168.41.5, eth1, 06:30:07
+   O>* 192.168.44.0/24 [110/20] via 192.168.41.5, eth1, 06:30:07
+   O   192.168.45.0/24 [110/10] is directly connected, eth2, 06:30:57
+   O   192.168.46.0/24 [110/10] is directly connected, eth2.100, 06:30:57
+   O   192.168.47.0/24 [110/10] is directly connected, eth2.200, 06:30:57
+   router2.networkplus.test>
+   ```
+   It is possible for a router to be directly connected to a network and not share that information with other routers.  However, in our model, router2 is sharing information about its directly connected interfaces with the other routers via OSPF.  This is why these directly connected routes show up in OSPF routes as well.
+   Let's take a closer look a the fields in the output of the OSPF routes. Notice there is a third field with two numbers in brackets. The first number is the "administrative distance".  As we have seen, a router may learn about a network via different methods.  Each routing protocol has its own method for calculating metrics to find the best route to a network.  For example, RIP just counts the number of routers between the source and destination where as OSPF is a little more complicated and considers the bandwidth of the links as well.  This means RIP metrics are only useful when comparing with other RIP routes, OSPF metrics are only useful when comparing OSPF routes, etc.  Comparing RIP metrics to OSPF metrics is comparing apples to oranges.  Therefore, when a router learns about networks from different methods, it needs to know which method is more trustworthy.  "Administrative distance" is the number used to determine how trustworthy the source of the route is with lower numbers being better.  Directly connected routes have an adminitrative distance of 0 and are the prefered route.  Static routes, that is routes manually entered by the network administrator have an administrative distance of 1 and are trusted over everything but directly connected routes.  The various routing protocols all have default administrative distances with OSPF having an administrative distance of 110 which is lower (more trustworthy) than RIP with an administrative distance of 120.</br>
 
 ### Route troubleshooting tools
 So far, we have been looking at commands to help us collect routing information. Before we can see the effects of route metrics or watch OSPF in action, we are going to need some tools for troubleshooting routes.
 
 The `ping` utility is a common tool for testing contectivity and is available on most platforms by default.
+
 1. Login to the debian1-1 VM and use ping to verify you have connectivity to 8.8.8.8:
-  ```
-  student@debian1:~$ ping -c 3 8.8.8.8
-  PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-  64 bytes from 8.8.8.8: icmp_seq=1 ttl=55 time=17.1 ms
-  64 bytes from 8.8.8.8: icmp_seq=2 ttl=55 time=17.6 ms
-  64 bytes from 8.8.8.8: icmp_seq=3 ttl=55 time=13.7 ms
+   ```
+   student@debian1:~$ ping -c 3 8.8.8.8
+   PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+   64 bytes from 8.8.8.8: icmp_seq=1 ttl=55 time=17.1 ms
+   64 bytes from 8.8.8.8: icmp_seq=2 ttl=55 time=17.6 ms
+   64 bytes from 8.8.8.8: icmp_seq=3 ttl=55 time=13.7 ms
+ 
+   --- 8.8.8.8 ping statistics ---
+   3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+   rtt min/avg/max/mdev = 13.745/16.149/17.630/1.715 ms
+   student@debian1:~$
+   ```
+   Note: adding `-c 3` causes ping on Linux to quit after three pings.
 
-  --- 8.8.8.8 ping statistics ---
-  3 packets transmitted, 3 received, 0% packet loss, time 2002ms
-  rtt min/avg/max/mdev = 13.745/16.149/17.630/1.715 ms
-  student@debian1:~$
-  ```
-  Note: adding `-c 3` causes ping on Linux to quit after three pings.
 1. While `ping` is nice for verifying you have connectivity and watching the round trip time, it doesn't tell you which route it took.  For that, we can use `traceroute` (`tracert` on Windows):
-  ```
-  student@debian1:~$ traceroute 8.8.8.8
-  traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
-  1  _gateway (192.168.45.254)  1.576 ms  1.957 ms  2.176 ms
-  2  192.168.41.5 (192.168.41.5)  3.042 ms  3.488 ms  3.888 ms
-  3  192.168.41.1 (192.168.41.1)  4.276 ms  4.733 ms  4.856 ms
-  4  192.168.122.1 (192.168.122.1)  6.347 ms  6.888 ms  8.221 ms
-  5  10.0.3.2 (10.0.3.2)  8.676 ms  9.361 ms  9.716 ms
-  6  * * *
-  7  * * *
-  8  * * *
-  9  * * *
-  10  24.124.128.89 (24.124.128.89)  23.699 ms  23.704 ms  23.539 ms
-  11  24.124.128.122 (24.124.128.122)  20.967 ms  24.335 ms  21.811 ms
-  12  50.218.57.26 (50.218.57.26)  21.778 ms 50.222.176.218 (50.222.176.218)  22.098 ms 50.222.176.214 (50.222.176.214)  25.611 ms
-  13  * * *
-  14  dns.google (8.8.8.8)  14.506 ms  13.356 ms  14.392 ms
-  student@debian1:~$
-  ```
-  Not every intermeddiate device will respond which is why some of the intermittent hops show up as stars.  However, if you can ping your default gateway but cannot ping other sites on the Internet, this tool can help you find out where the connection is failing.
-  A similar tool is `mtr`.  It as the added feature that you can continuously monitor the connection (press `q` to quit) and watch for packet loss, but you will have to install it first:
-  ```
-  student@debian1:~$ sudo apt install -y mtr
-  Reading package lists... Done
-  Building dependency tree... Done
-  Reading state information... Done
-  The following NEW packages will be installed:
-    mtr
-  0 upgraded, 1 newly installed, 0 to remove and 13 not upgraded.
-  Need to get 87.1 kB of archives.
-  After this operation, 219 kB of additional disk space will be used.
-  Get:1 http://http.us.debian.org/debian bullseye/main amd64 mtr amd64 0.94-1+deb11u1 [87.1 kB]
-  Fetched 87.1 kB in 0s (218 kB/s)
-  Selecting previously unselected package mtr.
-  (Reading database ... 164313 files and directories currently installed.)
-  Preparing to unpack .../mtr_0.94-1+deb11u1_amd64.deb ...
-  Unpacking mtr (0.94-1+deb11u1) ...
-  Setting up mtr (0.94-1+deb11u1) ...
-  Processing triggers for man-db (2.9.4-2) ...
-  student@debian1:~$ mtr --curses --nodns8.8.8.8
-  ```
-  The screen will clear and present you output like this:</br>
-  ```
-                                My traceroute  [v0.94]
-  debian1 (192.168.45.127) -> 8.8.8.8                    2021-12-02T06:16:17+0000
-  Keys:  Help   Display mode   Restart statistics   Order of fields   quit
-                                        Packets               Pings
-  Host                                Loss%   Snt   Last   Avg  Best  Wrst StDev
-  1. 192.168.45.254                    0.0%    40    1.3   1.2   0.9   1.7   0.2
-  2. 192.168.41.5                      0.0%    40    1.0   1.3   1.0   2.3   0.3
-  3. 192.168.41.1                      0.0%    40    1.7   1.8   1.1   8.9   1.5
-  4. 192.168.122.1                     0.0%    40    2.0   2.7   1.9   7.7   1.0
-  5. 10.0.3.2                          0.0%    40    2.0   2.7   2.0   6.0   0.8
-  6. (waiting for reply)
-  7. (waiting for reply)
-  8. (waiting for reply)
-  9. (waiting for reply)
-  10. 24.124.128.89                     0.0%    39   15.7  14.9  12.5  22.0   1.7
-  11. 24.124.128.122                    0.0%    39   12.9  18.6  12.4  53.9   8.2
-  12. 50.222.176.214                    0.0%    39   14.1  15.1  12.6  22.5   1.6
-  13. 142.251.50.43                     0.0%    39   16.5  15.9  13.6  19.6   1.4
-  14. 142.251.48.211                    0.0%    39   16.4  14.7  12.3  18.0   1.4
-  15. 8.8.8.8                           0.0%    39   15.4  14.8  12.5  22.2   1.7
-  ```
-  Press `q` to quit.
+   ```
+   student@debian1:~$ traceroute 8.8.8.8
+   traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+   1  _gateway (192.168.45.254)  1.576 ms  1.957 ms  2.176 ms
+   2  192.168.41.5 (192.168.41.5)  3.042 ms  3.488 ms  3.888 ms
+   3  192.168.41.1 (192.168.41.1)  4.276 ms  4.733 ms  4.856 ms
+   4  192.168.122.1 (192.168.122.1)  6.347 ms  6.888 ms  8.221 ms
+   5  10.0.3.2 (10.0.3.2)  8.676 ms  9.361 ms  9.716 ms
+   6  * * *
+   7  * * *
+   8  * * *
+   9  * * *
+   10  24.124.128.89 (24.124.128.89)  23.699 ms  23.704 ms  23.539 ms
+   11  24.124.128.122 (24.124.128.122)  20.967 ms  24.335 ms  21.811 ms
+   12  50.218.57.26 (50.218.57.26)  21.778 ms 50.222.176.218 (50.222.176.218)  22.098 ms 50.222.176.214 (50.222.176.214)  25.611 ms
+   13  * * *
+   14  dns.google (8.8.8.8)  14.506 ms  13.356 ms  14.392 ms
+   student@debian1:~$
+   ```
+   Not every intermeddiate device will respond which is why some of the intermittent hops show up as stars.  However, if you can ping your default gateway but cannot ping other sites on the Internet, this tool can help you find out where the connection is failing.
+   A similar tool is `mtr`.  It as the added feature that you can continuously monitor the connection (press `q` to quit) and watch for packet loss, but you will have to install it first:
+   ```
+   student@debian1:~$ sudo apt install -y mtr
+   Reading package lists... Done
+   Building dependency tree... Done
+   Reading state information... Done
+   The following NEW packages will be installed:
+     mtr
+   0 upgraded, 1 newly installed, 0 to remove and 13 not upgraded.
+   Need to get 87.1 kB of archives.
+   After this operation, 219 kB of additional disk space will be used.
+   Get:1 http://http.us.debian.org/debian bullseye/main amd64 mtr amd64 0.94-1+deb11u1 [87.1 kB]
+   Fetched 87.1 kB in 0s (218 kB/s)
+   Selecting previously unselected package mtr.
+   (Reading database ... 164313 files and directories currently installed.)
+   Preparing to unpack .../mtr_0.94-1+deb11u1_amd64.deb ...
+   Unpacking mtr (0.94-1+deb11u1) ...
+   Setting up mtr (0.94-1+deb11u1) ...
+   Processing triggers for man-db (2.9.4-2) ...
+   student@debian1:~$ mtr --curses --nodns8.8.8.8
+   ```
+   The screen will clear and present you output like this:</br>
+   ```
+                                 My traceroute  [v0.94]
+   debian1 (192.168.45.127) -> 8.8.8.8                    2021-12-02T06:16:17+0000
+   Keys:  Help   Display mode   Restart statistics   Order of fields   quit
+                                         Packets               Pings
+   Host                                Loss%   Snt   Last   Avg  Best  Wrst StDev
+   1. 192.168.45.254                    0.0%    40    1.3   1.2   0.9   1.7   0.2
+   2. 192.168.41.5                      0.0%    40    1.0   1.3   1.0   2.3   0.3
+   3. 192.168.41.1                      0.0%    40    1.7   1.8   1.1   8.9   1.5
+   4. 192.168.122.1                     0.0%    40    2.0   2.7   1.9   7.7   1.0
+   5. 10.0.3.2                          0.0%    40    2.0   2.7   2.0   6.0   0.8
+   6. (waiting for reply)
+   7. (waiting for reply)
+   8. (waiting for reply)
+   9. (waiting for reply)
+   10. 24.124.128.89                     0.0%    39   15.7  14.9  12.5  22.0   1.7
+   11. 24.124.128.122                    0.0%    39   12.9  18.6  12.4  53.9   8.2
+   12. 50.222.176.214                    0.0%    39   14.1  15.1  12.6  22.5   1.6
+   13. 142.251.50.43                     0.0%    39   16.5  15.9  13.6  19.6   1.4
+   14. 142.251.48.211                    0.0%    39   16.4  14.7  12.3  18.0   1.4
+   15. 8.8.8.8                           0.0%    39   15.4  14.8  12.5  22.2   1.7
+   ```
+   Press `q` to quit.
+ 
+   From the output above, we can see packets going from debian1-1 to 8.8.8.8 are first sent to the interface on router2 which is closest to the debian1-1 VM (192.168.45.254). From there, router2 send packets to the interface on router1 (192.168.41.5) which is closest to router2.  Router1 then sends the packets to the interface on firewall (192.168.41.1) which is closest to it and then firewall sends packets to the ISP (the Internet cloud in our model) which has the IP address 192.168.l22.1 before leaving the virtual model and traversing the real Internet.
+ 
+You might be wondering why there are two hops on the 192.168.41 network, but remember these routes have a /30 netmask.  If you use `ipcalc` (installed on the debian1-1 VM in a previous lab) to investgate these routes, you will see there are two networks, the 192.168.41.0/30 network and the 192.168.41.4/30 network, each with just two IP addresses.  This means the networks between firewall and router1 and between router1 and router2 are point to point networks:</br>
+```
+student@debian1:~$ ipcalc 192.168.41.0/30
+Address:   192.168.41.0         11000000.10101000.00101001.000000 00
+Netmask:   255.255.255.252 = 30 11111111.11111111.11111111.111111 00
+Wildcard:  0.0.0.3              00000000.00000000.00000000.000000 11
+=>
+Network:   192.168.41.0/30      11000000.10101000.00101001.000000 00
+HostMin:   192.168.41.1         11000000.10101000.00101001.000000 01
+HostMax:   192.168.41.2         11000000.10101000.00101001.000000 10
+Broadcast: 192.168.41.3         11000000.10101000.00101001.000000 11
+Hosts/Net: 2                     Class C, Private Internet
 
-  From the output above, we can see packets going from debian1-1 to 8.8.8.8 are first sent to the interface on router2 which is closest to the debian1-1 VM (192.168.45.254). From there, router2 send packets to the interface on router1 (192.168.41.5) which is closest to router2.  Router1 then sends the packets to the interface on firewall (192.168.41.1) which is closest to it and then firewall sends packets to the ISP (the Internet cloud in our model) which has the IP address 192.168.l22.1 before leaving the virtual model and traversing the real Internet.
+student@debian1:~$ ipcalc 192.168.41.4/30
+Address:   192.168.41.4         11000000.10101000.00101001.000001 00
+Netmask:   255.255.255.252 = 30 11111111.11111111.11111111.111111 00
+Wildcard:  0.0.0.3              00000000.00000000.00000000.000000 11
+=>
+Network:   192.168.41.4/30      11000000.10101000.00101001.000001 00
+HostMin:   192.168.41.5         11000000.10101000.00101001.000001 01
+HostMax:   192.168.41.6         11000000.10101000.00101001.000001 10
+Broadcast: 192.168.41.7         11000000.10101000.00101001.000001 11
+Hosts/Net: 2                     Class C, Private Internet
 
-  You might be wondering why there are two hops on the 192.168.41 network, but remember these routes have a /30 netmask.  If you use `ipcalc` (installed on the debian1-1 VM in a previous lab) to investgate these routes, you will see there are two networks, the 192.168.41.0/30 network and the 192.168.41.4/30 network, each with just two IP addresses.  This means the networks between firewall and router1 and between router1 and router2 are point to point networks:</br>
-  ```
-  student@debian1:~$ ipcalc 192.168.41.0/30
-  Address:   192.168.41.0         11000000.10101000.00101001.000000 00
-  Netmask:   255.255.255.252 = 30 11111111.11111111.11111111.111111 00
-  Wildcard:  0.0.0.3              00000000.00000000.00000000.000000 11
-  =>
-  Network:   192.168.41.0/30      11000000.10101000.00101001.000000 00
-  HostMin:   192.168.41.1         11000000.10101000.00101001.000000 01
-  HostMax:   192.168.41.2         11000000.10101000.00101001.000000 10
-  Broadcast: 192.168.41.3         11000000.10101000.00101001.000000 11
-  Hosts/Net: 2                     Class C, Private Internet
+student@debian1:~$
+```
 
-  student@debian1:~$ ipcalc 192.168.41.4/30
-  Address:   192.168.41.4         11000000.10101000.00101001.000001 00
-  Netmask:   255.255.255.252 = 30 11111111.11111111.11111111.111111 00
-  Wildcard:  0.0.0.3              00000000.00000000.00000000.000000 11
-  =>
-  Network:   192.168.41.4/30      11000000.10101000.00101001.000001 00
-  HostMin:   192.168.41.5         11000000.10101000.00101001.000001 01
-  HostMax:   192.168.41.6         11000000.10101000.00101001.000001 10
-  Broadcast: 192.168.41.7         11000000.10101000.00101001.000001 11
-  Hosts/Net: 2                     Class C, Private Internet
-
-  student@debian1:~$
-  ```
 ### Metrics and route convergence
 Now that we have some tools for tracing network traffic, we can explore route metrics and OSPF route convergence.
 
 The backbone our our virtual lab network connecting our debian1-1 VM to the Internet passes through the routers and out the firewall.  However, looking at the model, you may have noticed that router2 can reach firewall directly through OpenvSwitch-1 on the 192.168.42.0/24 provisioning network, but the traceroute/mtr output shows it takes the longer route through router1.  This is a result of route metrics.  By manually increasing the OSPF cost of using the network interfaces on the provisioning network, we discourage packets from taking that route.  However, the route is still available should a link in the backbone go down.  Let's test that now.
 
 1. Start a wireshark packet capture on the link between router1 and router2.  Set the filter line to `ospf`.  You will immediately see OSPF hello packets as the routers are in constant communication.  The inner working of how OSPF updates the link state database are outside of the scope for Network+, but you will need to know this if you are studying for a CCNA cert and you can find more information about how OSPF works in CCNA study guides. The network trace is just to give you a taste of what the conversation look like when OSPF communicates links state changes.
-1. From the debian1-1 VM, use traceroute to see the path packets take on their way to www1:
-  ```
-  student@debian1:~$ traceroute www1
-  traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
-  1  _gateway (192.168.45.254)  1.358 ms  1.517 ms  1.201 ms
-  2  192.168.41.5 (192.168.41.5)  2.588 ms  2.699 ms  2.617 ms
-  3  192.168.41.1 (192.168.41.1)  2.588 ms  3.052 ms  3.270 ms
-  4  www1.networkplus.test (192.168.43.1)  5.370 ms  6.140 ms  6.340 ms
-  student@debian1:~$
-  ```
-1. Login to router1 and view the routing table:
-  ```
-  router1.networkplus.test# show ip route
-Codes: K - kernel route, C - connected, S - static, R - RIP,
-       O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
-       > - selected route, * - FIB route
 
-O>* 0.0.0.0/0 [110/1] via 192.168.41.1, eth1, 08:58:59
-C>* 127.0.0.0/8 is directly connected, lo
-O   192.168.41.0/30 [110/10] is directly connected, eth1, 08:59:50
-C>* 192.168.41.0/30 is directly connected, eth1
-O   192.168.41.4/30 [110/10] is directly connected, eth3, 08:59:50
-C>* 192.168.41.4/30 is directly connected, eth3
-O   192.168.42.0/24 [110/25] is directly connected, eth0, 08:59:45
-C>* 192.168.42.0/24 is directly connected, eth0
-O>* 192.168.43.0/24 [110/20] via 192.168.41.1, eth1, 08:59:00
-O   192.168.44.0/24 [110/10] is directly connected, eth2, 08:59:50
-C>* 192.168.44.0/24 is directly connected, eth2
-O>* 192.168.45.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
-O>* 192.168.46.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
-O>* 192.168.47.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
-router1.networkplus.test#
-  ```
+1. From the debian1-1 VM, use traceroute to see the path packets take on their way to www1:
+   ```
+   student@debian1:~$ traceroute www1
+   traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
+   1  _gateway (192.168.45.254)  1.358 ms  1.517 ms  1.201 ms
+   2  192.168.41.5 (192.168.41.5)  2.588 ms  2.699 ms  2.617 ms
+   3  192.168.41.1 (192.168.41.1)  2.588 ms  3.052 ms  3.270 ms
+   4  www1.networkplus.test (192.168.43.1)  5.370 ms  6.140 ms  6.340 ms
+   student@debian1:~$
+   ```
+
+1. Login to router1 and view the routing table:
+   ```
+   router1.networkplus.test# show ip route
+   Codes: K - kernel route, C - connected, S - static, R - RIP,
+          O - OSPF, I - IS-IS, B - BGP, P - PIM, A - Babel, N - NHRP,
+          > - selected route, * - FIB route
+   
+   O>* 0.0.0.0/0 [110/1] via 192.168.41.1, eth1, 08:58:59
+   C>* 127.0.0.0/8 is directly connected, lo
+   O   192.168.41.0/30 [110/10] is directly connected, eth1, 08:59:50
+   C>* 192.168.41.0/30 is directly connected, eth1
+   O   192.168.41.4/30 [110/10] is directly connected, eth3, 08:59:50
+   C>* 192.168.41.4/30 is directly connected, eth3
+   O   192.168.42.0/24 [110/25] is directly connected, eth0, 08:59:45
+   C>* 192.168.42.0/24 is directly connected, eth0
+   O>* 192.168.43.0/24 [110/20] via 192.168.41.1, eth1, 08:59:00
+   O   192.168.44.0/24 [110/10] is directly connected, eth2, 08:59:50
+   C>* 192.168.44.0/24 is directly connected, eth2
+   O>* 192.168.45.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
+   O>* 192.168.46.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
+   O>* 192.168.47.0/24 [110/20] via 192.168.41.6, eth3, 08:59:05
+   router1.networkplus.test#
+   ```
 
 1. We are now going to disable eth1 on router1 to create an outage on the link between router1 and firewall.  On router1, run these commands:</br>
-  ```
-  router1.networkplus.test# configure terminal
-  router1.networkplus.test(config)# interface eth1
-  router1.networkplus.test(config-if)# shutdown
-  router1.networkplus.test(config-if)# exit
-  router1.networkplus.test(config)# exit
-  router1.networkplus.test#
-  ```
+   ```
+   router1.networkplus.test# configure terminal
+   router1.networkplus.test(config)# interface eth1
+   router1.networkplus.test(config-if)# shutdown
+   router1.networkplus.test(config-if)# exit
+   router1.networkplus.test(config)# exit
+   router1.networkplus.test#
+   ```
+
 1. View the packets in the wireshark trace and notice you have new OSPF packets with link state updates and acknowlegements.  It may take a few seconds for all the routers to converge on a new view of the network.
 
 1. Return to the debian1-1 VM and rerun the traceroute command to see how the route to www1 has changed:
-  ```
-  student@debian1:~$ traceroute www1
-  traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
-  1  _gateway (192.168.45.254)  2.144 ms  2.530 ms  2.970 ms
-  2  firewall.networkplus.test (192.168.42.2)  4.272 ms  4.209 ms  4.904 ms
-  3  www1.networkplus.test (192.168.43.1)  6.956 ms  10.937 ms  11.056 ms
-  student@debian1:~$
-  ```
+   ```
+   student@debian1:~$ traceroute www1
+   traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
+   1  _gateway (192.168.45.254)  2.144 ms  2.530 ms  2.970 ms
+   2  firewall.networkplus.test (192.168.42.2)  4.272 ms  4.209 ms  4.904 ms
+   3  www1.networkplus.test (192.168.43.1)  6.956 ms  10.937 ms  11.056 ms
+   student@debian1:~$
+   ```
+
 1. Reenable eth1 on router1 with the following commands:
-  ```
-  router1.networkplus.test# configure terminal
-  router1.networkplus.test(config)# interface eth1
-  router1.networkplus.test(config-if)# no shutdown
-  router1.networkplus.test(config-if)# exit
-  router1.networkplus.test(config)# exit
-  router1.networkplus.test#
-  ```
+   ```
+   router1.networkplus.test# configure terminal
+   router1.networkplus.test(config)# interface eth1
+   router1.networkplus.test(config-if)# no shutdown
+   router1.networkplus.test(config-if)# exit
+   router1.networkplus.test(config)# exit
+   router1.networkplus.test#
+   ```
+
 1. View more link state updates in the network trace.  Stop the trace when it looks like it's just "hello" packets again.
+
 1. Return to debian1-1 and rerun traceroute to www1 to confirm the routes have returned to normal.
-  ```
-  student@debian1:~$ traceroute www1
-  traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
-  1  _gateway (192.168.45.254)  1.179 ms  1.370 ms  1.575 ms
-  2  192.168.41.5 (192.168.41.5)  2.209 ms  2.492 ms  2.656 ms
-  3  192.168.41.1 (192.168.41.1)  2.982 ms  3.355 ms  3.534 ms
-  4  www1.networkplus.test (192.168.43.1)  6.078 ms  7.305 ms  8.312 ms
-  student@debian1:~$
-  ```
+   ```
+   student@debian1:~$ traceroute www1
+   traceroute to www1 (192.168.43.1), 30 hops max, 60 byte packets
+   1  _gateway (192.168.45.254)  1.179 ms  1.370 ms  1.575 ms
+   2  192.168.41.5 (192.168.41.5)  2.209 ms  2.492 ms  2.656 ms
+   3  192.168.41.1 (192.168.41.1)  2.982 ms  3.355 ms  3.534 ms
+   4  www1.networkplus.test (192.168.43.1)  6.078 ms  7.305 ms  8.312 ms
+   student@debian1:~$
+   ```
