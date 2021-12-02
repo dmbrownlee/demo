@@ -104,7 +104,7 @@ Note, in our network model, the debian1 VM is connected to the 192.168.45.0/24 n
 
 Try setting the network interface on your debian VM with your own custom settings, changing the address information in the previous command. Use your new subnetting knowledge to calculate suitable IP address information.
 
-To set the interface back to dynamic, using DHCP, type the following `nmcli connection delete Wired\ connection\ 1`. Here we are deleting the custom settings that we've set. Then we need Network Manager to apply our updated connection to the NIC: `nmcli connection up Wired\ connection\ 1`.
+To set the interface back to dynamic, using DHCP, type the following `nmcli connection modify Wired\ connection\ 1 ipv4.method auto ipv4.addresses "" ipv4.gateway "" ipv4.dns ""`. Here we are deleting the custom settings that we've set and cofiguring the connection method back to "auto" (DHCP). Then we need Network Manager to apply our updated connection to the NIC: `nmcli connection up Wired\ connection\ 1`.
 
 You can see the whole nmcli connection settings by entering `nmcli connection show Wired\ connection\ 1`. Enter this command. What other information can you see?
 
