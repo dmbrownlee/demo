@@ -1,0 +1,67 @@
+---
+- name: Ensure the openvpn package is installed
+  apt:
+    name: openvpn
+    state: present
+  become: yes
+- name: Ensure openvpn server.conf file exists
+  template:
+    src: server.conf.j2
+    dest: "/etc/openvpn/server/server.conf"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+- name: Ensure directories for runit support exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+  loop:
+    - "/etc/sv/openvpn/log"
+    - "/var/log/svlogd/openvpn"
+- name: Ensure runit scripts for openvpn daemon logging exist
+  copy:
+    content: |
+      #!/bin/sh -euC
+      svlogd -tt /var/log/svlogd/openvpn
+    dest: "/etc/sv/openvpn/log/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit scripts for openvpn daemons exist
+  template:
+    src: runit_openvpn.j2
+    dest: "/etc/sv/openvpn/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure inbound openvpn connections are allowed through firewall
+  iptables:
+    table: filter
+    chain: INPUT
+    in_interface: eth1
+    ctstate: NEW
+    destination: 192.168.122.0/24
+    destination_port: 1194
+    protocol: udp
+    jump: ACCEPT
+  become: yes
+- name: Ensure packets from tun interfaces are excepted
+  iptables:
+    table: filter
+    chain: INPUT
+    in_interface: tun+
+    jump: ACCEPT
+  become: yes
+# - name: Enable openvpn daemon
+#   file:
+#     path: "/etc/runit/runsvdir/default/openvpn"
+#     src: "/etc/sv/openvpn"
+#     state: link
+#   become: yes

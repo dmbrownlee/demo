@@ -5,6 +5,8 @@ fw:
     - eth0
     - eth2
     - eth3
+  ovpn_ifaces:
+    - eth1
   tcp_forwarding_rules:
     - { iface: eth1, port: 80, dest: "192.168.43.1:80" }
   snat_ifaces:

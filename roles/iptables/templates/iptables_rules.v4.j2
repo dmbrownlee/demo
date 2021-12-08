@@ -13,6 +13,12 @@
 -A INPUT -i {{ iface }} -p icmp --icmp-type 8 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 {% endfor %}
 {% endif %}
+{% if fw.opvn_ifaces is defined %}
+{% for iface in fw.opvn_ifaces %}
+-A INPUT -i {{ iface }} -m state --state NEW -p udp --dport 1194 -j ACCEPT
+{% endfor %}
+-A INPUT -i tun+ -j ACCEPT
+{% endif %}
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -m conntrack --ctstate INVALID -j DROP
 -A OUTPUT -o lo -j ACCEPT
