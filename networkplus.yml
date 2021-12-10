@@ -72,3 +72,8 @@
       tags: [runit]
     - role: web-server
       tags: [web-server]
+- name: Configure VPN servers
+  hosts: firewall.networkplus.test
+  roles:
+    - role: openvpn
+      tags: [openvpn]

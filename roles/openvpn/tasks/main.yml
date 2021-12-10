@@ -59,9 +59,9 @@
     in_interface: tun+
     jump: ACCEPT
   become: yes
-# - name: Enable openvpn daemon
-#   file:
-#     path: "/etc/runit/runsvdir/default/openvpn"
-#     src: "/etc/sv/openvpn"
-#     state: link
-#   become: yes
+- name: Enable openvpn daemon
+  file:
+    path: "/etc/runit/runsvdir/default/openvpn"
+    src: "/etc/sv/openvpn"
+    state: link
+  become: yes
