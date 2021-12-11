@@ -1,0 +1,3 @@
+---
+openvpn:
+  in_interface: eth1

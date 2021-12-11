@@ -65,3 +65,10 @@
     src: "/etc/sv/openvpn"
     state: link
   become: yes
+- name: Ensure traffic to 1194 is allowed through the firewall
+  iptables:
+    table: filter
+    chain: INPUT
+    in_interface: "{{ openvpn.in_interface }}"
+    jump: ACCEPT
+  become: yes
