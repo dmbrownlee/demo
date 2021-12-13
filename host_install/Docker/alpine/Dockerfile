@@ -13,7 +13,7 @@ RUN apk add --no-cache bash \
 && echo -e "$password\n$password\n" | passwd $username \
 && mkdir -p /run/sshd \
 && mkdir -p /var/log/svlogd/sshd \
-&& mkdir -p /etc/sv/sshd/log 
+&& mkdir -p /etc/sv/sshd/log
 
 COPY --chown=root:root files/boot.sh /sbin/boot.sh
 COPY --chown=root:root files/sshd.runit /etc/sv/sshd/run
@@ -25,4 +25,5 @@ RUN sed -i -e "s/USERNAME/$username/g" /sbin/boot.sh \
 
 EXPOSE 22
 
-CMD ["/sbin/boot.sh", "${ANSIBLE_CONTROLLER='false'}"]
+ENV ANSIBLE_CONTROLLER='false'
+CMD ["/sbin/boot.sh"]
