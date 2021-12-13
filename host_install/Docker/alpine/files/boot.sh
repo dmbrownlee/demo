@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ $ANSIBLE_CONTROLLER == 'true' ]]; then
+if [[ "$ANSIBLE_CONTROLLER" == "true" ]]; then
   which curl || apk add --no-cache curl
   [ -f /home/USERNAME/setup ] ||
     curl --output /home/USERNAME/setup https://raw.githubusercontent.com/dmbrownlee/labnetwork/main/setup
