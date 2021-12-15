@@ -10,6 +10,7 @@
       tags: [iptables]
     - role: runit
       tags: [runit]
+      when: ansible_distribution == 'Debian'
     - role: router
       tags: [router]
 # === Tier 1 devices ===
