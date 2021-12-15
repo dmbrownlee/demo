@@ -36,7 +36,7 @@
       changed_when: false
       become: yes
       when: ansible_distribution == 'Alpine'
-    - name: Ensure persistent iptables rules get loaded at boot
+    - name: Ensure persistent iptables rules get loaded at boot (Debian)
       template:
         dest: /etc/network/if-pre-up.d/firewall
         src: firewall.j2
@@ -44,4 +44,18 @@
         group: root
         mode: "0755"
       become: yes
+      when: ansible_distribution == 'Debian'
+    - name: Ensure persistent iptables rules get loaded at boot (Alpine)
+      copy:
+        dest: /etc/network/if-pre-up.d/firewall
+        content: |
+          #!/bin/bash
+          if [ -f /etc/iptables/rules.v4 ]; then
+            /sbin/iptables-restore < /etc/iptables/rules.v4
+          fi
+        owner: root
+        group: root
+        mode: "0755"
+      become: yes
+      when: ansible_distribution == 'Alpine'
   when: fw is defined
