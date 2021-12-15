@@ -85,7 +85,7 @@
     - "ospfd"
   loop_control:
     loop_var: quagga_server
-- name: Enable zebra daemon
+- name: Enable zebra daemon (Debian)
   file:
     path: "/etc/runit/runsvdir/default/{{ quagga_server }}"
     src: "/etc/sv/{{ quagga_server }}"
@@ -96,6 +96,19 @@
     - "ospfd"
   loop_control:
     loop_var: quagga_server
+  when: ansible_distribution == 'Debian'
+- name: Enable zebra daemon (Alpine)
+  file:
+    path: "/etc/service/{{ quagga_server }}"
+    src: "/etc/sv/{{ quagga_server }}"
+    state: link
+  become: yes
+  loop:
+    - "zebra"
+    - "ospfd"
+  loop_control:
+    loop_var: quagga_server
+  when: ansible_distribution == 'Alpine'
 - name: Ensure vtysh is the default console
   file:
     path: /root/startvtysh
