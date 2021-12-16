@@ -1,6 +1,6 @@
 ---
 - name: Ensure the openvpn package is installed
-  apt:
+  package:
     name: openvpn
     state: present
   become: yes
@@ -59,12 +59,20 @@
     in_interface: tun+
     jump: ACCEPT
   become: yes
-- name: Enable openvpn daemon
+- name: Enable openvpn daemon (Debian)
   file:
     path: "/etc/runit/runsvdir/default/openvpn"
     src: "/etc/sv/openvpn"
     state: link
   become: yes
+  when: ansible_distribution == 'Debian'
+- name: Enable openvpn daemon (Alpine)
+  file:
+    path: "/etc/service/openvpn"
+    src: "/etc/sv/openvpn"
+    state: link
+  become: yes
+  when: ansible_distribution == 'Alpine'
 - name: Ensure traffic to 1194 is allowed through the firewall
   iptables:
     table: filter
