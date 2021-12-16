@@ -119,11 +119,18 @@
   when: quagga.vtysh.default_console is defined and quagga.vtysh.default_console
 - name: Ensure isc-dhcp-relay is installed and configured if needed
   block:
-    - name: Install isc-dhcp-relay
+    - name: Install isc-dhcp-relay (Debian)
       apt:
         name: isc-dhcp-relay
         state: present
       become: yes
+      when: ansible_distribution == 'Debian'
+    - name: Install isc-dhcp-relay (Alpine)
+      package:
+        name: dhcrelay
+        state: present
+      become: yes
+      when: ansible_distribution == 'Alpine'
     - name: Ensure runit directories for DHCP agent exists
       file:
         path: "{{ item }}"
@@ -156,10 +163,18 @@
         group: root
         mode: '0755'
       become: yes
-    - name: Enable DHCP relay daemon
+    - name: Enable DHCP relay daemon (Debian)
       file:
         path: "/etc/runit/runsvdir/default/dhcrelay"
         src: "/etc/sv/dhcrelay"
         state: link
       become: yes
+      when: ansible_distribution == 'Debian'
+    - name: Enable DHCP relay daemon (Alpine)
+      file:
+        path: "/etc/service/dhcrelay"
+        src: "/etc/sv/dhcrelay"
+        state: link
+      become: yes
+      when: ansible_distribution == 'Alpine'
   when: isc_dhcp_relay is defined
