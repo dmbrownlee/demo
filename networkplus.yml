@@ -1,18 +1,22 @@
 ---
-- name: Configure controler
+- name: Configure bootstrap on the Ansible controller
   hosts: control.networkplus.test
   roles:
     - role: bootstrap
       tags: [bootstrap]
-    - role: breakfix
-      tags: [breakfix]
     - role: iptables
       tags: [iptables]
     - role: runit
       tags: [runit]
       when: ansible_distribution == 'Debian'
+- name: Configure services on the Ansible controller
+  hosts: control.networkplus.test
+    - role: ansible_controller
+      tags: [ansible_controller]
     - role: router
       tags: [router]
+    - role: breakfix
+      tags: [breakfix]
 # === Tier 1 devices ===
 # These devices are accessible to the control host without needing to
 # configure intermediary devices.  This includes the firewall and
