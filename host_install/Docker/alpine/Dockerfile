@@ -2,12 +2,9 @@ FROM alpine:latest
 ARG username
 ARG password
 
-RUN apk add --no-cache sudo
-RUN apk add --no-cache openssh-server
-RUN apk add --no-cache runit
+RUN apk add --no-cache sudo openssh openssh-server runit bash
 
-RUN apk add --no-cache bash \
-&& addgroup $username \
+RUN addgroup $username \
 && adduser -h /home/$username -G $username -s /bin/bash -D $username \
 && echo "$username ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/$username \
 && echo -e "$password\n$password\n" | passwd $username \
