@@ -29,18 +29,20 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
-- name: Configure services on tier 1 devices
-  hosts: tier1
-  roles:
     - role: iptables
       tags: [iptables]
     - role: runit
       tags: [runit]
+      when: ansible_distribution == 'Debian'
+- name: Configure services on tier 1 devices
+  hosts: tier1
+  roles:
     - role: router
       tags: [router]
     - role: TEA_disable
       tags: [TEA_disable]
     - role: debansiblefix
+      when: ansible_distribution == 'Debian'
   post_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
@@ -60,7 +62,13 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
+    - role: iptables
+      tags: [iptables]
+    - role: runit
+      tags: [runit]
+      when: ansible_distribution == 'Debian'
     - role: debansiblefix
+      when: ansible_distribution == 'Debian'
 - name: Configure DNS servers
   hosts: dns_servers
   roles:
@@ -69,8 +77,6 @@
 - name: Configure web servers
   hosts: web_servers
   roles:
-    - role: runit
-      tags: [runit]
     - role: web-server
       tags: [web-server]
 - name: Configure VPN servers
