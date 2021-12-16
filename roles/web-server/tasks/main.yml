@@ -1,6 +1,6 @@
 ---
 - name: Ensure the web server package is installed
-  apt:
+  package:
     name: nginx
     state: present
   become: yes
