@@ -1,6 +1,6 @@
 ---
 - name: Ensure the dnsmasq package is installed
-  apt:
+  package:
     name: dnsmasq
     state: present
   become: yes
