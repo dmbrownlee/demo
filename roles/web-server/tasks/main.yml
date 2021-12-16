@@ -39,3 +39,11 @@
     state: started
     enabled: yes
   become: yes
+  when: ansible_distribution == 'Debian'
+- name: Enable DHCP relay daemon (Alpine)
+  file:
+    path: "/etc/service/nginx"
+    src: "/etc/sv/nginx"
+    state: link
+  become: yes
+  when: ansible_distribution == 'Alpine'
