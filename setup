@@ -30,7 +30,7 @@ else
   Example:
   ./setup networkplus
   
-  DONE
+DONE
   exit 1
 fi
 
