@@ -3,18 +3,6 @@
 # ANSIBLE_CONTROLLER='true' is added to the environment when the
 # container is created.
 
-if [[ $# -ne 0 ]]; then
-  PLAYBOOK=${1}.yml
-else
-  echo "You need to pass the name of the network model you wish to configure"
-  echo "as the first argument."
-  echo
-  echo "Example:"
-  echo "./setup networkplus"
-  echo
-  exit 1
-fi
-
 # Ensure git and ansible is installed on Alpine Linux
 [ -f /etc/alpine-release ] &&
   ( [ -h /usr/bin/git ] || sudo apk add --no-cache git ) &&
@@ -28,6 +16,22 @@ if [ ! -d $HOME/labnetwork ]; then
 else
   cd $HOME/labnetwork
   git pull
+fi
+
+if [[ $# -ne 0 ]]; then
+  PLAYBOOK=${1}.yml
+else
+  cat - <<-DONE
+  The setup script has ensured that git and Ansible are installed and has
+  cloned the labnetwork project locally.  If you would like to run the Ansible
+  playbook to configure the nodes in your network model, you need to pass the
+  name of the network model you wish to configure as the first argument.
+  
+  Example:
+  ./setup networkplus
+  
+  DONE
+  exit 1
 fi
 
 echo "Make sure all the devices in the network model are started !!!"
