@@ -32,22 +32,22 @@ You can login to the "default" virtual machine if you want to run podman command
 podman machine ssh
 ```
 ## Building an image from a Docker file
-Change into the directory containing the ```Dockerfile``` (I'll use the "debansible" image in this example):</br>
+Change into the directory containing the ```Dockerfile``` (I'll use the "alpine" image in this example):</br>
 ```
-cd debansible/
+cd alpine/
 ```
 Next, run the podman build command specifying an appropriate repo and tag and passing the current directory ('.') as the first argument:</br>
 ```
-podman build --rm --no-cache --build-arg username=student --build-arg password=password -t dmbrownlee/debansible:test .
+podman build --rm --no-cache --build-arg username=student --build-arg password=password -t dmbrownlee/alpine:latest .
 ```
-Note, I use the tag "<image>:test" for testing.</br>
+Note, I use the tag "<image>:latest" for testing.</br>
 You can verify the new image is in the "default" virtual machine's image store with:</br>
 ```
 podman images
 ```
 You can start a container using:</br>
 ```
-podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/debansible:test
+podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/alpine:latest
 ```
 You can attach a terminal to the running container with:</br>
 ```
@@ -66,7 +66,7 @@ Note, the IP address belongs to the "default" virtual machine and port 2023 is g
 
 or to run a shell within the container:</br>
 ```
-podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/debansible:test bash
+podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/alpine:latest bash
 ```
 ## Uploading new images to hub.docker.com
 Make sure you are logged into your hub.docker.com account:</br>
@@ -75,7 +75,7 @@ podman login docker.io --username dmbrownlee
 ```
 Then upload the image:</br>
 ```
-podman push dmbrownlee/debansible:latest
+podman push dmbrownlee/alpine:latest
 ```
 ## Updating images in GNS3 VM
 If you have already pulled an image to the GNS3 VM, it will continue to use that version of the image even if a newer version has been pushed to hub.docker.com.  Information about how to login to the GNS3 VM can be found on the VMs console.
@@ -112,13 +112,13 @@ docker image rm <id>
 ```
 Download the latest image:</br>
 ```
-docker pull dmbrownlee/debansible:latest
+docker pull dmbrownlee/alpine:latest
 ```
 Find out more about an image:</br>
 ```
-docker inspect dmbrownlee/debansible:latest
+docker inspect dmbrownlee/alpine:latest
 ```
 See the history of the layers (not useful when squashed?):</br>
 ```
-docker history dmbrownlee/debansible:latest
+docker history dmbrownlee/alpine:latest
 ```
