@@ -77,8 +77,8 @@
 - name: Configure DNS servers
   hosts: dns_servers
   roles:
-    - role: dns-server
-      tags: [dns-server]
+    - role: dnsmasq
+      tags: [dnsmasq]
 - name: Configure web servers
   hosts: web_servers
   roles:
