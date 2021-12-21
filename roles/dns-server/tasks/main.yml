@@ -12,7 +12,7 @@
     group: root
     mode: '0644'
   become: yes
-  notify: restart_dnsmasq
+  notify: reload_dnsmasq
 - name: Ensure directories for runit support exist
   file:
     path: "{{ item }}"
