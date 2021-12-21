@@ -6,9 +6,6 @@
       tags: [bootstrap]
     - role: baseline
       tags: [baseline]
-    - role: runit
-      tags: [runit]
-      when: ansible_distribution == 'Debian'
 - name: Configure services on the Ansible controller
   hosts: control.networkplus.test
   roles:
@@ -36,9 +33,6 @@
       tags: [bootstrap]
     - role: baseline
       tags: [baseline]
-    - role: runit
-      tags: [runit]
-      when: ansible_distribution == 'Debian'
 - name: Configure services on tier 1 devices
   hosts: tier1
   roles:
@@ -46,8 +40,6 @@
       tags: [router]
     - role: TEA_disable
       tags: [TEA_disable]
-    - role: debansiblefix
-      when: ansible_distribution == 'Debian'
   post_tasks:
     - name: Delay 60 seconds so new OSPF routers have time to share routes
       wait_for:
@@ -69,11 +61,6 @@
       tags: [bootstrap]
     - role: baseline
       tags: [baseline]
-    - role: runit
-      tags: [runit]
-      when: ansible_distribution == 'Debian'
-    - role: debansiblefix
-      when: ansible_distribution == 'Debian'
 - name: Configure DNS servers
   hosts: dns_servers
   roles:
