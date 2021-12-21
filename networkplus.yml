@@ -4,8 +4,8 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
-    - role: iptables
-      tags: [iptables]
+    - role: baseline
+      tags: [baseline]
     - role: runit
       tags: [runit]
       when: ansible_distribution == 'Debian'
@@ -34,8 +34,8 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
-    - role: iptables
-      tags: [iptables]
+    - role: baseline
+      tags: [baseline]
     - role: runit
       tags: [runit]
       when: ansible_distribution == 'Debian'
@@ -67,8 +67,8 @@
   roles:
     - role: bootstrap
       tags: [bootstrap]
-    - role: iptables
-      tags: [iptables]
+    - role: baseline
+      tags: [baseline]
     - role: runit
       tags: [runit]
       when: ansible_distribution == 'Debian'
