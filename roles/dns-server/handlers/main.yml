@@ -1,5 +1,5 @@
 ---
 - name: Ensure dhsmasq is restarted on a config change
   listen: restart_dnsmasq
-  command: /etc/init.d/dnsmasq restart
+  command: sv reload dnsmasq
   become: yes
