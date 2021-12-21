@@ -1,4 +1,12 @@
 ---
+- name: Ensure iputils is installed (Alpine)
+  package:
+    name: "{{ item }}"
+    state: latest
+  loop:
+    - iputils
+  become: yes
+  when: ansible_distribution == 'Alpine'
 - name: Ensure iptables is configured and persists reboots
   block:
     - name: Ensure iptables is installed (Debian)
