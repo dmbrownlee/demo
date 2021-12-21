@@ -4,6 +4,14 @@
     name: openvpn
     state: present
   become: yes
+- name: Ensure directory for server configuration exists
+  file:
+    path: "/etc/openvpn/server"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
 - name: Ensure openvpn server.conf file exists
   template:
     src: server.conf.j2
