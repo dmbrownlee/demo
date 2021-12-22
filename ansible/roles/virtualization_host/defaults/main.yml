@@ -20,9 +20,27 @@ packer_build_dir: "{{ demo_root }}/ansible/packer"
 # ======================================
 # Virtual network configuration settings
 # ======================================
+# Note: you do not get to choose the name of our virtualbox host-only 
+# interfaces.  They are created as "vboxnetN" where "N" starts at 0 and
+# increments sequentially.  The name is only specified here so you can specify
+# to which interface you are assigning an address/mask.  However, they must all
+# be specified in order with no gaps to prevent issues with the playbook.
 hostonlyifs:
   - name: "vboxnet0"
     ip: "192.168.56.1"
+    netmask: "255.255.255.0"
+    ipv6: "fc00::1"
+    netmasklengthv6: "64"
+  # - name: "vboxnet1"
+  #   ip: "10.1.1.1"
+  #   netmask: "255.255.255.0"
+  #   ipv6: "fc00::1:0:0:0:1"
+  #   netmasklengthv6: "64"
+  # - name: "vboxnet2"
+  #   ip: "10.1.2.1"
+  #   netmask: "255.255.255.0"
+  #   ipv6: "fc00::2:0:0:0:1"
+  #   netmasklengthv6: "64"
 natnetworks:
   - name: 'RHCSA Network'
     netblock: '192.168.4.0/24'
