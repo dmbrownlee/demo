@@ -1,5 +1,5 @@
 ---
-- name: Ensure the web server package is installed
+- name: Ensure the nginx package is installed
   package:
     name: nginx
     state: present
@@ -40,7 +40,7 @@
     enabled: yes
   become: yes
   when: ansible_distribution == 'Debian'
-- name: Enable DHCP relay daemon (Alpine)
+- name: Enable nginx at boot (Alpine)
   file:
     path: "/etc/service/nginx"
     src: "/etc/sv/nginx"
