@@ -65,8 +65,8 @@
 - name: Configure web servers
   hosts: web_servers
   roles:
-    - role: web-server
-      tags: [web-server]
+    - role: nginx
+      tags: [nginx]
 - name: Configure VPN servers
   hosts: firewall.networkplus.test
   roles:
