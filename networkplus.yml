@@ -40,14 +40,10 @@
       tags: [router]
     - role: TEA_disable
       tags: [TEA_disable]
-  post_tasks:
-    - name: Delay 60 seconds so new OSPF routers have time to share routes
-      wait_for:
-        timeout: 60
-      delegate_to: localhost
-      when: ospf_restarted is defined
-# Once the network is up (and we wait it a pre_task for OSPF to converge,
-# we can begin configuring the hosts.
+# === Tier 2 devices ===
+# The control host can only reach tier 2 devices through the tier 1 devices
+# after the tier 1 devices have been configured.  Once the tier 1 routers are
+# up and have convered state, we can begin configuring the tier 2 hosts.
 - name: Bootstrap Python onto tier 2 devices
   gather_facts: false
   hosts: tier2
