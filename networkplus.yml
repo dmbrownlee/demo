@@ -11,8 +11,8 @@
   roles:
     - role: ansible_controller
       tags: [ansible_controller]
-    - role: router
-      tags: [router]
+    - role: quagga
+      tags: [quagga]
     - role: breakfix
       tags: [breakfix]
 # === Tier 1 devices ===
@@ -36,8 +36,8 @@
 - name: Configure services on tier 1 devices
   hosts: tier1
   roles:
-    - role: router
-      tags: [router]
+    - role: quagga
+      tags: [quagga]
     - role: isc-dhcp-relay
       tags: [isc-dhcp-relay]
       when: ansible_hostname == 'router2'
