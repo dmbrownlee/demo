@@ -53,6 +53,18 @@ quagga:
         - "  passive-interface eth2"
         - "  passive-interface eth2.100"
         - "  passive-interface eth2.200"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6d"
+        - "  router-id 192.168.42.4"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 address fc00:0:1::4/64"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"
 isc_dhcp_relay:
   dhcp_server: "192.168.44.1"
   interfaces: "-iu eth1 -id eth2 -id eth2.100 -id eth2.200"

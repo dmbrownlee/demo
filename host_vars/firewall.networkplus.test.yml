@@ -51,3 +51,15 @@ quagga:
         - "  passive-interface eth1"
         - "  passive-interface eth2"
         - "  default-information originate always"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6d"
+        - "  router-id 192.168.42.2"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 address fc00:0:1::2/64"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"

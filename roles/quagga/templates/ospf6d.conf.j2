@@ -5,7 +5,6 @@
 !
 {% endif %}
 {% if quagga_server.config is defined %}
-router ospf6
 {% for line in quagga_server.config %}
 {{ line }}
 {% endfor %}
