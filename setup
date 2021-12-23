@@ -157,7 +157,7 @@ esac
 # ============================================================================
 if [[ ! -d $DEMODIR ]]; then
   cd $HOME &&
-  /usr/local/bin/git clone https://github.com/dmbrownlee/demo.git
+  /usr/local/bin/git clone -b release https://github.com/dmbrownlee/demo.git
 else
   echo "Update local copy of demo project:"
   cd $DEMODIR
