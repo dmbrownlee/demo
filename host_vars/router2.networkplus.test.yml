@@ -33,6 +33,7 @@ quagga:
         - "interface eth0"
         - "  description Provisioning"
         - "  ip address 192.168.42.4/24"
+        - "  ipv6 address fc00:0:1::4/64"
         - "interface eth1"
         - "  description Backbone"
         - "  ip address 192.168.41.6/30"
@@ -62,7 +63,6 @@ quagga:
         - "  interface eth0 area 0.0.0.0"
       ifcfg:
         - "interface eth0"
-          #      - " ipv6 address fc00:0:1::4/64"
         - " ipv6 ospf6 network broadcast"
         - " ipv6 ospf6 cost 25"
 isc_dhcp_relay:
