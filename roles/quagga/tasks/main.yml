@@ -31,6 +31,21 @@
     group: quaggavty
     mode: '0775'
   become: yes
+- name: Ensure /etc/defaults directory exists
+  file:
+    path: /etc/defaults
+    state: directory
+    owner: root
+    group: root
+    mode: '0775'
+  become: yes
+- name: Ensure defaults file for options exists
+  file:
+    path: /etc/defaults/quagga
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+  become: yes
 - name: Ensure vtysh is the default console
   file:
     path: /root/startvtysh
