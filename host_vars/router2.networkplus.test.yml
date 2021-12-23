@@ -56,7 +56,7 @@ quagga:
     - name: ospf6d
       enabled: true
       config:
-        - "router ospf6d"
+        - "router ospf6"
         - "  router-id 192.168.42.4"
         - "  area 0.0.0.0 range fc00:0:1::/64"
         - "  interface eth0 area 0.0.0.0"
