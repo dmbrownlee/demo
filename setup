@@ -11,7 +11,7 @@
 # Ensure we're working with the most recent repo commit
 if [ ! -d $HOME/labnetwork ]; then
   cd $HOME &&
-  git clone https://github.com/dmbrownlee/labnetwork.git &&
+  git clone -b release https://github.com/dmbrownlee/labnetwork.git &&
   cd labnetwork
 else
   cd $HOME/labnetwork
