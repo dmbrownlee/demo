@@ -44,6 +44,6 @@ quagga:
         - "  interface eth0 area 0.0.0.0"
       ifcfg:
         - "interface eth0"
-        - " ipv6 address fc00:0:1::3/64"
+          #- " ipv6 address fc00:0:1::3/64"
         - " ipv6 ospf6 network broadcast"
         - " ipv6 ospf6 cost 25"
