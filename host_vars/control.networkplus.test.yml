@@ -15,16 +15,22 @@ interfaces:
     comment: "Private connection to Internet for bootstrap"
     method: dhcp
 quagga:
-  zebra:
-    - "ip route 0.0.0.0/0 192.168.122.1"
-    - "interface eth0"
-    - "  description Provisioning"
-    - "  ip address 192.168.42.1/24"
-    - "interface eth1"
-    - "  description Internet"
-  ospfd_interfaces:
-    - { name: eth0, ospf_cost: 25 }
-  ospfd:
-    - "  ospf router-id 1.1.1.1"
-    - "  network 192.168.42.0/24 area 0"
-    - "  passive-interface eth1"
+  vtysh_is_default_shell: false
+  servers:
+    - name: zebra
+      enabled: true
+      config:
+        - "ip route 0.0.0.0/0 192.168.122.1"
+        - "interface eth0"
+        - "  description Provisioning"
+        - "  ip address 192.168.42.1/24"
+        - "interface eth1"
+        - "  description Internet"
+    - name: ospfd
+      enabled: true
+      ifcfg:
+        - { name: eth0, ospf_cost: 25 }
+      config:
+        - "  ospf router-id 1.1.1.1"
+        - "  network 192.168.42.0/24 area 0"
+        - "  passive-interface eth1"

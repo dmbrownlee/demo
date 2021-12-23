@@ -31,84 +31,6 @@
     group: quaggavty
     mode: '0775'
   become: yes
-- name: Ensure quagga configurations are current
-  template:
-    dest: /etc/network/quagga/{{ item.service }}.conf
-    src: "{{ item.service }}.conf.j2"
-    owner: quagga
-    group: "{{ item.group }}"
-    mode: '0644'
-  notify: restart_router
-  become: yes
-  loop:
-    - { service: zebra, group: quagga }
-    - { service: vtysh, group: quaggavty }
-    - { service: ospfd, group: quagga }
-- name: Ensure directories for runit support exist
-  file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-  loop:
-    - "/etc/sv/zebra/log"
-    - "/var/log/svlogd/zebra"
-    - "/etc/sv/ospfd/log"
-    - "/var/log/svlogd/ospfd"
-- name: Ensure runit scripts for quagga daemon logging exist
-  copy:
-    content: |
-      #!/bin/sh -euC
-      svlogd -tt /var/log/svlogd/{{ quagga_server }}
-    dest: "/etc/sv/{{ quagga_server }}/log/run"
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-  loop:
-    - "zebra"
-    - "ospfd"
-  loop_control:
-    loop_var: quagga_server
-- name: Ensure runit scripts for quagga daemons exist
-  template:
-    src: runit_quagga.j2
-    dest: "/etc/sv/{{ quagga_server }}/run"
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-  loop:
-    - "zebra"
-    - "ospfd"
-  loop_control:
-    loop_var: quagga_server
-- name: Enable zebra daemon (Debian)
-  file:
-    path: "/etc/runit/runsvdir/default/{{ quagga_server }}"
-    src: "/etc/sv/{{ quagga_server }}"
-    state: link
-  become: yes
-  loop:
-    - "zebra"
-    - "ospfd"
-  loop_control:
-    loop_var: quagga_server
-  when: ansible_distribution == 'Debian'
-- name: Enable zebra daemon (Alpine)
-  file:
-    path: "/etc/service/{{ quagga_server }}"
-    src: "/etc/sv/{{ quagga_server }}"
-    state: link
-  become: yes
-  loop:
-    - "zebra"
-    - "ospfd"
-  loop_control:
-    loop_var: quagga_server
-  when: ansible_distribution == 'Alpine'
 - name: Ensure vtysh is the default console
   file:
     path: /root/startvtysh
@@ -116,7 +38,24 @@
     access_time: preserve
     modification_time: preserve
   become: yes
-  when: quagga.vtysh.default_console is defined and quagga.vtysh.default_console
+  when: quagga.vtysh_is_default_shell
+- name: Ensure quagga configuration for vtysh is current
+  template:
+    dest: /etc/network/quagga/vtysh.conf
+    src: "vtysh.conf.j2"
+    owner: quagga
+    group: "quaggavty"
+    mode: '0644'
+  become: yes
+# Now configure each of quagga's servers
+- name: Configure quagga's servers
+  include_tasks: add-quagga-service.yml
+  when: quagga_server.enabled
+  loop: "{{ quagga.servers }}"
+  loop_control:
+    loop_var: quagga_server
+    label: "{{ quagga_server.name }}"
+# The DHCP relay service should move to its own role
 - name: Ensure isc-dhcp-relay is installed and configured if needed
   block:
     - name: Install isc-dhcp-relay (Debian)

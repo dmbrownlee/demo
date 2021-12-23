@@ -5,17 +5,17 @@ enable password zebra
 log stdout
 log monitor informational
 !
-{% if quagga.ospfd_interfaces is defined %}
-{% for iface in quagga.ospfd_interfaces %}
+{% if quagga_server.ifcfg  is defined %}
+{% for iface in quagga_server.ifcfg  %}
 interface {{ iface.name }}
  ip ospf cost {{ iface.ospf_cost }}
 !
 {% endfor %}
 !
 {% endif %}
-{% if quagga.ospfd is defined %}
+{% if quagga_server.config is defined %}
 router ospf
-{% for line in quagga.ospfd %}
+{% for line in quagga_server.config %}
 {{ line }}
 {% endfor %}
 {% endif %}

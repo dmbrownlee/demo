@@ -4,8 +4,8 @@ enable password zebra
 log stdout
 log monitor informational
 !
-{% if quagga.zebra is defined %}
-{% for line in quagga.zebra %}
+{% if quagga_server.config is defined %}
+{% for line in quagga_server.config %}
 {{ line }}
 {% endfor %}
 {% endif %}
