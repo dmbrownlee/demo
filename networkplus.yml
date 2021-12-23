@@ -38,6 +38,9 @@
   roles:
     - role: router
       tags: [router]
+    - role: isc-dhcp-relay
+      tags: [isc-dhcp-relay]
+      when: ansible_hostname == 'router2'
     - role: TEA_disable
       tags: [TEA_disable]
 # === Tier 2 devices ===
