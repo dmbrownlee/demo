@@ -18,7 +18,7 @@
     key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/{{ ansible_user_id }}.pub') }}"
 - name: Ensure hostname is set to FQDN
   hostname:
-    name: "{{ inventory_hostname }}"
+    name: "{{ ansible_fqdn }}"
   become: yes
 - name: Ensure FQDN is resolvable via /etc/hosts
   replace:
