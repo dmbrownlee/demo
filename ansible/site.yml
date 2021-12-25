@@ -26,7 +26,6 @@
       vars:
         boxes:
           - { distro: debian, version: "11.1.0", configuration: default }
-          - { distro: windows, version: "10", configuration: default }
       tags: basebox
 
 - name: Ensure virtual lab environment for rhcsa is configured

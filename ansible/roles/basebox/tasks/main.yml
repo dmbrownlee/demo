@@ -16,16 +16,6 @@
     executable: "{{ ansible_user_shell }}"
   changed_when: false
   register: vagrant_box_list
-# This is a hack for Windows until we can treat it like a first class distro
-- name: Ensure packer build files for VirtualBox have beein installed
-  copy:
-    dest: "{{ packer_build_dir }}/"
-    src: "{{ virtualization }}/{{ item }}"
-    mode: '0644'
-  with_items:
-    - answer_files
-    - cookbooks
-    - scripts
 - name: Build the requested base boxes
   include_tasks: configurebox.yml
   vars:
