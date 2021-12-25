@@ -1,13 +1,13 @@
 ---
 - name: Configure bootstrap on the Ansible controller
-  hosts: control.networkplus.test
+  hosts: control
   roles:
     - role: bootstrap
       tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure services on the Ansible controller
-  hosts: control.networkplus.test
+  hosts: control
   roles:
     - role: ansible_controller
       tags: [ansible_controller]
@@ -73,7 +73,7 @@
     - role: nginx
       tags: [nginx]
 - name: Configure VPN servers
-  hosts: firewall.networkplus.test
+  hosts: firewall
   roles:
     - role: openvpn
       tags: [openvpn]
