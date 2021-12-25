@@ -165,6 +165,17 @@ authorityKeyIdentifier=keyid,issuer
 #nsCaPolicyUrl
 #nsSslServerName
 
+[ req_attributes ]
+[ req_distinguished_name ]
+countryName             = US
+stateOrProvinceName     = Washington
+organizationName        = NetworkPlus Study Group
+commonName              = NetworkPlus Root CA
+emailAddress            = ca@networkplus.test
+
+[ req_ca_extensions ]
+basicConstraints=CA:TRUE
+
 # This is required for TSA certificates.
 # extendedKeyUsage = critical,timeStamping
 

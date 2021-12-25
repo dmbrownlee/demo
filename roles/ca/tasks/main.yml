@@ -26,3 +26,35 @@
     group: root
     mode: '0600'
   become: yes
+- name: Check if serial exists
+  ansible.builtin.file:
+    path: /etc/CA/serial
+    state: file
+  failed_when: false
+  register: stat_serial
+  become: yes
+- name: Ensure serial is initialized to '01' if it doesn't exist
+  ansible.builtin.copy:
+    dest: /etc/CA/serial
+    content: '01'
+    owner: root
+    group: root
+    mode: '0600'
+  when: stat_serial.state == 'absent'
+  become: yes
+- name: Ensure the database file exists
+  ansible.builtin.file:
+    path: /etc/CA/index.txt
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+    owner: root
+    group: root
+    mode: '0600'
+  become: yes
+- name: Ensure self-signed CA cert exists
+  command:
+    chdir: /etc/CA
+    cmd: openssl req -x509 -newkey rsa:2048 -keyout private/cakey.pem -keyform pem -passin pass:password -passout pass:password -out cacert.pem -outform PEM -extensions req_ca_extensions -subj '/C=US/ST=Washington/O=NetworkPlus Study Group/CN=NetworkPlus Root CA/emailAddress=ca@networkplus.test'
+    creates: /etc/CA/cacert.pem
+  become: yes
