@@ -13,6 +13,8 @@
       tags: [ansible_controller]
     - role: quagga
       tags: [quagga]
+    - role: ca
+      tags: [ca]
     - role: breakfix
       tags: [breakfix]
 # === Tier 1 devices ===
