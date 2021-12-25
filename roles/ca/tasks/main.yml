@@ -1,0 +1,29 @@
+---
+- name: Ensure openssl is installed
+  ansible.builtin.package:
+    name: openssl
+    state: present
+  become: yes
+- name: Ensure demoCA directory exists in /etc
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
+  become: yes
+  loop:
+    - /etc/CA
+    - /etc/CA/certs
+    - /etc/CA/crl
+    - /etc/CA/newcerts
+    - /etc/CA/private
+- name: Ensure default config is updated to use /etc/CA
+  ansible.builtin.template:
+    src: openssl.cnf.j2
+    dest: /etc/ssl/openssl.cnf
+    owner: root
+    group: root
+    mode: '0600'
+    validate: /usr/sbin/sshd -t -f %s
+    backup: yes
