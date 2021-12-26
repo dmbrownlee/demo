@@ -27,11 +27,12 @@
     replace: '\1\2.networkplus.test \2'
   become: yes
 - name: Ensure /ets/hosts contains static IPs for network gear
-  lineinfile:
-    path: /etc/hosts
-    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].inventory_hostname_short }}.{{ ansible_domain }} {{ hostvars[item].inventory_hostname_short }}"
-  with_inventory_hostnames:
-    - all
+  ansible.builtin.template:
+    src: "hosts.j2"
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
   become: yes
   when: populate_hosts_file is defined and populate_hosts_file
 - name: Ensure network interfaces config file exists

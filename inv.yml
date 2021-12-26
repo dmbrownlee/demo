@@ -15,6 +15,8 @@ all:
       ansible_host: 192.168.43.1
     lab1.lab:
       ansible_host: 192.168.47.1
+  vars:
+    mydomain: networkplus.test
   children:
     tier0:
       hosts:
@@ -41,3 +43,6 @@ all:
     web_servers:
       hosts:
         www1:
+    lab_hosts:
+      hosts:
+        lab1.lab:
