@@ -17,3 +17,4 @@
   pause:
     prompt: Playbook will continue in 60 seconds (unless you interrupt it)
     seconds: 60
+  when: ansible_hostname != 'control'
