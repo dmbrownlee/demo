@@ -7,7 +7,4 @@ iso_location: "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd"
 iso_altlocation: "http://cdimage.debian.org/mirror/cdimage/archive/11.1.0/amd64/iso-cd"
 iso_name: "debian-11.1.0-amd64-netinst.iso"
 install_file: "debian-11.1.0-preseed.cfg"
-cpus: 1
-ram: 1024
-disk_size: "20480"
 templateks: "packer-debian-preseed.j2"

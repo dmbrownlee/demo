@@ -5,9 +5,6 @@ guest_os_type: "RedHat_64"
 iso_checksum: "sha256:0081f8b969d0cef426530f6d618b962c7a01e71eb12a40581a83241f22dfdc25"
 iso_location: "https://download.rockylinux.org/pub/rocky/8/isos/x86_64"
 iso_name: "Rocky-{{ version }}-x86_64-dvd1.iso"
-cpus: 1
-ram: 1024
-disk_size: "20480"
 install_file: "{{ distro }}-{{ version }}-{{ configuration }}-ks.cfg"
 templateks: "RedHat_64-ks.j2"
 repo_lines: |
