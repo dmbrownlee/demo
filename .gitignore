@@ -5,8 +5,5 @@
 *.un~
 .DS_Store
 *.retry
-*.box
-packer_cache
-output-virtualbox-iso
-ansible/packer/
-*/Vagrantfile*
+/packer/
+**/Vagrantfile*

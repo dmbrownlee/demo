@@ -10,7 +10,7 @@ user:
   key_dir: "{{ ansible_user_dir }}/keys"
   demo_dir: "{{ ansible_user_dir }}/demo"
 packer:
-  build_dir: "{{ user.demo_dir }}/ansible/packer"
+  build_dir: "{{ user.demo_dir }}/packer"
   build_vm:
     cpus: 1
     ram: 1024
