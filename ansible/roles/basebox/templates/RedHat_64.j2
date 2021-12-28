@@ -7,10 +7,8 @@
     "guest_os_type": "{{ guest_os_type }}",
     "iso_urls": [
       "{{ user.download_dir }}/{{ iso_name }}",
-      "{{ iso_location }}/{{ iso_name }}"
-    {% if iso_altlocation is defined %}
-      ",{{ iso_altlocation }}/{{ iso_name }}"
-    {% endif %}
+      "{{ iso_location }}/{{ iso_name }}"{% if iso_altlocation is defined and iso_altlocation != 'none' %},
+      "{{ iso_altlocation }}/{{ iso_name }}"{% endif +%}
     ],
     "iso_checksum": "{{ '{{' }} user `checksum` }}",
     "iso_target_path": "{{ user.download_dir }}/{{ iso_name }}",
