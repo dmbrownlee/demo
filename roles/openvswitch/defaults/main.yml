@@ -1,0 +1,4 @@
+---
+runit_services:
+  - { name: ovedb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock' }
+  - { name: ove-vswitchd, enabled: true, startcmd: 'ovs-switchd' }

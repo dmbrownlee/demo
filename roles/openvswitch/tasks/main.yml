@@ -1,0 +1,43 @@
+---
+- name: Ensure the openvswitch package is installed
+  ansible.builtin.package:
+    name: openvswitch
+    state: present
+  become: yes
+- name: Ensure the openvswitch database exists
+  command:
+    argv:
+      - ovsdb-tool
+      - create
+      - /etc/openvswitch/conf.db
+      - /usr/share/openvswitch/vswitch.ovsschema
+    creates: /etc/openvswitch/conf.db
+  become: yes
+- name: Ensure runit has been configured for each service
+  include_tasks: configure_runit.yml
+  become: yes
+  loop: "{{ runit_servicess }}"
+  loop_control:
+    loop_var: service
+    label: "{{ service }}"
+# Create a bridge named br-int
+- name: Ensure bridges exist
+  openvswitch.openvswitch.openvswitch_bridge:
+    bridge: "{{ bridge.name }}"
+    state: "{{ bridge.state | default('present') }}"
+  become: yes
+  loop: "{{ openvswitch.bridges | default(default_bridges}}"
+  loop_control:
+    loop_var: bridge
+    label: "{{ bridge }}"
+- name: Ensure ports are added to bridges
+  openvswitch.openvswitch.openvswitch_port:
+    port: "{{ port.name }}"
+    bridge: "{{ port.bridge }}"
+    state: "{{ port.state | default('present') }}"
+    vlan: "{{ port.vlan | default('1') }}"
+  become: yes
+  loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports }}"
+  loop_control:
+    loop_var: port
+    label: "{{ port }}"
