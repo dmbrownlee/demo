@@ -11,6 +11,7 @@ interfaces:
 #   bridges:
 #     - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev' }
 #   bridge_ports:
+#     - { name: 'eth0', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth1', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth2', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth3', state: 'present', bridge: 'br0', vlan: '1' }
@@ -18,4 +19,3 @@ interfaces:
 #     - { name: 'eth5', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth6', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth7', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth8', state: 'present', bridge: 'br0', vlan: '1' }

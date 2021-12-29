@@ -36,7 +36,6 @@
     state: "{{ port.state | default('present') }}"
     tag: "{{ port.vlan | default('1') }}"
   become: yes
-  when: port.name != 'eth0'
   loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports) }}"
   loop_control:
     loop_var: port
