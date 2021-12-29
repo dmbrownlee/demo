@@ -28,8 +28,6 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-    - role: bootstrap-python
-      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 1 switches
   hosts: tier1_switches
   roles:
@@ -50,8 +48,6 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-    - role: bootstrap-python
-      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 1 devices
   hosts: tier1
   roles:
@@ -79,8 +75,6 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-    - role: bootstrap-python
-      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 2 switches
   hosts: tier2_switches
   roles:
@@ -99,8 +93,6 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-    - role: bootstrap-python
-      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 2 devices
   hosts: tier2
   roles:
@@ -129,8 +121,6 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-    - role: bootstrap-python
-      tags: [bootstrap-python]
 - name: Configure bootstrap on tier 3 switches
   hosts: tier3_switches
   roles:
