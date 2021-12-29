@@ -2,3 +2,7 @@
 runit_services:
   - { name: ovsdb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock' }
   - { name: ovs-vswitchd, enabled: true, startcmd: 'ovs-vswitchd' }
+default_bridges:
+  - { name: 'br0', state: 'present' }
+default_bridge_ports:
+  - { name: 'eth0', state: 'present', bridge: 'br0', vlan: '1' }
