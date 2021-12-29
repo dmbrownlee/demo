@@ -25,7 +25,7 @@
     bridge: "{{ bridge.name }}"
     state: "{{ bridge.state | default('present') }}"
   become: yes
-  loop: "{{ openvswitch.bridges | default(default_bridges}}"
+  loop: "{{ openvswitch.bridges | default(default_bridges) }}"
   loop_control:
     loop_var: bridge
     label: "{{ bridge }}"
@@ -36,7 +36,7 @@
     state: "{{ port.state | default('present') }}"
     tag: "{{ port.vlan | default('1') }}"
   become: yes
-  loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports }}"
+  loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports) }}"
   loop_control:
     loop_var: port
     label: "{{ port }}"
