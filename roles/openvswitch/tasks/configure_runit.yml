@@ -6,6 +6,7 @@
     owner: root
     group: root
     mode: '0755'
+  become: yes
 - name: Ensure runit log directory exists
   file:
     path: "/var/log/svlogd/{{ service.name }}"
@@ -13,6 +14,7 @@
     owner: root
     group: root
     mode: '0755'
+  become: yes
 - name: Ensure runit scripts for logging exist
   copy:
     content: |
@@ -22,6 +24,7 @@
     owner: root
     group: root
     mode: '0755'
+  become: yes
 - name: Ensure runit scripts for daemon exists
   template:
     src: runit_script.j2
@@ -29,9 +32,11 @@
     owner: root
     group: root
     mode: '0755'
+  become: yes
 - name: Enable {{ service.name }} daemon (Alpine)
   file:
     path: "/etc/service/{{ service.name }}"
     src: "/etc/sv/{{ service.name }}"
     state: link
   when: service.enabled
+  become: yes
