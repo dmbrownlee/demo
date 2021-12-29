@@ -3,6 +3,21 @@ runit_services:
   - { name: ovsdb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock' }
   - { name: ovs-vswitchd, enabled: true, startcmd: 'ovs-vswitchd' }
 default_bridges:
-  - { name: 'br0', state: 'present' }
+  - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev' }
 default_bridge_ports:
-  - { name: 'eth0', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth1', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth2', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth3', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth4', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth5', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth6', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth7', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth8', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth9', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth10', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth11', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth12', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth13', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth14', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth15', state: 'present', bridge: 'br0', vlan: '1' }
+  - { name: 'eth16', state: 'present', bridge: 'br0', vlan: '1' }

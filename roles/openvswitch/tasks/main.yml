@@ -19,11 +19,11 @@
   loop_control:
     loop_var: service
     label: "{{ service }}"
-# Create a bridge named br-int
 - name: Ensure bridges exist
   openvswitch.openvswitch.openvswitch_bridge:
     bridge: "{{ bridge.name }}"
     state: "{{ bridge.state | default('present') }}"
+    set: "{{ bridge.set | default(omit) }}"
   become: yes
   loop: "{{ openvswitch.bridges | default(default_bridges) }}"
   loop_control:
@@ -36,6 +36,7 @@
     state: "{{ port.state | default('present') }}"
     tag: "{{ port.vlan | default('1') }}"
   become: yes
+  when: port.name != 'eth0'
   loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports) }}"
   loop_control:
     loop_var: port
