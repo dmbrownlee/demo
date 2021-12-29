@@ -26,6 +26,8 @@
   gather_facts: false
   hosts: tier1_switches
   roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
     - role: bootstrap-python
       tags: [bootstrap-python]
 - name: Configure bootstrap on tier 1 switches
@@ -40,10 +42,14 @@
   roles:
     - role: openvswitch
       tags: [openvswitch]
+    - role: TEA_disable
+      tags: [TEA_disable]
 - name: Bootstrap Python onto tier 1 devices
   gather_facts: false
   hosts: tier1
   roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
     - role: bootstrap-python
       tags: [bootstrap-python]
 - name: Configure bootstrap on tier 1 devices
