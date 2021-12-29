@@ -4,6 +4,14 @@
     name: openvswitch
     state: present
   become: yes
+- name: Ensure the run time directory for UNIX domain sockets exists
+  file:
+    path: /var/run/openvswitch
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
 - name: Ensure the openvswitch database exists
   command:
     argv:
