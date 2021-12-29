@@ -77,6 +77,8 @@
   gather_facts: false
   hosts: tier2_switches
   roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
     - role: bootstrap-python
       tags: [bootstrap-python]
 - name: Configure bootstrap on tier 2 switches
@@ -95,6 +97,8 @@
   gather_facts: false
   hosts: tier2
   roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
     - role: bootstrap-python
       tags: [bootstrap-python]
 - name: Configure bootstrap on tier 2 devices
@@ -123,6 +127,8 @@
   gather_facts: false
   hosts: tier3_switches
   roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
     - role: bootstrap-python
       tags: [bootstrap-python]
 - name: Configure bootstrap on tier 3 switches

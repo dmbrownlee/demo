@@ -1,5 +1,5 @@
 ---
-bootstrap_gateway: '192.168.42.1'
+bootstrap_gateway: '192.168.43.254'
 interfaces:
   eth0:
     comment: "Provisioning Interface"
