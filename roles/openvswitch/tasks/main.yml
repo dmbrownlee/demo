@@ -15,7 +15,7 @@
   become: yes
 - name: Ensure runit has been configured for each service
   include_tasks: configure_runit.yml
-  loop: "{{ runit_servicess }}"
+  loop: "{{ runit_services }}"
   loop_control:
     loop_var: service
     label: "{{ service }}"
