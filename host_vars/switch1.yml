@@ -1,0 +1,13 @@
+---
+bootstrap_gateway: '192.168.42.1'
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: 'static'
+    address: '192.168.42.10'
+    netmask: '255.255.255.0'
+openvswitch:
+  bridges:
+    - { name: 'br0', state: 'present' }
+  bridge_ports:
+    - { name: 'eth0', state: 'present', bridge: 'br0', vlan: '1' }

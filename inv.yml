@@ -9,6 +9,8 @@ all:
       ansible_host: 192.168.42.3
     router2:
       ansible_host: 192.168.42.4
+    switch1:
+      ansible_host: 192.168.42.10
     dns1:
       ansible_host: 192.168.44.1
     www1:
@@ -18,6 +20,9 @@ all:
   vars:
     mydomain: networkplus.test
   children:
+    switches:
+      hosts:
+        switch1:
     tier0:
       hosts:
         control:
