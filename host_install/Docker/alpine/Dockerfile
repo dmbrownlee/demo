@@ -2,7 +2,7 @@ FROM alpine:latest
 ARG username
 ARG password
 
-RUN apk add --no-cache sudo openssh openssh-server runit bash
+RUN apk add --no-cache sudo openssh openssh-server runit bash python3
 
 RUN addgroup $username \
 && adduser -h /home/$username -G $username -s /bin/bash -D $username \
