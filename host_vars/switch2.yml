@@ -4,7 +4,7 @@ interfaces:
   eth0:
     comment: "Provisioning Interface"
     method: 'static'
-    address: '192.168.42.11'
+    address: '192.168.45.253'
     netmask: '255.255.255.0'
 # Uncomment below if you want an 8-port switch rather than the default 16-port
 # openvswitch:

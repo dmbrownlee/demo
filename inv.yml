@@ -12,15 +12,15 @@ all:
     switch1:
       ansible_host: 192.168.42.10
     switch2:
-      ansible_host: 192.168.42.11
+      ansible_host: 192.168.45.253
     switch3:
-      ansible_host: 192.168.42.12
+      ansible_host: 192.168.43.253
     switch4:
-      ansible_host: 192.168.42.13
+      ansible_host: 192.168.44.253
     switch5:
-      ansible_host: 192.168.42.14
+      ansible_host: 192.168.45.252
     switch6:
-      ansible_host: 192.168.42.15
+      ansible_host: 192.168.45.251
     dns1:
       ansible_host: 192.168.44.1
     www1:
