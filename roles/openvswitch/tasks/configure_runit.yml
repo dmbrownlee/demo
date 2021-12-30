@@ -40,3 +40,7 @@
     state: link
   when: service.enabled
   become: yes
+- name: Wait for service lock file or socket
+  ansible.builtin.wait_for:
+    path: "{{ service.wait_for_file }}"
+  when: service.wait_for_file is defined

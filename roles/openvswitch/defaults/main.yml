@@ -1,6 +1,6 @@
 ---
 runit_services:
-  - { name: ovsdb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock' }
+  - { name: ovsdb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock', wait_for_file: '/var/run/openvswitch/db.sock' }
   - { name: ovs-vswitchd, enabled: true, startcmd: 'ovs-vswitchd' }
 default_bridges:
   - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
