@@ -10,6 +10,7 @@
   when:
     - internet_ping.rc != 0
     - bootstrap_gateway is defined
+    - bootstrap_gateway is '192.168.42.1'
   register: TEA
 - name: Ensure public DNS is used for bootstrapping
   raw: grep "nameserver" /etc/resolv.conf || echo "nameserver 8.8.8.8" > /etc/resolv.conf
