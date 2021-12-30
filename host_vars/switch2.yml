@@ -9,7 +9,7 @@ interfaces:
 # Uncomment below if you want an 8-port switch rather than the default 16-port
 # openvswitch:
 #   bridges:
-#     - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev' }
+#     - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
 #   bridge_ports:
 #     - { name: 'eth0', state: 'present', bridge: 'br0', vlan: '1' }
 #     - { name: 'eth1', state: 'present', bridge: 'br0', vlan: '1' }
