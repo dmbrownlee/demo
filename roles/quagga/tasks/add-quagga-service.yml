@@ -6,7 +6,9 @@
     group: quagga
     mode: '0644'
   become: yes
-  notify: restart_router
+  notify:
+    - restart_router
+    - wait_for_convergence
 - name: Ensure runit service directories exist ({{ quagga_server.name }})
   file:
     path: "/etc/sv/{{ quagga_server.name }}/log"
@@ -48,6 +50,7 @@
     state: link
   when: ansible_distribution == 'Debian'
   become: yes
+  notify: wait_for_convergence
 - name: Enable {{ quagga_server.name }} daemon (Alpine)
   file:
     path: "/etc/service/{{ quagga_server.name }}"
@@ -55,3 +58,4 @@
     state: link
   when: ansible_distribution == 'Alpine'
   become: yes
+  notify: wait_for_convergence

@@ -11,10 +11,9 @@
     name: "ospfd"
     state: restarted
   become: yes
-  register: ospf_restarted
 - name: Pause to allow time for OSPF routers to recalculate routes
-  listen: restart_router
+  listen: wait_for_convergence
   pause:
     prompt: Playbook will continue in 60 seconds (unless you interrupt it)
     seconds: 60
-  when: ansible_hostname != 'control'
+  when: inventory_hostname_short != 'control'
