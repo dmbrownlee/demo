@@ -1,0 +1,11 @@
+all:
+  hosts:
+    control:
+      ansible_connection: local
+      ansible_host: 192.168.42.1
+  vars:
+    mydomain: model2.test
+  children:
+    stage1:
+      hosts:
+        control:
