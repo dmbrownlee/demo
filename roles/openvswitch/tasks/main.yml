@@ -37,6 +37,7 @@
   loop_control:
     loop_var: bridge
     label: "{{ bridge }}"
+  notify: pause_for_switch_updates
 - name: Ensure ports are added to bridges
   openvswitch.openvswitch.openvswitch_port:
     port: "{{ port.name }}"
@@ -48,3 +49,4 @@
   loop_control:
     loop_var: port
     label: "{{ port }}"
+  notify: pause_for_switch_updates
