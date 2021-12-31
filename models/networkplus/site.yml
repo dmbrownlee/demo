@@ -15,8 +15,8 @@
       tags: [quagga]
     - role: ca
       tags: [ca]
-    - role: breakfix
-      tags: [breakfix]
+    - role: isc-dhcp-server
+      tags: [isc-dhcp-server]
 # === Tier 1 devices ===
 # These devices are accessible to the control host without needing to
 # configure intermediary devices.  This includes the firewall and
