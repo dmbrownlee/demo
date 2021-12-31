@@ -6,10 +6,20 @@
       - dhcp
     state: present
   become: yes
+- name: Ensure the server lease file exists
+  ansible.builtin.file:
+    path: /var/lib/dhcp/dhcpd.leases
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
 - name: Ensure the DHCP server config file exists
   ansible.builtin.template:
     dest: /etc/dhcp/dhcpd.conf
-    src: dhcpd.conf
+    src: dhcpd.conf.j2
     owner: root
     group: root
     mode: '0644'

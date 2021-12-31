@@ -8,7 +8,7 @@ max-lease-time 7200;
 # Use this to enble / disable dynamic dns updates globally.
 #ddns-update-style none;
 
-{% if dhcpd.authoritative %}authoritative;{% endif %}
+{% if dhcpd.authoritative is defined and dhcp.authoritative %}authoritative;{% endif %}
 
 {% if dhcpd.netblocks is defined %}{% for netblock in dhcpd.netblocks %}
 subnet {{ netblock.address }} netmask {{ netblock.mask }} {
