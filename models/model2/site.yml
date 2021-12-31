@@ -15,3 +15,5 @@
       tags: [quagga]
     - role: ca
       tags: [ca]
+    - role: isc-dhcp-server
+      tags: [isc-dhcp-server]

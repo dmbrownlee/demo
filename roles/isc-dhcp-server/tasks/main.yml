@@ -1,0 +1,22 @@
+---
+- name: Ensure the ISC dhcp server package is installed
+  ansible.builtin.package:
+    name:
+      - dhcp-server-vanilla
+      - dhcp
+    state: present
+  become: yes
+- name: Ensure the DHCP server file exists
+  ansible.builtin.template:
+    path: /etc/dhcp/dhcpd.conf
+    src: dhcpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+- name: Ensure runit has been configured for each service
+  ansible.builtin.include_tasks: configure_runit.yml
+  loop: "{{ runit_services }}"
+  loop_control:
+    loop_var: service
+    label: "{{ service }}"
