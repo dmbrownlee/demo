@@ -6,9 +6,9 @@
       - dhcp
     state: present
   become: yes
-- name: Ensure the DHCP server file exists
+- name: Ensure the DHCP server config file exists
   ansible.builtin.template:
-    path: /etc/dhcp/dhcpd.conf
+    dest: /etc/dhcp/dhcpd.conf
     src: dhcpd.conf
     owner: root
     group: root
