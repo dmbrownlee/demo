@@ -1,0 +1,30 @@
+---
+- name: Ensure localhost is configured as a virtualization host
+  hosts: localhost
+    # roles:
+    # - role: baseline
+    #   tags: baseline
+    # - role: virtualization_host
+    #   tags: virtualization_host
+    # - role: gns3_host
+    #   tags: gns3_host
+    # - role: labenv_networkplus
+    #   tags: labenv_networkplus
+    # - role: labenv_rhcsa
+    #   tags: labenv_rhcsa
+
+    # post_tasks:
+  tasks:
+    - name: Ensure the required Vagrant baseboxes have been built
+      include_role:
+        name: basebox
+        apply:
+          tags: basebox
+      vars:
+        buildvms: true
+        boxes:
+          - { distro: debian, version: "11.1.0", configuration: default }
+          - { distro: rocky, version: "8.5", configuration: core }
+          - { distro: rocky, version: "8.5", configuration: minimal }
+          - { distro: rocky, version: "8.5", configuration: gse }
+      tags: basebox
