@@ -33,7 +33,7 @@ of manual steps, it is mostly waiting for the setup scripts to finish.
 
 You must do the three steps in order.  If one step fails, you need to fis it
 first before continuing with later steps.  The first two steps are detailed in
-the demo project's [README.md](https://github.com/dmbrownlee/demo/blob/master/README.md).
+the demo project's [README.md](https://github.com/dmbrownlee/demo/blob/main/README.md).
 
 After you have completed the setup for the demo project, proceed by following
-the course setup instructions in the Network+ [README.md](https://github.com/dmbrownlee/demo/blob/master/networkplus/README.md) file.
+the course setup instructions in the Network+ [README.md](https://github.com/dmbrownlee/demo/blob/main/networkplus/README.md) file.
