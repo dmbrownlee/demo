@@ -1,0 +1,9 @@
+---
+virtualization: virtualbox
+system_packages:
+  - dkms
+  - kernel-headers.x86_64
+  - packer
+  - python3-jmespath
+  - vagrant
+  - VirtualBox

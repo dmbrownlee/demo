@@ -1,0 +1,64 @@
+---
+# ==============
+# GNS3
+# ==============
+- name: Ensure prerequisite packages are installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  become: yes
+  vars:
+    packages:
+      - python3-pip
+      - python3-devel
+      - qemu
+      - qemu-kvm
+      - libvirt-client
+      - libvirt-daemon
+      - wireshark
+      - ca-certificates
+      - curl
+      - gnupg2
+- name: Ensure PIP packages are installed
+  pip:
+    name: "{{ pip_packages }}"
+  vars:
+    pip_packages:
+      - gns3-server=={{ gns3_version }}
+      - gns3-gui=={{ gns3_version }}
+- name: Check status of bionic packages
+  command: dpkg -s dynamips ubridge gns3-server gns3-gui
+  changed_when: false
+  failed_when: false
+  register: bionic
+- name: Ensure podman is installed
+  yum:
+    name: "{{ packages }}"
+    state: present
+  become: yes
+  vars:
+    packages:
+      - podman
+      - podman-docker
+      - dynamips
+      - ubridge
+      - gns3-server
+      - gns3-gui
+  when: bionic.rc != 0
+- name: Ensure user is in the required groups
+  user:
+    name: "{{ ansible_user_id }}"
+    groups: "{{ item }}"
+    append: yes
+  become: yes
+  with_items:
+    - kvm
+    - libvirt
+- name: Ensure user config directory for GNS3 exists
+  file:
+    path: "{{ gns3_config_dir }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0755

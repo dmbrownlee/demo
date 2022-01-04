@@ -1,0 +1,13 @@
+---
+virtualization: virtualbox
+system_brews:
+  - dockutil
+  - packer
+  - packer-completion
+  - vagrant-completion
+system_casks:
+  - vagrant
+  # - virtualbox (installed separately due to kernel ext failure)
+dockitems_to_add:
+  - name: VirtualBox
+    path: "/Applications/VirtualBox.app"

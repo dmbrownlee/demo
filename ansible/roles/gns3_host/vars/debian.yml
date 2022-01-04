@@ -1,0 +1,28 @@
+---
+# Default variables assumed to be the same for all platforms are commented out
+# but you can override them here if you want to test new software versions
+# one platform at a time.
+#
+#gns3_vers: "2.2"
+#gns3_version: "2.2.12"
+gns3_bin_dir: "{{ ansible_user_dir }}/.local/bin"
+#gns3_config_dir: "{{ ansible_user_dir }}/GNS3"
+#gns3_user_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
+#===== vars for gns3_controller.j2
+#===== vars for gns3_gui.j2
+g3gui_mainwindow_hdpi: "true"
+g3gui_mainwindow_spice_console_command: "remote-viewer spice://%h:%p"
+g3gui_mainwindow_telnet_command: "gnome-terminal -t \"%d\" -e \"telnet %h %p\""
+g3gui_mainwindow_vnc_command: "vncviewer %h:%p"
+g3gui_packetcapture_reader_command: ""
+#g3gui_serial_console_command: ""
+#g3gui_vnc_command: "vncviewer %h:%p"
+#g3gui_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
+#g3gui_vboxmanage_path: "/usr/bin/VBoxManage"
+#===== vars for gns3_server.j2
+#g3server_host: "192.168.56.1"
+#g3server_port: "8000"
+#===== Debian specific vars
+gns3_pip_packages:
+  - "gns3-server=={{ gns3_version }}"
+  - "gns3-gui=={{ gns3_version }}"

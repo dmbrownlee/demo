@@ -1,0 +1,24 @@
+---
+- name: Ensure user account exists
+  user:
+    name: "student"
+    comment: "student"
+    password: "$6$sh1biwylWzIOiavR$C4YUP9KynT66ZufxJlKwx6NcqUFvVXAFSMH3lm74sZwthPxbZjGUI5.N.jPhfp7XA4y3SUWTtCaHDuwL5H4Js0"
+    system: no
+    append: yes
+    groups: "cdrom,floppy,sudo,audio,dip,video,plugdev,netdev,bluetooth,scanner"
+    shell: "/usr/bin/bash"
+    state: present
+  become: yes
+- name: Ensure GDM sessions are configured for the users
+  copy:
+    dest: "/var/lib/AccountsService/users/{{ item }}"
+    src: "AccountsService.{{ item }}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  become: yes
+  with_items:
+    - "vagrant"
+    - "user"
+  notify: "restart-gdm"

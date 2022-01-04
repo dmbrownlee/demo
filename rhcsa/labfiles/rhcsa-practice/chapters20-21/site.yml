@@ -1,0 +1,19 @@
+---
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure SELinux is in permissive mode
+      selinux:
+        policy: targeted
+        state: permissive
+      become: yes
+    - name: Ensure firewall allows HTTP traffic
+      firewalld:
+        service: http
+        permanent: yes
+        immediate: yes
+        state: enabled
+        zone: internal
+      become: yes

@@ -1,0 +1,16 @@
+---
+- name: Ensure an SELinux policy exists for the FTP share ({{ share.name }})
+  sefcontext:
+    target: "{{ share.seregex }}"
+    setype: "{{ share.setype }}"
+    state: present
+  become: yes
+- name: Ensure top level directory exists for the FTP share ({{ share.name }})
+  file:
+    path: "{{ share.path }}"
+    owner: "{{ share.owner | default('root') }}"
+    group: "{{ share.group | default('root') }}"
+    mode: "{{ share.mode | default('0755') }}"
+    state: directory
+    setype: "{{ share.setype }}"
+  become: yes

@@ -1,0 +1,7 @@
+---
+autoconnect: yes
+method4: auto
+method6: ignore
+never_default4: yes
+type: ethernet
+zone: internal

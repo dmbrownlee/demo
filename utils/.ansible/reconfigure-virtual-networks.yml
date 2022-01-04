@@ -1,0 +1,77 @@
+---
+- name: Reconfigure virtual networking
+  hosts: localhost
+  connection: local
+  vars:
+    hostonlyifs:
+      - name: "vboxnet0"
+        ip: "192.168.56.1"
+    natnetworks:
+      - name: 'RHCSA Network'
+        netblock: '192.168.4.0/24'
+      - name: 'RHCE Network'
+        netblock: '192.168.5.0/24'
+      - name: 'Network+ Network'
+        netblock: '192.168.6.0/24'
+    dhcpservers:
+      - interface: "vboxnet0"
+        server_ip: "192.168.56.2"
+        lower_ip: "192.168.56.3"
+        upper_ip: "192.168.56.253"
+        netmask: "255.255.255.0"
+  tasks:
+    - name: Assert this host can use this play
+      assert:
+        that: ansible_distribution == "MacOSX"
+        fail_msg: "This playbook is only supported on MacOS"
+    # Configure VirtualBox HostOnly Interfaces
+    - name: Get the list of hostonly network interfaces
+      shell: set -o pipefail && VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
+      args:
+        executable: "{{ ansible_user_shell }}"
+      changed_when: false
+      register: existing_hostonlyifs
+    - name: Ensure vboxnetX hostonly network interfaces exist
+      command: VBoxManage hostonlyif create
+      when: item not in existing_hostonlyifs.stdout_lines
+      with_items: "{{ hostonlyifs | json_query('[*].name') }}"
+    - name: Get the enabled status of the hostonly network interfaces
+      shell: set -o pipefail && VBoxManage list hostonlyifs |awk '/^Name:/ { INTERFACE=$2 }; /^Status:.*Up/ { print INTERFACE }'
+      args:
+        executable: "{{ ansible_user_shell }}"
+      changed_when: false
+      register: hostonlyifs_status
+    - name: Ensure hostonly network interfaces are configured
+      command: "VBoxManage hostonlyif ipconfig {{ item.name }} --ip {{ item.ip }}"
+      loop: "{{ hostonlyifs }}"
+      when: item.name not in hostonlyifs_status.stdout_lines
+    # Configure VirtualBox NAT Networks
+    - name: Get a list of existing natnetworks
+      shell: "set -o pipefail && VBoxManage list natnetworks | sed -n -e '/^NetworkName:/s/^NetworkName: *//p'"
+      args:
+        executable: "{{ ansible_user_shell }}"
+      changed_when: false
+      register: natnets
+    - name: Ensure all NAT networks have been configured
+      include_tasks: "{{ ansible_user_dir }}/demo/ansible/roles/virtualization_host/tasks/virtualbox-configure-natnetwork.yml"
+      vars:
+        vnet: "{{ item }}"
+      loop: "{{ natnetworks }}"
+    # Configure VirtualBox DHCP Servers
+    - name: Get the list of DHCP servers
+      shell: set -o pipefail && VBoxManage list dhcpservers | awk '/^NetworkName:/ { gsub(/HostInterfaceNetworking-/, "", $2); print $2 }'
+      args:
+        executable: "{{ ansible_user_shell }}"
+      changed_when: false
+      failed_when: false
+      register: existing_dhcpservers
+    - name: Ensure hostonly DHCP servers exist
+      command: >
+        VBoxManage dhcpserver add --interface {{ item.interface }}
+        --server-ip {{ item.server_ip }}
+        --netmask {{ item.netmask }}
+        --lowerip {{ item.lower_ip }}
+        --upperip {{ item.upper_ip }}
+        --enable
+      when: item.interface not in existing_dhcpservers.stdout_lines
+      loop: "{{ dhcpservers }}"

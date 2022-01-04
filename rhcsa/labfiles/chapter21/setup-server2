@@ -1,0 +1,51 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Ensure web server packages are installed
+    yum:
+      name: ['httpd', 'php']
+      state: present
+    become: yes
+  - name: Ensure VirtualHost DocumentRoot exists
+    file:
+      path: "{{ item }}"
+      state: directory
+    with_items:
+      - /var/www-testweb
+      - /var/www-testweb/html
+      - /var/www-testweb/cgi-bin
+    become: yes
+  - name: Ensure PHP content page exists
+    copy:
+      dest: /var/www-testweb/html/phpinfo.php
+      content: |
+        <?php phpinfo(); ?>
+    become: yes
+  - name: Ensure testweb has a different landing page
+    copy:
+      dest: /var/www-testweb/html/index.html
+      content: |
+        <html>
+        <title>Welcome to testweb</title>
+        <body><h1>Welcome to testweb</body>
+        </html>
+    become: yes
+  - name: Ensure firewall service is started
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    become: yes
+  - name: Ensure firewall allows http traffic
+    firewalld:
+      service: http
+      state: enabled
+      immediate: yes
+      permanent: yes
+      zone: internal
+    become: yes
+  - name: Disable SELinux
+    selinux:
+      policy: targeted
+      state: permissive
+    become: yes

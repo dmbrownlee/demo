@@ -1,0 +1,5 @@
+---
+- name: Common VM configuration
+  hosts: all
+  roles:
+    - role: vmguest

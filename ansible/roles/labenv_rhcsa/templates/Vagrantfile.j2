@@ -1,0 +1,261 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.ssh.private_key_path = "{{ key_dir }}/vagrant"
+  # These are the VM configuration defaults when not overridden
+  config.vm.box = "{{ distro }}-{{ version }}-minimal"
+  config.vm.synced_folder "labfiles/", "/labfiles",
+    id: "labfiles",
+    owner: "root",
+    group: "root"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+{% if virtualization == "virtualbox" %}
+  config.vm.provider :virtualbox do |virtualbox|
+    virtualbox.gui = false
+    virtualbox.memory = 1024
+    virtualbox.customize ["modifyvm", :id, "--firmware", "EFI"]
+    virtualbox.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    virtualbox.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+    virtualbox.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+{% if ansible_distribution == 'MacOSX' %}
+    virtualbox.customize ["setextradata", :id, "GUI/ScaleFactor", "2.0"]
+{% endif %}
+  end
+{% elif virtualization == "libvirt" %}
+  config.vm.network :private_network,
+    :type => "dhcp",
+    :libvirt__network_name => "vagrant-private-dhcp",
+    :libvirt__domain_name => "example.com",
+    :libvirt__network_address => "192.168.4.0",
+    :libvirt__netmask => "255.255.255.0",
+    :libvirt__dhcp_enabled => true,
+    :libvirt__host_ip => "192.168.4.1",
+    :libvirt__dhcp_start => "192.168.4.2",
+    :libvirt__dhcp_stop => "192.168.4.99",
+    :libvirt__dhcp_bootp_file => "pxelinux/pxelinux.0",
+    :libvirt__dhcp_bootp_server => "192.168.4.102"
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.driver = "kvm"
+    libvirt.host = "localhost"
+    libvirt.uri = 'qemu:///system'
+    libvirt.memory = 1024
+  end
+{% endif %}
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "ansible/site.yml"
+    ansible.skip_tags = "disabled"
+    ansible.groups = {
+      "nmhosts" => [
+        "idm1",
+        "control",
+        "ansible1",
+        "ansible2",
+        "server1",
+        "server2",
+        "exam1",
+        "exam2"
+      ],
+      "labhosts" => [
+        "server1",
+        "server2"
+      ],
+      "servers_with_gui" => [
+        "server1"
+      ],
+      "ftp_servers" => [
+        "idm1"
+      ],
+      "nfs_servers" => [
+        "idm1"
+      ],
+      "samba_servers" => [
+        "idm1"
+      ],
+      "idm_servers" => [
+        "idm1"
+      ],
+      "examhosts" => [
+        "exam1",
+        "exam2"
+      ],
+      "rhcsa8:vars" => { "ansible_python_interpreter" => "/usr/bin/python3" }
+    }
+  end
+
+  #====================
+  #==  Lab Machines  ==
+  #====================
+  #=== idm1 ==
+  config.vm.define "idm1" do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "idm1"
+      virtualbox.memory = 2048
+    end
+{% elif virtualization == "libvirt" %}
+    node.vm.provider :libvirt do |libvirt|
+      libvirt.memory = 2048
+    end
+{% endif %}
+  end
+
+  #=== control ==
+  config.vm.define "control", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "control"
+      virtualbox.memory = 2048
+    end
+{% endif %}
+  end
+
+  #=== ansible1 ===
+  config.vm.define "ansible1", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible1"
+    end
+{% endif %}
+  end
+
+  #=== ansible2 ===
+  config.vm.define "ansible2", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "ansible2"
+    end
+{% endif %}
+  end
+
+  #=== server1 ==
+  config.vm.define "server1" do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-gse"
+{% if virtualization == "virtualbox" %}
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "server1"
+      virtualbox.memory = 2048
+    end
+{% endif %}
+  end
+
+  #=== server2 ===
+  config.vm.define "server2" do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-minimal"
+{% if virtualization == "virtualbox" %}
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/server2/server2_disk2.vmdk"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "server2"
+      # Create and attach a new, empty disk with the same name
+      if not File.file?(disk)
+        virtualbox.customize ['createhd', '--filename', disk, '--variant',
+          'Standard', '--size', 20 * 1024]
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--type", "hdd",
+          "--port", "1",
+          "--device", "0",
+          "--medium", disk]
+      end
+    end
+{% endif %}
+  end
+
+  #==============================
+  #==  Additional Lab Machines ==
+  #==============================
+{# VirtualBox VMs do not support PXE boot without the use
+     of the extension pack which is licensed software.
+#}
+{% if virtualization == "virtualbox" %}
+  #=== installhost ===
+  config.vm.define "installhost", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/{{ distro }}-{{ version }}-disk001.vmdk"
+    disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
+    disk2 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk002.vmdk"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "installhost"
+      virtualbox.gui = true
+      virtualbox.memory = 2048
+      # Dettach and destroy original disk
+      if File.file?(disk)
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--port", "0",
+          "--device", "0",
+          "--medium", 'none']
+        virtualbox.customize ['closemedium', 'disk', disk, '--delete']
+      end
+      # Create and attach a new, empty disk
+      if not File.file?(disk1)
+        virtualbox.customize ['createhd', '--filename', disk1, '--variant',
+          'Standard', '--size', 20 * 1024]
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--type", "hdd",
+          "--port", "0",
+          "--device", "0",
+          "--medium", disk1]
+      end
+      # Create and attach a new, empty, secondary disk
+      if not File.file?(disk2)
+        virtualbox.customize ['createhd', '--filename', disk2, '--variant',
+          'Standard', '--size', 20 * 1024]
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--type", "hdd",
+          "--port", "1",
+          "--device", "0",
+          "--medium", disk2]
+      end
+      # Make sure the installation media is in the drive
+      virtualbox.customize ["storageattach", :id,
+        "--storagectl", "IDE Controller",
+        "--type", "dvddrive",
+        "--port", "0",
+        "--device", "0",
+        "--medium", "#{ENV["HOME"]}/Downloads/{{ iso_name }}"]
+      # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
+    end
+    node.vm.provision "default", type: :shell, run: "never" do |shell|
+      shell.inline = "echo"
+    end
+  end
+{% endif %}
+{% if virtualization == "libvirt" %}
+  #=== pxeclient ===
+  config.vm.define :pxeclient, autostart: false do |pxeclient|
+    pxeclient.vm.provider :libvirt do |domain|
+      domain.storage :file, :size => '10G', :type => 'qcow2'
+      domain.memory = 2048
+      boot_network = {'network' => 'vagrant-private-dhcp'}
+      domain.boot boot_network
+      domain.boot 'hd'
+    end
+  #end
+{% endif %}
+
+  #===================================
+  #==  Machines for practice exams  ==
+  #===================================
+  #=== exam1 ===
+  config.vm.define "exam1", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "exam1"
+    end
+  end
+
+  #=== exam2 ===
+  config.vm.define "exam2", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "exam2"
+    end
+  end
+end

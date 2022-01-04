@@ -1,0 +1,78 @@
+---
+- name: Ensure system packages are installed
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_packages }}"
+  when:
+    - system_packages is defined
+    - (system_packages | length > 0)
+  become: yes
+- name: Ensure apt sources updated for virtualbox
+  lineinfile:
+    path: /etc/apt/sources.list
+    line: "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian buster contrib"
+    state: present
+    backup: yes
+  become: yes
+- name: Ensure Oracle's apt key is also installed
+  apt_key:
+    url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+    state: present
+  become: yes
+- name: Ensure Internet packages are installed
+  apt:
+    deb: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ internet_packages }}"
+  when:
+    - internet_packages is defined
+    - (internet_packages | length > 0)
+  become: yes
+- name: Ensure user is a member of vboxusers
+  user:
+    name: "{{ ansible_user_id }}"
+    append: yes
+    groups: vboxusers
+  become: yes
+- name: Replace system packer with newer version if needed
+  block:
+  - name: Ensure more recent packer has been downloaded
+    get_url:
+      dest: "{{ download_dir }}/{{ packer_override.basename }}.zip"
+      url: "{{ packer_override.url }}"
+      checksum: "{{ packer_override.checksum }}"
+    delegate_to: localhost
+  - name: Ensure more recent packer is unszipped
+    unarchive:
+      dest: "{{ download_dir }}"
+      src: "{{ download_dir }}/{{ packer_override.basename }}.zip"
+      creates: "{{ download_dir }}/packer"
+    delegate_to: localhost
+  - name: Ensure more recent packer is installed
+    copy:
+      dest: "/usr/bin/packer"
+      src: "{{ download_dir }}/packer"
+      owner: "root"
+      group: "root"
+      mode: "0755"
+    become: yes
+  when: packer_override is defined
+- name: Replace system vagrant with newer version if needed
+  apt:
+    deb: "{{ vagrant_override.url }}"
+  become: yes
+  when: vagrant_override is defined
+- name: Get a list of existing Vagrant plugins
+  shell: set -o pipefail && vagrant plugin list | awk '{ print $1 }'
+  args:
+    executable: "{{ ansible_user_shell }}"
+  changed_when: false
+  register: vagrant_plugins
+- name: Ensure vagrant plugins have been built and installed
+  command: vagrant plugin install {{ item }}
+  when: item not in vagrant_plugins.stdout_lines
+  loop:
+    - winrm
+    - winrm-elevated

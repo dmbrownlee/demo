@@ -1,0 +1,31 @@
+---
+- name: Ensure a directory exists for chapter {{ chapter_num }}
+  file:
+    path: "{{ fs_prefix_git_repo }}/{{ contentdir }}/chapter{{ chapter_num }}"
+    state: directory
+    mode: '0755'
+- name: Ensure a course orientation page exists
+  template:
+    src: "orientation.md.j2"
+    dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/README.md"
+    mode: '0644'
+    force: no
+  when: chapter_num == 0
+- name: Ensure an assignment page exists for chapter {{ chapter_num }}
+  template:
+    src: "assignment.md.j2"
+    dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/chapter{{ chapter_num }}/README.md"
+    mode: '0644'
+    force: no
+  when: chapter_num != 0
+- name: Ensure lab{{ chapter_num }}-{{ lab_num + 1 }} exists
+  template:
+    src: "lab.md.j2"
+    dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/chapter{{ chapter_num }}/lab{{ chapter_num }}-{{ lab_num + 1 }}.md"
+    mode: '0644'
+    force: no
+  loop: "{{ chapter.labs }}"
+  loop_control:
+    loop_var: lab
+    index_var: lab_num
+  when: chapter.labs is defined

@@ -1,0 +1,10 @@
+---
+package_section: |
+  %packages
+  @^graphical-server-environment
+  ansible
+  epel-release
+  git-core
+  tmux
+  rhel-system-roles
+  %end

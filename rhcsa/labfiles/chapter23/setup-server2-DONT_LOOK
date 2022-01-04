@@ -1,0 +1,25 @@
+---
+- hosts: server2
+  tasks:
+    - name: Doing something...
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+      become: yes
+    - name: Doing something...
+      command: firewall-cmd --set-default-zone=home
+    - name: Doing something...
+      firewalld:
+        interface: enp0s3
+        state: enabled
+        immediate: yes
+        permanent: yes
+        zone: public
+      become: yes
+    - name: Doing something...
+      service:
+        name: firewalld
+        state: stopped
+        enabled: no
+      become: yes

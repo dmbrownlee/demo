@@ -1,0 +1,7 @@
+---
+- name: Ensure the VM hostname is set
+  command: hostnamectl set-hostname {{ inventory_hostname }}
+  become: yes
+  when: ansible_hostname != inventory_hostname
+- include_tasks: install-packages.yml
+- include_tasks: manage-accounts.yml

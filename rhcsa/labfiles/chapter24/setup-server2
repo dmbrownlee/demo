@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  tasks:
+  - name: Ensure firewall service is started
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    become: yes
+  - name: Ensure firewall allows http traffic
+    firewalld:
+      service: "{{ item }}"
+      state: enabled
+      immediate: yes
+      permanent: yes
+      zone: internal
+    loop:
+      - mountd
+      - nfs
+      - rpc-bind
+    become: yes

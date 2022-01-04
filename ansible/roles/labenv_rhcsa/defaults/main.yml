@@ -1,0 +1,11 @@
+---
+buildvms: true
+demo_root: "{{ ansible_user_dir }}/demo"
+download_dir: "{{ ansible_user_dir }}/Downloads"
+supported_distributions:
+  - MacOSX
+  - Fedora
+key_dir: "{{ ansible_user_dir }}/keys"
+distro: "rocky"
+version: "8.4"
+iso_name: "Rocky-8.4-x86_64-dvd1.iso"

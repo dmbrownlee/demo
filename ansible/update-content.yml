@@ -1,0 +1,16 @@
+---
+- name: Update course materials for all courses
+  hosts: localhost
+  tasks:
+    - name: Create course materials for {{ course }}
+      include_role:
+        name: coursematerials
+        apply:
+          tags: "{{ course }}"
+      loop:
+        - rhcsa
+        - rhce
+      loop_control:
+        loop_var: course
+      tags:
+        - always

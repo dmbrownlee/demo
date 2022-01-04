@@ -1,0 +1,30 @@
+#!/bin/bash
+cmds=(
+  "vboxmanage list intnets"
+  "vboxmanage list bridgedifs"
+  "vboxmanage list hostonlyifs"
+  "vboxmanage list natnets"
+  "vboxmanage list dhcpservers"
+)
+
+read -p "Enter the version of your GNS3 VM: " vmver
+
+echo ======================================================================
+echo Version Check
+echo ======================================================================
+appver=$(grep -A 1 'CFBundleShortVersionString' /Applications/GNS3.app/Contents/Info.plist |
+  sed -n -e 's/^.*<string>\(.*\)<\/string>.*$/\1/p')
+echo "GNS3 version:    $appver"
+echo "GNS3 VM version: $vmver"
+
+echo ======================================================================
+echo vboxmanage showvminfo "GNS3 VM"
+echo ======================================================================
+vboxmanage showvminfo "GNS3 VM"
+
+for c in "${cmds[@]}"; do
+  echo ======================================================================
+  echo $c
+  echo ======================================================================
+  $c
+done
