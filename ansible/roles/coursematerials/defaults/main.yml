@@ -2,8 +2,8 @@
 # defaults file for coursematerials
 #repo: "https://github.com/dmbrownlee/demo"
 url_prefix_github: "https://github.com/dmbrownlee/demo"
-#rawrepo: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
-url_prefix_raw: "https://raw.githubusercontent.com/dmbrownlee/demo/master"
+#rawrepo: "https://raw.githubusercontent.com/dmbrownlee/demo/main"
+url_prefix_raw: "https://raw.githubusercontent.com/dmbrownlee/demo/main"
 fs_prefix_git_repo: '{{ ansible_user_dir }}/demo'
 #courseroot: '{{ ansible_user_dir }}/demo/{{ course }}'
 #courseroot: '{{ fs_prefix_git_repo }}/{{ course }}'

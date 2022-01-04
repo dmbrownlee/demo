@@ -8,8 +8,8 @@ In this lab, we learn how to use Vagrant to manage the virtual machines in our v
 
 This lab assumes you have already installed the demo project and have setup the virtual lab environment for the RHCSA study group.  If you haven't done these steps already, you can use these links to find the instructions:
 
-- [Install the demo project](https://github.com/dmbrownlee/demo/blob/master/README.md)
-- [Setup the RHCSA virtual lab environment](https://github.com/dmbrownlee/demo/blob/master/rhcsa/README.md)
+- [Install the demo project](https://github.com/dmbrownlee/demo/blob/main/README.md)
+- [Setup the RHCSA virtual lab environment](https://github.com/dmbrownlee/demo/blob/main/rhcsa/README.md)
 
 ## BACKGROUND
 
