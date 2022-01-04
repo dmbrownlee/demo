@@ -1,0 +1,17 @@
+# vi: ft=yaml
+---
+hostname: server2
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhcsa
+      ifname: enp0s8
+      autoconnect: yes
+      ip4: 192.168.4.220/24
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"

@@ -1,0 +1,30 @@
+---
+- name: Ensure example_com connection has been removed
+  nmcli:
+    conn_name: "example_com"
+    state: absent
+  become: yes
+- name: Ensure unconfigured connection is configured for practice
+  nmcli:
+    conn_name: "unconfigured"
+    state: present
+    autoconnect: "no"
+    ifname: "enp0s8"
+    ip4: "10.1.1.1/24"
+    method4: "manual"
+    never_default4: "yes"
+    type: "ethernet"
+  become: yes
+- name: Copy exam files to root's homedir
+  copy:
+    dest: /root
+    src: "{{ item }}"
+  become: yes
+  with_items:
+    - exam1/README
+- name: Lock the root user's password
+  user:
+    name: root
+    password: '!'
+  become: yes
+  notify: reboot

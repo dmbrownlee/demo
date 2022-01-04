@@ -1,0 +1,41 @@
+---
+- name: Configure server2
+  gather_facts: false
+  hosts:
+    - localhost
+  tasks:
+    - name: Ensure firewall allows Samba traffic
+      firewalld:
+        service: samba
+        state: enabled
+        permanent: yes
+        zone: internal
+        immediate: yes
+      become: yes
+    - name: Ensure SELinux is in permissive mode
+      selinux:
+        policy: targeted
+        state: permissive
+      become: yes
+    - name: Ensure Samba is configured
+      copy:
+        dest: /etc/samba/smb.conf
+        src: smb.conf
+        owner: root
+        group: root
+        mode: '0644'
+      become: yes
+    - name: Ensure smbuser1 account exists
+      user:
+        name: smbuser1
+        create_home: no
+        shell: /sbin/nologin
+        password: "{{ 'password' | password_hash('sha512', 'randomsalt') }}"
+      become: yes
+    # - name: Ensure smbuser1 is also a samba user
+    #   shell: >
+    #     (pdbedit --user=smbuser1 2>&1 > /dev/null)
+    #     || echo -e 'password\npassword'
+    #     | smbpasswd -s -a smbuser1
+    #   register: smbpasswd
+    #   changed_when: "'Added user' in smbpasswd.stdout"

@@ -1,0 +1,17 @@
+# vi: ft=yaml
+---
+hostname: ansible2
+nmcons:
+  present:
+    - conn_name: vagrant
+      netvars: vagrant
+      ifname: enp0s3
+      autoconnect: yes
+    - conn_name: example_com
+      netvars: rhce
+      ifname: enp0s8
+      autoconnect: yes
+      enthod4: auto
+  absent:
+    - conn_name: "System enp0s3"
+    - conn_name: "Wired connection 1"

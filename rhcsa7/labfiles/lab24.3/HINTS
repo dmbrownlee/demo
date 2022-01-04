@@ -1,5 +1,0 @@
-- The nfs-secure service on the client communicates authentication information
-  to the nfs-secure service running on the server
-- klist will show your current Kerberos credentials (you need to be logged in
-  to Kerberos)
-- kinit is the command to login to Kerberos and kdestroy will log you out

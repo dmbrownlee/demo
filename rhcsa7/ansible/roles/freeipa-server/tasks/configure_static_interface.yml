@@ -1,4 +1,0 @@
----
-- name: Ensure the interface is reloaded
-  command: nmcli c reload example_com
-  become: yes

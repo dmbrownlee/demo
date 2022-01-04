@@ -1,0 +1,31 @@
+---
+# zsh configuration
+- name: Ensure {{ ansible_user_dir }}/.zprofile exists
+  file:
+    path: "{{ ansible_user_dir }}/.zprofile"
+    state: touch
+    access_time: preserve
+    modification_time: preserve
+    mode: '0644'
+- name: Ensure directory for shell customizations exists
+  file:
+    path: "{{ ansible_user_dir }}/.zshrc.d"
+    state: directory
+    mode: '0755'
+- name: Ensure ~/.zshrc.d/ files are sourced from .zprofile
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.zprofile"
+    marker: "# {mark}"
+    marker_begin: "=== ANSIBLE MANAGED BLOCK BEGIN: Source files in .zshrc.d"
+    marker_end: "END: .zshrc.d"
+    block: |
+      if [[ -d "$HOME/.zshrc.d" ]]; then
+        source $HOME/.zshrc.d/*
+      fi
+- name: Ensure README for the zsh snippets directory exists
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.zshrc.d/ADD_ZSH_SNIPPETS_HERE"
+    state: present
+    create: yes
+    line: "# Add snippets of zsh code in this directory."
+    mode: '0644'

@@ -1,0 +1,20 @@
+{
+    "computes": [],
+    "templates": [],
+    "gns3vm": {
+        "vmname": "{{ g3controller_gns3vm_vmname }}",
+        "when_exit": "stop",
+        "headless": {{ g3controller_gns3vm_headless }},
+        "enable": {{ g3controller_gns3vm_enable }},
+        "engine": "{{ g3controller_gns3vm_engine }}",
+        "ram": {{ g3controller_gns3vm_ram }},
+        "vcpus": {{ g3controller_gns3vm_vcpus }},
+        "port": 80
+    },
+    "iou_license": {
+        "iourc_content": "",
+        "license_check": true
+    },
+    "appliances_etag": null,
+    "version": "{{ gns3_version }}"
+}

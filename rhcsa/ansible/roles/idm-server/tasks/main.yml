@@ -1,0 +1,122 @@
+---
+# The idm client module must be disabled before we can activate the server
+- name: Ensure the idm client module is removed
+  dnf:
+    name: '@idm:client'
+    state: absent
+  become: yes
+- name: Ensure the idm DL1 module is installed
+  dnf:
+    name: '@idm:DL1'
+    state: present
+  become: yes
+- name: Ensure packages for the IPA server are installed
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - ipa-server
+    - bind-dyndb-ldap
+    - ipa-server-dns
+    - vsftpd
+  become: yes
+# Firewall needs to be enabled before configuring the IdM server
+- name: Ensure IdM server traffic is allowed through the firewall
+  firewalld:
+    service: "{{ item }}"
+    state: "{{ service.idm.fw_state }}"
+    permanent: "{{ service.idm.fw_permanent }}"
+    immediate: "{{ service.idm.fw_immediate }}"
+    zone: "{{ service.idm.fw_zone }}"
+  loop:
+    - ssh
+    - http
+    - https
+    - ldap
+    - ldaps
+    - kerberos
+    - kpasswd
+    - dns
+    - ntp
+  become: yes
+# ========================
+# Configure the IdM server
+# ========================
+# setsebool -P named_write_master_zones 1
+# ausearch -c 'named-pkcs11' --raw | audit2allow -M my-namedpkcs11
+# semodule -i my-namedpkcs11.pp
+# ipactl status has return code of 4 when server is not configured
+
+# - name: Check the ipa-server-install install status
+#   command: ipactl status
+#   register: ipastatus
+#   changed_when: False
+#   failed_when: False
+#   become: yes
+# - name: Ensure IPA server is configured (takes several minutes if it isn't)
+#   command: ipa-server-install --setup-dns --allow-zone-overlap -U -p password -a password -n example.com -r EXAMPLE.COM --ip-address 192.168.4.200 --hostname labipa.example.com --reverse-zone 4.168.192.in-addr.arpa. --forwarder 8.8.8.8 -U
+#   become: yes
+#   when: ipastatus.rc == 4
+# - name: Ensure cacert.p12 file is available via FTP
+#   copy:
+#     src: /root/cacert.p12
+#     dest: /var/ftp/pub/cacert.p12
+#     remote_src: yes
+#     owner: pkiuser
+#     group: pkiuser
+#     mode: 0644
+#     setype: public_content_t
+#   become: yes
+#   when: ipastatus.rc == 4
+# - name: Check if nfs/labipa.example.com principal exists in IPA
+#   shell: echo password | kinit admin; ipa service-find nfs/labipa.example.com
+#   changed_when: false
+#   failed_when: false
+#   register: find_nfs_principal_ipa
+# - name: Ensure nfs/labipa.example.com principal exists in IPA
+#   shell: echo password | kinit admin; ipa service-add nfs/labipa.example.com
+#   when: find_nfs_principal_ipa.rc != 0
+# - name: Check if nfs/labipa.example.com principal exists in host keytab
+#   shell: klist -k | grep -q nfs/labipa.example.com
+#   changed_when: false
+#   failed_when: false
+#   become: yes
+#   register: find_nfs_principal_keytab
+# - name: Ensure nfs/labipa.example.com principal is added to host keytab
+#   shell: echo password | kinit admin; ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab
+#   become: yes
+#   when: find_nfs_principal_keytab.rc != 0
+# - name: Get existing A records from IPA DNS
+#   shell: "echo password | kinit admin; ipa dnsrecord-find example.com | sed -n 's/  Record name: //p'"
+#   changed_when: false
+#   failed_when: false
+#   register: ipa_dns_a_records
+# - name: Ensure A records for hosts exist
+#   shell: echo password | kinit admin; ipa dnsrecord-add {{ item.azone }} {{ item.ptr }} --a-ip-address 192.168.4.{{ item.a }}
+#   when: item.ptr not in ipa_dns_a_records.stdout_lines
+#   with_items:
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible1', a: '201' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible2', a: '202' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'control', a: '203' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }
+# - name: Get existing PTR records from IPA DNS
+#   shell: "echo password | kinit admin; ipa dnsrecord-find 4.168.192.in-addr.arpa | sed -n 's/  Record name: //p'"
+#   changed_when: false
+#   failed_when: false
+#   register: ipa_dns_ptr_records
+# - name: Ensure PTR records for hosts exist
+#   shell: echo password | kinit admin; ipa dnsrecord-add {{ item.ptrzone }} {{ item.a }} --ptr-hostname {{ item.ptr }}.example.com.
+#   when: item.a not in ipa_dns_ptr_records.stdout_lines
+#   with_items:
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam1', a: '101' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'exam2', a: '102' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible1', a: '201' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'ansible2', a: '202' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'control', a: '203' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server1', a: '210' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'server2', a: '220' }
+#     - { azone: 'example.com.', ptrzone: '4.168.192.in-addr.arpa', ptr: 'testnetinstall', a: '230' }

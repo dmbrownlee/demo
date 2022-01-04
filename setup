@@ -1,0 +1,204 @@
+#!/bin/bash
+DEMODIR=$HOME/demo
+PLATFORM="$(uname)"
+APARGS="-K -t baseline -t virtualization_host --skip-tags disabled"
+PLAYBOOK="site.yml"
+
+# -e options to ansible-playbook
+while getopts "e:" OPT; do
+  case "$OPT" in
+    "e")
+      APARGS="$APARGS -e $OPTARG"
+      ;;
+    ":")
+      echo "Option $OPTARG requires an argument."
+      exit 1
+      ;;
+    "*")
+      echo "Invalid option $OPTARG."
+      exit 1
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
+
+if [[ $# -gt 0 ]]; then
+  APARGS="$APARGS -t $1"
+fi
+
+function restore_backup() {
+  BACKUP_DIR="$1"
+  if [[ -f "$BACKUP_DIR/box-backup.tar" ]]; then
+    cat <<DONE
+=========================================================================
+Found backup file $BACKUP_DIR/box-backup.tar
+=========================================================================
+Restoring keys, box files, and ISO image downloads can save a lot of
+time during setup.
+
+DONE
+    read -p "Would you like to restore from this backup [Y/n]? " a
+    if [[ ! "$a" =~ [nN][oO]* ]]; then
+      cd $DEMODIR && $DEMODIR/utils/box-restore.sh $BACKUP_DIR
+    fi
+  fi
+}
+
+
+# ============================================================================
+# ==
+# ==  Ensure we have network connectivity and, if Mac, we are plugged into
+# ==  power.
+# ==
+# ============================================================================
+if [[ "$PLATFORM" == 'Darwin' ]]; then
+  # Warn if power adapter is not plugged in before continuing anyway
+  pmset -g ac | grep -q "No adapter attached"
+  if [[ $? -eq 0 ]]; then
+    cat <<DONE
+=========================================================================
+This script takes a long time to run.  Please plug in your power adapter.
+(continuting in 10 seconds...)
+=========================================================================
+DONE
+    sleep 10
+  fi
+fi
+
+cat <<DONE
+=========================================================================
+Verifying network connectivity.
+=========================================================================
+DONE
+ping -q -c 1 8.8.8.8
+if [[ $? -ne 0 ]]; then
+  echo "Unable to reach the Internet.  Please check your network connectivity."
+  exit 1;
+fi
+echo
+
+
+# ============================================================================
+# ==
+# ==  Ensure prerequisite software is installed on each platform
+# ==
+# ============================================================================
+case "$PLATFORM" in
+  "Darwin")
+    which -s brew
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing homebrew.
+    =========================================================================
+DONE
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    fi
+
+    if [[ ! -x /usr/local/bin/git ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing git.
+    =========================================================================
+DONE
+      brew install git
+    fi
+
+    which -s ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
+      brew install ansible
+    fi
+    BACKUPDIR="/Volumes/Backups"
+    ANSIBLE_PLAYBOOK_CMD='caffeinate -dsu ansible-playbook'
+    ;;
+  "Linux")
+    if [[ -f /etc/debian_version ]]; then
+      if [[ ! -x /usr/local/bin/pip3 ]]; then
+        sudo apt install -y python3-pip
+      fi
+    elif [[ -f /etc/centos-release ]]; then
+      if [[ ! -x /usr/bin/pip3 ]]; then
+        sudo yum install -y python3-pip
+      fi
+    fi
+    which ansible-playbook
+    if [[ $? -ne 0 ]]; then
+      cat <<DONE
+    =========================================================================
+    Installing ansible.
+    =========================================================================
+DONE
+      sudo -H python3 -m pip install --upgrade pip
+      sudo -H python3 -m pip install --upgrade ansible
+      sudo -H python3 -m pip install --upgrade jmespath
+    fi
+    BACKUPDIR="/mnt"
+    ANSIBLE_PLAYBOOK_CMD='ansible-playbook'
+    ;;
+  "*")
+    echo "This setup script does not work with your host operating system."
+    exit 1
+    ;;
+esac
+
+
+# ============================================================================
+# ==
+# ==  If we are curling this directly from raw.githubusercontent.com, we need
+# ==  to clone this repo into the home directory before changing to it.  If it
+# ==  already exists, ensure we're working with the most recent repo commit.
+# ==
+# ============================================================================
+if [[ ! -d $DEMODIR ]]; then
+  cd $HOME &&
+  /usr/local/bin/git clone -b release https://github.com/dmbrownlee/demo.git
+else
+  echo "Update local copy of demo project:"
+  cd $DEMODIR
+  /usr/local/bin/git pull
+fi
+cd $DEMODIR/ansible
+
+# ============================================================================
+# ==
+# ==  On Mac, we install virtualbox outside of the ansible playbook
+# ==  since the kernel extensions will require a reboot
+# ==
+# ============================================================================
+if [[ $PLATFORM == "Darwin" ]]; then
+  brew list virtualbox 2>/dev/null
+  if [ $? -ne 0 ]; then
+    brew install virtualbox
+    cat <<DONE
+
+================================================================================
+Please go to "System Preferences > Security & Privacy > General" and allow
+the Oracle kernel extensions.  After you allow the kernel extensions, reboot
+and then run this setup script again.
+================================================================================
+
+DONE
+    exit
+  fi      
+fi      
+
+
+# ============================================================================
+# ==
+# ==  Offer to restore Vagrant base boxes if a backup is detected (to save
+# ==  setup time) and then run the Ansible playbook to complete the setup.
+# ==
+# ============================================================================
+restore_backup $BACKUPDIR
+cat <<DONE
+=========================================================================
+Running Ansible playbook
+=========================================================================
+DONE
+$ANSIBLE_PLAYBOOK_CMD $APARGS $PLAYBOOK

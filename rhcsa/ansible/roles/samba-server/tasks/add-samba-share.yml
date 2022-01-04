@@ -1,0 +1,27 @@
+---
+- name: Ensure an SELinux policy exists for the Samba share ({{ share.sharename }})
+  sefcontext:
+    target: "{{ share.seregex }}"
+    setype: "{{ share.setype }}"
+    state: present
+  become: yes
+- name: Ensure top level directory exists for the Samba share ({{ share.sharename }})
+  file:
+    path: "{{ share.path }}"
+    owner: "{{ share.owner | default('root') }}"
+    group: "{{ share.group | default('root') }}"
+    mode: "{{ share.mode | default('0755') }}"
+    state: directory
+    setype: "{{ share.setype }}"
+  become: yes
+- name: Ensure configuration exists for the Samba share ({{ share.sharename }})
+  blockinfile:
+    path: /etc/samba/smb.conf
+    marker: '# {mark} ANSIBLE MANAGED BLOCK: {{ share.sharename }}'
+    block: |
+      [{{ share.sharename }}]
+        comment = {{ share.comment | default(share.sharename) }}
+        path = {{ share.path }}
+        guest ok = {{ share.guest_ok | default('no') }}
+        read only = {{ share.read_only | default('yes') }}
+  become: yes

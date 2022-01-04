@@ -1,0 +1,16 @@
+---
+virtualization: virtualbox
+system_packages:
+  - dkms
+  - linux-headers-amd64
+  - packer
+  - python3-jmespath
+  - vagrant
+internet_packages:
+  - https://download.virtualbox.org/virtualbox/6.1.16/virtualbox-6.1_6.1.16-140961~Debian~buster_amd64.deb
+packer_override:
+  url: "https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zip"
+  basename: "packer_1.6.5_linux_amd64"
+  checksum: "sha256:a49f6408a50c220fe3f1a6192ea21134e2e8f31092c507614cd27ad4f913234b"
+vagrant_override:
+  url: "https://releases.hashicorp.com/vagrant/2.2.14/vagrant_2.2.14_x86_64.deb"

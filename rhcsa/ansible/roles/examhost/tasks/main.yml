@@ -1,0 +1,2 @@
+---
+- include_tasks: break_{{ inventory_hostname }}.yml

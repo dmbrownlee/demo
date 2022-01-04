@@ -1,0 +1,150 @@
+---
+# ==============
+# GNS3
+# ==============
+- name: Ensure prerequisite packages are installed
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+    autoclean: yes
+    autoremove: yes
+  become: yes
+  vars:
+    packages:
+      - python3-pip
+      - python3-pyqt5
+      - python3-pyqt5.qtsvg
+      - python3-pyqt5.qtwebsockets
+      - qemu
+      - qemu-kvm
+      - qemu-utils
+      - libvirt-clients
+      - libvirt-daemon-system
+      - virtinst
+      - wireshark
+      - xtightvncviewer
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg2
+      - software-properties-common
+- name: Ensure PIP packages are installed
+  pip:
+    name: "{{ pip_packages }}"
+  vars:
+    pip_packages:
+      - gns3-server=={{ gns3_version }}
+      - gns3-gui=={{ gns3_version }}
+- name: Check status of bionic packages
+  command: dpkg -s dynamips ubridge vpcs gns3-server gns3-gui
+  changed_when: false
+  failed_when: false
+  register: bionic
+- name: Ensure the apt key for the docker repo is installed
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+  become: yes
+- name: Ensure the apt key for Ubuntu bionic repo is installed
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
+    state: present
+  become: yes
+  when: bionic.rc != 0
+- name: Ensure the docker repo is enabled
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/debian buster stable edge"
+    state: present
+    update_cache: yes
+  become: yes
+- name: Ensure Ubuntu bionic repos are enabled
+  blockinfile:
+    path: /etc/apt/sources.list
+    block: |
+      deb http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
+      deb-src http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
+    state: present
+  become: yes
+  when: bionic.rc != 0
+- name: Ensure apt repos are updated
+  apt:
+    update_cache: yes
+  become: yes
+- name: Ensure docker-ce installed
+  apt:
+    name: "{{ packages }}"
+    state: present
+  become: yes
+  vars:
+    packages:
+      - docker-ce
+      - dynamips
+      - ubridge
+      - vpcs
+      - gns3-server
+      - gns3-gui
+  when: bionic.rc != 0
+- name: Ensure the Ubuntu repos are removed after dynamips is installed
+  blockinfile:
+    path: /etc/apt/sources.list
+    block: |
+      deb http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
+      deb-src http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
+    state: absent
+  become: yes
+  when: bionic.rc != 0
+- name: Ensure the apt key for Ubuntu bionic repo is removed
+  apt_key:
+    id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
+    state: absent
+  become: yes
+  when: bionic.rc != 0
+- name: Ensure user is in the required groups
+  user:
+    name: "{{ ansible_user }}"
+    groups: "{{ item }}"
+    append: yes
+  become: yes
+  with_items:
+    - kvm
+    - libvirt
+    - docker
+    - ubridge
+- name: Ensure user config directory for GNS3 exists
+  file:
+    path: "{{ gns3_config_dir }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: 0755
+#- name: Update GNS3 configuration files
+#  template:
+#    src: "{{ item }}.j2"
+#    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
+#  with_items:
+#    - "gns3_gui"
+#    - "gns3_server"
+#    - "gns3_controller"
+#  vars:
+#    gns3_bin_dir: "/usr/bin"
+#    gns3_server_host: "192.168.56.1"
+#    gns3_server_port: "8000"
+#    gns3_server_path: "{{ ansible_user_dir }}/.local/bin/gns3server"
+#    gns3_gui_hdpi: "false"
+#    gns3_gui_serial_console_command: ""
+#    gns3_gui_spice_console_command: "remote-viewer spice://%h:%p"
+#    gns3_gui_telnet_command: "gnome-terminal -t \"%d\" -e \"telnet %h %p\""
+#    gns3_gui_vnc_command: "vncviewer %h:%p"
+#    gns3_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
+#    vboxmanage_path: "/usr/bin/VBoxManage"
+#- name: Ensure directory for IOS images exists
+#  file:
+#    path: "{{ gns3_user_dir }}/images"
+#    state: directory
+#    mode: 0755
+#- name: Ensure directory for IOS symbols exists
+#  file:
+#    path: "{{ gns3_user_dir }}/symbols"
+#    state: directory
+#    mode: 0755

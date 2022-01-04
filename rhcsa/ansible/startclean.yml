@@ -1,0 +1,55 @@
+---
+# This playbook automates some clean up tasks when you just want to start over.
+# Run it in this directory with:
+#
+#   ansible-playbook startclean.yml
+- name: Undo the course setup
+  hosts: localhost
+  tasks:
+    - name: Get the status of the Vagrantfile
+      stat:
+        path: "{{ ansible_user_dir }}/demo/rhcsa/Vagrantfile"
+      register: vagrantfile
+    - name: Ensure the course VMs are destroyed
+      command: vagrant destroy -f
+      args:
+        chdir: "{{ ansible_user_dir }}/demo/rhcsa"
+      when: vagrantfile.stat.exists
+    - name: Ensure the Vagrantfile is removed
+      file:
+        path: "{{ ansible_user_dir }}/demo/rhcsa/{{ item }}"
+        state: absent
+      loop:
+        - Vagrantfile
+        - Vagrantfile.rocky
+      when: vagrantfile.stat.exists
+    - name: Ensure there are no leftover VM directories
+      file:
+        path: "{{ ansible_user_dir }}/VirtualBox VMs/{{ item }}"
+        state: absent
+      loop:
+        - idm1
+        - control
+        - ansible1
+        - ansible2
+        - server1
+        - server2
+        - installhost
+        - exam1
+        - exam2
+    - name: Ensure the Vagrant base boxes are removed
+      command: vagrant box remove {{ item }}
+      ignore_errors: true
+      loop:
+        - rocky-8.4
+        - rocky-8.4-core
+        - rocky-8.4-minimal
+        - rocky-8.4-gse
+    - name: Ensure the packer build directory has kbeen removed
+      file:
+        path: "{{ ansible_user_dir }}/demo/ansible/packer"
+        state: absent
+    - name: Ensure your local repo is current
+      command: git pull
+      args:
+        chdir: "{{ ansible_user_dir }}/demo"

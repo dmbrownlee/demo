@@ -1,0 +1,8 @@
+If you're stuck, consider these questions:
+
+- Is the web server using the latest config?
+- Is the web server running?
+- Where is access control configured and where might you find examples?
+- Is name resolution working?
+- Does wget from server2 to itself work?
+- Is the SELinux fcontext the same for the new docroot as it was for the old?

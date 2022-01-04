@@ -1,0 +1,28 @@
+---
+system_brews:
+  - telnet
+system_casks:
+  - wireshark
+    #- gns3
+system_dmgs:
+  - file: "GNS3-{{ gns3_version }}.dmg"
+    url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns3_version }}/GNS3-{{ gns3_version }}.dmg"
+    checksum: "{{ gns3_dmg_checksum }}"
+    contents: "GNS3.app"
+    mount: "GNS3 {{ gns3_version }}"
+    content_type: "app"
+    artifact: "/Applications/GNS3.app"
+dockitems_to_add:
+  - name: GNS3
+    path: "/Applications/GNS3.app"
+#gns3_config_dir: "{{ ansible_user_dir }}/GNS3"
+#gns3_user_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
+#===== vars for gns3_controller.j2
+g3controller_gns3vm_headless: "false"
+#===== vars for gns3_gui.j2
+g3gui_mainwindow_hdpi: "true"
+g3gui_mainwindow_spice_console_command: "/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer spice://%h:%p"
+g3gui_mainwindow_telnet_command: "osascript -e 'set posix_path to do shell script \\\"echo \\\\\\\"$PATH\\\\\\\"\\\"' -e 'tell application \\\"Terminal\\\"' -e 'activate' -e 'do script \\\"echo -n -e \\\\\\\"\\\\\\\\033]0;%d\\\\\\\\007\\\\\\\"; clear; PATH=\\\" & quoted form of posix_path & \\\" telnet %h %p ; exit\\\"' -e 'end tell'"
+g3gui_mainwindow_vnc_command: "osascript -e 'tell application \\\"Screen Sharing\\\"' -e '   display dialog \\\"WARNING OSX VNC support is limited if you have trouble connecting to a device please use an alternative client like Chicken of the VNC.\\\" buttons {\\\"OK\\\"} default button 1 with icon caution with title \\\"GNS3\\\"' -e '  open location \\\"vnc://%h:%p\\\"' -e 'end tell'"
+g3gui_packetcapture_reader_command: "tail -f -c +0 %c | /Applications/Wireshark.app/Contents/MacOS/Wireshark -o \\\"gui.window_title:%d\\\" -k -i -"
+#===== vars for gns3_server.j2

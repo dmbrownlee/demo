@@ -1,0 +1,32 @@
+# Welcome to the {{ exam.certification }} self-study course!
+{% if orientation.course is defined %}
+
+## The Course
+{{ orientation.course }}
+{% endif %}
+{% if orientation.resources is defined %}
+
+## The Resources
+{{ orientation.resources }}
+{% endif %}
+{% if orientation.labenv is defined %}
+
+## The Lab Environment
+{{ orientation.labenv }}
+{% endif %}
+{% if chapter.labs is defined %}
+
+## Labs
+{% for lab in chapter.labs %}
+[lab{{ chapter_num }}-{{ loop.index }}: {{ lab.title }}](chapter{{ chapter_num }}/lab{{ chapter_num }}-{{ loop.index }}.md)</br>
+{% endfor %}
+{% endif %}
+{% if study_guide.chapters is defined %}
+
+## Assignment Page Listing
+{% for chapter in study_guide.chapters %}
+{% if not loop.first %}
+[Chapter {{ loop.index - 1 }}: {{ chapter.title }}](chapter{{ loop.index - 1 }}/README.md)</br>
+{% endif %}
+{% endfor %}
+{% endif %}

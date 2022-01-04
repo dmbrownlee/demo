@@ -1,0 +1,4 @@
+---
+rpm_gpg_keys:
+  - RPM-GPG-KEY-rockyofficial
+  - RPM-GPG-KEY-EPEL-8

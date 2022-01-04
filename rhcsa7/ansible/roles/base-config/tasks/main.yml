@@ -1,3 +1,0 @@
----
-- import_tasks: baseline_security.yml
-- import_tasks: install_common_packages.yml
