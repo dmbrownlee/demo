@@ -12,15 +12,15 @@ all:
     switch1:
       ansible_host: 192.168.42.10
     switch2:
-      ansible_host: 192.168.45.253
+      ansible_host: 192.168.42.11
     switch3:
-      ansible_host: 192.168.43.253
+      ansible_host: 192.168.42.12
     switch4:
-      ansible_host: 192.168.44.253
+      ansible_host: 192.168.42.13
     switch5:
-      ansible_host: 192.168.45.252
+      ansible_host: 192.168.42.14
     switch6:
-      ansible_host: 192.168.45.251
+      ansible_host: 192.168.42.15
     dns1:
       ansible_host: 192.168.44.1
     www1:
@@ -33,19 +33,19 @@ all:
     tier0:
       hosts:
         control:
-    tier1_switches:
+    switches:
       hosts:
         switch1:
+        switch2:
+        switch3:
+        switch4:
+        switch5:
+        switch6:
     tier1:
       hosts:
         firewall:
         router1:
         router2:
-    tier2_switches:
-      hosts:
-        switch2:
-        switch3:
-        switch4:
     tier2:
       hosts:
         dns1:
@@ -63,10 +63,6 @@ all:
     web_servers:
       hosts:
         www1:
-    tier3_switches:
-      hosts:
-        switch5:
-        switch6:
     lab_hosts:
       hosts:
         lab1.lab:
