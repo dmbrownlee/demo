@@ -33,9 +33,11 @@ all:
     tier0:
       hosts:
         control:
-    switches:
+    provisioning_switch:
       hosts:
         switch1:
+    switches:
+      hosts:
         switch2:
         switch3:
         switch4:
