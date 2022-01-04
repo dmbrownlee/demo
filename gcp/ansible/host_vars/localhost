@@ -1,3 +1,0 @@
-local_dirs:
-  - path: "{{ ansible_user_dir }}/.ssh"
-    mode: '0700'
