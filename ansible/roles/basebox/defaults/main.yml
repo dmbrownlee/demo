@@ -1,11 +1,20 @@
 ---
-supported_distributions:
-  - MacOSX
-  - Debian
-  - Fedora
-download_dir: "{{ ansible_user_dir }}/Downloads"
-packer_build_dir: "{{ ansible_user_dir }}/demo/ansible/packer"
-key_dir: "{{ ansible_user_dir }}/keys"
-virtualization: "virtualbox"
-provisioning_user: vagrant
-provisioning_password: vagrant
+host:
+  supported_distributions:
+    - MacOSX
+    - Debian
+    - Fedora
+  virtualization: "virtualbox"
+user:
+  download_dir: "{{ ansible_user_dir }}/Downloads"
+  key_dir: "{{ ansible_user_dir }}/keys"
+  demo_dir: "{{ ansible_user_dir }}/demo"
+packer:
+  build_dir: "{{ user.demo_dir }}/packer"
+  build_vm:
+    cpus: 1
+    ram: 1024
+    disk_size: "20480"
+vagrant:
+  provisioning_user: vagrant
+  provisioning_password: vagrant

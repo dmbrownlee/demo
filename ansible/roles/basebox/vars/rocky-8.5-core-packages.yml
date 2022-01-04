@@ -1,0 +1,5 @@
+---
+package_section: |
+  %packages --excludedocs --excludeWeakdeps
+  @core --nodefaults
+  %end
