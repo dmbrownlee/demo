@@ -1,0 +1,61 @@
+- name: Ensure quagga configuration is current ({{ quagga_server.name }})
+  template:
+    dest: /etc/network/quagga/{{ quagga_server.name }}.conf
+    src: "{{ quagga_server.name }}.conf.j2"
+    owner: quagga
+    group: quagga
+    mode: '0644'
+  become: yes
+  notify:
+    - restart_router
+    - wait_for_convergence
+- name: Ensure runit service directories exist ({{ quagga_server.name }})
+  file:
+    path: "/etc/sv/{{ quagga_server.name }}/log"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit log directory exists ({{ quagga_server.name }})
+  file:
+    path: "/var/log/svlogd/{{ quagga_server.name }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit scripts for quagga daemon logging exist ({{ quagga_server.name }})
+  copy:
+    content: |
+      #!/bin/sh -euC
+      svlogd -tt /var/log/svlogd/{{ quagga_server.name }}
+    dest: "/etc/sv/{{ quagga_server.name }}/log/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit scripts for quagga daemons exist ({{ quagga_server.name }})
+  template:
+    src: runit_quagga.j2
+    dest: "/etc/sv/{{ quagga_server.name }}/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Enable {{ quagga_server.name }} daemon (Debian)
+  file:
+    path: "/etc/runit/runsvdir/default/{{ quagga_server.name }}"
+    src: "/etc/sv/{{ quagga_server.name }}"
+    state: link
+  when: ansible_distribution == 'Debian'
+  become: yes
+  notify: wait_for_convergence
+- name: Enable {{ quagga_server.name }} daemon (Alpine)
+  file:
+    path: "/etc/service/{{ quagga_server.name }}"
+    src: "/etc/sv/{{ quagga_server.name }}"
+    state: link
+  when: ansible_distribution == 'Alpine'
+  become: yes
+  notify: wait_for_convergence

@@ -1,0 +1,15 @@
+---
+- name: Ensure temporary external access is disabled
+  block:
+    - name: Get list of default routes
+      command: ip route list 0.0.0.0/0 via {{ bootstrap_gateway }}
+      changed_when: false
+      register: tea_check
+    - name: Ensure default route through bootstap gateway is removed
+      command: ip route del 0.0.0.0/0 via {{ bootstrap_gateway }}
+      when:
+        - bootstrap_gateway is defined
+        - bootstrap_gateway == '192.168.42.1'
+        - tea_check.stdout != ""
+      become: yes
+  when: TEA.changed

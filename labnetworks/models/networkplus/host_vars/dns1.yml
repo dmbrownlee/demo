@@ -1,0 +1,74 @@
+---
+dnsmasq:
+  interface: eth0
+  upstream_dns_servers:
+    - 8.8.8.8
+    - 8.8.4.4
+  dns_zones:
+    - name: "{{ ansible_domain }}"
+      netblock: "192.168.0.0/16"
+      interface: eth0
+      cnames:
+        - target: "dns1.{{ ansible_domain }}"
+          cnames:
+            - "dns.{{ ansible_domain }}"
+            - "dhcp.{{ ansible_domain }}"
+            - "pxe.{{ ansible_domain }}"
+        - target: "www1.{{ ansible_domain }}"
+          cnames:
+            - "www.{{ ansible_domain }}"
+    - name: "eng.{{ ansible_domain }}"
+      netblock: "192.168.46.0/24"
+      interface: eth0
+    - name: "lab.{{ ansible_domain }}"
+      netblock: "192.168.47.0/24"
+      interface: eth0
+  dhcp_netblocks:
+    # - name: default_vlan
+    #   network: 192.168.0.0
+    #   netmask: 255.255.0.0
+    #   domain: "{{ ansible_domain }}"
+    - name: default_vlan
+      network: 192.168.45.0/24
+      netmask: 255.255.255.0
+      pool_start: 192.168.45.100
+      pool_end: 192.168.45.150
+      lease_time: 4h
+      domain: "{{ ansible_domain }}"
+      router: 192.168.45.254
+      dns_server: 192.168.44.1
+      domain_search:
+        - networkplus.test
+      tftp_server: pxe.{{ ansible_domain }}
+      bootfile_name: bootable_image
+    - name: eng_vlan
+      network: 192.168.46.0/24
+      netmask: 255.255.255.0
+      pool_start: 192.168.46.100
+      pool_end: 192.168.46.150
+      lease_time: 4h
+      domain: "{{ ansible_domain }}"
+      router: 192.168.46.254
+      dns_server: 192.168.44.1
+      domain_search:
+        - eng.networkplus.test
+        - lab.networkplus.test
+        - networkplus.test
+    - name: lab_vlan
+      network: 192.168.47.0/24
+      netmask: 255.255.255.0
+      pool_start: 192.168.47.100
+      pool_end: 192.168.47.150
+      lease_time: 4h
+      domain: "{{ ansible_domain }}"
+      router: 192.168.47.254
+      dns_server: 192.168.44.1
+      domain_search:
+        - lab.networkplus.test
+populate_hosts_file: true
+interfaces:
+  eth0:
+    method: static
+    address: 192.168.44.1
+    netmask: 255.255.255.0
+    gateway: 192.168.44.254

@@ -1,0 +1,7 @@
+---
+- name: Ensure sshpass is installed on Ansible controllers
+  package:
+    name: sshpass
+    state: present
+  become: yes
+  when: ansible_distribution == 'Alpine'

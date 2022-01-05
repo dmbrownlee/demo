@@ -1,0 +1,50 @@
+#!/bin/bash
+# This script is installed in the Alpine Linux docker image if
+# ANSIBLE_CONTROLLER='true' is added to the environment when the
+# container is created.
+
+ORIGINAL_DIR=$PWD
+
+# Ensure git and ansible is installed on Alpine Linux
+[ -f /etc/alpine-release ] &&
+  ( [ -h /usr/bin/git ] || sudo apk add --no-cache git ) &&
+  ( [ -h /usr/bin/ansible-playbook ] || sudo apk add --no-cache ansible )
+
+# Ensure we're working with the most recent repo commit
+if [ ! -d $HOME/labnetwork ]; then
+  cd $HOME &&
+  git clone -b release https://github.com/dmbrownlee/labnetwork.git
+else
+  cd $HOME/labnetwork
+  git pull
+  echo
+  diff -q $HOME/setup $HOME/labnetwork/setup
+  if [ $? -ne 0 ]; then
+    cp $HOME/labnetwork/setup $HOME/setup
+    echo "Setup script updated"
+    echo
+  fi
+fi
+
+if [[ $# -ne 0 ]]; then
+  MODEL=${1}
+else
+  cat - <<DONE
+The setup script has ensured that git and Ansible are installed and has
+cloned the labnetwork project locally.  If you would like to run the Ansible
+playbook to configure the nodes in your network model, you need to pass the
+name of the network model you wish to configure as the first argument.
+
+Example:
+./setup networkplus
+
+DONE
+  exit 1
+fi
+
+echo "Make sure all the devices in the network model are started !!!"
+echo
+read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
+
+cd $HOME/labnetwork/models/$MODEL && ansible-playbook -k -K site.yml
+cd $ORIGINAL_DIR

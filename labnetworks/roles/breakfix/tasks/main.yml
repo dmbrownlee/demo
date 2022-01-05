@@ -1,0 +1,8 @@
+---
+- name: Ensure the breakfix script is installed
+  copy:
+    src: breakfix
+    dest: "{{ ansible_user_dir }}/breakfix"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    mode: '0555'

@@ -1,0 +1,5 @@
+#!/bin/bash
+exec 2>&1
+. /etc/default/quagga
+#/sbin/ip route flush proto zebra
+exec chpst /usr/sbin/{{ quagga_server.name }} ${{ quagga_server.name | upper() }}_OPTS -f /etc/quagga/{{ quagga_server.name }}.conf

@@ -1,0 +1,42 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -i lo -j ACCEPT
+{% if fw.trusted_ifaces is defined %}
+{% for iface in fw.trusted_ifaces %}
+-A INPUT -i {{ iface }} -j ACCEPT
+{% endfor %}
+{% endif %}
+{% if fw.snat_ifaces is defined %}
+{% for iface in fw.snat_ifaces %}
+-A INPUT -i {{ iface }} -p icmp --icmp-type 8 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+{% endfor %}
+{% endif %}
+{% if fw.opvn_ifaces is defined %}
+{% for iface in fw.opvn_ifaces %}
+-A INPUT -i {{ iface }} -m state --state NEW -p udp --dport 1194 -j ACCEPT
+{% endfor %}
+-A INPUT -i tun+ -j ACCEPT
+{% endif %}
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A OUTPUT -o lo -j ACCEPT
+COMMIT
+#
+*nat
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+{% if fw.tcp_forwarding_rules is defined %}
+{% for rule in fw.tcp_forwarding_rules %}
+-A PREROUTING -i {{ rule.iface }} -p 6 -m tcp --dport {{ rule.port }} -j DNAT --to-destination {{ rule.dest }}
+{% endfor %}
+{% endif %}
+{% if fw.snat_ifaces is defined %}
+{% for iface in fw.snat_ifaces %}
+-A POSTROUTING -o {{ iface }} -j MASQUERADE
+{% endfor %}
+{% endif %}
+COMMIT
