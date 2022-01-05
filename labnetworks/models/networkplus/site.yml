@@ -1,0 +1,121 @@
+---
+- name: Configure bootstrap on the Ansible controller
+  hosts: control
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure services on the Ansible controller
+  hosts: control
+  roles:
+    - role: ansible_controller
+      tags: [ansible_controller]
+    - role: quagga
+      tags: [quagga]
+    - role: ca
+      tags: [ca]
+    - role: isc-dhcp-server
+      tags: [isc-dhcp-server]
+# === Bootstrap layer2 of the network
+# Configure all switches through the provisioning network
+# - name: Bootstrap provisioning switch
+#   gather_facts: false
+#   hosts: provisioning_switch
+#   roles:
+#     - role: bootstrap-routing
+#       tags: [bootstrap-routing]
+# - name: Configure bootstrap on provisioning switch
+#   hosts: provisioning_switch
+#   roles:
+#     - role: bootstrap
+#       tags: [bootstrap]
+#     - role: baseline
+#       tags: [baseline]
+# - name: Configure services on provisioning switch
+#   hosts: provisioning_switch
+#   roles:
+#     - role: openvswitch
+#       tags: [openvswitch]
+#     - role: TEA_disable
+#       tags: [TEA_disable]
+- name: Bootstrap switches
+  gather_facts: false
+  hosts: switches
+  roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
+- name: Configure bootstrap on switches
+  hosts: switches
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure services on switches
+  hosts: switches
+  roles:
+    - role: openvswitch
+      tags: [openvswitch]
+    - role: TEA_disable
+      tags: [TEA_disable]
+# === Tier 1 devices ===
+# These devices are accessible to the control host without needing to
+# configure intermediary devices.  This includes the firewall and
+# backbone routers. Bootstrapping Python is a separate play because
+# gathering facts has to be disabled as it depends on Python.
+- name: Bootstrap tier 1 devices
+  gather_facts: false
+  hosts: tier1
+  roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
+- name: Configure bootstrap on tier 1 devices
+  hosts: tier1
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure services on tier 1 devices
+  hosts: tier1
+  roles:
+    - role: quagga
+      tags: [quagga]
+    - role: isc-dhcp-relay
+      tags: [isc-dhcp-relay]
+      when: ansible_hostname == 'router2'
+    - role: TEA_disable
+      tags: [TEA_disable]
+# === Tier 2 devices ===
+# The control host can only reach tier 2 devices through the tier 1 devices
+# after the tier 1 devices have been configured.  Once the tier 1 routers are
+# up and have convered state, we can begin configuring the tier 2 hosts.
+- name: Bootstrap Python onto tier 2 devices
+  gather_facts: false
+  hosts: tier2
+  roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
+- name: Configure bootstrap on tier 2 devices
+  hosts: tier2
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure DNS servers
+  hosts: dns_servers
+  roles:
+    - role: dnsmasq
+      tags: [dnsmasq]
+- name: Configure web servers
+  hosts: web_servers
+  roles:
+    - role: nginx
+      tags: [nginx]
+- name: Configure VPN servers
+  hosts: firewall
+  roles:
+    - role: openvpn
+      tags: [openvpn]

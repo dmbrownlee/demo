@@ -1,0 +1,68 @@
+#auth-server={{ ansible_domain }},eth0
+domain-needed
+expand-hosts
+bogus-priv
+no-resolv
+no-negcache
+{% if dnsmasq.upstream_dns_servers is defined %}
+{% for server in dnsmasq.upstream_dns_servers %}
+server={{ server }}
+{% endfor %}
+{% endif %}
+rev-server=192.168.0.0/16,192.168.44.1
+mx-target=smtp.networkplus.test
+localmx
+{% if dnsmasq.interface is defined %}
+interface={{ dnsmasq.interface }}
+{% endif %}
+# ============
+# DNS Settings
+# ============
+{% for zone in dnsmasq.dns_zones %}
+{% if zone.name is defined %}
+#
+# {{ zone.name }} zone settings
+#
+local=/{{ zone.name }}/
+{% if zone.netblock is defined %}
+domain={{ zone.name }},{{ zone.netblock }},local
+{% if zone.netblock is defined and zone.interface is defined %}
+#auth-zone={{ zone.name }},{{ zone.netblock }},{{ zone.interface }}
+interface-name={{ zone.name }},{{ zone.interface }}
+{% endif %}
+{% endif %}
+{% if zone.cnames is defined %}
+{% for cname in zone.cnames %}
+cname={{ cname.cnames | join(',') }},{{ cname.target }}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+# =============
+# DHCP Settings
+# =============
+{% for dhcp in dnsmasq.dhcp_netblocks %}
+{% if dhcp.name is defined and dhcp.network is defined %}
+#
+# DHCP settings for {{ dhcp.network }}
+{% if dhcp.pool_start is defined and dhcp.pool_end is defined and dhcp.netmask is defined and dhcp.lease_time is defined %}
+dhcp-range=set:{{ dhcp.name }},{{ dhcp.pool_start }},{{ dhcp.pool_end }},{{ dhcp.netmask }},{{ dhcp.lease_time }}
+{% endif %}
+{% if dhcp.router is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:router,{{ dhcp.router }}
+{% endif %}
+{% if dhcp.dns_server is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:dns-server,{{ dhcp.dns_server }}
+{% endif %}
+{% if dhcp.domain_search is defined %}
+dhcp-option=tag:{{ dhcp.name }},option:domain-search,{{ dhcp.domain_search | join(',') }}
+{% endif %}
+{% if dhcp.tftp_server is defined %}
+dhcp-option-force=tag:{{ dhcp.name }},option:tftp-server,{{ dhcp.tftp_server }}
+{% endif %}
+{% if dhcp.bootfile_name is defined %}
+dhcp-option-force=tag:{{ dhcp.name }},option:bootfile-name,{{ dhcp.bootfile_name }}
+{% endif %}
+{% endif %}
+{% endfor %}
