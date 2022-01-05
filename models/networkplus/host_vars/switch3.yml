@@ -6,15 +6,22 @@ interfaces:
     method: 'static'
     address: '192.168.42.12'
     netmask: '255.255.255.0'
-# Uncomment below if you want an 8-port switch rather than the default 16-port
-# openvswitch:
-#   bridges:
-#     - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
-#   bridge_ports:
-#     - { name: 'eth1', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth2', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth3', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth4', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth5', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth6', state: 'present', bridge: 'br0', vlan: '1' }
-#     - { name: 'eth7', state: 'present', bridge: 'br0', vlan: '1' }
+openvswitch:
+  bridges:
+    - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
+  bridge_ports:
+    - { name: 'eth1', state: 'present', bridge: 'br0' }
+    - { name: 'eth2', state: 'present', bridge: 'br0' }
+    - { name: 'eth3', state: 'present', bridge: 'br0' }
+    - { name: 'eth4', state: 'present', bridge: 'br0' }
+    - { name: 'eth5', state: 'present', bridge: 'br0' }
+    - { name: 'eth6', state: 'present', bridge: 'br0' }
+    - { name: 'eth7', state: 'present', bridge: 'br0' }
+    - { name: 'eth8', state: 'present', bridge: 'br0' }
+    - { name: 'eth9', state: 'present', bridge: 'br0' }
+    - { name: 'eth10', state: 'present', bridge: 'br0' }
+    - { name: 'eth11', state: 'present', bridge: 'br0' }
+    - { name: 'eth12', state: 'present', bridge: 'br0' }
+    - { name: 'eth13', state: 'present', bridge: 'br0' }
+    - { name: 'eth14', state: 'present', bridge: 'br0' }
+    - { name: 'eth15', state: 'present', bridge: 'br0' }
