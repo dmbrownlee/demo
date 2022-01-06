@@ -2,8 +2,8 @@
 if [[ "$ANSIBLE_CONTROLLER" == "true" ]]; then
   which curl || apk add --no-cache curl
   [ -f /home/USERNAME/setup ] ||
-    curl --output /home/USERNAME/setup https://raw.githubusercontent.com/dmbrownlee/labnetwork/main/setup
-  chmod +x /home/USERNAME/setup
+    curl --output /home/USERNAME/configure_network https://raw.githubusercontent.com/dmbrownlee/demo/release/playbooks/configure_network
+  chmod +x /home/USERNAME/configure_network
 fi
 
 [ -f /etc/ssh/ssh_host_rsa_key ] ||
