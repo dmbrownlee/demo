@@ -29,9 +29,9 @@ In this lab, we will be performing and automated install of the ```installhost``
 1. Use the cursor keys to navigate to the end of the line beginning with ```linuxefi```
   > Tip: You can use ```Ctrl-e``` on this screen to jump to the end of the line
 
-1. Use the delete/backspace key to erase the word ```quiet``` at the end of the line (we like to see the installer's output) and replace it with ```inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/main/rhcsa/labfiles/chapter1/ks.cfg```.  The prompts at the bottom of the screen tell you how to discard your changes if you make a mistake.
+1. Use the delete/backspace key to erase the word ```quiet``` at the end of the line (we like to see the installer's output) and replace it with ```inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/release/courses/rhcsa/labs/chapter1/ks.cfg```.  The prompts at the bottom of the screen tell you how to discard your changes if you make a mistake.
 
-  > Note: The kickstart file is viewable at [https://github.com/dmbrownlee/demo/blob/main/rhcsa/labfiles/chapter1/ks.cfg](https://github.com/dmbrownlee/demo/blob/main/rhcsa/labfiles/chapter1/ks.cfg).  However, that URL takes you to the file in the GitHub web interface which includes all the HTML to render the GitHub menus, etc.  When specifying the Kickstart file's URL in the installer, you always want to use a URL pointing to the raw text of the Kickstart file.
+  > Note: The kickstart file is viewable at [https://github.com/dmbrownlee/demo/blob/release/courses/rhcsa/labs/chapter1/ks.cfg](https://github.com/dmbrownlee/demo/blob/release/courses/rhcsa/labs/chapter1/ks.cfg).  However, that URL takes you to the file in the GitHub web interface which includes all the HTML to render the GitHub menus, etc.  When specifying the Kickstart file's URL in the installer, you always want to use a URL pointing to the raw text of the Kickstart file.
 
 1. Once you have added the Kickstart option to the ```linuxefi``` line, you can press ```Ctrl-x to begin the installation.
   > If the installer starts a manual install and prompts you to make installation choices, then you likely have a typo in the URL you entered and the installer has fallen back to doing a manual install because it could not download the Kickstart file.  In this case, destroy the virtual machine and start over.
