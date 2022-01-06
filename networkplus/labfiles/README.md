@@ -31,7 +31,7 @@ Follow these steps after opening the network model.
   password: password
   ```
 1. Run</br>
-  <code>./setup networkplus</code></br>
+  <code>./configure_network networkplus</code></br>
   (you will be prompted for the student's password twice, once for SSH and once for become).
 
 ## The Network+ virtual lab environment
