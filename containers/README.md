@@ -49,6 +49,14 @@ You can start a container using:</br>
 ```
 podman run -it --rm -p 2023:22 --name mycontainer dmbrownlee/alpine:latest
 ```
+If your container behaves differently based on environment variables passed to it, you can start a container using one or more `-e` opetions.  For example:</br>
+```
+podman run -it --rm -p 2023:22 -e ANSIBLE_CONTROLLER=true --name mycontainer dmbrownlee/alpine:latest
+```
+Remember, if using `-e` doesn't seem to be working, you can verify it is getting set correctly by running the `env` command inside your container instead of the default like this:</br>
+```
+podman run -it --rm -p 2023:22 -e ANSIBLE_CONTROLLER=true --name mycontainer dmbrownlee/alpine:latest env
+```
 You can attach a terminal to the running container with:</br>
 ```
 podman container attach mycontainer
