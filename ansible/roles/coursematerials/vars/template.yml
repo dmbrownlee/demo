@@ -19,7 +19,7 @@ orientation:
 study_guide:
   title: "The Great FOO+ Cert Guide: EX999 (Certification Guide) 2nd Edition"
   totalpages: 570
-  notes: "Any notes you would like to add."
+  notes: "(optional) If study_guide.notes is defined, it replaces the default text at the top of every assignment page."
   links:
     amazon: "https://www.amazon.com/FOO-Certification/dp/xxxxxxxxxx/"
     orielly: 'https://learning.oreilly.com/library/view/foo/xxxxxxxxxxxxx'
