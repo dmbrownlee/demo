@@ -33,6 +33,18 @@
     dest: "{{ packer.build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
+- name: Ensure the ISO has been pre-downloaded if it needs to be unzipped
+  get_url:
+    dest: "{{ user.download_dir }}"
+    url: "{{ iso.url }}"
+    checksum: "{{ iso.gzip_checksum }}"
+  when: iso.gzipped
+- name: Ensure zipped ISO has been unzipped
+  ansible.builtin.command:
+    cmd: gunzip {{ iso_name }}.gz
+    chgdir: "{{ user.download_dir }}"
+    creates: "{{ iso_name }}"
+  when: iso.gzipped
 - name: Build the base box if it is currently unavailable
   include_tasks: buildbox.yml
   when:
