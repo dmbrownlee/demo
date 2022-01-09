@@ -23,7 +23,7 @@
 - name: Ensure we have a packer config file for {{ distro }}-{{ version }}-{{ configuration }}
   template:
     dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
-    src: "{{ guest_os_type }}.j2"
+    src: "{{ packer_template }}"
     mode: '0600'
 - name: Ensure we import the variables for the {{ configuration }} configuration
   include_vars:
