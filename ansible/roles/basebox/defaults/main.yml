@@ -9,6 +9,9 @@ user:
   download_dir: "{{ ansible_user_dir }}/Downloads"
   key_dir: "{{ ansible_user_dir }}/keys"
   demo_dir: "{{ ansible_user_dir }}/demo"
+iso:
+  gzipped: false
+  gzip_checksum: ""
 packer:
   build_dir: "{{ user.demo_dir }}/packer"
   build_vm:
