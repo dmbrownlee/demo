@@ -1,0 +1,5 @@
+---
+demo:
+  root: "{{ ansible_user_dir }}/demo"
+vagrant:
+  key_dir: "{{ ansible_user_dir }}/keys"
