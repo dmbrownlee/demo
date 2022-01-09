@@ -6,14 +6,14 @@
       tags: baseline
     - role: virtualization_host
       tags: virtualization_host
+    - role: gns3_host
+      tags: gns3_host
 
 - name: Ensure virtual lab environment for networkplus is configured
   hosts: localhost
   tags: networkplus
 
   roles:
-    - role: gns3_host
-      tags: gns3_host
     - role: labenv_networkplus
       tags: labenv_networkplus
 
