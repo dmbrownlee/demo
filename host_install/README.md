@@ -2,8 +2,8 @@ This directory contains files for automating the installation of a minimal Linux
 
 # Overview
 The basic steps are:
-1. [Create the installion media](https://github.com/dmbrownlee/demo/blob/master/host_install/README.md#create-the-installation-media)
-2. [Install the host using distribution specific automation](https://github.com/dmbrownlee/demo/blob/master/host_install/README.md#install-the-host-using-distribution-specific-automation)
+1. [Create the installion media](https://github.com/dmbrownlee/demo/blob/main/host_install/README.md#create-the-installation-media)
+2. [Install the host using distribution specific automation](https://github.com/dmbrownlee/demo/blob/main/host_install/README.md#install-the-host-using-distribution-specific-automation)
 
 ## Create the installation media
 There are plenty of better places to find information on how to do this so I'm keeping this short and only addressing using the ```dd``` command to write the ISO image to a file.
@@ -43,7 +43,7 @@ The network installing ISO images are fairly small so the ```dd``` command shoul
 ### CentOS
 Boot from the installation media, use the cursor keys to highlight the menu option to install CentOS, and press 'e' __instead of pressing return__ so you can edit the menu option (the keys to press are displayed at the bottom of the screen in case you forget).  Use the cursor keys to go down to the line beginning with "linux" and use Ctrl-e to jump to the end of that line.  Once there, add the following to the end of the line:
 ```
-inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/master/host_install/CentOS/ks.cfg
+inst.ks=https://raw.githubusercontent.com/dmbrownlee/demo/main/host_install/CentOS/ks.cfg
 ```
 Then press Ctrl-x (as displayed at the bottom of the screen) to begin the installation.
 
@@ -54,7 +54,7 @@ Once the install completes, you will have an administrative user named "user".  
 ### Debian
 Boot from the installation media, use the cursor keys to highlight the "Advanced options ..." menu option and press enter.  Next, select the "... Automated install" menu option and press enter.  The installation will begin.  When prompted for "Location of initial preconfiguration file:", use this URL:
 ```
-https://raw.githubusercontent.com/dmbrownlee/demo/master/host_install/Debian/preseed.cfg
+https://raw.githubusercontent.com/dmbrownlee/demo/main/host_install/Debian/preseed.cfg
 ```
 The Debian preseed file is mostly automated but you will have to follow the text screen prompts to select the partitioning scheme (I use "Guided - use entire disk and set up LVM") and the disk use.  You need to confirm you want to write these changes to disk.
 

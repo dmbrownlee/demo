@@ -1,0 +1,53 @@
+---
+- name: Ensure the openvswitch package is installed
+  ansible.builtin.package:
+    name: openvswitch
+    state: present
+  become: yes
+- name: Ensure the run time directory for UNIX domain sockets exists
+  file:
+    path: /var/run/openvswitch
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure the openvswitch database exists
+  command:
+    argv:
+      - ovsdb-tool
+      - create
+      - /etc/openvswitch/conf.db
+      - /usr/share/openvswitch/vswitch.ovsschema
+    creates: /etc/openvswitch/conf.db
+  become: yes
+- name: Ensure runit has been configured for each service
+  include_tasks: configure_runit.yml
+  loop: "{{ runit_services }}"
+  loop_control:
+    loop_var: service
+    label: "{{ service }}"
+- name: Ensure bridges exist
+  openvswitch.openvswitch.openvswitch_bridge:
+    bridge: "{{ bridge.name }}"
+    state: "{{ bridge.state | default('present') }}"
+    set: "{{ bridge.set | default(omit) }}"
+  become: yes
+  loop: "{{ openvswitch.bridges | default(default_bridges) }}"
+  loop_control:
+    loop_var: bridge
+    label: "{{ bridge }}"
+  notify: pause_for_switch_updates
+- name: Ensure ports are added to bridges
+  openvswitch.openvswitch.openvswitch_port:
+    port: "{{ port.name }}"
+    bridge: "{{ port.bridge }}"
+    state: "{{ port.state | default('present') }}"
+    tag: "{{ port.vlan | default(omit) }}"
+  become: yes
+  when: port.name != 'eth0'
+  loop: "{{ openvswitch.bridge_ports | default(default_bridge_ports) }}"
+  loop_control:
+    loop_var: port
+    label: "{{ port }}"
+  notify: pause_for_switch_updates

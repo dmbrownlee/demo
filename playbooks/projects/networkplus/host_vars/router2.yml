@@ -1,0 +1,70 @@
+---
+bootstrap_gateway: 192.168.42.1
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.4
+    netmask: 255.255.255.0
+  eth2:
+    comment: "Default VLAN"
+    method: static
+    address: 192.168.45.254
+    netmask: 255.255.255.0
+    vlans:
+      - 100
+      - 200
+  eth2.100:
+    comment: "Eng VLAN"
+    method: static
+    address: 192.168.46.254
+    netmask: 255.255.255.0
+  eth2.200:
+    comment: "Lab VLAN"
+    method: static
+    address: 192.168.47.254
+    netmask: 255.255.255.0
+quagga:
+  vtysh_is_default_shell: true
+  servers:
+    - name: zebra
+      enabled: true
+      config:
+        - "interface eth0"
+        - "  description Provisioning"
+        - "  ip address 192.168.42.4/24"
+        - "  ipv6 address fc00:0:1::4/64"
+        - "interface eth1"
+        - "  description Backbone"
+        - "  ip address 192.168.41.6/30"
+        - "interface eth2"
+        - "  description Office and Labs"
+        - "  ip address 192.168.45.254/24"
+    - name: ospfd
+      enabled: true
+      ifcfg:
+        - { name: eth0, ospf_cost: 25 }
+      config:
+        - "  ospf router-id 4.4.4.4"
+        - "  network 192.168.41.4/30 area 0"
+        - "  network 192.168.42.0/24 area 0"
+        - "  network 192.168.45.0/24 area 0"
+        - "  network 192.168.46.0/24 area 0"
+        - "  network 192.168.47.0/24 area 0"
+        - "  passive-interface eth2"
+        - "  passive-interface eth2.100"
+        - "  passive-interface eth2.200"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6"
+        - "  router-id 192.168.42.4"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"
+isc_dhcp_relay:
+  dhcp_server: "192.168.44.1"
+  interfaces: "-iu eth1 -id eth2 -id eth2.100 -id eth2.200"

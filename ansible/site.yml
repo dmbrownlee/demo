@@ -26,7 +26,6 @@
       vars:
         boxes:
           - { distro: debian, version: "11.1.0", configuration: default }
-          - { distro: windows, version: "10", configuration: default }
       tags: basebox
 
 - name: Ensure virtual lab environment for rhcsa is configured
@@ -45,7 +44,7 @@
           tags: basebox
       vars:
         boxes:
-          - { distro: rocky, version: "8.4", configuration: core }
-          - { distro: rocky, version: "8.4", configuration: minimal }
-          - { distro: rocky, version: "8.4", configuration: gse }
+          - { distro: rocky, version: "8.5", configuration: core }
+          - { distro: rocky, version: "8.5", configuration: minimal }
+          - { distro: rocky, version: "8.5", configuration: gse }
       tags: basebox

@@ -1,0 +1,19 @@
+---
+- name: Configure bootstrap on the Ansible controller
+  hosts: control
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure services on the Ansible controller
+  hosts: control
+  roles:
+    - role: ansible_controller
+      tags: [ansible_controller]
+    - role: quagga
+      tags: [quagga]
+    - role: ca
+      tags: [ca]
+    - role: isc-dhcp-server
+      tags: [isc-dhcp-server]

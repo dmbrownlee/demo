@@ -1,0 +1,30 @@
+# option definitions common to all supported networks...
+option domain-name "{{ dhcpd.domain_name }}";
+option domain-name-servers {{ dhcpd.domain_name_servers }};
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# Use this to enble / disable dynamic dns updates globally.
+#ddns-update-style none;
+
+{% if dhcpd.authoritative is defined and dhcpd.authoritative %}authoritative;{% endif %}
+
+{% if dhcpd.netblocks is defined %}{% for netblock in dhcpd.netblocks %}
+subnet {{ netblock.address }} netmask {{ netblock.mask }} {
+  range {{ netblock.rangemin }} {{ netblock.rangemax }};
+  option routers {{ netblock.routers }};
+  option domain-name "{{ netblock.domain_name }}";
+  #filename "bootme";
+  #server-name "pxe.model1.test";
+}
+
+{% endfor %}{% endif %}
+{% if dhcpd.hosts is defined %}{% for host in dhcpd.hosts %}
+host {{ host.hostname }} {
+  hardware ethernet {{ host.mac }};
+  fixed-address {{ host.ipv4 }};
+}
+
+{% endfor %}{% endif %}
+

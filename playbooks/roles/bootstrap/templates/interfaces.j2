@@ -1,0 +1,22 @@
+{% for name, attr in interfaces.items() %}
+{% if attr.comment is defined %}
+# {{ attr.comment }}
+{% endif %}
+auto {{ name }}
+iface {{ name }} inet {{ attr.method }}
+{% if attr.method == "static" %}
+  address {{ attr.address }}
+  netmask {{ attr.netmask }}
+{% if attr.gateway is defined %}
+  gateway {{ attr.gateway }}
+{% endif %}
+{% elif attr.method == "manual" %}
+  pre-up ip link set {{ name }} up
+{% endif %}
+{% if attr.vlans is defined %}
+{% for id in attr.vlans %}
+  post-up ip link {{ name }}.{{ id }} || ip link add link {{ name }} name {{ name }}.{{ id }} type vlan id {{ id }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}

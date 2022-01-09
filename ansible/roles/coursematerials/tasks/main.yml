@@ -9,14 +9,6 @@
     mode: '0755'
   loop:
     - "{{ contentdir }}"
-    - "{{ imagesdir }}"
-- name: Ensure common images exist
-  copy:
-    src: "{{ item }}"
-    dest: "{{ fs_prefix_git_repo }}/{{ imagesdir }}"
-    mode: '0644'
-  loop:
-    - 'ConstructionSign.png'
 - name: Ensure directories exist for each chapter
   include_tasks: make-chapter.yml
   loop: "{{ study_guide.chapters }}"

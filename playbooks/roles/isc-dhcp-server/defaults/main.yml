@@ -1,0 +1,14 @@
+---
+runit_services:
+  - { name: dhcpd, enabled: true, startcmd: '/usr/sbin/dhcpd -d' }
+dhcpd:
+  domain_name: 'example.com'
+  domain_name_servers: 'ns1.example.com, ns2.example.com'
+  netblocks:
+    - address: 192.168.0.0
+      mask: 255.255.255.0
+      rangemin: 192.168.0.100
+      rangemax: 192.168.0.199
+      routers: 192.168.0.1
+      domain_name: 'provisioning.example.com'
+  hosts: []

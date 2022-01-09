@@ -15,14 +15,14 @@
       #- iso_altlocation is defined
       - iso_name is defined
       - install_file is defined
-      - cpus is defined
-      - ram is defined
-      - disk_size is defined
+      # - cpus is defined
+      # - ram is defined
+      # - disk_size is defined
       - templateks is defined
     fail_msg: "One or more required variables are undefined."
-- name: Ensure we have a packer JSON file for {{ distro }}-{{ version }}
+- name: Ensure we have a packer config file for {{ distro }}-{{ version }}-{{ configuration }}
   template:
-    dest: "{{ packer_build_dir }}/{{ distro }}-{{ version }}.json"
+    dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
     src: "{{ guest_os_type }}.j2"
     mode: '0600'
 - name: Ensure we import the variables for the {{ configuration }} configuration
@@ -30,7 +30,7 @@
     file: "{{ distro }}-{{ version }}-{{ configuration }}-packages.yml"
 - name: Ensure we have an installer file ({{ install_file }})
   template:
-    dest: "{{ packer_build_dir }}/{{ install_file }}"
+    dest: "{{ packer.build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
 - name: Build the base box if it is currently unavailable
