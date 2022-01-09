@@ -1,8 +1,11 @@
-{% if chapter.title != '' %}
 # Reading Assignment
-This assignment is part of a [self-study course](../README.md) to prepare for the {{ exam.certification }} exam.
+{% if chapter.title != '' %}
 # Chapter {{ chapter_num }}: {{ chapter.title }}
-
+{% if study_guide.notes is defined %}
+{{ study_guide.notes }}
+{% else %}
+This assignment is part of a [self-study course](../README.md) to prepare for the {{ exam.certification }} exam.
+{% endif %}
 ## Primary Resource
 Read chapter {{ chapter_num }} of [{{ study_guide.title }}]({{ study_guide.links.amazon }}).{% if study_guide.links.oreilly is defined and chapter.oreilly_page is defined %}  If you have an O'Reilly Online account, you can access the chapter directly [here]({{ study_guide.links.oreilly }}/{{ chapter.oreilly_page }}).{% endif %}
 {% if chapter.resources is defined %}
@@ -39,5 +42,5 @@ Read chapter {{ chapter_num }} of [{{ study_guide.title }}]({{ study_guide.links
 # Sorry, there is no assignment page for chapter {{ chapter_num }} yet
 You may mark this assignment as completed in your workbook.
 
-![Image of construction sign](../../images/ConstructionSign.png)
+# === U N D E R   C O N S T R U C T I O N ===
 {% endif %}

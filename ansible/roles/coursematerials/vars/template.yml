@@ -1,0 +1,64 @@
+---
+# vars file for coursematerials
+exam:
+  certification: "FOO+ (EX999)"
+  objectives: "https://www.example.com/FOO/Objectives.html"
+orientation:
+  course: |
+    Description of course (paragraph 1)</br></br>
+    Description of course (paragraph 2)</br></br>
+    Description of course (last paragraph)
+  resources: |
+    There are a few main resources here to help you with your studies.  First, there is a study schedule template to help you set deadlines for yourself.  The [study schedule template]({{ url_prefix_raw }}/{{ contentdir }}/{{ schedulefile }}) is a tab seperated values (TSV) file you can import into a spreadsheet.  After importing the template, fill in the date column for when you would like to finish the chapter.  Depending on your time line, you might aim for one or two chapters a week.  The chapters in the schedule are hyperlinks back to the assignment pages which themselves contain all the links to the study material and labs.  This makes the schedule your one stop for finding everything else.</br></br>
+    Next, there are the assignment pages.  These are basically just a single page for organizing all the links for a particular assignment in one place to make them easy to find.  There are handy links to the online study guide (requires an O'Reilly Online account) and other online material as well as links to lab docs that give you objectives to practice within the virtual lab environment.</br></br>
+    The preconfigured virtual lab environment is where you can get hands-on practice.  We use Vagrant to make creating (and destroying) the virtual lab machines easy so you can get started quickly and focus on the material covered in the text rather than get mired in lab setup.
+  labenv: |
+    The instructions for setting up the lab environment are [here](../README.md).</br></br>
+    There are one or more labs for each chapter of the study guide, each with a clearly defined objective, to give you practice on the topics covered.  Certain labs may require additional setup before the lab can be started and those steps will be in the lab's setup section.  Finally, each lab will give you a series of tasks to complete.  Most of the time these tasks will state the desired outcome without giving you the specific commands you need to complete the task.  The reason for this is that you should be learning the specific commands from the source material and the labs are there to test if you can recognize when to apply them as well as recall the specific commands.</br></br>
+    Go ahead and start your first labs now!
+study_guide:
+  title: "The Great FOO+ Cert Guide: EX999 (Certification Guide) 2nd Edition"
+  totalpages: 570
+  notes: "(optional) If study_guide.notes is defined, it replaces the default text at the top of every assignment page."
+  links:
+    amazon: "https://www.amazon.com/FOO-Certification/dp/xxxxxxxxxx/"
+    orielly: 'https://learning.oreilly.com/library/view/foo/xxxxxxxxxxxxx'
+  chapters:
+    - title: "Study Group Orientation"
+      lastpage: 0
+      labs:
+        - title: "Create your schedule"
+        - title: "Using the virtual lab environment"
+    - title: "FOO: An Introduction"
+      lastpage: 10
+      oreilly_page: "ch01.xhtml"
+      # example of including an additional resources section for this chapter
+      resources:
+        - text: 'A great heading'
+          type: heading
+        - text: 'Sub-heading 1'
+          type: subheading
+        - text: 'A link under sub-heading 1'
+          type: link
+          url: 'https://www.example.com/1-1/index.html'
+        - text: 'Sub-heading 2'
+          type: subheading
+        - text: 'A link under sub-heading 2'
+          type: link
+          url: 'https://www.example.com/2-1/index.html'
+        - text: 'Another link under sub-heading 2'
+          type: link
+          url: 'https://www.example.com/2-2/index.html'
+      labs:
+        - title: "Creating the installation media"
+    - title: 'Installing FOO'
+      lastpage: 51
+      oreilly_page: 'ch02.xhtml'
+      labs:
+        - title: "Install FOO on your own machine"
+        - title: "Configuring FOO: First Steps"
+    - title: 'Using FOO'
+      lastpage: 79
+      oreilly_page: 'ch03.xhtml'
+      labs:
+        - title: "Using FOO's online help system"

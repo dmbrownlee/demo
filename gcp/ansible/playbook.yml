@@ -1,5 +1,0 @@
----
-- name: Configure localhost as a terraform control node
-  hosts: localhost
-  roles:
-    - role: terraform-controller

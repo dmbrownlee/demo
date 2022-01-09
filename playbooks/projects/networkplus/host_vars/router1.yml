@@ -1,0 +1,49 @@
+---
+bootstrap_gateway: 192.168.42.1
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.3
+    netmask: 255.255.255.0
+quagga:
+  vtysh_is_default_shell: true
+  servers:
+    - name: zebra
+      enabled: true
+      config:
+        - "interface eth0"
+        - "  description Provisioning"
+        - "  ip address 192.168.42.3/24"
+        - "  ipv6 address fc00:0:1::3/64"
+        - "interface eth1"
+        - "  description Backbone"
+        - "  ip address 192.168.41.2/30"
+        - "interface eth2"
+        - "  description MDF"
+        - "  ip address 192.168.44.254/24"
+        - "interface eth3"
+        - "  description Backbone"
+        - "  ip address 192.168.41.5/30"
+    - name: ospfd
+      enabled: true
+      ifcfg:
+        - { name: eth0, ospf_cost: 25 }
+      config:
+        - "  ospf router-id 3.3.3.3"
+        - "  network 192.168.41.0/30 area 0"
+        - "  network 192.168.41.4/30 area 0"
+        - "  network 192.168.42.0/24 area 0"
+        - "  network 192.168.44.0/24 area 0"
+        - "  passive-interface eth2"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6"
+        - "  router-id 192.168.42.3"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"

@@ -1,0 +1,65 @@
+---
+bootstrap_gateway: 192.168.42.1
+fw:
+  trusted_ifaces:
+    - eth0
+    - eth2
+    - eth3
+  ovpn_ifaces:
+    - eth1
+  tcp_forwarding_rules:
+    - { iface: eth1, port: 80, dest: "192.168.43.1:80" }
+  snat_ifaces:
+    - eth1
+nat_out_interface: "eth1"
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.2
+    netmask: 255.255.255.0
+  eth1:
+    comment: "Internet"
+    method: dhcp
+quagga:
+  vtysh_is_default_shell: false
+  servers:
+    - name: zebra
+      enabled: true
+      config:
+        - "ip route 0.0.0.0/0 192.168.122.1"
+        - "interface eth0"
+        - "  description Provisioning"
+        - "  ip address 192.168.42.2/24"
+        - "  ipv6 address fc00:0:1::2/64"
+        - "interface eth1"
+        - "  description Internet"
+        - "interface eth2"
+        - "  description DMZ"
+        - "  ip address 192.168.43.254/24"
+        - "interface eth3"
+        - "  description Internal"
+        - "  ip address 192.168.41.1/30"
+    - name: ospfd
+      enabled: true
+      ifcfg:
+        - { name: eth0, ospf_cost: 25 }
+      config:
+        - "  ospf router-id 2.2.2.2"
+        - "  network 192.168.43.0/24 area 0"
+        - "  network 192.168.42.0/24 area 0"
+        - "  network 192.168.41.0/30 area 0"
+        - "  passive-interface eth1"
+        - "  passive-interface eth2"
+        - "  default-information originate always"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6"
+        - "  router-id 192.168.42.2"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"

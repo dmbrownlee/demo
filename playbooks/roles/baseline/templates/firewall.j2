@@ -1,0 +1,4 @@
+#!/bin/bash
+if [ -f /etc/iptables/rules.v4 ]; then
+  /etc/init.d/netfilter-persistent restart
+fi

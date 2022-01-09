@@ -1,0 +1,14 @@
+---
+distro: "rocky"
+version: "8.5"
+guest_os_type: "RedHat_64"
+iso_checksum: "sha256:0081f8b969d0cef426530f6d618b962c7a01e71eb12a40581a83241f22dfdc25"
+iso_location: "https://download.rockylinux.org/pub/rocky/8/isos/x86_64"
+iso_altlocation: "none"
+iso_name: "Rocky-{{ version }}-x86_64-dvd1.iso"
+install_file: "{{ distro }}-{{ version }}-{{ configuration }}-ks.cfg"
+templateks: "RedHat_64-ks.j2"
+repo_lines: |
+  repo --name="epel" --baseurl=https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch
+  repo --name=Rocky_BaseOS --mirrorlist=http://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever
+  repo --name=Rocky_AppStream --mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=AppStream-$releasever

@@ -1,5 +1,5 @@
 #version=RHEL8
-# Rocky 8.4 kickstart file
+# Rocky 8.x kickstart file
 #
 # For more information on kickstart syntax and commands, refer to the
 # CentOS Installation Guide:
@@ -51,7 +51,7 @@ firstboot --disable
 services --enabled="chronyd"
 # System timezone
 timezone America/Los_Angeles --isUtc
-user --groups=wheel --name={{ provisioning_user }} --plaintext --password={{ provisioning_password }}
+user --groups=wheel --name={{ vagrant.provisioning_user }} --plaintext --password={{ vagrant.provisioning_password }}
 
 {{ package_section }}
 %post

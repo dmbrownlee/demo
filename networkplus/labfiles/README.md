@@ -10,7 +10,7 @@ If you need help, see the ```README.md``` in [demo](https://github.com/dmbrownle
 ## Import the network model into GNS3
 1. Launch the GNS3 app and wait for the GNS3 VM in VirtualBox to fully boot</br>
   ![Ensure GNS3 VM has the green light](gns3vm_booted.png)
-1. Once the GNS3 VM has booted, in the GNS3 app, go to ```File > Import portable project``` and import the [```~/demo/networkplus/labfiles/networkplus.test.gns3project```](networkplus.test.gns3project) file
+1. Once the GNS3 VM has booted, in the GNS3 app, go to ```File > Import portable project``` and import the [```~/demo/networkplus/labfiles/networkplus.gns3project```](networkplus.gns3project) file
 
 GNS3 will open the model when it has finished importing.
 ## Adding the Virtual Machines
@@ -31,7 +31,7 @@ Follow these steps after opening the network model.
   password: password
   ```
 1. Run</br>
-  <code>./setup networkplus</code></br>
+  <code>./configure_network networkplus</code></br>
   (you will be prompted for the student's password twice, once for SSH and once for become).
 
 ## The Network+ virtual lab environment

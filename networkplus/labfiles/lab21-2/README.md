@@ -5,7 +5,7 @@
 In this lab, you will practice troubleshooting a network problem.
 
 ## SETUP
-This lab uses the [networkplus.test](https://github.com/dmbrownlee/demo/blob/master/networkplus/labfiles/README.md) network model.
+This lab uses the [networkplus.test](https://github.com/dmbrownlee/demo/blob/main/networkplus/labfiles/README.md) network model.
 
 This lab will intensionally break something in the network model to see if you can find where the problem lies.  Before beginning the lab, login to debian1, open a browser, and navigate to http://www.networkplus.test/.  You should see the default nginx web page.  If you do not, you have a problem that is not part of this lab and you should fix that first (bonus troubleshooting practice!) before continuing with the lab.  Remember, everytime you load the networkplus.test model you need to login to the control host as the ```ansible``` user and run the setup script to configure the network so do that first if you haven't already.
 

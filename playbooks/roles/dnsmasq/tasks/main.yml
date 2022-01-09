@@ -1,0 +1,67 @@
+---
+- name: Ensure the dnsmasq package is installed
+  package:
+    name: dnsmasq
+    state: present
+  become: yes
+- name: Ensure the dnsmasq config file is current
+  template:
+    dest: /etc/dnsmasq.d/{{ ansible_hostname }}.conf
+    src: "{{ ansible_hostname }}.conf.j2"
+    owner: root
+    group: root
+    mode: '0644'
+  become: yes
+  notify: reload_dnsmasq
+- name: Ensure directories for runit support exist
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+  loop:
+    - "/etc/sv/dnsmasq/log"
+    - "/var/log/svlogd/dnsmasq"
+- name: Ensure runit scripts for dnsmasq daemon logging exist
+  copy:
+    content: |
+      #!/bin/sh -euC
+      svlogd -tt /var/log/svlogd/dnsmasq
+    dest: "/etc/sv/dnsmasq/log/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+- name: Ensure runit scripts for dnsmasq daemons exist
+  template:
+    src: runit_dnsmasq.j2
+    dest: "/etc/sv/dnsmasq/run"
+    owner: root
+    group: root
+    mode: '0755'
+  become: yes
+# - name: Ensure inbound DNS connections are allowed through firewall
+#   iptables:
+#     table: filter
+#     chain: INPUT
+#     destination: 192.168.44.1/24
+#     destination_port: '53'
+#     protocol: udp
+#     jump: ACCEPT
+#   become: yes
+- name: Enable dnsmasq daemon (Debian)
+  file:
+    path: "/etc/runit/runsvdir/default/dnsmasq"
+    src: "/etc/sv/dnsmasq"
+    state: link
+  become: yes
+  when: ansible_distribution == 'Debian'
+- name: Enable dnsmasq daemon (Alpine)
+  file:
+    path: "/etc/service/dnsmasq"
+    src: "/etc/sv/dnsmasq"
+    state: link
+  become: yes
+  when: ansible_distribution == 'Alpine'
