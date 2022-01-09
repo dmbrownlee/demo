@@ -17,6 +17,7 @@
     dest: "{{ packer.build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
+  when: templateks is defined and templateks != 'none'
 - name: Ensure the ISO has been pre-downloaded if it needs to be unzipped
   get_url:
     dest: "{{ user.download_dir }}"
