@@ -1,5 +1,5 @@
 ---
-- name: Common VM configuration
-  hosts: all
+- name: Apply baseline configuration common to all Debian VMs.
+  hosts: debian
   roles:
-    - role: vmguest
+    - role: debian_baseline
