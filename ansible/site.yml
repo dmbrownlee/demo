@@ -34,6 +34,10 @@
 
   roles:
     - role: labenv_rhcsa
+      vars:
+        distro: rocky
+        version: "8.5"
+        iso_name: "Rocky-8.5-x86_64-dvd1.iso"
       tags: labenv_rhcsa
 
   post_tasks:
