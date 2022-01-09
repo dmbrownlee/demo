@@ -26,7 +26,7 @@
   when: iso.gzipped
 - name: Ensure zipped ISO has been unzipped
   ansible.builtin.command:
-    cmd: gunzip {{ iso_name }}.gz
+    cmd: gunzip -k {{ iso_name }}.gz
     chdir: "{{ user.download_dir }}"
     creates: "{{ iso_name }}"
   when: iso.gzipped
