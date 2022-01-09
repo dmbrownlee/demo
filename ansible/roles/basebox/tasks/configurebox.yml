@@ -4,22 +4,6 @@
     boxname: "{{ distro }}-{{ version }}-{{ configuration }}"
 - name: Read variables from vars/{{ distro }}-{{ version }}.yml
   include_vars: "{{ distro }}-{{ version }}.yml"
-- name: Ensure required variabless have been defined for {{ distro }}-{{ version }}
-  assert:
-    that:
-      #- distro is defined
-      #- version is defined
-      - guest_os_type is defined
-      - iso_checksum is defined
-      - iso_location is defined
-      #- iso_altlocation is defined
-      - iso_name is defined
-      - install_file is defined
-      # - cpus is defined
-      # - ram is defined
-      # - disk_size is defined
-      - templateks is defined
-    fail_msg: "One or more required variables are undefined."
 - name: Ensure we have a packer config file for {{ distro }}-{{ version }}-{{ configuration }}
   template:
     dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
@@ -48,5 +32,5 @@
 - name: Build the base box if it is currently unavailable
   include_tasks: buildbox.yml
   when:
-    - buildvms|bool
+    - host.buildvms|bool
     - boxname not in vagrant_box_list

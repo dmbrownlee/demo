@@ -24,7 +24,7 @@
     "cpus": "{{ packer.build_vm.cpus }}",
     "memory": {{ packer.build_vm.ram }},
     "vm_name": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}",
-    "headless": false,
+    "headless": {{ packer.headless }},
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
     "hard_drive_nonrotational": true,
