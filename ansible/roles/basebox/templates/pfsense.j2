@@ -24,7 +24,7 @@
     "cpus": "1",
     "memory": 1024,
     "vm_name": "pfsense-2.5.2",
-    "headless": false,
+    "headless": {{ packer.headless }},
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
     "hard_drive_nonrotational": true,

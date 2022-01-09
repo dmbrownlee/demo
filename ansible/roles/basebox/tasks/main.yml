@@ -2,7 +2,7 @@
 # do one time only
 - name: Assert this host can use this role
   assert:
-    that: ansible_distribution in host.supported_distributions
+    that: ansible_distribution in role.supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 - name: Ensure the packer build directories exists before copying files there
   # this is a bit hacky as it hardcodes a directory path for the Win10 box
