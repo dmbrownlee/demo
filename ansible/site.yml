@@ -14,7 +14,7 @@
   tags: networkplus
 
   roles:
-    - role: labenv_networkplus
+    - role: vagrantfile_networkplus
       tags: labenv_networkplus
 
   post_tasks:
