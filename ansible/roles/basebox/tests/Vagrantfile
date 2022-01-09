@@ -1,0 +1,72 @@
+# -*- mode: ruby -*-
+# vi: set ft=jinja2 :
+
+Vagrant.configure("2") do |config|
+  #===========================================================
+  # These settings are defaults for all VMs unless overridden
+  #===========================================================
+  config.ssh.private_key_path= "~/keys/vagrant"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "labfiles/", "/labfiles",
+      id: "labfiles",
+      owner: "root",
+      group: "root",
+      SharedFoldersEnableSymlinksCreate: false
+  config.vm.provider :virtualbox do |vboxvm|
+    vboxvm.gui = true
+    vboxvm.memory = 1024
+    vboxvm.customize ["modifyvm", :id, "--vram", "10"]
+    vboxvm.customize ["modifyvm", :id, "--vrde", "off"]
+    vboxvm.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    vboxvm.customize ["setextradata", :id, "GUI/ScaleFactor", "2.0"]
+    # NIC1 is connected to the vagrant management network
+    vboxvm.customize ["modifyvm", :id, "--cableconnected1", "on"]
+    vboxvm.customize ["modifyvm", :id, "--macaddress1", "auto"]
+  end
+
+  #==========================
+  # Debian VMs
+  #==========================
+
+  config.vm.define "debian-11.1.0-default" do |node|
+    node.vm.box = "debian-11.1.0-default"
+    node.vm.provider :virtualbox do |vboxvm|
+      vboxvm.name = "debian-11.1.0-default"
+    end
+  end
+
+  #==========================
+  # Rocky VMs
+  #==========================
+
+  config.vm.define "rocky-8.5-core" do |node|
+    node.vm.box = "rocky-8.5-core"
+    node.vm.provider :virtualbox do |vboxvm|
+      vboxvm.name = "rocky-8.5-core"
+      vboxvm.customize ["modifyvm", :id, "--firmware", "EFI"]
+      vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+    end
+  end
+
+  config.vm.define "rocky-8.5-minimal" do |node|
+    node.vm.box = "rocky-8.5-minimal"
+    node.vm.provider :virtualbox do |vboxvm|
+      vboxvm.name = "rocky-8.5-minimal"
+      vboxvm.customize ["modifyvm", :id, "--firmware", "EFI"]
+      vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+    end
+  end
+
+  config.vm.define "rocky-8.5-gse" do |node|
+    node.vm.box = "rocky-8.5-gse"
+    node.vm.provider :virtualbox do |vboxvm|
+      vboxvm.name = "rocky-8.5-gse"
+      vboxvm.customize ["modifyvm", :id, "--firmware", "EFI"]
+      vboxvm.customize ["modifyvm", :id, "--nic2", "natnetwork"]
+      vboxvm.customize ["modifyvm", :id, "--nat-network2", "RHCSA Network"]
+    end
+  end
+
+end

@@ -1,0 +1,134 @@
+---
+- name: Breakfix
+  hosts: localhost
+  gather_facts: false
+  vars:
+    fix: false
+  tasks:
+    #=======================================================================
+    # Breakfix 21-1
+    #
+    # In this exercise, eth2 on the firewall is disabled so there is no
+    # route to the DMZ network.  Ping from debian1 to www would fail and
+    # traceroute would show packets getting routed from the firewall out
+    # the Internet interface rather than to www in the DMZ.
+    #=======================================================================
+    - name: Breaking...
+      block:
+        - name: Disable firewall network interface to DMZ
+          command: ip link set eth2 down
+          become: yes
+          delegate_to: firewall
+        - name: Problem report from user
+          debug:
+            msg: |
+              INCOMING TROUBLE TICKET
+              We have received a trouble ticket from the user of debian1
+              saying the web page at http://www.networkplus.test/ is not
+              working.  Please troubleshoot the issue.
+      when:
+        - not fix
+      tags:
+        - 21-1
+    - name: Fixing...
+      block:
+        - name: Re-enable firewall network interface to DMZ
+          command: ip link set eth2 up
+          become: yes
+          delegate_to: firewall
+        - name: Escalation response received
+          debug:
+            msg: |
+              EMAIL FROM NETWORK OPERATIONS
+              The network administrator reports the problem has been fixed.
+      when:
+        - fix
+      tags:
+        - 21-1
+    #=======================================================================
+    # Breakfix 21-2
+    #
+    # In this exercise, the web server on www has been stopped.  The trouble
+    # report is the same as in 21-1, but ping from debian1 to www works.  You
+    # can use nc or telnet to check if the host is accepting TCP connections
+    # on port 80 and if those connection attempts hang or are immediately
+    # rejected.  You might also use wireshark/tcpdump to capture the connection
+    # attempt and, if you have console access on www (you do), you can use
+    # "ps aux" to see if the web server process is running or "sudo ss -ntlp"
+    # to see if there is any process listening on port 80.
+    #=======================================================================
+    - name: Breaking...
+      block:
+        - name: Ensure the web server is stopped
+          command: /usr/bin/sv stop nginx
+          become: yes
+          delegate_to: www1
+        - name: Problem report from user
+          debug:
+            msg: |
+              INCOMING TROUBLE TICKET
+              We have received a trouble ticket from the user of debian1
+              saying the web page at http://www.networkplus.test/ is not
+              working.  Please troubleshoot the issue.
+      when:
+        - not fix
+      tags:
+        - 21-2
+    - name: Fixing...
+      block:
+        - name: Ensure the web server is stopped
+          command: /usr/bin/sv start nginx
+          become: yes
+          delegate_to: www1
+        - name: Escalation response received
+          debug:
+            msg: |
+              EMAIL FROM SYSTEM ADMINISTRATORS
+              The web service has been restored.
+      when:
+        - fix
+      tags:
+        - 21-2
+    #=======================================================================
+    # Breakfix 21-3
+    #
+    # In this exercise, the name server has stopped returning the IP address
+    # of www.  The trouble report is the same as in 21-1, and ping from debian1
+    # to www still fails, but it fails with a different error.  Assuming you
+    # already new the IP address of www was 192.168.43.1, you could verify the
+    # web server is working by trying to connect by IP address.  The host,
+    # nslookup and dig commands would also show that name resolution was not
+    # working.
+    #=======================================================================
+    - name: Breaking...
+      block:
+        - name: Ensure the DNS server is not resolving www
+          shell: sed -i 's/^192.168.43.1/#192.168.43.1/' /etc/hosts && kill -HUP $(cat /run/dnsmasq/dnsmasq.pid)
+          become: yes
+          delegate_to: dns1
+        - name: Problem report from user
+          debug:
+            msg: |
+              INCOMING TROUBLE TICKET
+              We have received a trouble ticket from the user of debian1
+              saying the web page at http://www.networkplus.test/ is not
+              working.  Please troubleshoot the issue.
+      when:
+        - not fix
+      tags:
+        - 21-3
+    - name: Fixing...
+      block:
+        - name: Ensure the DNS server is resolving www again
+          shell: sed -i 's/^#192.168.43.1/192.168.43.1/' /etc/hosts && kill -HUP $(cat /run/dnsmasq/dnsmasq.pid)
+          become: yes
+          delegate_to: dns1
+        - name: Escalation response received
+          debug:
+            msg: |
+              EMAIL FROM SYSTEM ADMINISTRATORS
+              Name resolution for www is working again.
+      when:
+        - fix
+      tags:
+        - 21-3

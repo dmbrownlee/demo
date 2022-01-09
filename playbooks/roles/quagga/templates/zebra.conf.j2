@@ -1,0 +1,11 @@
+hostname {{ ansible_hostname }}
+password zebra
+enable password zebra
+log stdout
+log monitor informational
+!
+{% if quagga_server.config is defined %}
+{% for line in quagga_server.config %}
+{{ line }}
+{% endfor %}
+{% endif %}

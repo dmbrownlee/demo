@@ -1,8 +1,4 @@
 ---
-# default overrides
-contentdir: 'rhcsa/labfiles/rhce'
-imagesdir: 'rhcsa/labfiles/images'
-relativeimagesdir: '../../images'
 # vars file for coursematerials
 exam:
   certification: "RHCE (EX294)"

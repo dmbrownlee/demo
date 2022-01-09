@@ -1,0 +1,9 @@
+---
+- name: Ensure all interfaces are restarted with the new config
+  listen: restart_interfaces
+  shell: /gns3/bin/busybox ifdown -f {{ item }} && /gns3/bin/busybox ifup -f {{ item }}
+  become: yes
+  when:
+    - item.key != "lo"
+    - item.key != "eth0"
+  loop: "{{ interfaces | dict2items }}"

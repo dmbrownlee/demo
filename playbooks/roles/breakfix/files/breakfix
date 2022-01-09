@@ -1,0 +1,53 @@
+#!/bin/bash
+function usage() {
+  cat - <<DONE
+USAGE: $0 -h | [-u] <studygroup> <lab>
+
+  -h    Print this help message
+  -u    Undo the changes (fix the breakage)
+
+The first argument is the name of the study group and a directory with the same
+name should exist in the same directory as $0.
+
+The second argument is the number of the lab.  This is an Ansible tag used to
+to determine which tasks to run for this specific lab.
+
+If the -u option is specified, a different set of tasks is run to undo the
+changes of the first set of of tasks used to break the network.
+
+DONE
+}
+
+ANSIBLE_ARGS="-k -K"
+while getopts "hu" OPT; do
+  case $OPT in
+    "u")
+      ANSIBLE_ARGS="$ANSIBLE_ARGS -e fix=true"
+      ;;
+    "h")
+      usage
+      exit 0
+      ;;
+    "?")
+      usage
+      exit 1
+      ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ $# -ne 2 ]; then
+  usage
+  exit 2
+fi
+
+COURSE=$1
+LAB=$2
+TOPDIR=$HOME/labnetwork
+if [ ! -d $TOPDIR/$COURSE ]; then
+  echo "The $TOPDIR/$COURSE directory does not exist."
+  exit 3
+fi
+
+cd $TOPDIR &&
+  echo -e "\n$(ansible-playbook $ANSIBLE_ARGS -t $LAB $TOPDIR/$COURSE/breakfix.yml 2>&1 | sed -n -r 's/^ *"msg": "(.*)\\n"$/\1/p')\n"

@@ -1,0 +1,70 @@
+all:
+  hosts:
+    control:
+      ansible_connection: local
+      ansible_host: 192.168.42.1
+    firewall:
+      ansible_host: 192.168.42.2
+    router1:
+      ansible_host: 192.168.42.3
+    router2:
+      ansible_host: 192.168.42.4
+    switch1:
+      ansible_host: 192.168.42.10
+    switch2:
+      ansible_host: 192.168.42.11
+    switch3:
+      ansible_host: 192.168.42.12
+    switch4:
+      ansible_host: 192.168.42.13
+    switch5:
+      ansible_host: 192.168.42.14
+    switch6:
+      ansible_host: 192.168.42.15
+    dns1:
+      ansible_host: 192.168.44.1
+    www1:
+      ansible_host: 192.168.43.1
+    lab1.lab:
+      ansible_host: 192.168.47.1
+  vars:
+    mydomain: networkplus.test
+  children:
+    tier0:
+      hosts:
+        control:
+    provisioning_switch:
+      hosts:
+        switch1:
+    switches:
+      hosts:
+        switch2:
+        switch3:
+        switch4:
+        switch5:
+        switch6:
+    tier1:
+      hosts:
+        firewall:
+        router1:
+        router2:
+    tier2:
+      hosts:
+        dns1:
+        www1:
+    firewalls:
+      hosts:
+        firewall:
+    routers:
+      hosts:
+        router1:
+        router2:
+    dns_servers:
+      hosts:
+        dns1:
+    web_servers:
+      hosts:
+        www1:
+    lab_hosts:
+      hosts:
+        lab1.lab:

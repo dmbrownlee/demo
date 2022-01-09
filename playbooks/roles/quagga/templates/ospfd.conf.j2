@@ -1,0 +1,21 @@
+hostname {{ ansible_hostname }}
+password zebra
+enable password zebra
+!
+log stdout
+log monitor informational
+!
+{% if quagga_server.ifcfg  is defined %}
+{% for iface in quagga_server.ifcfg  %}
+interface {{ iface.name }}
+ ip ospf cost {{ iface.ospf_cost }}
+!
+{% endfor %}
+!
+{% endif %}
+{% if quagga_server.config is defined %}
+router ospf
+{% for line in quagga_server.config %}
+{{ line }}
+{% endfor %}
+{% endif %}

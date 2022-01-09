@@ -1,0 +1,48 @@
+---
+control_host: true
+fw:
+  trusted_ifaces:
+    - eth0
+  snat_ifaces:
+    - eth1
+populate_hosts_file: true
+interfaces:
+  eth0:
+    method: static
+    address: 192.168.42.1
+    netmask: 255.255.255.0
+  eth1:
+    comment: "Private connection to Internet for bootstrap"
+    method: dhcp
+quagga:
+  vtysh_is_default_shell: false
+  servers:
+    - name: zebra
+      enabled: true
+      config:
+        - "ip route 0.0.0.0/0 192.168.122.1"
+        - "interface eth0"
+        - "  description Provisioning"
+        - "  ip address 192.168.42.1/24"
+        - "  ipv6 address fc00:0:1::1/64"
+        - "interface eth1"
+        - "  description Internet"
+    - name: ospfd
+      enabled: true
+      ifcfg:
+        - { name: eth0, ospf_cost: 25 }
+      config:
+        - "  ospf router-id 1.1.1.1"
+        - "  network 192.168.42.0/24 area 0"
+        - "  passive-interface eth1"
+    - name: ospf6d
+      enabled: true
+      config:
+        - "router ospf6"
+        - "  router-id 192.168.42.1"
+        - "  area 0.0.0.0 range fc00:0:1::/64"
+        - "  interface eth0 area 0.0.0.0"
+      ifcfg:
+        - "interface eth0"
+        - " ipv6 ospf6 network broadcast"
+        - " ipv6 ospf6 cost 25"

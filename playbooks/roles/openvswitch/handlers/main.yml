@@ -1,0 +1,5 @@
+---
+- name: Pause a couple seconds for switch updates to complete
+  listen: pause_for_switch_updates
+  ansible.builtin.pause:
+    seconds: 5

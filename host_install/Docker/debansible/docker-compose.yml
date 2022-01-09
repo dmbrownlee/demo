@@ -1,9 +1,0 @@
-version: "3"
-
-services:
-  server:
-    image: debansible:test
-    container_name: test
-    ports:
-      - "2023:22"
-    restart: always
