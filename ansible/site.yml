@@ -33,7 +33,7 @@
   tags: rhcsa
 
   roles:
-    - role: labenv_rhcsa
+    - role: vagrantfile_rhcsa
       vars:
         distro: rocky
         version: "8.5"
