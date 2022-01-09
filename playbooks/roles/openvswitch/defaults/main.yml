@@ -1,0 +1,14 @@
+---
+runit_services:
+  - { name: ovsdb-server, enabled: true, startcmd: 'ovsdb-server --remote=punix:/var/run/openvswitch/db.sock', wait_for_file: '/var/run/openvswitch/db.sock' }
+  - { name: ovs-vswitchd, enabled: true, startcmd: 'ovs-vswitchd' }
+default_bridges:
+  - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
+default_bridge_ports:
+  - { name: 'eth1', state: 'present', bridge: 'br0' }
+  - { name: 'eth2', state: 'present', bridge: 'br0' }
+  - { name: 'eth3', state: 'present', bridge: 'br0' }
+  - { name: 'eth4', state: 'present', bridge: 'br0' }
+  - { name: 'eth5', state: 'present', bridge: 'br0' }
+  - { name: 'eth6', state: 'present', bridge: 'br0' }
+  - { name: 'eth7', state: 'present', bridge: 'br0' }

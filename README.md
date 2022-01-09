@@ -11,7 +11,7 @@ To install the virtualization software, you just need to run a ```setup``` scrip
 ## Setup
 Make sure your power cable is plugged in if you are on an laptop and you have a working Internet connection.  Open a terminal and run this command from the command line to start the installation:
 ```
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/dmbrownlee/demo/master/setup)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/dmbrownlee/demo/release/setup)"
 ```
 The script will prompt you for your password a few times as it needs elevated permissions to complete the installation.
 > NOTE: The first time through the script on Mac OSX, the installation of VirtualBox will fail because the installation of kernel extensions requires manual approval.  You need to go into ```System Preferences > Security & Privacy > General```, unlock the dialog using the lock icon on the bottom left, allow the Oracle kernel extensions to run, and reboot the machine.  After rebooting, open a terminal and run the setup script a second time with:

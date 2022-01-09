@@ -1,0 +1,11 @@
+{% if quagga_server.ifcfg  is defined %}
+{% for line in quagga_server.ifcfg  %}
+{{ line }}
+{% endfor %}
+!
+{% endif %}
+{% if quagga_server.config is defined %}
+{% for line in quagga_server.config %}
+{{ line }}
+{% endfor %}
+{% endif %}
