@@ -1,6 +1,6 @@
 ---
 - name: Ensure iputils is installed (Alpine)
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: latest
   loop:
@@ -10,7 +10,7 @@
 - name: Ensure iptables is configured and persists reboots
   block:
     - name: Ensure iptables is installed (Debian)
-      apt:
+      ansible.builtin.apt:
         name: "{{ item }}"
         state: latest
       loop:
@@ -19,7 +19,7 @@
       become: yes
       when: ansible_distribution == 'Debian'
     - name: Ensure iptables is installed (Alpine)
-      package:
+      ansible.builtin.package:
         name: "{{ item }}"
         state: latest
       loop:
@@ -27,7 +27,7 @@
       become: yes
       when: ansible_distribution == 'Alpine'
     - name: Ensure iptables rules file exists
-      template:
+      ansible.builtin.template:
         dest: /etc/iptables/rules.v4
         src: iptables_rules.v4.j2
         owner: root
@@ -35,17 +35,17 @@
         mode: '0644'
       become: yes
     - name: Ensure changes to firewall are always applied immediately (Debian)
-      shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
+      ansible.builtin.shell: /usr/sbin/iptables-restore < /etc/iptables/rules.v4
       changed_when: false
       become: yes
       when: ansible_distribution == 'Debian'
     - name: Ensure changes to firewall are always applied immediately (Alpine)
-      shell: /sbin/iptables-restore < /etc/iptables/rules.v4
+      ansible.builtin.shell: /sbin/iptables-restore < /etc/iptables/rules.v4
       changed_when: false
       become: yes
       when: ansible_distribution == 'Alpine'
     - name: Ensure persistent iptables rules get loaded at boot (Debian)
-      template:
+      ansible.builtin.template:
         dest: /etc/network/if-pre-up.d/firewall
         src: firewall.j2
         owner: root
@@ -54,7 +54,7 @@
       become: yes
       when: ansible_distribution == 'Debian'
     - name: Ensure persistent iptables rules get loaded at boot (Alpine)
-      copy:
+      ansible.builtin.copy:
         dest: /etc/network/if-pre-up.d/firewall
         content: |
           #!/bin/bash
@@ -73,18 +73,18 @@
 - name: Ensure the runit package is installed and configured (Debian)
   block:
     - name: Ensure the runit package is installed
-      apt:
+      ansible.builtin.apt:
         name: runit
         state: present
       become: yes
     - name: Ensure /var/service is a link to default /etc/service location
-      file:
+      ansible.builtin.file:
         path: "/var/service"
         state: link
         src: "/etc/service"
       become: yes
     - name: Ensure directory for runit logging exists
-      file:
+      ansible.builtin.file:
         path: /var/log/svlogd
         state: directory
         owner: root
@@ -92,7 +92,7 @@
         mode: '0775'
       become: yes
     - name: Ensure runit directories for sshd exist
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
         owner: root
@@ -103,7 +103,7 @@
         - /etc/sv/sshd/log 
       become: yes
     - name: Ensure runit files for sshd exist
-      copy:
+      ansible.builtin.copy:
         dest: "{{ item.path }}"
         src: "{{ item.src }}"
         owner: root
@@ -115,7 +115,7 @@
         - { path: /etc/sv/sshd/log/run, src: sshd-log.runit }
       become: yes
     - name: Ensure runit starts sshd
-      file:
+      ansible.builtin.file:
         path: "/etc/runit/runsvdir/default/sshd"
         src: "/etc/sv/sshd"
         state: link

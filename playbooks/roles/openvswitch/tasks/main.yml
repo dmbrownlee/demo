@@ -5,7 +5,7 @@
     state: present
   become: yes
 - name: Ensure the run time directory for UNIX domain sockets exists
-  file:
+  ansible.builtin.file:
     path: /var/run/openvswitch
     state: directory
     owner: root
@@ -13,7 +13,7 @@
     mode: '0755'
   become: yes
 - name: Ensure the openvswitch database exists
-  command:
+  ansible.builtin.command:
     argv:
       - ovsdb-tool
       - create
@@ -22,7 +22,7 @@
     creates: /etc/openvswitch/conf.db
   become: yes
 - name: Ensure runit has been configured for each service
-  include_tasks: configure_runit.yml
+  ansible.builtin.include_tasks: configure_runit.yml
   loop: "{{ runit_services }}"
   loop_control:
     loop_var: service

@@ -1,11 +1,11 @@
 ---
 - name: Ensure the nginx package is installed
-  package:
+  ansible.builtin.package:
     name: nginx
     state: present
   become: yes
 - name: Ensure runit directory for nginx exists
-  file:
+  ansible.builtin.file:
     path: /etc/sv/nginx/log
     state: directory
     owner: root
@@ -13,7 +13,7 @@
     mode: '0755'
   become: yes
 - name: Ensure runit script for nginx logging exists
-  copy:
+  ansible.builtin.copy:
     content: |
       #!/bin/sh -euC
       svlogd -tt /var/log/svlogd
@@ -23,7 +23,7 @@
     mode: '0755'
   become: yes
 - name: Ensure runit script for nginx exists
-  copy:
+  ansible.builtin.copy:
     content: |
       #!/bin/sh
       exec 2>&1
@@ -41,7 +41,7 @@
   become: yes
   when: ansible_distribution == 'Debian'
 - name: Enable nginx at boot (Alpine)
-  file:
+  ansible.builtin.file:
     path: "/etc/service/nginx"
     src: "/etc/sv/nginx"
     state: link

@@ -1,11 +1,11 @@
 ---
 - name: Ensure the openvpn package is installed
-  package:
+  ansible.builtin.package:
     name: openvpn
     state: present
   become: yes
 - name: Ensure directory for server configuration exists
-  file:
+  ansible.builtin.file:
     path: "/etc/openvpn/server"
     state: directory
     owner: root
@@ -13,7 +13,7 @@
     mode: '0755'
   become: yes
 - name: Ensure openvpn server.conf file exists
-  template:
+  ansible.builtin.template:
     src: server.conf.j2
     dest: "/etc/openvpn/server/server.conf"
     owner: root
@@ -21,7 +21,7 @@
     mode: '0644'
   become: yes
 - name: Ensure directories for runit support exist
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     owner: root
@@ -32,7 +32,7 @@
     - "/etc/sv/openvpn/log"
     - "/var/log/svlogd/openvpn"
 - name: Ensure runit scripts for openvpn daemon logging exist
-  copy:
+  ansible.builtin.copy:
     content: |
       #!/bin/sh -euC
       svlogd -tt /var/log/svlogd/openvpn
@@ -42,7 +42,7 @@
     mode: '0755'
   become: yes
 - name: Ensure runit scripts for openvpn daemons exist
-  template:
+  ansible.builtin.template:
     src: runit_openvpn.j2
     dest: "/etc/sv/openvpn/run"
     owner: root
@@ -50,7 +50,7 @@
     mode: '0755'
   become: yes
 - name: Ensure inbound openvpn connections are allowed through firewall
-  iptables:
+  ansible.builtin.iptables:
     table: filter
     chain: INPUT
     in_interface: eth1
@@ -61,28 +61,28 @@
     jump: ACCEPT
   become: yes
 - name: Ensure packets from tun interfaces are excepted
-  iptables:
+  ansible.builtin.iptables:
     table: filter
     chain: INPUT
     in_interface: tun+
     jump: ACCEPT
   become: yes
 - name: Enable openvpn daemon (Debian)
-  file:
+  ansible.builtin.file:
     path: "/etc/runit/runsvdir/default/openvpn"
     src: "/etc/sv/openvpn"
     state: link
   become: yes
   when: ansible_distribution == 'Debian'
 - name: Enable openvpn daemon (Alpine)
-  file:
+  ansible.builtin.file:
     path: "/etc/service/openvpn"
     src: "/etc/sv/openvpn"
     state: link
   become: yes
   when: ansible_distribution == 'Alpine'
 - name: Ensure traffic to 1194 is allowed through the firewall
-  iptables:
+  ansible.builtin.iptables:
     table: filter
     chain: INPUT
     in_interface: "{{ openvpn.in_interface }}"
