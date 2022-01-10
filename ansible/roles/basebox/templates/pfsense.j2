@@ -1,16 +1,14 @@
 {
-  "variables": {
-    "checksum": "{{ iso_checksum }}"
-  },
   "builders": [{
+    "vm_name": "{{ box }}",
     "type": "virtualbox-iso",
     "guest_os_type": "{{ guest_os_type }}",
     "iso_urls": [
       "{{ user.download_dir }}/{{ iso_name }}"{% if iso_location is defined and iso_location != 'none' %},
-      "{{ iso_location }}/{{ iso_name }}"{% if iso_altlocation is defined and iso_altlocation != 'none' %},
+      "{{ iso_location }}/{{ iso_name }}"{% endif +%}{% if iso_altlocation is defined and iso_altlocation != 'none' %},
       "{{ iso_altlocation }}/{{ iso_name }}"{% endif +%}
     ],
-    "iso_checksum": "{{ user `checksum` }}",
+    "iso_checksum": "{{ iso_checksum }}",
     "iso_target_path": "{{ user.download_dir }}/{{ iso_name }}",
 
     "http_directory" : ".",
@@ -23,12 +21,15 @@
     "disk_size" : "20480",
     "cpus": "1",
     "memory": 1024,
-    "vm_name": "pfsense-2.5.2",
     "headless": {{ packer.headless }},
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
     "hard_drive_nonrotational": true,
-
+{# Note: We actually want all the {{ ... }} in this JSON block
+         in the output so we are escaping the block between {% raw %}
+         and {% endraw %}
+#}
+{% if host.virtualization == "virtualbox" %}{% raw %}
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--vram", "64"],
       ["modifyvm", "{{.Name}}", "--vrde", "off"],
@@ -37,7 +38,7 @@
       ["modifyvm", "{{.Name}}", "--nic2", "null"],
       ["modifyvm", "{{.Name}}", "--nic3", "null"],
       ["modifyvm", "{{.Name}}", "--nic4", "null"]
-    ],
+    ],{% endraw %}{% endif +%}
     "boot_wait": "30s",
     "boot_command": [
       "<enter>",
@@ -58,7 +59,7 @@
       "<wait><enter>",
       "<wait><enter>",
       "<wait>admins<enter>",
-      "<wait5><enter>",
+      "<wait><enter>",
       "<wait><enter>",
       "<wait><enter>",
       "<wait><enter>",
@@ -70,7 +71,9 @@
       "<wait><enter>",
       "<wait>yes<enter>",
       "<wait>no<enter>",
-      "<wait>exit<enter>",
+      "<wait>echo '{{ vagrant.provisioning_user }} ALL=(ALL) NOPASSWD:ALL' >> /usr/local/etc/sudoers<enter>",
+      "<wait>pkg install -y pfSense-pkg-sudo bash<enter>",
+      "<wait10>exit<enter>",
       "<wait>12<enter>",
       "<wait>unset($config['interfaces']['wan']['blockpriv']);<enter>",
       "<wait>write_config();<enter>",
@@ -83,7 +86,7 @@
       "<wait>pfctl -d<enter>",
       "<wait>exit<enter>"
     ],
-    "shutdown_command": "poweroff"
+    "shutdown_command": "echo {{ vagrant.provisioning_password }} | sudo -S poweroff"
   }],
   "provisioners": [
     {  "type": "file",
@@ -91,18 +94,15 @@
        "destination": "/tmp/{{ vagrant.provisioning_user }}.pub"
     },
     {  "type": "shell",
+       "execute_command": "echo '{{ vagrant.provisioning_password }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
        "inline": ["mkdir -m 0700 /home/{{ vagrant.provisioning_user }}/.ssh",
                   "mv /tmp/{{ vagrant.provisioning_user }}.pub /home/{{ vagrant.provisioning_user }}/.ssh/authorized_keys",
+                  "chown -R {{ vagrant.provisioning_user }}:{{ vagrant.provisioning_user }} /home/{{ vagrant.provisioning_user }}/.ssh",
                   "chmod 644 /home/{{ vagrant.provisioning_user }}/.ssh/authorized_keys"]
-    },
-    {  "type": "shell",
-       "execute_command": "echo '{{ vagrant.provisioning_password }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
-       "inline": [ "echo '{{ vagrant.provisioning_user }} ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/{{ vagrant.provisioning_user }}",
-                  "chmod 0440 /etc/sudoers.d/{{ vagrant.provisioning_user }}"]
     }
   ],
   "post-processors": [{
     "type": "vagrant",
-    "output": "pfsense-2.5.2.box"
+    "output": "{{ box }}.box"
   }]
 }
