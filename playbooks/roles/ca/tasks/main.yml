@@ -53,7 +53,7 @@
     mode: '0600'
   become: yes
 - name: Ensure self-signed CA cert exists
-  command:
+  ansible.builtin.command:
     chdir: /etc/CA
     cmd: openssl req -x509 -newkey rsa:2048 -keyout private/cakey.pem -keyform pem -passin pass:password -passout pass:password -out cacert.pem -outform PEM -extensions req_ca_extensions -subj '/C=US/ST=Washington/O=NetworkPlus Study Group/CN=NetworkPlus Root CA/emailAddress=ca@networkplus.test'
     creates: /etc/CA/cacert.pem

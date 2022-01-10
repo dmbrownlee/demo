@@ -2,19 +2,19 @@
 - name: Ensure isc-dhcp-relay is installed and configured if needed
   block:
     - name: Install isc-dhcp-relay (Debian)
-      apt:
+      ansible.builtin.apt:
         name: isc-dhcp-relay
         state: present
       become: yes
       when: ansible_distribution == 'Debian'
     - name: Install isc-dhcp-relay (Alpine)
-      package:
+      ansible.builtin.package:
         name: dhcrelay
         state: present
       become: yes
       when: ansible_distribution == 'Alpine'
     - name: Ensure runit directories for DHCP agent exists
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
         owner: root
@@ -25,7 +25,7 @@
         - /etc/sv/dhcrelay/log
         - /var/log/svlogd/dhcrelay
     - name: Ensure runit script for DHCP relay logging exists
-      copy:
+      ansible.builtin.copy:
         content: |
           #!/bin/sh -euC
           svlogd -tt /var/log/svlogd/dhcrelay
@@ -35,7 +35,7 @@
         mode: '0755'
       become: yes
     - name: Ensure runit script for DHCP relay exists
-      copy:
+      ansible.builtin.copy:
         content: |
           #!/bin/sh
           exec 2>&1
@@ -46,14 +46,14 @@
         mode: '0755'
       become: yes
     - name: Enable DHCP relay daemon (Debian)
-      file:
+      ansible.builtin.file:
         path: "/etc/runit/runsvdir/default/dhcrelay"
         src: "/etc/sv/dhcrelay"
         state: link
       become: yes
       when: ansible_distribution == 'Debian'
     - name: Enable DHCP relay daemon (Alpine)
-      file:
+      ansible.builtin.file:
         path: "/etc/service/dhcrelay"
         src: "/etc/sv/dhcrelay"
         state: link
