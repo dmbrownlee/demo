@@ -1,5 +1,5 @@
 ---
 - name: Ensure Dock is restarting after changes
   listen: "launcher-restart-macosx"
-  command:
+  ansible.builtin.command:
     cmd: killall Dock

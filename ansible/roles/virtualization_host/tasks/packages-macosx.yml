@@ -1,10 +1,10 @@
 ---
 - name: Assert homebrew is installed
-  assert:
+  ansible.builtin.assert:
     that: ansible_pkg_mgr == "homebrew"
     fail_msg: "A homebrew installation is required."
 - name: Ensure system brews are installed
-  homebrew:
+  community.general.homebrew:
     name: "{{ item }}"
     state: present
   loop: "{{ system_brews }}"
@@ -12,7 +12,7 @@
     - system_brews is defined
     - (system_brews | length > 0)
 - name: Ensure system casks are installed
-  homebrew_cask:
+  community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
   loop: "{{ system_casks }}"
@@ -20,13 +20,13 @@
     - system_casks is defined
     - (system_casks | length > 0)
 - name: Ensure icons are added to the Dock
-  shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
+  ansible.builtin.shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
   register: dockadd
   changed_when: "'item added at end' in dockadd.stdout"
   loop: "{{ dockitems_to_add }}"
   notify: launcher-restart-macosx
 # packer pre-requisite
 - name: Ensure jmespath is installed for python3
-  pip:
+  ansible.builtin.pip:
     name: jmespath
   become: true

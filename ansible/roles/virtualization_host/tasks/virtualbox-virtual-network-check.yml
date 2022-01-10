@@ -1,15 +1,13 @@
 ---
 # Configure VirtualBox HostOnly Interfaces
 - name: Get the list of hostonly network interfaces
-  shell: set -o pipefail && VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
+  ansible.builtin.shell: set -o pipefail && VBoxManage list hostonlyifs | awk '/^Name:/ { print $2 }'
   args:
     executable: "{{ ansible_user_shell }}"
   changed_when: false
   register: existing_hostonlyifs
-- debug:
-    var: "{{ hostonlyifs | json_query('[*].name') }}"
 - name: Loop through defined host-only interfaces
-  include_tasks: virtualbox-hostonlyif-create.yml
+  ansible.builtin.include_tasks: virtualbox-hostonlyif-create.yml
   when: hostonlyif.name not in existing_hostonlyifs.stdout_lines
   loop: "{{ hostonlyifs }}"
   loop_control:
@@ -17,26 +15,26 @@
     label: hostonlyif.name
 # Configure VirtualBox NAT Networks
 - name: Get a list of existing natnetworks
-  shell: "set -o pipefail && VBoxManage list natnetworks | sed -n -e '/^NetworkName:/s/^NetworkName: *//p'"
+  ansible.builtin.shell: "set -o pipefail && VBoxManage list natnetworks | sed -n -e '/^NetworkName:/s/^NetworkName: *//p'"
   args:
     executable: "{{ ansible_user_shell }}"
   changed_when: false
   register: natnets
 - name: Ensure all NAT networks have been configured
-  include_tasks: "virtualbox-configure-natnetwork.yml"
+  ansible.builtin.include_tasks: "virtualbox-configure-natnetwork.yml"
   vars:
     vnet: "{{ item }}"
   loop: "{{ natnetworks }}"
 # Configure VirtualBox DHCP Servers
 - name: Get the list of DHCP servers
-  shell: set -o pipefail && VBoxManage list dhcpservers | awk '/^NetworkName:/ { gsub(/HostInterfaceNetworking-/, "", $2); print $2 }'
+  ansible.builtin.shell: set -o pipefail && VBoxManage list dhcpservers | awk '/^NetworkName:/ { gsub(/HostInterfaceNetworking-/, "", $2); print $2 }'
   args:
     executable: "{{ ansible_user_shell }}"
   changed_when: false
   failed_when: false
   register: existing_dhcpservers
 - name: Ensure hostonly DHCP servers exist
-  command: >
+  ansible.builtin.command: >
     VBoxManage dhcpserver add --interface {{ item.interface }}
     --server-ip {{ item.server_ip }}
     --netmask {{ item.netmask }}

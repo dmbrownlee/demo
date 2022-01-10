@@ -6,15 +6,15 @@
 #   vnet: the virtual_network to configure
 #
 - name: Define libvirt virtual network ({{ vnet.name }})
-  virt_net:
+  community.libvirt.virt_net:
     command: define
     name: "vagrant-private-dhcp"
     xml: '{{ lookup("file", "libvirt/RHCxNetwork.xml") }}'
 - name: Create libvirt virtual network ({{ vnet.name }})
-  virt_net:
+  community.libvirt.virt_net:
     command: create
     name: "vagrant-private-dhcp"
 - name: Start libvirt virtual network ({{ vnet.name }})
-  virt_net:
+  community.libvirt.virt_net:
     name: "vagrant-private-dhcp"
     state: active
