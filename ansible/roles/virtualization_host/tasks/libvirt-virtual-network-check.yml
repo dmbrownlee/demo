@@ -6,18 +6,18 @@
 #   virtual_networks: the list of virtual_networks the study group uses
 #
 - name: Ensure {{ ansible_user_id }} is a member of the libvirt group
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     groups: libvirt
     append: yes
   become: yes
 - name: Get the list of virtual networks
-  command: "virsh net-list --all --name"
+  ansible.builtin.command: "virsh net-list --all --name"
   changed_when: false
   register: netlist
   become: yes
 - name: Configure missing virtual networks
-  include_tasks: "{{ virtualization }}-virtual-network-configure.yml"
+  ansible.builtin.include_tasks: "{{ virtualization }}-virtual-network-configure.yml"
   vars:
     vnet: "{{ item }}"
   when: item.name not in netlist.stdout_lines
