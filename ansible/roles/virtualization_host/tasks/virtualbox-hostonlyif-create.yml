@@ -4,6 +4,6 @@
 - name: Ensure {{ hostonlyif.name }} is configured for IPv4
   command: "VBoxManage hostonlyif ipconfig {{ hostonlyif.name }} --ip {{ hostonlyif.ip }} --netmask {{ hostonlyif.netmask }}"
   when: hostonlyif.ip is defined
-- name: Ensure {{ hostonlyif.name }} is configured for IPv6
-  command: "VBoxManage hostonlyif ipconfig {{ hostonlyif.name }} --ipv6 {{ hostonlyif.ipv6 }} --netmasklengthv6 {{ hostonlyif.netmasklengthv6 }}"
-  when: hostonlyif.ipv6 is defined
+# - name: Ensure {{ hostonlyif.name }} is configured for IPv6
+#   command: "VBoxManage hostonlyif ipconfig {{ hostonlyif.name }} --ipv6 {{ hostonlyif.ipv6 }} --netmasklengthv6 {{ hostonlyif.netmasklengthv6 }}"
+#   when: hostonlyif.ipv6 is defined
