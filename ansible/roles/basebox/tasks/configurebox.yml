@@ -1,40 +1,45 @@
 ---
 - name: Ensure boxname is set to {{ distro }}-{{ version }}-{{ configuration }}
-  set_fact:
+  ansible.builtin.set_fact:
     boxname: "{{ distro }}-{{ version }}-{{ configuration }}"
 - name: Read variables from vars/{{ distro }}-{{ version }}.yml
-  include_vars: "{{ distro }}-{{ version }}.yml"
-- name: Ensure required variabless have been defined for {{ distro }}-{{ version }}
-  assert:
-    that:
-      #- distro is defined
-      #- version is defined
-      - guest_os_type is defined
-      - iso_checksum is defined
-      - iso_location is defined
-      #- iso_altlocation is defined
-      - iso_name is defined
-      - install_file is defined
-      # - cpus is defined
-      # - ram is defined
-      # - disk_size is defined
-      - templateks is defined
-    fail_msg: "One or more required variables are undefined."
+  ansible.builtin.include_vars: "{{ distro }}-{{ version }}.yml"
 - name: Ensure we have a packer config file for {{ distro }}-{{ version }}-{{ configuration }}
-  template:
+  ansible.builtin.template:
     dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
-    src: "{{ guest_os_type }}.j2"
+    src: "{{ packer_template }}"
     mode: '0600'
 - name: Ensure we import the variables for the {{ configuration }} configuration
-  include_vars:
+  ansible.builtin.include_vars:
     file: "{{ distro }}-{{ version }}-{{ configuration }}-packages.yml"
 - name: Ensure we have an installer file ({{ install_file }})
-  template:
+  ansible.builtin.template:
     dest: "{{ packer.build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
-- name: Build the base box if it is currently unavailable
-  include_tasks: buildbox.yml
+  when: templateks is defined and templateks != 'none'
+- name: Check for gzipped ISO in download directory
+  ansible.builtin.stat:
+    path: "{{ user.download_dir }}/{{ iso_name }}.gz"
+    checksum_algorithm: sha256
+  register: gziso
+  when: iso.gzipped
+- name: Ensure the ISO has been pre-downloaded if it needs to be unzipped
+  ansible.builtin.get_url:
+    dest: "{{ user.download_dir }}"
+    url: "{{ iso.url }}"
+    checksum: "{{ iso.gzip_checksum }}"
   when:
-    - buildvms|bool
+    - iso.gzipped
+    - not gziso.stat.exists
+- name: Ensure zipped ISO has been unzipped
+  ansible.builtin.command:
+    cmd: gunzip -k {{ iso_name }}.gz
+    chdir: "{{ user.download_dir }}"
+    creates: "{{ iso_name }}"
+  when: iso.gzipped
+- name: Build the base box if it is currently unavailable
+  ansible.builtin.include_tasks: buildbox.yml
+  when:
+    - host.buildvms|bool
     - boxname not in vagrant_box_list

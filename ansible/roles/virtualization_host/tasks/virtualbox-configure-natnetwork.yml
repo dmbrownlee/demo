@@ -2,8 +2,8 @@
 # This block should be included from a loop, once per NAT network.
 # natnets should already contain the output of "vboxmanage list natnetworks".
 - name: Creating virtualbox NAT network ({{ vnet.name }})
-  command: "VBoxManage natnetwork add --netname '{{ vnet.name }}' --network {{ vnet.netblock }} --dhcp off --enable"
+  ansible.builtin.command: "VBoxManage natnetwork add --netname '{{ vnet.name }}' --network {{ vnet.netblock }} --dhcp off --enable"
   when: vnet.name not in natnets.stdout_lines
 - name: Starting virtualbox NAT network ({{ vnet.name }})
-  command: "VBoxManage natnetwork start --netname '{{ vnet.name }}'"
+  ansible.builtin.command: "VBoxManage natnetwork start --netname '{{ vnet.name }}'"
   when: vnet.name not in natnets.stdout_lines

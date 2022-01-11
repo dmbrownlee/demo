@@ -1,0 +1,15 @@
+---
+- name: Ensure the Vagrantfile exists (current location)
+  ansible.builtin.template:
+    dest: "{{ demo.root }}/networkplus/Vagrantfile"
+    src: "Vagrantfile.j2"
+    mode: 0644
+- name: Ensure future course directory exists (temporary)
+  ansible.builtin.file:
+    path: "{{ demo.root }}/courses/networkplus/VMs"
+    state: directory
+- name: Ensure the Vagrantfile exists (future location)
+  ansible.builtin.template:
+    dest: "{{ demo.root }}/courses/networkplus/VMs/Vagrantfile"
+    src: "Vagrantfile.j2"
+    mode: 0644

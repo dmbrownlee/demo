@@ -1,6 +1,6 @@
 ---
 - name: NFS services
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -9,7 +9,7 @@
     - nfs-server
   become: yes
 - name: Firewalld service
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -17,7 +17,7 @@
     - firewalld
   become: yes
 - name: Ensure NFS is allowed through firewall on libvirt interfaces
-  firewalld:
+  ansible.posix.firewalld:
     service: "{{ item }}"
     state: enabled
     permanent: yes
@@ -29,12 +29,12 @@
     - nfs
   become: yes
 - name: Ensure shared folders are exported
-  copy:
+  ansible.builtin.copy:
     dest: /etc/exports.d/vagrant-shared-folders.exports
     content: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
     mode: '0644'
   become: yes
 - name: Re-export shared folders
-  command: exportfs -ra
+  ansible.builtin.command: exportfs -ra
   changed_when: false
   become: yes

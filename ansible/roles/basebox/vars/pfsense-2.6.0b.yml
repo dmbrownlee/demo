@@ -1,0 +1,21 @@
+---
+distro: "pfsense"
+version: "2.6.0b"
+guest_os_type: "FreeBSD_64"
+packer_template: "pfsense.j2"
+iso_checksum: "sha256:47ee00ca38f47735b170a4602632e340359d78b9bf28b274152255dd230d64a6"
+iso_location: "none"
+iso_altlocation: "none"
+iso_name: "pfSense-CE-2.6.0-BETA-amd64-20220109-0600.iso"
+install_file: "none"
+templateks: "none"
+iso:
+  # filename: "pfSense-CE-2.6.0b-RELEASE-amd64.iso"
+  # checksum: "sha256:234bcd61549867cfda719424a11bb0e13233c2b582acc7cec0ee1b0ec0966cf3"
+  url: "https://snapshots.netgate.com/amd64/pfSense_master/installer/pfSense-CE-2.6.0-BETA-amd64-20220109-0600.iso.gz"
+  alturl: "none"
+  gzipped: true
+  gzip_checksum: "sha256:8cf26d1b0c1fac40310f65a5c16c5ba8737be0e8ce383c04ea9e85fd8d5875ef"
+# packer:
+#   template: "pfsense.j2"
+#   guest_os_type: "FreeBSD_64"
