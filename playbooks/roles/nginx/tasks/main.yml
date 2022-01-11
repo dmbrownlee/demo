@@ -7,8 +7,8 @@
 - name: Ensure runit support for nginx is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
-    vars:
-      service:
-        name: nginx
-        startcmd: "/usr/sbin/nginx -g 'daemon off;'"
-        enabled: true
+  vars:
+    service:
+      name: nginx
+      startcmd: "/usr/sbin/nginx -g 'daemon off;'"
+      enabled: true

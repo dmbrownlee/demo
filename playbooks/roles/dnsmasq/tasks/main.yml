@@ -16,8 +16,8 @@
 - name: Ensure runit support for dnsmasq is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
-    vars:
-      service:
-        name: dnsmasq
-        startcmd: "/usr/sbin/dnsmasq -d"
-        enabled: true
+  vars:
+    service:
+      name: dnsmasq
+      startcmd: "/usr/sbin/dnsmasq -d"
+      enabled: true
