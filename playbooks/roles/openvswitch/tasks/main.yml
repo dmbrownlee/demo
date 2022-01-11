@@ -21,8 +21,9 @@
       - /usr/share/openvswitch/vswitch.ovsschema
     creates: /etc/openvswitch/conf.db
   become: yes
-- name: Ensure runit has been configured for each service
-  ansible.builtin.include_tasks: configure_runit.yml
+- name: Ensure runit support for {{ service.name }} is installed and enabled
+  ansible.builtin.include_role:
+    name: runit-service
   loop: "{{ runit_services }}"
   loop_control:
     loop_var: service

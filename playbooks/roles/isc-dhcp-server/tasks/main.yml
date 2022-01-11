@@ -24,9 +24,11 @@
     group: root
     mode: '0644'
   become: yes
-- name: Ensure runit has been configured for each service
-  ansible.builtin.include_tasks: configure_runit.yml
-  loop: "{{ runit_services }}"
-  loop_control:
-    loop_var: service
-    label: "{{ service }}"
+- name: Ensure runit support for dnsmasq is installed and enabled
+  ansible.builtin.include_role:
+    name: runit-service
+    vars:
+      service:
+        name: dhcpd
+        startcmd: "/usr/sbin/dhcpd -d"
+        enabled: true
