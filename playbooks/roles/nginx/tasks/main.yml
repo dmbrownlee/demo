@@ -4,46 +4,11 @@
     name: nginx
     state: present
   become: yes
-- name: Ensure runit directory for nginx exists
-  ansible.builtin.file:
-    path: /etc/sv/nginx/log
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-- name: Ensure runit script for nginx logging exists
-  ansible.builtin.copy:
-    content: |
-      #!/bin/sh -euC
-      svlogd -tt /var/log/svlogd
-    dest: /etc/sv/nginx/log/run
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-- name: Ensure runit script for nginx exists
-  ansible.builtin.copy:
-    content: |
-      #!/bin/sh
-      exec 2>&1
-      exec chpst /usr/sbin/nginx -g "daemon off;"
-    dest: /etc/sv/nginx/run
-    owner: root
-    group: root
-    mode: '0755'
-  become: yes
-- name: Ensure nginx started
-  community.general.runit:
-    name: nginx
-    state: started
-    enabled: yes
-  become: yes
-  when: ansible_distribution == 'Debian'
-- name: Enable nginx at boot (Alpine)
-  ansible.builtin.file:
-    path: "/etc/service/nginx"
-    src: "/etc/sv/nginx"
-    state: link
-  become: yes
-  when: ansible_distribution == 'Alpine'
+- name: Ensure runit support for nginx is installed and enabled
+  ansible.builtin.include_role:
+    name: runit-service
+    vars:
+      service:
+        name: nginx
+        startcmd: "/usr/sbin/nginx -g 'daemon off;'"
+        enabled: true

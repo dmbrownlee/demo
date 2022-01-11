@@ -1,62 +1,18 @@
 ---
 - name: Ensure isc-dhcp-relay is installed and configured if needed
   block:
-    - name: Install isc-dhcp-relay (Debian)
-      ansible.builtin.apt:
-        name: isc-dhcp-relay
-        state: present
-      become: yes
-      when: ansible_distribution == 'Debian'
     - name: Install isc-dhcp-relay (Alpine)
       ansible.builtin.package:
         name: dhcrelay
         state: present
       become: yes
       when: ansible_distribution == 'Alpine'
-    - name: Ensure runit directories for DHCP agent exists
-      ansible.builtin.file:
-        path: "{{ item }}"
-        state: directory
-        owner: root
-        group: root
-        mode: '0755'
-      become: yes
-      loop:
-        - /etc/sv/dhcrelay/log
-        - /var/log/svlogd/dhcrelay
-    - name: Ensure runit script for DHCP relay logging exists
-      ansible.builtin.copy:
-        content: |
-          #!/bin/sh -euC
-          svlogd -tt /var/log/svlogd/dhcrelay
-        dest: /etc/sv/dhcrelay/log/run
-        owner: root
-        group: root
-        mode: '0755'
-      become: yes
-    - name: Ensure runit script for DHCP relay exists
-      ansible.builtin.copy:
-        content: |
-          #!/bin/sh
-          exec 2>&1
-          exec chpst /usr/sbin/dhcrelay -d {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}
-        dest: /etc/sv/dhcrelay/run
-        owner: root
-        group: root
-        mode: '0755'
-      become: yes
-    - name: Enable DHCP relay daemon (Debian)
-      ansible.builtin.file:
-        path: "/etc/runit/runsvdir/default/dhcrelay"
-        src: "/etc/sv/dhcrelay"
-        state: link
-      become: yes
-      when: ansible_distribution == 'Debian'
-    - name: Enable DHCP relay daemon (Alpine)
-      ansible.builtin.file:
-        path: "/etc/service/dhcrelay"
-        src: "/etc/sv/dhcrelay"
-        state: link
-      become: yes
-      when: ansible_distribution == 'Alpine'
+    - name: Ensure runit support for dnsmasq is installed and enabled
+      ansible.builtin.include_role:
+        name: runit-service
+        vars:
+          service:
+            name: dnsmasq
+            startcmd: "/usr/sbin/dhcrelay -d {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}"
+            enabled: true
   when: isc_dhcp_relay is defined

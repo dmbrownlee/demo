@@ -33,13 +33,14 @@
     group: root
     mode: '0755'
   become: yes
-- name: Enable {{ service.name }} daemon (Alpine)
+- name: Enable {{ service.name }} daemon
   ansible.builtin.file:
     path: "/etc/service/{{ service.name }}"
     src: "/etc/sv/{{ service.name }}"
     state: link
   when: service.enabled
   become: yes
+  notify: "{{ service.enablednotify | default(omit) }}"
 - name: Wait for service lock file or socket
   ansible.builtin.wait_for:
     path: "{{ service.wait_for_file }}"

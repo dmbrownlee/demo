@@ -1,6 +1,4 @@
 ---
-runit_services:
-  - { name: dhcpd, enabled: true, startcmd: '/usr/sbin/dhcpd -d' }
 dhcpd:
   domain_name: 'example.com'
   domain_name_servers: 'ns1.example.com, ns2.example.com'
