@@ -1,4 +1,4 @@
 #!/bin/bash
-{% service.startdefaultsfile is defined %}. {{ service.startdefaultsfile }}{% endif %}
+{% if service.startdefaultsfile is defined %}. {{ service.startdefaultsfile }}{% endif %}
 exec 2>&1
 exec chpst {{ service.startcmd }}
