@@ -1,6 +1,6 @@
 ---
 - name: Ensure NAT to Internet is enabled
-  iptables:
+  ansible.builtin.iptables:
     table: nat
     chain: POSTROUTING
     out_interface: eth1

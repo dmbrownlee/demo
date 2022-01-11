@@ -1,6 +1,6 @@
 ---
 - name: NFS services
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: started
     enabled: yes
@@ -9,7 +9,7 @@
     - nfs-server
   become: yes
 - name: Ensure shared folders are exported (Debian)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/exports
     line: "{{ ansible_user_dir }}/demo/rhcsa/labfiles 192.168.4.*(rw)"
     state: present
@@ -17,6 +17,6 @@
     mode: '0644'
   become: yes
 - name: Re-export shared folders
-  command: exportfs -ra
+  ansible.builtin.command: exportfs -ra
   changed_when: false
   become: yes

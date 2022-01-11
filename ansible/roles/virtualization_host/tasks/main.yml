@@ -1,24 +1,24 @@
 ---
 - name: Assert this host can use this role
-  assert:
+  ansible.builtin.assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 - name: Include OS specific variables
-  include_vars: "{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_distribution | lower }}.yml"
 - name: role packages
-  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure virtual networks have been configured
-  include_tasks: "{{ virtualization }}-virtual-network-check.yml"
+  ansible.builtin.include_tasks: "{{ virtualization }}-virtual-network-check.yml"
 - name: Enable host support for Vagrant Shared Folders
-  include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_tasks: "libvirt-shared-folders-{{ ansible_distribution | lower }}.yml"
   when: virtualization == "libvirt"
 - name: Ensure {{ key_dir }} directory exists
-  file:
+  ansible.builtin.file:
     path: "{{ key_dir }}"
     state: directory
     mode: 0700
 - name: Ensure key pair in {{ key_dir }}
-  openssh_keypair:
+  community.crypto.openssh_keypair:
     path: "{{ key_dir }}/{{ provisioning_user }}"
     state: present
     type: rsa
@@ -27,11 +27,11 @@
 - name: Ensure host key is swapped to right command key
   block:
     - name: Get current hostkey setting
-      shell: set -o pipefail && VBoxManage getextradata global GUI/Input/HostKeyCombination | awk '{ print $2; }'
+      ansible.builtin.shell: set -o pipefail && VBoxManage getextradata global GUI/Input/HostKeyCombination | awk '{ print $2; }'
       args:
         executable: "{{ ansible_user_shell }}"
       register: hostkey
       changed_when: false
     - name: Set hostkey to right command key if needed
-      command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
+      ansible.builtin.command: VBoxManage setextradata global GUI/Input/HostKeyCombination "54"
       when: hostkey.stdout != "54"

@@ -1,0 +1,6 @@
+---
+- name: Ensure the Rocky Vagrantfile exists
+  ansible.builtin.template:
+    dest: "{{ demo.root }}/courses/rhcsa/VMs/Vagrantfile"
+    src: "Vagrantfile.j2"
+    mode: 0644

@@ -1,6 +1,6 @@
 ---
 - name: Ensure sshpass is installed on Ansible controllers
-  package:
+  ansible.builtin.package:
     name: sshpass
     state: present
   become: yes

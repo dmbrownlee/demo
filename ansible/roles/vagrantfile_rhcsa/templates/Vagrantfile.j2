@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  config.ssh.private_key_path = "{{ key_dir }}/vagrant"
+  config.ssh.private_key_path = "{{ vagrant.key_dir }}/vagrant"
   # These are the VM configuration defaults when not overridden
   config.vm.box = "{{ distro }}-{{ version }}-minimal"
   config.vm.synced_folder "labfiles/", "/labfiles",

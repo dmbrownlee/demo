@@ -1,7 +1,0 @@
----
-buildvms: false
-demo_root: "{{ ansible_user_dir }}/demo"
-supported_distributions:
-  - MacOSX
-  - Debian
-  - Fedora

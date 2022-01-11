@@ -1,23 +1,23 @@
 ---
 # do one time only
 - name: Assert this host can use this role
-  assert:
-    that: ansible_distribution in host.supported_distributions
+  ansible.builtin.assert:
+    that: ansible_distribution in role.supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 - name: Ensure the packer build directories exists before copying files there
   # this is a bit hacky as it hardcodes a directory path for the Win10 box
-  file:
+  ansible.builtin.file:
     path: "{{ packer.build_dir }}"
     state: directory
     mode: '0700'
 - name: Get the list of currently available Vagrant base boxes
-  shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
+  ansible.builtin.shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
   args:
     executable: "{{ ansible_user_shell }}"
   changed_when: false
   register: vagrant_box_list
 - name: Build the requested base boxes
-  include_tasks: configurebox.yml
+  ansible.builtin.include_tasks: configurebox.yml
   vars:
     distro: "{{ this.distro }}"
     version: "{{ this.version }}"
