@@ -23,7 +23,7 @@
     - name: Import GNS3.VM ova file into VirtualBox
       ansible.builtin.command: "VBoxManage import '{{ download_dir }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
     - name: Ensure imported VM has appropriate hardware
-      ansible.builtin.command: "VBoxManage modifyvm 'GNS3 VM' --cpus 2 --memory 4096 --rtcuseutc on"
+      ansible.builtin.command: "VBoxManage modifyvm 'GNS3 VM' --cpus 4 --memory 8192 --rtcuseutc on"
     - name: Ensure invalid settings in imported VM are fixed
       ansible.builtin.command: "VBoxManage modifyvm 'GNS3 VM' --graphicscontroller vmsvga --vrde off"
     - name: Ensure imported VM has scaled display
