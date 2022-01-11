@@ -1,6 +1,6 @@
 ---
 - name: Ensure runit service directories exist
-  file:
+  ansible.builtin.file:
     path: "/etc/sv/{{ service.name }}/log"
     state: directory
     owner: root
@@ -8,7 +8,7 @@
     mode: '0755'
   become: yes
 - name: Ensure runit log directory exists
-  file:
+  ansible.builtin.file:
     path: "/var/log/svlogd/{{ service.name }}"
     state: directory
     owner: root
@@ -16,7 +16,7 @@
     mode: '0755'
   become: yes
 - name: Ensure runit scripts for logging exist
-  copy:
+  ansible.builtin.copy:
     content: |
       #!/bin/sh -euC
       svlogd -tt /var/log/svlogd/{{ service.name }}
@@ -26,20 +26,21 @@
     mode: '0755'
   become: yes
 - name: Ensure runit scripts for daemon exists
-  template:
+  ansible.builtin.template:
     src: runit_script.j2
     dest: "/etc/sv/{{ service.name }}/run"
     owner: root
     group: root
     mode: '0755'
   become: yes
-- name: Enable {{ service.name }} daemon (Alpine)
-  file:
+- name: Enable {{ service.name }} daemon
+  ansible.builtin.file:
     path: "/etc/service/{{ service.name }}"
     src: "/etc/sv/{{ service.name }}"
     state: link
   when: service.enabled
   become: yes
+  notify: "{{ service.enablednotify | default(omit) }}"
 - name: Wait for service lock file or socket
   ansible.builtin.wait_for:
     path: "{{ service.wait_for_file }}"

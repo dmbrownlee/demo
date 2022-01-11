@@ -3,7 +3,7 @@
 # GNS3
 # ==============
 - name: Ensure prerequisite packages are installed
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
     update_cache: yes
@@ -30,36 +30,36 @@
       - gnupg2
       - software-properties-common
 - name: Ensure PIP packages are installed
-  pip:
+  ansible.builtin.pip:
     name: "{{ pip_packages }}"
   vars:
     pip_packages:
       - gns3-server=={{ gns3_version }}
       - gns3-gui=={{ gns3_version }}
 - name: Check status of bionic packages
-  command: dpkg -s dynamips ubridge vpcs gns3-server gns3-gui
+  ansible.builtin.command: dpkg -s dynamips ubridge vpcs gns3-server gns3-gui
   changed_when: false
   failed_when: false
   register: bionic
 - name: Ensure the apt key for the docker repo is installed
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://download.docker.com/linux/debian/gpg
   become: yes
 - name: Ensure the apt key for Ubuntu bionic repo is installed
-  apt_key:
+  ansible.builtin.apt_key:
     keyserver: keyserver.ubuntu.com
     id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
     state: present
   become: yes
   when: bionic.rc != 0
 - name: Ensure the docker repo is enabled
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://download.docker.com/linux/debian buster stable edge"
     state: present
     update_cache: yes
   become: yes
 - name: Ensure Ubuntu bionic repos are enabled
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apt/sources.list
     block: |
       deb http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
@@ -68,11 +68,11 @@
   become: yes
   when: bionic.rc != 0
 - name: Ensure apt repos are updated
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
   become: yes
 - name: Ensure docker-ce installed
-  apt:
+  ansible.builtin.apt:
     name: "{{ packages }}"
     state: present
   become: yes
@@ -86,7 +86,7 @@
       - gns3-gui
   when: bionic.rc != 0
 - name: Ensure the Ubuntu repos are removed after dynamips is installed
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/apt/sources.list
     block: |
       deb http://ppa.launchpad.net/gns3/ppa/ubuntu bionic main
@@ -95,13 +95,13 @@
   become: yes
   when: bionic.rc != 0
 - name: Ensure the apt key for Ubuntu bionic repo is removed
-  apt_key:
+  ansible.builtin.apt_key:
     id: F88F6D313016330404F710FC9A2FD067A2E3EF7B
     state: absent
   become: yes
   when: bionic.rc != 0
 - name: Ensure user is in the required groups
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_user }}"
     groups: "{{ item }}"
     append: yes
@@ -112,14 +112,14 @@
     - docker
     - ubridge
 - name: Ensure user config directory for GNS3 exists
-  file:
+  ansible.builtin.file:
     path: "{{ gns3_config_dir }}"
     state: directory
     owner: "{{ ansible_user_id }}"
     group: "{{ ansible_user_id }}"
     mode: 0755
 #- name: Update GNS3 configuration files
-#  template:
+#  ansible.builtin.template:
 #    src: "{{ item }}.j2"
 #    dest: "{{ gns3_config_dir }}/{{ item }}.conf"
 #  with_items:
@@ -139,12 +139,12 @@
 #    gns3_pcap_reader_command: "tail -f -c +0b %c | wireshark -o \"gui.window_title:%d\" -k -i -"
 #    vboxmanage_path: "/usr/bin/VBoxManage"
 #- name: Ensure directory for IOS images exists
-#  file:
+#  ansible.builtin.file:
 #    path: "{{ gns3_user_dir }}/images"
 #    state: directory
 #    mode: 0755
 #- name: Ensure directory for IOS symbols exists
-#  file:
+#  ansible.builtin.file:
 #    path: "{{ gns3_user_dir }}/symbols"
 #    state: directory
 #    mode: 0755

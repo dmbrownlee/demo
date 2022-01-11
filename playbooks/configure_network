@@ -16,7 +16,6 @@ if [ ! -d $HOME/labnetwork ]; then
   && cd $HOME/labnetwork \
   && git init -b main \
   && git sparse-checkout init \
-  && git config core.sparseCheckoutCone true \
   && git sparse-checkout set playbooks/ \
   && git remote add origin https://github.com/dmbrownlee/demo.git \
   && git pull origin release \
