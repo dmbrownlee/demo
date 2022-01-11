@@ -1,28 +1,28 @@
 ---
 - name: Ensure a .ssh directory exists for SSH keys
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.ssh"
     state: directory
     mode: '0700'
   when: control_host is defined and control_host
 - name: Ensure ssh key exists
-  openssh_keypair:
+  community.crypto.openssh_keypair:
     path: "{{ ansible_user_dir }}/.ssh/{{ ansible_user_id }}"
     state: present
     comment: "Ansible configuration account"
   when: control_host is defined and control_host
 - name: Ensure public key is copied to authorized keys on host (if this hangs, you may have typed the wrong password)
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ ansible_user_id }}"
     state: present
     key: "{{ lookup('file', '{{ ansible_user_dir }}/.ssh/{{ ansible_user_id }}.pub') }}"
 - name: Ensure hostname is set to FQDN
-  hostname:
+  ansible.builtin.hostname:
     name: "{{ inventory_hostname_short }}.{{ mydomain }}"
   become: yes
   when: ansible_fqdn == inventory_hostname_short
 - name: Ensure FQDN is resolvable via /etc/hosts
-  replace:
+  ansible.builtin.replace:
     path: /etc/hosts
     regexp: '^(127.0.1.1\s+)(\S+)$'
     replace: '\1\2.networkplus.test \2'
@@ -37,7 +37,7 @@
   become: yes
   when: populate_hosts_file is defined and populate_hosts_file
 - name: Ensure network interfaces config file exists
-  template:
+  ansible.builtin.template:
     src: "interfaces.j2"
     dest: /etc/network/interfaces
     owner: root
@@ -46,9 +46,9 @@
   become: yes
   notify: restart_interfaces
 - name: Ensure VLAN interfaces exist, are configured, and are up
-  shell: ip link add link {{ item.key.split('.')[0] }} name {{ item.key.split('.')[0] }}.{{ item.key.split('.')[1] }} type vlan id {{ item.key.split('.')[1] }} && ip address add {{ item.value.address }}/{{ item.value.netmask }} dev {{ item.key }} && ip link set dev {{ item.key }} up
+  ansible.builtin.shell: ip link add link {{ item.key.split('.')[0] }} name {{ item.key.split('.')[0] }}.{{ item.key.split('.')[1] }} type vlan id {{ item.key.split('.')[1] }} && ip address add {{ item.value.address }}/{{ item.value.netmask }} dev {{ item.key }} && ip link set dev {{ item.key }} up
   loop: "{{ interfaces | dict2items }}"
   when: item.key not in ansible_interfaces and item.key is regex('\.\d+$')
   become: yes
 - name: Ensure repo cache is updated before installing packages
-  include_tasks: repo-update-{{ ansible_distribution | lower }}.yml
+  ansible.builtin.include_tasks: repo-update-{{ ansible_distribution | lower }}.yml

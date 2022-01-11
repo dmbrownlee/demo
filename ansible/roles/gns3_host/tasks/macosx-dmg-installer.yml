@@ -1,16 +1,16 @@
 ---
 - name: Ensure {{ dmg.file }} has been downloaded
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ dmg.url }}"
     dest: "{{ ansible_user_dir }}/Software/{{ dmg.file }}"
     checksum: "{{ dmg.checksum }}"
 - name: Ensure {{ dmg.file }} has been mounted
-  command:
+  ansible.builtin.command:
     cmd: hdiutil attach {{ ansible_user_dir }}/Software/{{ dmg.file }}
   register: hdiutil_attach
   changed_when: false
 - name: Ensure {{ dmg.contents }} app has been installed
-  copy:
+  ansible.builtin.copy:
     src: "/Volumes/{{ dmg.mount }}/{{ dmg.contents }}"
     dest: "/Applications/"
     mode: '0755'
@@ -18,12 +18,12 @@
       #become: yes
   when: dmg.content_type == "app"
 - name: Ensure {{ dmg.contents }} package has been installed
-  command:
+  ansible.builtin.command:
     cmd: "installer -pkg '/Volumes/{{ dmg.mount }}/{{ dmg.contents }}' -target /"
   become: yes
   when: dmg.content_type == "pkg"
 - name: Ensure {{ dmg.file }} has been unmounted
-  command:
+  ansible.builtin.command:
     cmd: hdiutil detach "/Volumes/{{ dmg.mount }}"
   changed_when: false
   when: hdiutil_attach.rc == 0

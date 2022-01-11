@@ -1,6 +1,6 @@
 ---
 - name: Ensure the breakfix script is installed
-  copy:
+  ansible.builtin.copy:
     src: breakfix
     dest: "{{ ansible_user_dir }}/breakfix"
     owner: "{{ ansible_user_id }}"

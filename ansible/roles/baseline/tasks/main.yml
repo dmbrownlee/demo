@@ -1,11 +1,11 @@
 ---
 - name: Assert this host can use this role
-  assert:
+  ansible.builtin.assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 - name: Include OS specific variables
-  include_vars: "{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_vars: "{{ ansible_distribution | lower }}.yml"
 - name: baseline packages
-  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 - name: shell configuration
-  include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"
+  ansible.builtin.include_tasks: "shell-config-{{ ansible_user_shell | basename }}.yml"

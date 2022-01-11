@@ -6,5 +6,5 @@
 .DS_Store
 *.retry
 /packer/
-**/Vagrantfile*
+**/Vagrantfile
 courses/template

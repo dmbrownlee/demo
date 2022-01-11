@@ -1,11 +1,11 @@
 ---
 - name: Test Internet connectivity
-  raw: ping -c 1 8.8.8.8
+  ansible.builtin.raw: ping -c 1 8.8.8.8
   changed_when: false
   failed_when: false
   register: internet_ping
 - name: Ensure there is a default route using the bootstrap interface
-  raw: ip route list 0.0.0.0/0 | grep default && ip route change 0.0.0.0/0 via {{ bootstrap_gateway }} || ip route add 0.0.0.0/0 via {{ bootstrap_gateway }}
+  ansible.builtin.raw: ip route list 0.0.0.0/0 | grep default && ip route change 0.0.0.0/0 via {{ bootstrap_gateway }} || ip route add 0.0.0.0/0 via {{ bootstrap_gateway }}
   become: yes
   when:
     - internet_ping.rc != 0
@@ -13,6 +13,6 @@
     - bootstrap_gateway == '192.168.42.1'
   register: TEA
 - name: Ensure public DNS is used for bootstrapping
-  raw: grep "nameserver" /etc/resolv.conf || echo "nameserver 8.8.8.8" > /etc/resolv.conf
+  ansible.builtin.raw: grep "nameserver" /etc/resolv.conf || echo "nameserver 8.8.8.8" > /etc/resolv.conf
   changed_when: false
   become: yes

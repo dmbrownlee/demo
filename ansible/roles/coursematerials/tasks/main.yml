@@ -1,23 +1,23 @@
 ---
 # tasks file for coursematerials
 - name: Include course specific variables for {{ course }}
-  include_vars: "{{ course }}.yml"
+  ansible.builtin.include_vars: "{{ course }}.yml"
 - name: Ensure content directories exist
-  file:
+  ansible.builtin.file:
     path: "{{ fs_prefix_git_repo }}/{{ item }}"
     state: directory
     mode: '0755'
   loop:
     - "{{ contentdir }}"
 - name: Ensure directories exist for each chapter
-  include_tasks: make-chapter.yml
+  ansible.builtin.include_tasks: make-chapter.yml
   loop: "{{ study_guide.chapters }}"
   loop_control:
     loop_var: chapter
     index_var: chapter_num
     label: "{{ chapter.title }}"
 - name: Ensure a schedule template TSV file exists
-  template:
+  ansible.builtin.template:
     src: "schedule-template.j2"
     dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/{{ schedulefile }}"
     mode: '0644'

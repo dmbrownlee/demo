@@ -3,34 +3,34 @@
 # GNS3.VM.VirtualBox
 # ==============
 - name: Test if GNS3.VM.VirtualBox is already installed
-  command: "VBoxManage showvminfo 'GNS3 VM'"
+  ansible.builtin.command: "VBoxManage showvminfo 'GNS3 VM'"
   register: installed_gns3vm
   changed_when: false
   failed_when: false
 - name: Download the GNS3.VM.VirtualBox zip file
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ gns3vm_vbox_zip_url }}"
     dest: "{{ download_dir }}/{{ gns3vm_vbox_zip }}"
     checksum: "{{ gns3vm_vbox_zip_checksum }}"
   when: installed_gns3vm.rc != 0
 - name: Unzip the GNS3.VM.VirtualBox zip file
-  command: unzip -o -u {{ download_dir }}/{{ gns3vm_vbox_zip }}
+  ansible.builtin.command: unzip -o -u {{ download_dir }}/{{ gns3vm_vbox_zip }}
   args:
     chdir: "{{ download_dir }}"
     warn: false
     creates: "{{ download_dir }}/GNS3 VM.ova"
   when: installed_gns3vm.rc != 0
 - name: Import GNS3.VM ova file into VirtualBox
-  command: "VBoxManage import '{{ download_dir }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
+  ansible.builtin.command: "VBoxManage import '{{ download_dir }}/GNS3 VM.ova' --vsys 0 --vmname 'GNS3 VM'"
   when: installed_gns3vm.rc != 0
 - name: Ensure imported VM has appropriate hardware
-  command: "VBoxManage modifyvm 'GNS3 VM' --cpus 2 --memory 4096 --rtcuseutc on"
+  ansible.builtin.command: "VBoxManage modifyvm 'GNS3 VM' --cpus 2 --memory 4096 --rtcuseutc on"
   when: installed_gns3vm.rc != 0
 - name: Ensure imported VM has scaled display
-  command: "VBoxManage setextradata 'GNS3 VM' 'GUI/ScaleFactor' '2.0'"
+  ansible.builtin.command: "VBoxManage setextradata 'GNS3 VM' 'GUI/ScaleFactor' '2.0'"
   when: installed_gns3vm.rc != 0
 - name: Ensure OVA file is removed after import
-  file:
+  ansible.builtin.file:
     path: "{{ download_dir }}/GNS3 VM.ova"
     state: absent
   when: installed_gns3vm.rc != 0

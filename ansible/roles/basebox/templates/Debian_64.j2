@@ -23,7 +23,7 @@
     "ssh_username": "{{ vagrant.provisioning_user }}",
     "ssh_password": "{{ vagrant.provisioning_password }}",
     "ssh_wait_timeout": "60m",
-    "headless": false,
+    "headless": {{ packer.headless }},
 
     "cpus": "{{ packer.build_vm.cpus }}",
     "memory": {{ packer.build_vm.ram }},

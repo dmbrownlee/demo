@@ -1,6 +1,6 @@
 ---
 - name: Ensure system packages are installed
-  apt:
+  ansible.builtin.apt:
     deb: "{{ item }}"
     state: present
   loop: "{{ system_packages }}"

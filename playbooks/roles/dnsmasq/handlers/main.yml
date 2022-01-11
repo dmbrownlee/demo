@@ -1,12 +1,12 @@
 ---
 - name: Ensure runit is already managing dnsmasq before continuing
   listen: reload_dnsmasq
-  wait_for:
+  ansible.builtin.wait_for:
     path: /etc/sv/dnsmasq/supervise/pid
     state: present
     timeout: 10
   become: yes
 - name: Ensure dhsmasq is restarted on a config change
   listen: reload_dnsmasq
-  command: sv reload dnsmasq
+  ansible.builtin.command: sv reload dnsmasq
   become: yes

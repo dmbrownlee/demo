@@ -1,0 +1,108 @@
+{
+  "builders": [{
+    "vm_name": "{{ box }}",
+    "type": "virtualbox-iso",
+    "guest_os_type": "{{ guest_os_type }}",
+    "iso_urls": [
+      "{{ user.download_dir }}/{{ iso_name }}"{% if iso_location is defined and iso_location != 'none' %},
+      "{{ iso_location }}/{{ iso_name }}"{% endif +%}{% if iso_altlocation is defined and iso_altlocation != 'none' %},
+      "{{ iso_altlocation }}/{{ iso_name }}"{% endif +%}
+    ],
+    "iso_checksum": "{{ iso_checksum }}",
+    "iso_target_path": "{{ user.download_dir }}/{{ iso_name }}",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "{{ vagrant.provisioning_user }}",
+    "ssh_password": "{{ vagrant.provisioning_password }}",
+    "ssh_wait_timeout": "40m",
+    "disk_size" : "20480",
+    "cpus": "1",
+    "memory": 1024,
+    "headless": {{ packer.headless }},
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
+{# Note: We actually want all the {{ ... }} in this JSON block
+         in the output so we are escaping the block between {% raw %}
+         and {% endraw %}
+#}
+{% if host.virtualization == "virtualbox" %}{% raw %}
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--vram", "64"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+      ["setextradata", "{{.Name}}", "GUI/ScaleFactor", "2.0"],
+      ["modifyvm", "{{.Name}}", "--nic2", "null"],
+      ["modifyvm", "{{.Name}}", "--nic3", "null"],
+      ["modifyvm", "{{.Name}}", "--nic4", "null"]
+    ],{% endraw %}{% endif +%}
+    "boot_wait": "30s",
+    "boot_command": [
+      "<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait> <wait><enter>",
+      "<wait><left><enter>",
+      "<wait1m>",
+      "<enter><wait><enter>",
+      "<wait2m>",
+      "<wait>8<enter>",
+      "<wait>adduser<enter>",
+      "<wait>vagrant<enter>",
+      "<wait>vagrant<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait>admins<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait>vagrant<enter>",
+      "<wait>vagrant<enter>",
+      "<wait><enter>",
+      "<wait>yes<enter>",
+      "<wait>no<enter>",
+      "<wait>echo '{{ vagrant.provisioning_user }} ALL=(ALL) NOPASSWD:ALL' >> /usr/local/etc/sudoers<enter>",
+      "<wait>pkg install -y pfSense-pkg-sudo bash<enter>",
+      "<wait10>exit<enter>",
+      "<wait>12<enter>",
+      "<wait>unset($config['interfaces']['wan']['blockpriv']);<enter>",
+      "<wait>write_config();<enter>",
+      "<wait>exec<enter>",
+      "<wait>exit<enter>",
+      "<wait>14<enter>",
+      "<wait>y<enter>",
+      "<wait>8<enter>",
+      "<wait>easyrule pass wan tcp any any 22<enter>",
+      "<wait>pfctl -d<enter>",
+      "<wait>exit<enter>"
+    ],
+    "shutdown_command": "echo {{ vagrant.provisioning_password }} | sudo -S poweroff"
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "{{ user.key_dir }}/{{ vagrant.provisioning_user }}.pub",
+       "destination": "/tmp/{{ vagrant.provisioning_user }}.pub"
+    },
+    {  "type": "shell",
+       "execute_command": "echo '{{ vagrant.provisioning_password }}' | {{ '{{' }} .Vars }} sudo -E -S sh -c '{{ '{{' }} .Path }}'",
+       "inline": ["mkdir -m 0700 /home/{{ vagrant.provisioning_user }}/.ssh",
+                  "mv /tmp/{{ vagrant.provisioning_user }}.pub /home/{{ vagrant.provisioning_user }}/.ssh/authorized_keys",
+                  "chown -R {{ vagrant.provisioning_user }}:{{ vagrant.provisioning_user }} /home/{{ vagrant.provisioning_user }}/.ssh",
+                  "chmod 644 /home/{{ vagrant.provisioning_user }}/.ssh/authorized_keys"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "output": "{{ box }}.box"
+  }]
+}

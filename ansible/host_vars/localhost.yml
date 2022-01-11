@@ -1,0 +1,25 @@
+---
+host:
+  virtualization: "virtualbox"
+  buildvms: true
+user:
+  download_dir: "{{ ansible_user_dir }}/Downloads"
+  key_dir: "{{ ansible_user_dir }}/keys"
+  demo_dir: "{{ ansible_user_dir }}/demo"
+demo:
+  root: "{{ ansible_user_dir }}/demo"
+iso:
+  gzipped: false
+  gzip_checksum: ""
+packer:
+  build_dir: "{{ user.demo_dir }}/packer"
+  build_vm:
+    cpus: 1
+    ram: 1024
+    disk_size: "20480"
+  headless: "false"
+vagrant:
+  provisioning_user: vagrant
+  provisioning_password: vagrant
+  key_dir: "{{ ansible_user_dir }}/keys"
+  headless: "false"
