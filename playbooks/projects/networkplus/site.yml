@@ -83,8 +83,8 @@
     - role: quagga
       tags: [quagga]
     - role: isc-dhcp-relay
+      when: isc_dhcp_relay is defined
       tags: [isc-dhcp-relay]
-      when: ansible_hostname == 'router2'
     - role: TEA_disable
       tags: [TEA_disable]
 # === Tier 2 devices ===
