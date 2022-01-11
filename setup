@@ -1,7 +1,7 @@
 #!/bin/bash
 DEMODIR=$HOME/demo
 PLATFORM="$(uname)"
-APARGS="-K -t baseline -t virtualization_host --skip-tags disabled"
+APARGS="-K -t baseline -t virtualization_host -t gns3_host --skip-tags disabled"
 PLAYBOOK="site.yml"
 
 # -e options to ansible-playbook
