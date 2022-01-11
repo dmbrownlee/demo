@@ -23,11 +23,11 @@
 - name: Ensure runit support for openvpn is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
-    vars:
-      service:
-        name: openvpn
-        startcmd: "/usr/sbin/openvpn --config /etc/openvpn/server/server.conf"
-        enabled: true
+  vars:
+    service:
+      name: openvpn
+      startcmd: "/usr/sbin/openvpn --config /etc/openvpn/server/server.conf"
+      enabled: true
 - name: Ensure inbound openvpn connections are allowed through firewall
   ansible.builtin.iptables:
     table: filter

@@ -27,8 +27,8 @@
 - name: Ensure runit support for dnsmasq is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
-    vars:
-      service:
-        name: dhcpd
-        startcmd: "/usr/sbin/dhcpd -d"
-        enabled: true
+  vars:
+    service:
+      name: dhcpd
+      startcmd: "/usr/sbin/dhcpd -d"
+      enabled: true
