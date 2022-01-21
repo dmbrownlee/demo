@@ -22,9 +22,9 @@ In this lab, we will be performing and automated install of the ```installhost``
 
 1. Use the following command to create the ```installhost``` virtual machine and begin the installation:
 
-  ```cd ~/demo/rhcsa && vagrant up installhost```
+  ```cd ~/demo/courses/rhcsa/VMs && vagrant up installhost```
 
-1. Use the cursor up key to select "Install CentOS Linux 8" (**do not press enter**) and press ```e``` to edit this option as indicated in the text at the bottom of the screen.
+1. Use the cursor up key to select "Install Rocky Linux 8" (**do not press enter**) and press ```e``` to edit this option as indicated in the text at the bottom of the screen.
 
 1. Use the cursor keys to navigate to the end of the line beginning with ```linuxefi```
   > Tip: You can use ```Ctrl-e``` on this screen to jump to the end of the line

@@ -14,7 +14,7 @@ Linux and other software is often distributed in ```.iso``` files on the Interne
 
 ## STEPS
 
-1. Download a CentOS ISO image from [a mirror site near you](http://isoredirect.centos.org/centos/8/isos/x86_64/).
+1. Download the Rocky Linux ISO image from [```https://rockylinux.org/download/```](https://rockylinux.org/download/) (the ```setup``` script likely left a copy in your Downloads directory so you may be able to skip this step).
 
   > Note: for the **boot** ISO image you will need a 1GB flash drive or larger.  The **DVD1** ISO image requires at least a 16GB flash drive (well, larger than 8GB) and will take longer to download.
 
@@ -32,7 +32,7 @@ Linux and other software is often distributed in ```.iso``` files on the Interne
   > **Important**: The command below should be typed on a single line and ```/dev/sdb``` should be replaced with the name of the disk you found in the steps above
 
   ```
-  sudo dd if=CentOS-8.3.2011-x86_64-boot.iso of=/dev/sdb bs=4M status=progress
+  sudo dd if=Rocky-8.5-x86_64-dvd1.iso of=/dev/sdb bs=4M status=progress
   ```
 
   > Tip: The above command will take about 15 minutes to run with the larger **DVD1** ISO file and the ```status=progress``` option will cause ```dd``` to periodically output its progress.  Also note the Linux version of ```dd``` uses ```M``` (uppercase) units when specifying blocksize with ```bs=``` where as Mac's version of ```dd``` uses lowercase units.
@@ -43,4 +43,4 @@ Linux and other software is often distributed in ```.iso``` files on the Interne
 
 You will know you have completed this lab successfully when the following are true:
 
-  1. You can boot a spare machine or a virtual machine into the CentOS installer using the USB flash drive you created.
+  1. You can boot a spare machine or a virtual machine into the Rocky installer using the USB flash drive you created.
