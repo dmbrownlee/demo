@@ -19,7 +19,7 @@ sudo apt install -y strace
 
 ## STEPS
 ### Capturing name resolution traffic
-Before getting started, shutdown the debian1-1 and windows VMs if they are running. Start a network capture on debian1-1's link and set the filter to `dns or mdns or llmnr or nbns`. This will allow us to capture name resolution traffic generated when these VMs start.
+Before getting started, shutdown the debian VMs if they are running. Start a network capture on debian1-1's link and set the filter to `dns or mdns or llmnr or nbns`. This will allow us to capture name resolution traffic generated when these VMs start.
 
 1. Boot debian1-1 VM and login.  Observe the DNS traffic as the host checks for updates.
    ```
@@ -124,7 +124,7 @@ Before getting started, shutdown the debian1-1 and windows VMs if they are runni
    2714 613.986557  192.168.44.1  192.168.45.149  DNS 144 Standard query response 0x560f A http.us.debian.org CNAME ftp.us.debian.org A 64.50.236.52 A 64.50.233.100 A 208.80.154.15
    2715 613.986833  192.168.44.1  192.168.45.149  DNS 180 Standard query response 0xd00c AAAA http.us.debian.org CNAME ftp.us.debian.org AAAA 2600:3402:200:227::2 AAAA 2620:0:861:1:208:80:154:15 AAAA 2600:3404:200:237::2
    ```
-   We can see our local DNS server is 192.168.44.1 and observe a number of queries and responses with a mix of resource records. We also see mDNS packets which is part of zeroconf and is one way auto-configured machines (with APIPA addresses) can find each other. Leave the packet capture running and start the windows VM. In addition to DNS and mDNS, windows uses LLMNR which is Microsoft's mDNS implementation and NetBIOS Name Services (NBNS) to make itself known on the local network.
+   We can see our local DNS server is 192.168.44.1 and observe a number of queries and responses with a mix of resource records. We also see mDNS packets which is part of zeroconf and is one way auto-configured machines (with APIPA addresses) can find each other. Leave the packet capture running and start a windows VM. In addition to DNS and mDNS, windows uses LLMNR which is Microsoft's mDNS implementation and NetBIOS Name Services (NBNS) to make itself known on the local network.
 
 ### The resolver library
 An operating system provides many services to applications and one of these is name resolution.  This is essentially just looking up an answer to a query in a data source.  We will be looking at three files on debian1-1 involved with this process, `/etc/nsswitch.conf`, `/etc/hosts`, and `/etc/resolv.conf`.  While we are focusing on hostname related lookups, keep in mind the operating system has other types of lookups, for example, matching usernames to user IDs, which is why the first file we look at is used for more than just hostname lookups.
@@ -207,8 +207,6 @@ An operating system provides many services to applications and one of these is n
    student@debian1:~$
    ```
    224.0.0.251 is the IPv4 multicast address reserved for mDNS and ff02::fb is the IPv6 address reserved for mDNS.  All hosts using mDNS will be listening for traffic on one or both of these addresses.  From the windows VM, open a powershell and try to ping debian1.local.
-
-   > Note:<br>Currently, the windows VM is not configured with an account for student.  You can login to the 'vagrant' account using the password 'vagrant'
 
 
 # Unfinished...

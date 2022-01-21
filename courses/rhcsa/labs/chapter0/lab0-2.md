@@ -39,17 +39,20 @@ To see which base boxes are already installed locally and available as a startin
 vagrant box list
 ```
 
-You will see output like this:
+You might see output like this:
 
 ```
-centos-8.3.2011 (virtualbox, 0)
-debian-10.6.0   (virtualbox, 0)
-windows-10      (virtualbox, 0)
+debian-11.1.0-default  (virtualbox, 0)
+kalilinux/rolling      (virtualbox, 2021.3.0)
+pfsense-2.6.0b-default (virtualbox, 0)
+rocky-8.5-core         (virtualbox, 0)
+rocky-8.5-gse          (virtualbox, 0)
+rocky-8.5-minimal      (virtualbox, 0)
 ```
 
 > Note: This is the one command in this lab you can run from anywhere.  For all the commands below, make sure you are in ```~/demo/rhcsa``` which is the directory containing the ```Vagrantfile``` for this study group's lab environment.
 
-> Note: This study group uses only the ```centos-8.3.2011``` base box but you may have others which were installed from other projects and study groups.
+> Note: This study group uses only the ```rocky-8.5-*``` vagrant boxes but you may have others which were installed from other projects and study groups.
 
 For other projects, you can get Vagrant base boxes built by others from [Vagrant Cloud](https://app.vagrantup.com/boxes/search) or you can build your own custom base boxes using [```packer```](https://www.packer.io/), also from Hashicorp.  However, we won't be covering that in this lab.
 
@@ -96,7 +99,7 @@ This command will take a few minutes as it creates server1 and server2.  In the 
 ```
 Bringing machine 'server1' up with 'virtualbox' provider...
 Bringing machine 'server2' up with 'virtualbox' provider...
-==> server1: Importing base box 'centos-8.3.2011'...
+==> server1: Importing base box 'rocky-8.5-gse'...
 ==> server1: Matching MAC address for NAT networking...
 ==> server1: Setting the name of the VM: rhcsa_server1
 ==> server1: Clearing any previously set network interfaces...
@@ -180,7 +183,7 @@ Once these steps have been completed, if you no longer have a need for the old b
 With regards to building the Vagrant base boxes, our initial base boxes were built and installed by Ansbile when we ran ```cd ~/demo && git pull && ./setup rhcsa```.  While it is great to have this automated, the packer ouput when there is an error is difficult to read when it is wrapped in an Ansible tasks.  You can build the base boxes manually with:
 
 ```
-cd ~/demo/ansible/packer && packer build centos-8.3.2011.json
+cd ~/demo/ansible/packer && packer build rocky-8.5-core.json
 ```
 
 The ```packer build``` command uses the instructions in the ```.json``` file to download the installation media, create a virtual machine, install the operating system and customize it for use with Vagrant, shutdown the virtual machine, and, finally, package the virtual machine's hard disk file into a Vagrant base box file with a ```.box``` extension.  This base box file can be added to Vagrant's base box repository with the ```vagrant box add``` command.
