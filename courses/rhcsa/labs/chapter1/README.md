@@ -41,5 +41,5 @@ Read chapter 1 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 2nd E
 ## Labs
 [lab1-1: Creating USB Installation Media (Linux instructions)](lab1-1.md)</br>
 [lab1-2: Creating USB Installation Media (Mac instructions)](lab1-2.md)</br>
-[lab1-3: Installing CentOS](lab1-3.md)</br>
+[lab1-3: Installing Rocky Linux](lab1-3.md)</br>
 [lab1-4: Automated Installs Using Kickstart](lab1-4.md)</br>
