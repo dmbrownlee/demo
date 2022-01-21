@@ -1,18 +1,14 @@
 ---
-- name: Ensure isc-dhcp-relay is installed and configured if needed
-  block:
-    - name: Install isc-dhcp-relay (Alpine)
-      ansible.builtin.package:
-        name: dhcrelay
-        state: present
-      become: yes
-      when: ansible_distribution == 'Alpine'
-    - name: Ensure runit support for dnsmasq is installed and enabled
-      ansible.builtin.include_role:
-        name: runit-service
-      vars:
-        service:
-          name: dnsmasq
-          startcmd: "/usr/sbin/dhcrelay -d {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}"
-          enabled: true
-  when: isc_dhcp_relay is defined
+- name: Ensure isc-dhcp-relay is installed
+  ansible.builtin.package:
+    name: dhcrelay
+    state: present
+  become: yes
+- name: Ensure runit support for dhcrelay is installed and enabled
+  ansible.builtin.include_role:
+    name: runit-service
+  vars:
+    service:
+      name: dhcrelay
+      startcmd: "/usr/sbin/dhcrelay -d {{ isc_dhcp_relay.interfaces }} {{ isc_dhcp_relay.dhcp_server }}"
+      enabled: true
