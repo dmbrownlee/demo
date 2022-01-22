@@ -9,14 +9,14 @@
     src: "orientation.md.j2"
     dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/README.md"
     mode: '0644'
-    force: no
+    force: "{{ always_update_orientation }}"
   when: chapter_num == 0
 - name: Ensure an assignment page exists for chapter {{ chapter_num }}
   ansible.builtin.template:
     src: "assignment.md.j2"
     dest: "{{ fs_prefix_git_repo }}/{{ contentdir }}/chapter{{ chapter_num }}/README.md"
     mode: '0644'
-    force: no
+    force: "{{ always_update_assignments }}"
   when: chapter_num != 0
 - name: Ensure lab{{ chapter_num }}-{{ lab_num + 1 }} exists
   ansible.builtin.template:
