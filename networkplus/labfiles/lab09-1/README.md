@@ -10,7 +10,7 @@ In this lab, we will learn to use tools to investigate how name resolution is ha
 
 ## SETUP
 
-This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/main/networkplus/labfiles/README.md).
+This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/release/networkplus/labfiles/README.md).
 
 We will be using the debian1-1 VM in this lab.  The first part of the lab will use a utility called `strace` to watch how network clients request networking services from the host operating system and you will want to make sure it is installed if if isn't already.  On the debian1-1 VM, run:
 ```
