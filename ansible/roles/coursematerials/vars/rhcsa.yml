@@ -108,7 +108,7 @@ study_guide:
       labs:
         - title: "Creating USB Installation Media (Linux instructions)"
         - title: "Creating USB Installation Media (Mac instructions)"
-        - title: "Installing CentOS"
+        - title: "Installing Rocky Linux"
         - title: "Automated Installs Using Kickstart"
     - title: 'Using Essential Tools'
       lastpage: 51
