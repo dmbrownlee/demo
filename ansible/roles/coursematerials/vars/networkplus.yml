@@ -22,7 +22,7 @@ study_guide:
   notes: "You can download a PDF of the official exam objectives from the [CompTIA website](https://www.comptia.org/certifications/network#examdetails).  The Professor Messer videos are organized by exam objective but the book covers the material in its own order.  As a result, bits of information related to a specific exam objective appear spread out across multiple chapters so you will see some exam objectives reappearing at the top of more than one book chapter.  Since the videos are organized according to the exam objectives, the video links will be repeated as well."
   links:
     amazon: "https://www.amazon.com/CompTIA-Network-Certification-Seventh-N10-007/dp/1260122387"
-    orielly: 'https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/'
+    oreilly: 'https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/'
   chapters:
     - title: "Study Group Orientation"
       lastpage: 0
