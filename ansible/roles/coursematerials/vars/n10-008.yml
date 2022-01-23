@@ -21,7 +21,7 @@ study_guide:
   notes: "This assignment is part of a [self-study course](../README.md) to prepare for the CompTIA Network+ (N10-008) exam."
   links:
     amazon: "https://www.amazon.com/CompTIA-Network-Certification-N10-008-Comptia/dp/1264269056"
-    orielly: 'https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398'
+    oreilly: 'https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398'
   chapters:
     - title: "Study Group Orientation"
       lastpage: 0
