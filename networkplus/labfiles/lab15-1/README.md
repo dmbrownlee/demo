@@ -4,9 +4,12 @@ In this lab, we will be going through the steps and procedures of setting up a v
 -- 15-2 goes into a bit more details regarding the configurations of possible inputs and outputs as well as networking these virtual machines together--
 
 ## Host Setup 
-In the initial setup of the lab folders and environments, a hypervisor was installed called VirtualBox. In this hypervisor is where you will configure and run your Virtual machines. If you have confirmed that Virtual Box is present on the machine, we can move forward with setting up a Virtual Machine locally. If virtual box is not present, please revisit https://github.com/dmbrownlee/setup 
+In the initial setup of the lab folders and environments, a hypervisor was installed called VirtualBox. This hypervisor is where you will configure and run your Virtual machines. If you have confirmed that Virtual Box is present on the machine, we can move forward with setting up a Virtual Machine locally. If virtual box is not present, please revisit https://github.com/dmbrownlee/setup 
 
-	1. We will need an iso file to get started, given the /demo setup includes the RHCSA directory, I will use the most up-to-date rocky linux in this example, which can be downloaded here https://rockylinux.org/download/
+
+##Grabbing an ISO Image
+
+	1. We will need an iso file to get started, given the /demo setup includes the RHCSA directory, I will use the most up-to-date rocky linux image in this example, which can be downloaded here https://rockylinux.org/download/
 
 
 		For Mac I have chosen to download the x86_64 minimal.iso file, although other options are available.
