@@ -9,14 +9,14 @@ In the initial setup of the lab folders and environments, a hypervisor was insta
 
 ##Grabbing an ISO Image
 
-	1. We will need an iso file to get started, given the /demo setup includes the RHCSA directory, I will use the most up-to-date rocky linux image in this example, which can be downloaded here https://rockylinux.org/download/
+We will need an iso file to get started, given the /demo setup includes the RHCSA directory, I will use the most up-to-date rocky linux image in this example, which can be downloaded here https://rockylinux.org/download/
 
 
 		For Mac I have chosen to download the x86_64 minimal.iso file, although other options are available.
 		You are welcome to try out any OS that might peak your interest, just ensure they are from a reliable source. 
 
 
-	2. Once you have an ISO file for your desired Operating system, I recommend moving it to a designated folder, just for the sake of staying organized and having all your iso images in one place, in my case the command is as follows 
+Once you have an ISO file for your desired Operating system, I recommend moving it to a designated folder, just for the sake of staying organized and having all your iso images in one place, in my case the command is as follows 
 	
 		` mv Downloads/Rocky-8.4-x86_64-minimal.iso VirtualBox_VMS/images ` 
  
