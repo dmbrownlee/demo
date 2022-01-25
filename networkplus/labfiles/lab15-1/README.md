@@ -1,6 +1,6 @@
 #Setting Up a Virtual Machine from ISO image 
 
-In this lab, we will going through the steps and procedures of setting up a virtual machine inside of VirtualBox. After this lab you should be able to successfully setup a range of Virtual Machines to experiment with if you get curious.
+In this lab, we will be going through the steps and procedures of setting up a virtual machine inside of VirtualBox. After this lab you should be able to successfully setup a range of Virtual Machines to experiment with if you get curious.
 -- 15-2 goes into a bit more details regarding the configurations of possible inputs and outputs as well as networking these virtual machines together--
 
 ## Host Setup 
