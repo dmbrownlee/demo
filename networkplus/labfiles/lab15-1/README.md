@@ -27,7 +27,8 @@ Once the image is in safe place, we can start on creating your Virtual machine!
 
 
 1. First we will want to open up the Hypervisor, in this case VirtualBox.
-	setup of the actual virtual machine in a gui will very after this point based on what hypervisor you choose to use. As mentioned VirtualBox will be used in this example 
+		
+		The setup of the actual virtual machine in a gui will very after this point based on what hypervisor you choose to use. As mentioned VirtualBox will be used in this example 
 
 2. In the center at the top of the VirtualBox Manager window, you should see a few options, `Preferences, Import, Export, New, ADD`. If this is not the case, ensure you have `tools` selected in the left hand corner.  
 
@@ -47,7 +48,7 @@ Once the image is in safe place, we can start on creating your Virtual machine!
 	Note: Any resource utilization is taken from the host. I typically do about 1/4th, that way I have enough resources for the virtual machine to run without interruption, while still leaving enough resources for the host to run other programs if needed.
 
 
-5. The window will then prompt us if we want to create a virtual hard disk, use an existing one or if we do not want to add one. In this case I will create a virtual hard drive, to store scripts, files and other data we might want to access later 
+5. The window will then prompt us if we want to create a virtual hard disk, use an existing one or neither. In this case I will create a virtual hard disk, to store scripts, files and other data we might want to access later 
 
 6. After we have chose to create a disk, we get to choose th file type that we would like to use, given we are using virutalbox through out this course, I will stick with vdi, but here is a quick summary of each option. 
 
@@ -56,10 +57,10 @@ Once the image is in safe place, we can start on creating your Virtual machine!
 	c. VMDK: This was previously proprietary to vmware virtual appliances, but is now open format and widely used across many virtualization platforms. It allows cloning of physical disks and buckup of vm's offsite, VMDK also allows incremental backups, which makes the backup process much quicker than VDI or VHD. 
 		 This format also support dynamic or fixed storage. 
 
-7. Next you will choose if you want the drive to be Dynamically allocated, or a fixed size, I typically go for dynamic, because why not? 
+7. Next you will choose if you want the drive to be Dynamically allocated, or a Fixed Size, I typically go for dynamic, because why not? 
 
 8. Next it will request that you choose a location to store your file, I typically leave this as default, to save all the vm's configurations within its own folder. 
-	I have plenty of storage, but to ensure the full image has enough space, I will go ahead and up the disk size to 15gb's, you can add additional storage later if you find that you need more room which will be covered in the intermediate section. 
+	I have plenty of storage, but to ensure the full image has enough space, I will go ahead and up the disk size to 15gb's, you can add additional storage later if you find that you need more room which will be covered in RHCSA or other Linux Tutorials. 
 
 With that you have successfully added your first Virtual Machine to Virtual box, all thats left is to launch the Virtual machine and install the OS by following the onscreen instructions. 
 
