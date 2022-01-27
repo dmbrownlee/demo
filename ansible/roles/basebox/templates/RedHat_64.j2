@@ -1,7 +1,4 @@
 {
-  "variables": {
-    "checksum": "{{ iso_checksum }}"
-  },
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "{{ guest_os_type }}",
@@ -10,7 +7,7 @@
       "{{ iso_location }}/{{ iso_name }}"{% if iso_altlocation is defined and iso_altlocation != 'none' %},
       "{{ iso_altlocation }}/{{ iso_name }}"{% endif +%}
     ],
-    "iso_checksum": "{{ '{{' }} user `checksum` }}",
+    "iso_checksum": "{{ iso_checksum }}",
     "iso_target_path": "{{ user.download_dir }}/{{ iso_name }}",
 
     "http_directory" : ".",
@@ -23,7 +20,7 @@
     "disk_size" : "{{ packer.build_vm.disk_size }}",
     "cpus": "{{ packer.build_vm.cpus }}",
     "memory": {{ packer.build_vm.ram }},
-    "vm_name": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}",
+    "vm_name": "{{ distro }}-{{ version }}-{{ configuration }}",
     "headless": {{ packer.headless }},
     "hard_drive_interface": "sata",
     "sata_port_count": 4,
@@ -45,7 +42,7 @@
     {% endif %}
     "boot_command": [
     {# Using {{ '{{' }} escapes the {{ so we can have it in the output #}
-      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}-ks.cfg<leftCtrlOn>x"
+      "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ '{{' }} .HTTPIP }}:{{ '{{' }} .HTTPPort }}/{{ distro }}-{{ version }}-{{ configuration }}-ks.cfg<leftCtrlOn>x"
     ],
     "shutdown_command": "echo {{ vagrant.provisioning_password }} | sudo -S shutdown -P now"
   }],
@@ -92,6 +89,6 @@
   ],
   "post-processors": [{
     "type": "vagrant",
-    "output": "{{ distro }}-{{ version }}-{{ '{{' }} user `configuration` }}.box"
+    "output": "{{ box }}.box"
   }]
 }

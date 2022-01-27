@@ -9,6 +9,7 @@
     dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
     src: "{{ packer_template }}"
     mode: '0600'
+    force: yes
 - name: Ensure we import the variables for the {{ configuration }} configuration
   ansible.builtin.include_vars:
     file: "{{ distro }}-{{ version }}-{{ configuration }}-packages.yml"
@@ -17,6 +18,7 @@
     dest: "{{ packer.build_dir }}/{{ install_file }}"
     src: "{{ templateks }}"
     mode: '0600'
+    force: yes
   when: templateks is defined and templateks != 'none'
 - name: Check for gzipped ISO in download directory
   ansible.builtin.stat:
