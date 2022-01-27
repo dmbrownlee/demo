@@ -17,7 +17,7 @@ packer:
     cpus: 1
     ram: 1024
     disk_size: "20480"
-  headless: "false"
+  headless: "true"
 vagrant:
   provisioning_user: vagrant
   provisioning_password: vagrant
