@@ -1,0 +1,14 @@
+---
+- name: Ensure software needed to build Faucet is installed
+  ansible.builtin.package:
+    name:
+      - g++
+      - python3-dev
+      - py3-pip
+    state: present
+  become: yes
+- name: Ensure Faucet is installed
+  ansible.builtin.pip:
+    name: faucet
+    state: present
+  become: yes
