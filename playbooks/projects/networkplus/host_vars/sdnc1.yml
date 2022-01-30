@@ -1,0 +1,8 @@
+---
+bootstrap_gateway: 192.168.42.1
+interfaces:
+  eth0:
+    comment: "Provisioning Interface"
+    method: static
+    address: 192.168.42.9
+    netmask: 255.255.255.0

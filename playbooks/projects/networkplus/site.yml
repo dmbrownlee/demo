@@ -18,27 +18,26 @@
     - role: isc-dhcp-server
       tags: [isc-dhcp-server]
 # === Bootstrap layer2 of the network
-# Configure all switches through the provisioning network
-# - name: Bootstrap provisioning switch
-#   gather_facts: false
-#   hosts: provisioning_switch
-#   roles:
-#     - role: bootstrap-routing
-#       tags: [bootstrap-routing]
-# - name: Configure bootstrap on provisioning switch
-#   hosts: provisioning_switch
-#   roles:
-#     - role: bootstrap
-#       tags: [bootstrap]
-#     - role: baseline
-#       tags: [baseline]
-# - name: Configure services on provisioning switch
-#   hosts: provisioning_switch
-#   roles:
-#     - role: openvswitch
-#       tags: [openvswitch]
-#     - role: TEA_disable
-#       tags: [TEA_disable]
+- name: Bootstrap SDN controller
+  gather_facts: false
+  hosts: sdnc1
+  roles:
+    - role: bootstrap-routing
+      tags: [bootstrap-routing]
+- name: Configure bootstrap on provisioning switch
+  hosts: sdnc1
+  roles:
+    - role: bootstrap
+      tags: [bootstrap]
+    - role: baseline
+      tags: [baseline]
+- name: Configure services on provisioning switch
+  hosts: sdnc1
+  roles:
+    - role: faucet
+      tags: [faucet]
+    - role: TEA_disable
+      tags: [TEA_disable]
 - name: Bootstrap switches
   gather_facts: false
   hosts: switches
