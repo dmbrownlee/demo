@@ -18,7 +18,6 @@ dockitems_to_add:
 #gns3_config_dir: "{{ ansible_user_dir }}/GNS3"
 #gns3_user_dir: "{{ ansible_user_dir }}/.config/GNS3/{{ gns3_vers }}"
 #===== vars for gns3_controller.j2
-g3controller_gns3vm_headless: "false"
 #===== vars for gns3_gui.j2
 g3gui_mainwindow_hdpi: "true"
 g3gui_mainwindow_spice_console_command: "/Applications/RemoteViewer.app/Contents/MacOS/RemoteViewer spice://%h:%p"

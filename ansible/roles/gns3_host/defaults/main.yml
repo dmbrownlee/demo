@@ -19,7 +19,7 @@ gns3vm_vbox_zip_url: "https://github.com/GNS3/gns3-gui/releases/download/v{{ gns
 gns3vm_vbox_zip_checksum: "sha256:fc86303b360fa3d86148a342b793cb08aa9992eeb0068687a5f7f65ea592700d"
 # vars for gns3_controller.j2
 g3controller_gns3vm_vmname: "GNS3 VM"
-g3controller_gns3vm_headless: "false"
+g3controller_gns3vm_headless: "true"
 g3controller_gns3vm_enable: "true"
 g3controller_gns3vm_engine: "virtualbox"
 g3controller_gns3vm_ram: 4096

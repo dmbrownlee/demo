@@ -1,4 +1,6 @@
 ---
+always_update_orientation: true
+always_update_assignments: true
 # defaults file for coursematerials
 #repo: "https://github.com/dmbrownlee/demo"
 url_prefix_github: "https://github.com/dmbrownlee/demo"

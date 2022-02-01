@@ -5,7 +5,7 @@
 In this lab, you will learn about VLANs and how they function like a virtual switch and, potentially, span many physical switches.  You will also learn how to view VLAN IDs in Wireshark captures and where to place the network sniffer in order to capture this information.  This lab is **not** a primer for learning about OpenvSwitch although we do use it in the lab and you may want to learn more about it at [openvswitch.org](https://www.openvswitch.org/).
 
 ## SETUP
-This lab uses the [networkplus.test](https://github.com/dmbrownlee/demo/blob/main/networkplus/labfiles/README.md) network model.
+This lab uses the [networkplus.test](https://github.com/dmbrownlee/demo/blob/release/networkplus/labfiles/README.md) network model.
 
 Before beginning the lab, you will need to configure ports on the OpenvSwitch switches as either access ports or trunk ports (the VLAN interfaces are already configured on router2:eth2).  Open a console and run the commands below on the switches as indicated.
 
