@@ -4,6 +4,17 @@
     path: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"
   register: boxfile
   changed_when: false
+- name: Set expectionations about build times
+  debug:
+    msg: |
+      The next step, building the Vagrant box, will take a while, possibly more
+      than 20 minutes.  When packer is building the VM is headless (without a
+      visible GUI). This can give the appearance that the task is not running.
+      If the task has encountered an error, this playbook will eventually fail.
+      However, the task is likely running just fine.  If you want to view the
+      progress, you can show the window for the VM being built from the
+      VirtualBox Manager.  Just don't interact with the VM as it is being built
+      as that might interfere with the build and cause it to fail.
 - name: Build box file ({{ distro }}-{{ version }}-{{ configuration }})
   ansible.builtin.command: packer build -color=false -force -var "configuration={{ configuration }}" -var "username={{ vagrant.provisioning_user }}" -var "password={{ vagrant.provisioning_password }}" {{ distro }}-{{ version }}-{{ configuration }}.json
   args:
