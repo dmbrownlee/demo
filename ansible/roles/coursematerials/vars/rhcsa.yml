@@ -19,10 +19,10 @@ orientation:
 study_guide:
   title: "Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 2nd Edition"
   totalpages: 570
-  notes: "The official exam objectives are available on the Red Hat website.  There is one exam objective that was added after the publication of the book and does not appear in any of the chapters.  It is covered in its own assignment at the end of the schedule.  The lessons in the video series are by the same author as the book and their content closely follows that of the book chapters.  However, there are slight differences so the assignments follow the order of the book chapters and the video lessons are linked in the assignments based on content even if their number differs from the number of the book chapter."
+  notes: "This assignment is part of a [self-study course](../README.md) to prepare for the {{ exam.certification }} exam.</br>\n\n> The lessons in the video series are by the same author as the book and their content closely follows that of the book chapters.  However, there are slight differences between the order of the book chapters and the order of the video lessons so the assignments follow the order of the book chapters and the video lessons are linked in the assignments based on content even if their number differs from the number of the book chapter."
   links:
     amazon: "https://www.amazon.com/Red-RHCSA-Cert-Guide-Certification/dp/0137341628/"
-    orielly: 'https://learning.oreilly.com/library/view/red-hat-rhcsa/9780137341641'
+    oreilly: 'https://learning.oreilly.com/library/view/red-hat-rhcsa/9780137341641'
   chapters:
     - title: "Study Group Orientation"
       lastpage: 0
@@ -108,7 +108,7 @@ study_guide:
       labs:
         - title: "Creating USB Installation Media (Linux instructions)"
         - title: "Creating USB Installation Media (Mac instructions)"
-        - title: "Installing CentOS"
+        - title: "Installing Rocky Linux"
         - title: "Automated Installs Using Kickstart"
     - title: 'Using Essential Tools'
       lastpage: 51

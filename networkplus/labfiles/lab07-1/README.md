@@ -6,7 +6,7 @@ In this lab, we will be exploring IPv4 routing by running various commands on th
 
 ## SETUP
 
-This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/main/networkplus/labfiles/README.md).
+This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/release/networkplus/labfiles/README.md).
 
 The firewall and routers in the virtual lab environment are Linux containers running Quagga, an open source suite of routing protocols that allow a Linux machine to server as a router. Quagga's command line interface is designed to look and work similar to Cisco's Internetwork Operating System (IOS) and the commands listed here can also be used on a Cisco router.
 

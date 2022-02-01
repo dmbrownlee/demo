@@ -6,7 +6,7 @@ In this lab, we will capture network packets to see NAT in action.
 
 ## SETUP
 
-This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/main/networkplus/labfiles/README.md).
+This lab uses the same virtual lab environment as the other labs.  Make sure you have opened this project and run the `setup` script on the control node as described [here](https://github.com/dmbrownlee/demo/blob/release/networkplus/labfiles/README.md).
 
 The firewall in the virtual lab environment is doing NAT, specifically source NAT (aka SNAT), to rewrite the source IP address for all outbound traffic.  To the outside world, it looks like all connections are coming from the firewall.  This allows us to use non-routable, private address ranges inside the firewall and still be able to connect to destinations on the Internet.  The non-routable address ranges defined in RFC 1918 are:
 
