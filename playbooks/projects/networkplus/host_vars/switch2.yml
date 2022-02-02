@@ -8,7 +8,11 @@ interfaces:
     netmask: '255.255.255.0'
 openvswitch:
   bridges:
-    - { name: 'br0', state: 'present', set: 'bridge br0 datapath_type=netdev stp_enable=true' }
+    - name: 'br0'
+      state: 'present'
+      datapath_id: '0000000000000200' }
+      datapath_type: 'netdev'
+      stp_enable: 'true'
   bridge_ports:
     - { name: 'eth1', state: 'present', bridge: 'br0' }
     - { name: 'eth2', state: 'present', bridge: 'br0' }
