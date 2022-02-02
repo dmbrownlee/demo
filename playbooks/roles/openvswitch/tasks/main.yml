@@ -32,7 +32,6 @@
   openvswitch.openvswitch.openvswitch_bridge:
     bridge: "{{ bridge.name }}"
     state: "{{ bridge.state | default('present') }}"
-    set: "{{ bridge.set | default(omit) }}"
   become: yes
   loop: "{{ openvswitch.bridges | default(default_bridges) }}"
   loop_control:
@@ -52,3 +51,40 @@
     loop_var: port
     label: "{{ port }}"
   notify: pause_for_switch_updates
+- name: Ensure the bridge is implemented in userspace
+  openvswitch.openvswitch.openvswitch_db:
+    table: Bridge
+    record: "{{ bridge.name }}"
+    col: datapath_type
+    value: "{{ bridge.datapath_type }}"
+  when: bridge.datapath_type is defined
+  become: yes
+  loop: "{{ openvswitch.bridges | default(default_bridges) }}"
+  loop_control:
+    loop_var: bridge
+    label: "{{ bridge }}"
+- name: Ensure the bridge has a fixed datapath_id
+  openvswitch.openvswitch.openvswitch_db:
+    table: Bridge
+    record: "{{ bridge.name }}"
+    col: other_config
+    key: datapath-id
+    value: "{{ bridge.datapath_id }}"
+  when: bridge.datapath_id is defined
+  become: yes
+  loop: "{{ openvswitch.bridges | default(default_bridges) }}"
+  loop_control:
+    loop_var: bridge
+    label: "{{ bridge }}"
+- name: Ensure STP is enabled on bridges
+  openvswitch.openvswitch.openvswitch_db:
+    table: Bridge
+    record: "{{ bridge.name }}"
+    col: stp_enable
+    value: "{{ bridge.stp_enable }}"
+  when: bridge.stp_enable is defined
+  become: yes
+  loop: "{{ openvswitch.bridges | default(default_bridges) }}"
+  loop_control:
+    loop_var: bridge
+    label: "{{ bridge }}"
