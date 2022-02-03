@@ -1,5 +1,0 @@
----
-- name: Ensure apt cache is updated before installing packages
-  ansible.builtin.apt:
-    update_cache: yes
-  become: yes

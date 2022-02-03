@@ -50,5 +50,8 @@
   loop: "{{ interfaces | dict2items }}"
   when: item.key not in ansible_interfaces and item.key is regex('\.\d+$')
   become: yes
-- name: Ensure repo cache is updated before installing packages
-  ansible.builtin.include_tasks: repo-update-{{ ansible_distribution | lower }}.yml
+- name: Ensure apk cache is updated before installing packages
+  community.general.apk:
+    update_cache: yes
+  changed_when: false
+  become: yes

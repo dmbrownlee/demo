@@ -1,6 +1,0 @@
----
-- name: Ensure apk cache is updated before installing packages
-  community.general.apk:
-    update_cache: yes
-  changed_when: false
-  become: yes
