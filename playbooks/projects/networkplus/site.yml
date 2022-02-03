@@ -1,9 +1,7 @@
 ---
-- name: Configure bootstrap on the Ansible controller
+- name: Apply baseline configuraton to the Ansible controller
   hosts: control
   roles:
-    - role: bootstrap
-      tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure services on the Ansible controller
@@ -24,11 +22,9 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-- name: Configure bootstrap on provisioning switch
+- name: Apply baseline configuraton to the SDN controllers
   hosts: sdncontrollers
   roles:
-    - role: bootstrap
-      tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure services on provisioning switch
@@ -44,11 +40,9 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-- name: Configure bootstrap on switches
+- name: Apply baseline configuraton to the switches
   hosts: switches
   roles:
-    - role: bootstrap
-      tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure services on switches
@@ -69,11 +63,9 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-- name: Configure bootstrap on tier 1 devices
+- name: Apply baseline configuraton to the tier 1 devices
   hosts: tier1
   roles:
-    - role: bootstrap
-      tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure services on tier 1 devices
@@ -96,11 +88,9 @@
   roles:
     - role: bootstrap-routing
       tags: [bootstrap-routing]
-- name: Configure bootstrap on tier 2 devices
+- name: Apply baseline configuraton to the tier 2 devices
   hosts: tier2
   roles:
-    - role: bootstrap
-      tags: [bootstrap]
     - role: baseline
       tags: [baseline]
 - name: Configure DNS servers
