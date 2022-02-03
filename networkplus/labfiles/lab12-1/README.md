@@ -1,10 +1,10 @@
 # Neighbor Discovery Protocol
 
 ## Setup
-For this lab, please load the '/Users/[USERNAME]/demo/networkplus/labfiles/lab12-1/IPv6-NDP.pcapng' into Wireshark.
+Open '/Users/[USERNAME]/demo/networkplus/labfiles/lab12-1/IPv6-NDP.pcapng' in Wireshark.
 
 ## Lab 
-For this lab, we're reviewing the Neighbor Discovery Protocol. The Neighbor Discovery Protocol (NDP) makes the IPv6 automation magic work. NDP consists of four different packet types: Neighbor solicitation, Neighbor advertisement, Router solicitation, and Router advertisement.
+The Neighbor Discovery Protocol (NDP) makes the IPv6 automation magic work. NDP consists of four different packet types: Neighbor solicitation, Neighbor advertisement, Router solicitation, and Router advertisement.
 
 **How does the Neighbor solicitation and Neighbor advertisement segments of NDP replace IPv4’s Address Resolution Protocol (ARP)?**
 - When an IPv6 host joins a network, it sends out multicast neighbor solicitation packets which all begin with ff02 to search for other computers on its broadcast domain. Only the other IPv6-capable hosts on the broadcast domain will hear the multicast neighbor solicitation packet and then respond with a unicast neighbor advertisement packet, essentially saying, “I hear you and this is who I am.” 
