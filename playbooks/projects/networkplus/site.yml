@@ -32,8 +32,8 @@
   roles:
     - role: faucet
       tags: [faucet]
-    - role: TEA_disable
-      tags: [TEA_disable]
+    - role: bootstrap-routing-disable
+      tags: [bootstrap_routing_disable]
 - name: Configure bootstrap interface on switches
   gather_facts: false
   hosts: switches
@@ -50,8 +50,8 @@
   roles:
     - role: openvswitch
       tags: [openvswitch]
-    - role: TEA_disable
-      tags: [TEA_disable]
+    - role: bootstrap-routing-disable
+      tags: [bootstrap_routing_disable]
 # === Tier 1 devices ===
 # These devices are accessible to the control host without needing to
 # configure intermediary devices.  This includes the firewall and
@@ -76,8 +76,8 @@
     - role: isc-dhcp-relay
       when: isc_dhcp_relay is defined
       tags: [isc-dhcp-relay]
-    - role: TEA_disable
-      tags: [TEA_disable]
+    - role: bootstrap-routing-disable
+      tags: [bootstrap_routing_disable]
 # === Tier 2 devices ===
 # The control host can only reach tier 2 devices through the tier 1 devices
 # after the tier 1 devices have been configured.  Once the tier 1 routers are
