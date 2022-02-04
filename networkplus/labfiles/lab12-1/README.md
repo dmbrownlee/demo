@@ -46,3 +46,8 @@ The host begins by sending out a multicast router solicitation to any routers wh
 **B.2.** 33:33:00:00:00:01
 **B.3.** 2001:db8:1:2050:79ff:fe66:6801
 **B.4.** 7, 134
+
+## Links
+[Chapter 12 IPv6](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch12.xhtml) by Mike Meyers 
+[Configuring IPv6](https://www.professormesser.com/network-plus/n10-007/configuring-ipv6-2/) by Professor Messer 
+[IPv6 Addresses](https://www.cbtnuggets.com/learn/it-training/cisco-ccna-labs-using-gns3-and-wireshark/29?autostart=1) by Keith Barker 
