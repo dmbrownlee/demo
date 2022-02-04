@@ -9,7 +9,7 @@ Open '/Users/[USERNAME]/demo/networkplus/labfiles/lab12-1/IPv6-NDP.pcapng' in Wi
 ## Lab 
 The Neighbor Discovery Protocol (NDP) makes the IPv6 automation magic work by enabling all the nodes on the network to easily discover each other. NDP consists of four different packet types: Neighbor solicitation, Neighbor advertisement, Router solicitation, and Router advertisement. Now let's see how it works!
 
-**How does the Neighbor solicitation and Neighbor advertisement segments of NDP replace IPv4’s Address Resolution Protocol (ARP)?**
+**How do Neighbor solicitation and Neighbor advertisement replace IPv4’s Address Resolution Protocol (ARP)?**
 
 When an IPv6 host joins a network, it sends out multicast neighbor solicitation packets which all begin with ff02 to search for other computers on its broadcast domain. Only the other IPv6-capable hosts on the broadcast domain will hear the multicast neighbor solicitation packet and then respond with a unicast neighbor advertisement packet, essentially saying, “I hear you and this is who I am.” 
 
@@ -23,7 +23,7 @@ When an IPv6 host joins a network, it sends out multicast neighbor solicitation 
 
 - A.4. What are the correct ICMPv6 types for these two packet types?
 
-**How does Router solicitation and Router advertisement allow an IPv6 host to automatically discover what the network it's connected to and then configure a usable IP address?**
+**How do Router solicitation and Router advertisement allow an IPv6 host to automatically discover what the network it's connected to and then configure a usable IP address?**
 
 The host begins by sending out a multicast router solicitation to any routers who are currently on that network segment so that the host can get the information it needs about that network. The router responds by sending out a multicast router advertisement to all the nodes on the network. Even if there's no router solicitation, a router will still periodically send out router advertisements onto the network to advertise its presence and the information for the network.
 
