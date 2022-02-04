@@ -1,5 +1,8 @@
 # Neighbor Discovery Protocol
 
+## Exam Objective
+[1.0 Networking Concepts: 1.3 Explain the concepts and characteristics of routing and switching: IPv6 Concepts](https://www.comptia.jp/pdf/comptia-network-n10-007-v-3-0-exam-objectives.pdf)
+
 ## Setup
 Open '/Users/[USERNAME]/demo/networkplus/labfiles/lab12-1/IPv6-NDP.pcapng' in Wireshark.
 
