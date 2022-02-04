@@ -8,6 +8,7 @@ In this lab, we will going through the steps and procedures of setting up a rout
 1. To start, we are going to need a second interface for NAT active, in lab 15-2 we disabled these mainly due to the fact we were generating our own internal network (10 points if you can explain what NAT does and how it works). The following steps should be performed on all 3 vm's, The reason we did not clone these steps are due to differences on the vm's. We will see the additonal steps and differneces later on in this chapter.
 	
 	a. As we did in lab15_2 you will want to add another interface to your machine in the virtualbox, but instead of an internal network assignment we will want to assign it as NAT under ADAPTER_2 so, adapter 2 should looks as follows. (Virtual_box > Server1_2_gateway > Settings > Network > ADAPTER_2). 
+	
 		* Enable Network Adapter 
 		Attached to: NAT
 		* Cable Connected
