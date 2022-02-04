@@ -1,6 +1,6 @@
 #Setting up a Gateway to the outside World, Careful it can be dangerous out there.. 
 
-In this lab, we will going through the steps and procedures of setting up a router, that will allow two different networks to communicat, pay attention, because this may get a bit messy if you are not familiar with the processes we performed in lab 2. 
+In this lab, we will going through the steps and procedures of setting up a router, that will allow two different networks to communicat. Pay attention, because this may get a bit messy if you are not familiar with the processes we performed in lab 2. 
 
 
 ## Host setup
@@ -24,19 +24,47 @@ In this lab, we will going through the steps and procedures of setting up a rout
 	d. repeat these steps for server2 and the gateway. we will make some additonal changes to server2 and the gateway below, so you might want to read ahead and edit your configuration accodingly, this is where things get a little messy. 
 
 								    Server2 Setup
-								    Gateway Setup
+
+As mentioned in the description of the lab, we are connecting 2 `different` networks together, thus we must change the current network interface of `server2`
+
+1. In the `Adapter 1` section we will want to change the interface to a different name (VirtualBox > Server2 > Settings > Network > Adapter 1)
+
+	a. Enable Network Adapter 
+	b. Attach the network adapter to `Internal Network`
+	c. Name: $intnet-2
+	d. Under advanced ensure the cable is connected
+            
+
+2. we will also want to change th ip, just to ensure we are infact on a different network so lets boot up `server2` and run `nmtui`
+
+	a. we will want to run nmtui 
+	b. we will want to `Edit Connection`
+	c. select enp0s3 
+	edit the ip address to 10.0.1.11
 
 
-1. We
+Great that should be sufficient now on to the gateway
+
+								    Router Setup
+1. okay, so we got the two machines setup, so now they need to see each one another, the router will need to see both device, so we will need to add intnet-2, to our network adapter on the gateway. (VirtualBox > Router > Settings > Network > Adapter 3) (Keep in mind adapter 1 and 2 should already be assigned to intnet-1 and NAT). Once in Adapter 3 we will want to 
+
+	a. Enable Network Adapter 
+	b. Attach the network adapter to `Internal Network`
+	c. Name: $intnet-2
+	d. Under advanced ensure the cable is connected
 
 
-For 
+2. Once these are set, we will have to visit nmcli again, here we are going to make a few configuration changes, ones that we have been making in nmtui, so keep your eyes peeled and see if you can decode what is taking place in these commands. 
 
-2. Once  
 
-` mv ` 
+3. Once these are set, we will have to visit nmcli again, here we are going to make a few configuration changes, ones that we have been making in nmtui, so keep your eyes peeled and see if you can decode what is taking place in these commands 
 
-Once 
+	a. first we will want to get adapater 3 online, `nmcli device` will show us the interface name, ensure both NAT($enp0s8) and intnet-2($enp0s9) are up
+	b. `nmcli device connect enp0s8` 
+	c. `nmcli device connect enp0s9`
+	
+	
+
 
 
 ## VirtualBox Setup 
