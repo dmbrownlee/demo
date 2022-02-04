@@ -1,12 +1,12 @@
 # Neighbor Discovery Protocol
 
-## Exam Objective
+## Exam Objective 📑
 [1.0 Networking Concepts: 1.3 Explain the concepts and characteristics of routing and switching: IPv6 Concepts](https://www.comptia.jp/pdf/comptia-network-n10-007-v-3-0-exam-objectives.pdf)
 
-## Setup
+## Setup 💻
 Open '/Users/[USERNAME]/demo/networkplus/labfiles/lab12-1/IPv6-NDP.pcapng' in Wireshark.
 
-## Lab 
+## Lab 🔬
 The Neighbor Discovery Protocol (NDP) makes the IPv6 automation magic work by enabling all the nodes on the network to easily discover each other. NDP consists of four different packet types: Neighbor solicitation, Neighbor advertisement, Router solicitation, and Router advertisement. Now let's see how it works!
 
 **How do Neighbor solicitation and Neighbor advertisement replace IPv4’s Address Resolution Protocol (ARP)?**
@@ -37,7 +37,7 @@ The host begins by sending out a multicast router solicitation to any routers wh
 
 - B.4. In which number packet does the router immediately respond to the multicast solicitation packet and what is the ICMPv6 type? 
 
-## Answers
+## Answers ✅
 **A.1.** ff02::1:ff66:6802 
 **A.2.** 33:33:ff:66:68:02
 **A.3.** 00:50:79:66:68:02
@@ -47,7 +47,7 @@ The host begins by sending out a multicast router solicitation to any routers wh
 **B.3.** 2001:db8:1:2050:79ff:fe66:6801
 **B.4.** 7, 134
 
-## Links
+## Links 📚
 [Chapter 12 IPv6](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch12.xhtml) by Mike Meyers 
 
 [Configuring IPv6](https://www.professormesser.com/network-plus/n10-007/configuring-ipv6-2/) by Professor Messer 
