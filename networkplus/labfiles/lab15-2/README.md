@@ -1,4 +1,4 @@
-## Intermediate instructions for configuring networking and storage on a virtual machine. 
+## Intermediate instructions for configuring networks on a virtual machine. 
 
 It looks like you may have managed to create your virtual machine successfully, congrats, now it time for the fun part, configuring your personal lab envrionment and machines.
 
@@ -42,13 +42,13 @@ _________________________________________________________________________
 ## Section 2: Configuring the servers network settings
 
 
-Next we will want to ensure that the machine is configured to our liking and that the interface is activated on the virtual machine. in linux we will want to open up a terminal. Once open we will want to run the command `sudo nmtui` here we can edit our servers network configuration with a graphical interface. Within the graphical environment we see 3 fields, Edit, Activate and Hostname.
+Next we will want to ensure that the machine is configured to our liking and that the interface is activated on the virtual machine. In linux we will want to open up a terminal. Once open we will want to run the command `sudo nmtui` here we can edit our servers network configuration with a graphical interface. Within the graphical environment we see 3 fields, Edit, Activate and Hostname.
 
 Lets go ahead and edit the configuration first 
 
-1. to configure, use your keys to hightlight `Edit a connection` press enter, and the select the network interface, after you have selected the network interface, we should see a configuration prompt, here we can choose to configure ipv4, ipv6 automatic connection and availability. 
+1. To configure, use your keys to hightlight `Edit a connection` press enter, and the select the network interface, after you have selected the network interface, we should see a configuration prompt, here we can choose to configure ipv4, ipv6 automatic connection and availability. 
 
-	a. For this lesson I will just configure ipv4 with the parameters changedas shown below 
+	a. For this lesson I will just configure ipv4 manually with the parameters shown below 
 		Configuration: Manual
 		Address: 10.0.0.10
 		Gateway 10.0.0.1
@@ -56,7 +56,9 @@ Lets go ahead and edit the configuration first
 		[x] Require ipv4
 		[x]Automatically Connect
 
-	b. Next we will Activate the interface, to do this navigate back to the home screen of nmtui. One we are at the main page you should see, `Acctivate a Connection` select that to enter the menu options. Next we will want to  highlight the interface and pressing <Activate>. This should activate the interface without rebooting
+	b. Next we will Activate the interface, to do this navigate back to the home screen of nmtui. Once we are at the main page you should see, `Acctivate a Connection` select that to enter the menu options. Next we will want to  highlight the interface and pressing <Activate>. This should activate the interface without rebooting
+		Note: The interface should have a * by it to endicate it is active, 
+		Ex; * enp0s3
 
 	c. Next we can change the hostname if you wish by navigating back to the main screen in nmtui. I changed mine to serve1.localdomain. Finally we can hit okay to save our changes
     
@@ -68,7 +70,7 @@ _________________________________________________________________________
 							
 								Bonus 
 
-This section we are going to test the configuration thus far and see assign your hosts to their static IP's! We will want a command prompt for this one 
+This section we are going to test the configuration thus far and assign your hosts to their static IP's! We will want a command prompt for this one 
 
 1. lets try a few ping commands, if you have not ran this command before, use the key combo <control(^)+c> to stop the ping command
 		a. `<ping 10.0.0.10>, <ping 10.0.0.1> <ping 10.0.0.11> and <ping 8.8.8.8>`
@@ -79,7 +81,9 @@ This section we are going to test the configuration thus far and see assign your
 	
 	b. now lets add some text to a configuration files `echo 10.0.0.10 server1 >> /etc/hosts && echo 10.0.0.11 server2 /etc/hosts && echo 10.0.0.1 gateway >> /etc/hosts`
 	
-	c. Now lets exit out of the root shell by running the command `exit`
+	c. now we can check the assignment by running `cat /etc/hosts`
+	
+	d. Now lets exit out of the root shell by running the command `exit`
 
 Great, on to the next section
 _________________________________________________________________________
@@ -126,14 +130,9 @@ _________________________________________________________________________
 
 
 
-Awesome, hopefully you made it through, but if you have any questions or feel that anything is unclear please reach out to wellsjacob@ or wells0790@gmail.com and I will do my best to assist
+Awesome, hopefully you made it through, but if you have any questions or feel that anything is unclear please reach out to wellsjacob@ or wells0790@ and I will do my best to assist
 
 
 								END
 
 
-
-
-
-##good lab3 idea, generating an additonal network interface, activating it and having a router managed two seperate LANS
-##configure external web to work with internal network 
