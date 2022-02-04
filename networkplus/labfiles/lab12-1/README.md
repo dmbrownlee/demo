@@ -49,5 +49,7 @@ The host begins by sending out a multicast router solicitation to any routers wh
 
 ## Links
 [Chapter 12 IPv6](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch12.xhtml) by Mike Meyers 
+
 [Configuring IPv6](https://www.professormesser.com/network-plus/n10-007/configuring-ipv6-2/) by Professor Messer 
+
 [IPv6 Addresses](https://www.cbtnuggets.com/learn/it-training/cisco-ccna-labs-using-gns3-and-wireshark/29?autostart=1) by Keith Barker 
