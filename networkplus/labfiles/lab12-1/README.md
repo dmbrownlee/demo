@@ -16,8 +16,11 @@ When an IPv6 host joins a network, it sends out multicast neighbor solicitation 
 *Review the packet capture in Wireshark to answer the following questions:*
 
 - A.1. In packet #28, the first Neighbor Solicitation, what is the layer 3 multicast address that this packet is being sent out to? 
+
 - A.2. What is the layer 2 MAC address which corresponds to the multicast address that is on the receiving end of the neighbor solicitation?
+
 - A.3. In packet #29, the responding Neighbor Advertisement, what is the layer 2 MAC address of the host that sent this unicast packet? 
+
 - A.4. What are the correct ICMPv6 types for these two packet types?
 
 **How does Router solicitation and Router advertisement allow an IPv6 host to automatically discover what the network it's connected to and then configure a usable IP address?**
@@ -27,8 +30,11 @@ The host begins by sending out a multicast router solicitation to any routers wh
 *Review the packet capture in Wireshark to answer the following questions:*
 
 - B.1. In packet #4, the first Router Advertisement that has been periodically generated, what is the link-local IPv6 address of the router that this packet is being sent from?
+
 - B.2.  What layer 2 MAC address corresponds to the multicast address for all the nodes on the network?
+
 - B.3. In packet #6, the first Router Solicitation, what is the layer 3 IP address of the host that’s looking for the router? 
+
 - B.4. In which number packet does the router immediately respond to the multicast solicitation packet and what is the ICMPv6 type? 
 
 ## Answers
