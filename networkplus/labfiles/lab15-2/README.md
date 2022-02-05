@@ -24,7 +24,7 @@ _________________________________________________________________________
 	
                                     --------Insert image of network adapter 1 here---------
     
-2. In the `Adapter 2` section we will want to
+2. In the `Adapter 1` section we will want to
 
 	a. Enable Network Adapter 
 	
