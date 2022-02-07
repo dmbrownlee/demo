@@ -1,7 +1,8 @@
 #Setting Up a Virtual Machine from ISO image 
 
 In this lab, we will be going through the steps and procedures of setting up a virtual machine inside of VirtualBox. After this lab you should be able to successfully setup a range of Virtual Machines to experiment with if you get curious.
--- 15-2 goes into a bit more details regarding the configurations of possible inputs and outputs as well as networking these virtual machines together--
+
+15-2 and 15-3 goes into a bit more details regarding the configurations of possible inputs and outputs as well as networking these virtual machines together--
 
 ## Host Setup 
 In the initial setup of the lab folders and environments, a hypervisor was installed called VirtualBox. This hypervisor is where you will configure and run your Virtual machines. If you have confirmed that Virtual Box is present on the machine, we can move forward with setting up a Virtual Machine locally. If virtual box is not present, please revisit https://github.com/dmbrownlee/setup 
@@ -36,12 +37,15 @@ Once the image is in safe place, we can start on creating your Virtual machine!
 	We will want to select `New` and then we will start the Virtual Machine Configuration 
 
 	a. The first thing the OS will prompt you with is the 
-		name of the machine, 
-		where you want it to be saved, 
-		Type of Operating System
-		Operating System Version 
+	
+		name of the machine: Client
+		
+		Machine Folder: /User/$your_user/Virtualbox_Vms
+		
+		OS Type: Linux
+		
+		Operating System Version: Fedora (64-bit)
 
-	----------------##Insert VB1_image.png here##---------------------
 
 
 4. Next, VirtualBox will prompt you for the amount of Random Access Memory (RAM) you would like the virtual machine to utilize. My system holds 32 gb of ram, I intend to only use this as demonstartion, so I will use the recommended 1024mb given I am not needing this machine to perform any other tasks. Keep in mind this can be changed later.  
