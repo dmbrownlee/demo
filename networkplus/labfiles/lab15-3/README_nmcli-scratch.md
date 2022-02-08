@@ -61,9 +61,9 @@ As mentioned in the description of the lab, we are connecting 2 `different` netw
 	
 	d. assign the ipv4 to manual 
 	
-	e.edit the ip address to 10.0.1.10/8 <- !!!note the subnet!!!
+	e.edit the ip address to 172.168.0.10/8 <- !!!note the subnet!!!
 	
-	f.edit the gateway address to 10.0.1.1
+	f.edit the gateway address to 172.168.0.1
 	
 	g. assign the dns server to 8.8.8.8
 	
@@ -123,11 +123,11 @@ Great we made it halfway thorugh the alphabet. That should be sufficient now on 
 	
 	a.`nmcli connection mod enp0s9 ipv4.method manual`
 	
-	b.`nmcli connection modify enp0s9 ipv4.addresses 10.0.1.1/8` <-- !!Note the subnet!!
+	b.`nmcli connection modify enp0s9 ipv4.addresses 172.168.0.1/8` <-- !!Note the subnet!!
 	
-	f. `nmcli c down enp0s9`
+	c. `nmcli c down enp0s9`
 	
-	g. `nmcli c up enp0s9`
+	d. `nmcli c up enp0s9`
 
 4.dont forget, this is a clone of the old system, so we need to edit the intnet1 adapter as well, we can use ip addr to see which ip has the 10.0.0.10 address assigned to it 
 
@@ -136,14 +136,15 @@ Great we made it halfway thorugh the alphabet. That should be sufficient now on 
 	b.`nmcli connection modify enp0s3 ipv4.addresses 10.0.0.1/8`
 	
 	c. `nmcli c mod enp0s3 ipv4.gateway 0` <- I have done this just to clear out the gateway config
-	c. `nmcli con down enp0s3 && nmcli con up enp0s3`
+	
+	d. `nmcli con down enp0s3 && nmcli con up enp0s3`
 
 
 	
 ## Packet Forwarding
 To start, lets reboot all the systems, just to ensure they are up to date and that there are no  lagging configurations 
 
-1. Now if you try running your handy dandy ping command across the vms ip addresses, you might notice some odd behaviour.. The linux vm is not setup as a router just yet, at this point it is just a desktop host, which do not forward packets. Although, from the host and the server, you should be able to ping the gatway of those two nodes (10.0.0.1 & 10.0.1.1), but agian, expect some odd behaviour. 
+1. Now if you try running your handy dandy ping command across the vms ip addresses, you might notice some odd behaviour.. The linux vm is not setup as a router just yet, at this point it is just a desktop host, which do not forward packets. Although, from the host and the server, you should be able to ping the gatway of those two nodes (10.0.0.1 & 172.168.0.1), but agian, expect some odd behaviour. 
 
 2. Now lets configure our router to forward IP packets.. this will give you a little more exposure to linux ;) 
 
