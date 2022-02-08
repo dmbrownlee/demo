@@ -120,10 +120,9 @@ Great we made it halfway thorugh the alphabet. That should be sufficient now on 
 
 3. If we run `nmcli device` again we should see that $enp0s9 is pending configuration. We are going to make a few configuration changes using nmcli, ones that we have been making in nmtui, so keep your eyes peeled and see if you can decode what is taking place in these commands
 
+	a.`nmcli connection modify enp0s9 ipv4.addresses 172.168.0.1/8` <-- !!Note the subnet!!
 	
-	a.`nmcli connection mod enp0s9 ipv4.method manual`
-	
-	b.`nmcli connection modify enp0s9 ipv4.addresses 172.168.0.1/8` <-- !!Note the subnet!!
+	b.`nmcli connection mod enp0s9 ipv4.method manual`
 	
 	c. `nmcli c down enp0s9`
 	
@@ -152,5 +151,5 @@ To start, lets reboot all the systems, just to ensure they are up to date and th
 
 	b. this will disappear after reboot if you want this configuration to stick so that the router works on reboot, run `echo net.ipv4.ip_forward=1 >> /usr/lib/sysctl.d/50-defualt.conf`
 		i. now we will want to reboot.
-		ii. after reboot if we run `/sbin/sysctl net.ipv4.ip_forward` we should see the output of `net.ipv4.ip_forward=1`
+		ii. after reboot if we run `/sbin/sysctl net.ipv4.ip_forward` we should see the output of `net.ipv4.ip_forward = 1`
 
