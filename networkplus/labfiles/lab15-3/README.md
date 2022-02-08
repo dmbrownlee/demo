@@ -33,7 +33,10 @@ In this lab, we will going through the steps and procedures of setting up a rout
 
 As mentioned in the description of the lab, we are connecting 2 `different` networks together, thus we must change the current network interface of the `server`
 
-1. In the `Adapter 1` section we will want to change the interface to a different name (VirtualBox > Server > Settings > Network > Adapter 1)
+1. In the `Adapter 3` section we will want to change the interface to a different name (VirtualBox > Server > Settings > Network > Adapter 3) 
+
+								      Note
+`It is vital that you choose the same adapter // interfaces across the vms, I spent hours trying to troubleshoot machines not talking to one another. The cause was the servers interface that it shared with the router was set to Adpater 1 while the Routers adapater was set to Adapter 3.
 
 	a. Enable Network Adapter 
 	
@@ -42,27 +45,37 @@ As mentioned in the description of the lab, we are connecting 2 `different` netw
 	c. Name: $intnet-2
 	
 	d. Under advanced ensure the cable is connected
+
+	e. now navigate to adapter_1 and disable that adapter, which should be connected to intnet-1 
             
 
 2. we will also want to change th ip, just to ensure we are infact on a different network so lets boot up `server` and run `nmtui`
 
-	a. we will want to run nmtui 
+	a. we will want to run `nmcli device connect enp0s9` 
+	
+	b. Now that the connection is up we can edit the connection in `nmtui`
 	
 	b. we will want to `Edit Connection`
 	
-	c. select enp0s3 
+	c. select enp0s9 
 	
-	d.edit the ip address to 10.0.1.11/8 <- !!!note the subnet!!!
+	d. assign the ipv4 to manual 
+	
+	e.edit the ip address to 10.0.1.10/8 <- !!!note the subnet!!!
 	
 	f.edit the gateway address to 10.0.1.1
 	
-	g. if you have issues pinging the ip try rebooting the machine or running `nmcli connection down enp0s3 && nmcli connection up enp0s3`
+	g. assign the dns server to 8.8.8.8
+	
+	h.(x) require ipv4 addressing for this connection
+	
+	i. if you have issues pinging the ip try rebooting the machine or running `nmcli connection down enp0s9 && nmcli connection up enp0s9`
 
 
-Great that should be sufficient now on to the Router
+Great we made it halfway thorugh the alphabet. That should be sufficient now on to the Router
 
 								    Router Setup
-1. okay, so we got the two machines setup, so now they need to see one another. The router will need to see both device, so we will need to add intnet-2, to our network adapter on the gateway. (VirtualBox > Router > Settings > Network > Adapter 3) (Keep in mind adapter 1 and 2 should already be assigned to intnet-1 and NAT). Once in Adapter 3 we will want to 
+1. okay, so we got the two machines setup. Now they need to see one another. The router will need to see both device, so we will need to add intnet-2, to our network adapter on the gateway. (VirtualBox > Router > Settings > Network > Adapter 3) (Keep in mind adapter 1 and 2 should already be assigned to intnet-1 and NAT). Once in Adapter 3 we will want to 
 
 	a. Select adapter 3
 	
@@ -93,7 +106,7 @@ Great that should be sufficient now on to the Router
 4. now to connect the downed devices on the router, (intnet-2, nat and the bridge )
 
 								Note
-intnet-2 will likely fail its first go, but we have to activate it so we can run a few commands in nmcli to configure the interface approriatly. this will take place in step 3, if one of these commands hang press key combo `ctrl + c` to exit. 
+`intnet-2 will likely fail its first go, but we have to activate it so we can run a few commands in nmcli to configure the interface approriatly. this will take place in step 3, if one of these commands hang press key combo `ctrl + c` to exit.`
 
 	a. first we will want to get adapater 3 online, `nmcli device` will show us the interface name, ensure both NAT($enp0s8) and intnet-2($enp0s9) are up
 	
@@ -107,9 +120,10 @@ intnet-2 will likely fail its first go, but we have to activate it so we can run
 
 3. If we run `nmcli device` again we should see that $enp0s9 is pending configuration. We are going to make a few configuration changes using nmcli, ones that we have been making in nmtui, so keep your eyes peeled and see if you can decode what is taking place in these commands
 
-	a.`nmcli connection modify enp0s9 ipv4.addresses 10.0.1.1/8` <-- !!Note the subnet!!
 	
-	b.`nmcli connection mod enp0s9 ipv4.method manual`
+	a.`nmcli connection mod enp0s9 ipv4.method manual`
+	
+	b.`nmcli connection modify enp0s9 ipv4.addresses 10.0.1.1/8` <-- !!Note the subnet!!
 	
 	c.`nmcli con mod enp0s9 ipv4.dns 8.8.8.8`
 	
@@ -121,7 +135,7 @@ intnet-2 will likely fail its first go, but we have to activate it so we can run
 
 4.dont forget, this is a clone of the old system, so we need to edit the intnet1 adapter as well, we can use ip addr to see which ip has the 10.0.0.10 address assigned to it 
 
-	a.ip addr` -> for me it is enp0s3 given intnet-1 is still assigend to adaapter 1
+	a.ip addr` -> for me it is enp0s3 given intnet-1 is still assigend to adapter 1
 	
 	b.`nmcli connection modify enp0s3 ipv4.addresses 10.0.0.1/8`
 	
@@ -145,23 +159,4 @@ To start, lets reboot all the systems, just to ensure they are up to date and th
 	b. this will disappear after reboot if you want this configuration to stick so that the router works on reboot, run `echo net.ipv4.ip_forward=1 >> /usr/lib/sysctl.d/50-defualt.conf`
 		i. now we will want to reboot.
 		ii. after reboot if we run `/sbin/sysctl net.ipv4.ip_forward` we should see the output of `net.ipv4.ip_forward=1`
-
-
-## Firewalls
-There still some configuration left. We might have been able to enbale port forwarding, but our security system seems to be blocking us so our client will still be unable to see or talk to the server
-	
-Security, we will have to open up some holes in our systems to allow this information to flow freely, that being said, this is only for learning purposes, anything you do on your own home network you perform at your own risk. I encourage you to make these changes on virtual machines and then destroy machines whenever you are done experementing. Dont open up more holes in your system than what is necessary. Otherwise you open yourself up to secuirty vulnerabilities.  
-
-I found that I had to poke holes in both the router and in the server with the following commands 
-	
-		firewall-cmd --direct --permanent --add-rule ipv4 nat POSTROUTING 0 -o ext1 -j MASQUERADE; 
-
-		firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i int1 -o ext1 -j ACCEPT; 
-
-		firewall-cmd --direct --permanent --add-rule ipv4 filter FORWARD 0 -i ext1 -o int1 -m state --state RELATED,ESTABLISHED -j ACCEPT;
-		
-		reboot
-
-
-That was a lot, and don't feel down if some of this is not clear, there was a lot of linux related knowledge in there and this is a networking course, not linux. BUT, if you made it through congrats! 
 
