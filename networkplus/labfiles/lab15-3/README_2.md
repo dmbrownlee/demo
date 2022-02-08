@@ -16,7 +16,7 @@ In this lab, we will going through the steps and procedures of setting up a rout
 		* Enable Network Adapter 
 		
 		* Attached to: NAT
-		
+		* Promiscuous Mode: Allow Vms
 		* Cable Connected
 	
 2. Now that we have NAT setup, lets boot into the machine and see if it is visible, we will be introducing `nmcli` in this step
@@ -61,7 +61,7 @@ As mentioned in the description of the lab, we are connecting 2 `different` netw
 	
 	d. assign the ipv4 to manual 
 	
-	e.edit the ip address to 10.0.1.10/8 <- !!!note the subnet!!!
+	e.edit the ip address to 172.168.0.1/8 <- !!!note the subnet!!!
 	
 	f.edit the gateway address to 10.0.1.1
 	
@@ -127,9 +127,13 @@ Great we made it halfway thorugh the alphabet. That should be sufficient now on 
 
 	c, ipv4 method manual`
 	
+<<<<<<< HEAD
 	d.` IP addresses 172.168.0.1/8` <-- !!Note the subnet!!
 
 	e. `(*) require ipv4 for this connection. `
+=======
+	b.`nmcli connection modify enp0s9 ipv4.addresses 172.168.0.1/8` <-- !!Note the subnet!!
+>>>>>>> refs/remotes/origin/master
 	
 	f. `No gateway`
 	
