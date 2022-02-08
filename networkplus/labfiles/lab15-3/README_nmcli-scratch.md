@@ -121,43 +121,21 @@ Great we made it halfway thorugh the alphabet. That should be sufficient now on 
 3. If we run `nmcli device` again we should see that $enp0s9 is pending configuration. We are going to make a few configuration changes using nmcli, ones that we have been making in nmtui, so keep your eyes peeled and see if you can decode what is taking place in these commands
 
 	
-	a.`nmtui` 
-
-	b. Edit enp0s9 
-
-	c, ipv4 method manual`
+	a.`nmcli connection mod enp0s9 ipv4.method manual`
 	
-	d.` IP addresses 172.168.0.1/8` <-- !!Note the subnet!!
-
-	e. `(*) require ipv4 for this connection. `
-	
-	f. `No gateway`
-	
-	e. `(*) never use this network as default route`
+	b.`nmcli connection modify enp0s9 ipv4.addresses 10.0.1.1/8` <-- !!Note the subnet!!
 	
 	f. `nmcli c down enp0s9`
 	
 	g. `nmcli c up enp0s9`
 
-
 4.dont forget, this is a clone of the old system, so we need to edit the intnet1 adapter as well, we can use ip addr to see which ip has the 10.0.0.10 address assigned to it 
 
 	a.ip addr` -> for me it is enp0s3 given intnet-1 is still assigend to adapter 1
 	
-	b.`nmtui
+	b.`nmcli connection modify enp0s3 ipv4.addresses 10.0.0.1/8`
 	
-	c. Edit enp0s3 
-	
-	d. Method: manual 
-
-	e. ipv4.addresses 10.0.0.1/8`
-	
-	f. `No gateway`
-	
-	f. `(*) require ipv4 for this connection `
-	
-	f. `(*) never us this network as default route`g
-	
+	c. `nmcli c mod enp0s3 ipv4.gateway 0` <- I have done this just to clear out the gateway config
 	c. `nmcli con down enp0s3 && nmcli con up enp0s3`
 
 
