@@ -4,6 +4,8 @@
 # container is created.
 
 ORIGINAL_DIR=$PWD
+DEMOREPO=${DEMOREPO:-https://github.com/dmbrownlee/demo.git}
+DEMOBRANCH=${DEMOBRANCH:-release}
 
 # Ensure git and ansible is installed on Alpine Linux
 [ -f /etc/alpine-release ] &&
@@ -17,9 +19,10 @@ if [ ! -d $HOME/labnetwork ]; then
   && git init -b main \
   && git sparse-checkout init \
   && git sparse-checkout set playbooks/ \
-  && git remote add origin https://github.com/dmbrownlee/demo.git \
-  && git pull origin release \
-  && git checkout release
+  && git remote add origin $DEMOREPO \
+  && git pull origin $DEMOBRANCH \
+  && git checkout $DEMOBRANCH \
+  && git branch -u origin/$DEMOBRANCH $DEMOBRANCH
 else
   cd $HOME/labnetwork/playbooks \
   && git pull
