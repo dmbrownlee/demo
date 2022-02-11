@@ -29,7 +29,7 @@ else
   echo
   diff -q $HOME/configure_network $HOME/labnetwork/playbooks/configure_network
   if [ $? -ne 0 ]; then
-    cp $HOME/playbooks/configure_network $HOME/configure_network
+    cp $HOME/labnetwork/playbooks/configure_network $HOME/configure_network
     echo "Setup script updated"
     echo
   fi
