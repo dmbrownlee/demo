@@ -3,7 +3,6 @@
 # ANSIBLE_CONTROLLER='true' is added to the environment when the
 # container is created.
 
-ORIGINAL_DIR=$PWD
 DEMOREPO=${DEMOREPO:-https://github.com/dmbrownlee/demo.git}
 DEMOBRANCH=${DEMOBRANCH:-release}
 
@@ -13,26 +12,28 @@ DEMOBRANCH=${DEMOBRANCH:-release}
   ( [ -h /usr/bin/ansible-playbook ] || sudo apk add --no-cache ansible )
 
 # Ensure we're working with the most recent repo commit
+ORIGINAL_DIR=$PWD
 if [ ! -d $HOME/labnetwork ]; then
   mkdir $HOME/labnetwork \
   && cd $HOME/labnetwork \
-  && git init -b main \
+  && git init -b $DEMOBRANCH \
   && git sparse-checkout init \
   && git sparse-checkout set playbooks/ \
   && git remote add origin $DEMOREPO \
-  && git pull origin $DEMOBRANCH \
-  && git checkout $DEMOBRANCH \
-  && git branch -u origin/$DEMOBRANCH $DEMOBRANCH
+  && git fetch origin \
+  && git checkout -t origin/$DEMOBRANCH -b $DEMOBRANCH
 else
-  cd $HOME/labnetwork/playbooks \
-  && git pull
-  echo
-  diff -q $HOME/configure_network $HOME/labnetwork/playbooks/configure_network
-  if [ $? -ne 0 ]; then
-    cp $HOME/labnetwork/playbooks/configure_network $HOME/configure_network
-    echo "Setup script updated"
-    echo
-  fi
+  cd $HOME/labnetwork && git pull
+fi
+cd $ORIGINAL_DIR
+
+# Update the configure_network script if it has changed since the controller
+# was installed.
+diff -q $HOME/configure_network $HOME/labnetwork/playbooks/configure_network
+if [ $? -ne 0 ]; then
+  cp $HOME/labnetwork/playbooks/configure_network $HOME/configure_network
+  echo "Setup script has self-updated.  Please run it again."
+  exit
 fi
 
 if [[ $# -ne 0 ]]; then
@@ -56,4 +57,3 @@ echo
 read -p "Press enter when you are ready to continue (Ctrl-c to abort)." a
 
 cd $HOME/labnetwork/playbooks/projects/$PROJECTNAME && ansible-playbook -k -K site.yml
-cd $ORIGINAL_DIR
