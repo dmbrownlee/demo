@@ -51,13 +51,13 @@ Complete the steps and then answer the questions below.
 
   B.1. Who is making this call to Doug?
   
-  B.2. How much money did the gentlemen agree on?
+  B.2. How much money did they agree on?
   
   B.3. What does Doug want to get into? 
   
-  B.4. What difference(s) do you notice in the audio after setting the Jitter Buffer to 200? 
+  B.4. What difference does setting the Jitter Buffer to 200 make? 
   
-  B.5. What is the Jitter Buffer doing with this playback?
+  B.5. What does raising the Jitter Buffer do to the stream?
   
 ## Answers ✅
 **A.1.** 192.168.2.6, 5060
@@ -66,7 +66,7 @@ Complete the steps and then answer the questions below.
 **B.1.** Bill
 **B.2.** $10,500
 **B.3.** Car racing
-**B.4.** The audio sounds a bit clearer and less choppy  
+**B.4.** The audio sounds slightly clearer and less choppy  
 **B.5.** Its actively delaying and storing incoming voice packets to ensure they arrive in order with minimal delay.
 
 ## Links 📚
