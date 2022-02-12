@@ -27,41 +27,47 @@ Voice over IP (VoIP) made it possible to communicate by voice right over an IP n
 5. Open Statistics > Flow Graph > check limit to display filter
     * This display simply visualizes SIP between the addresses. [flow-chart.png](https://github.com/shellam4/demo/blob/main/networkplus/labfiles/lab17-1/flow-chart.png)
 
+6. Remove the display filter. Open Telephony > RTP > RTP Streams
+    * Lost somewhat demonstrates UDP which is what's used transport the data. UDP is unreliable at times, so we monitor the Lost percentages to see the amount of dropped packets and make sure its not getting too high. 
+    * Jitter relates to the timing and sequence of the arriving RTP packets. The lower the Jitter, the better the user experience. [rtp-streams.png](https://github.com/shellam4/demo/blob/main/networkplus/labfiles/lab17-1/rtp-streams.png)
+
 #### SIP 
 SIP is a signaling protocol that supports voice calls, video conferencing, instant messaging, and media distribution. SIP handles initiating, maintaining, and terminating real-time sessions between the client and the server. 
 
 Answer the questions below. (Hint: use display filter `sip`)
 
-  A.1. In packet #3, the client starts the process by sending a REQUEST packet to the server at which IP address and on which port?
+  A.1. In packet 3, the client starts the process by sending a REQUEST packet to the server at which IP address and on which port?
 
   A.2. In which packet, does the server alert the client that its ready to establish the session and what is the packet length?
 
   A.3. In which packet, does the client alert the server that its ending the session and what is the packet length?
 
-#### RTP
-RTP defines the type of packets used on the Internet to move voice or data from a server to clients. The vast majority of VoIP solutions available today use RTP. RTP controls the destination of the packets and identifies the type of information being transported. 
+#### RTP and H.323
+RTP defines the type of packets used on the Internet to move voice or data from a server to clients. The vast majority of VoIP solutions available today use RTP. RTP controls the destination of the packets and identifies the type of information being transported. H.323 handles the initiation, setup, and delivery of VoIP sessions. It runs on top of RTP and is able to handle multicasting.
 
-Answer the questions below.
+Complete the steps and then answer the questions below.
+1. Select the stream with source port 4042 > Click Find Reverse to highlight both sides of the conversation 
+2. Click Analyze > Select the Reverse tab > Play Streams
 
-  B.1. 
-
-#### H.323
-H.323 handles the initiation, setup, and delivery of VoIP sessions. It runs on top of RTP and is able to handle multicasting.
-
-Answer the questions below.
-
-  C.1. 
-
+  B.1. Who is making this call to Doug?
+  
+  B.2. How much money did the gentlemen agree on?
+  
+  B.3. What does Doug want to get into? 
+  
+  B.4. What difference(s) do you notice in the audio after setting the Jitter Buffer to 200? 
+  
+  B.5. What is the Jitter Buffer doing with this playback?
+  
 ## Answers ✅
 **A.1.** 192.168.2.6, 5060
-**A.2.** #8, 938
-**A.3.** #2374, 510
-**B.1.** 
-**B.2.** 
-**B.3.** 
-**C.1.** 
-**C.2.** 
-**C.3.** 
+**A.2.** 8, 938
+**A.3.** 2374, 510
+**B.1.** Bill
+**B.2.** $10,500
+**B.3.** Car racing
+**B.4.** The audio sounds a bit clearer and less choppy  
+**B.5.** Its actively delaying and storing incoming voice packets to ensure they arrive in order with minimal delay.
 
 ## Links 📚
 [Chapter 17 Building a Real-World Network](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch17.xhtml) by Mike Meyers
