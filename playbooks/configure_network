@@ -27,15 +27,6 @@ else
 fi
 cd $ORIGINAL_DIR
 
-# Update the configure_network script if it has changed since the controller
-# was installed.
-diff -q $HOME/configure_network $HOME/labnetwork/playbooks/configure_network
-if [ $? -ne 0 ]; then
-  cp $HOME/labnetwork/playbooks/configure_network $HOME/configure_network
-  echo "Setup script has self-updated.  Please run it again."
-  exit
-fi
-
 if [[ $# -ne 0 ]]; then
   PROJECTNAME=${1}
 else
