@@ -20,7 +20,10 @@ interfaces:
     netmask: 255.255.255.0
   eth1:
     comment: "Internet"
-    method: dhcp
+    method: static
+    address: 192.168.122.254
+    netmask: 255.255.255.0
+    gateway: 192.168.122.1
 quagga:
   vtysh_is_default_shell: false
   servers:

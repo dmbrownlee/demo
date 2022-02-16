@@ -13,7 +13,7 @@ The Neighbor Discovery Protocol (NDP) makes the IPv6 automation magic work by en
 
 When an IPv6 host joins a network, it sends out multicast neighbor solicitation packets which all begin with ff02 to search for other computers on its broadcast domain. Only the other IPv6-capable hosts on the broadcast domain will hear the multicast neighbor solicitation packet and then respond with a unicast neighbor advertisement packet, essentially saying, “I hear you and this is who I am.” 
 
-*Review the packet capture in Wireshark to answer the following questions:*
+Answer the questions below.
 
 - A.1. In packet #28, the first Neighbor Solicitation, what is the layer 3 multicast address that this packet is being sent out to? 
 
@@ -27,7 +27,7 @@ When an IPv6 host joins a network, it sends out multicast neighbor solicitation 
 
 The host begins by sending out a multicast router solicitation to any routers who are currently on that network segment so that the host can get the information it needs about that network. The router responds by sending out a multicast router advertisement to all the nodes on the network. Even if there's no router solicitation, a router will still periodically send out router advertisements onto the network to advertise its presence and the information for the network.
 
-*Review the packet capture in Wireshark to answer the following questions:*
+Answer the questions below.
 
 - B.1. In packet #4, the first Router Advertisement that has been periodically generated, what is the link-local IPv6 address of the router that this packet is being sent from?
 
