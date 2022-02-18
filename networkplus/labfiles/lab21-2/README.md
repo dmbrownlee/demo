@@ -13,20 +13,26 @@ This lab will intensionally break something in the network model to see if you c
 
 Here are the steps to begin the lab.
 
-1. Login to the control host as the ```ansible``` user and run the following command:
+1. Change to the following directory:
 
   ```
-  cd && ./breakfix networkplus 21-2
+  cd ~/labnetwork/playbooks/projects/networkplus
+  ```
+
+1. Run the breakfix script to setup up the lab:
+
+  ```
+  ansible-playbook -k -K -t 21-2 breakfix.yml
   ```
 
 1. The command in the step above will break something and then print a description of the problem.
 
 1. Use any tools you have to try to discover the root cause of the problem.  You do NOT have to fix the problem (although you can if you know how), just identify what is broken.
 
-1.  When you think you have solved the problem, you can fix it by running this command on the control host (the -u is for "undo"):
+1.  When you think you have solved the problem, you can fix it by running the same command on the control host with the addition of "-e fix=true" to undo the change:
 
   ```
-  cd && ./breakfix -u networkplus 21-2
+  ansible-playbook -k -K -e fix=true -t 21-2 breakfix.yml
   ```
 
 ## CONFIRMATION
@@ -36,4 +42,4 @@ true:
 
 1. You have used your knowledge and tools to both discover the source of the problem and to verify the problem was fixed.
 
-1. You may also read the comments in ```~/labnetwork/networkplus/breakfix.yml``` to see if you were correct.
+1. You may also read the comments in ```breakfix.yml``` to see if you were correct.
