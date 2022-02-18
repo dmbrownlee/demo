@@ -5,3 +5,7 @@ interfaces:
     address: 192.168.43.1
     netmask: 255.255.255.0
     gateway: 192.168.43.254
+nginx:
+  virtualhosts:
+    - fqdn: www1.networkplus.test
+      ip: 192.168.43.1
