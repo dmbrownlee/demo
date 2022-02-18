@@ -1,0 +1,5 @@
+---
+- name: Reload nginx
+  listen: nginx_reload
+  command: killall -HUP nginx
+  become: yes

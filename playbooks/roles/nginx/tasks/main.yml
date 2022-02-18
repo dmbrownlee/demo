@@ -31,6 +31,7 @@
   loop_control:
     loop_var: virtualhost
   when: nginx.virtualhosts is defined
+  notify: nginx_reload
 - name: Ensure runit support for nginx is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
