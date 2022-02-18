@@ -6,8 +6,8 @@
   become: yes
 - name: Ensure docroot exists for each virtualhost
   ansible.builtin.file:
-    src: virtualhost.j2
-    path: /var/www/{{ virtualhost.name }}/html
+    path: /var/www/{{ virtualhost.fqdn }}/html
+    state: directory
   become: yes
   loop: "{{ nginx.virtualhosts }}"
   loop_control:
@@ -16,7 +16,7 @@
 - name: Ensure default index.html exists for each virtualhost
   ansible.builtin.template:
     src: index.html.j2
-    dest: /var/www/{{ virtualhost.name }}/html/index.html
+    dest: /var/www/{{ virtualhost.fqdn }}/html/index.html
   become: yes
   loop: "{{ nginx.virtualhosts }}"
   loop_control:
@@ -25,7 +25,7 @@
 - name: Ensure default config file exists for each virtualhost
   ansible.builtin.template:
     src: virtualhost.j2
-    dest: /etc/nginx/http.d/{{ virtualhost.name }}.conf
+    dest: /etc/nginx/http.d/{{ virtualhost.fqdn }}.conf
   become: yes
   loop: "{{ nginx.virtualhosts }}"
   loop_control:
