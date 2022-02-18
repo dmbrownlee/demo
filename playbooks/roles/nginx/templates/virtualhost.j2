@@ -1,0 +1,12 @@
+server {
+  listen {{ virtualhost.ip }}:80;
+
+  server_name {{ virtualhost.fqdn }};
+
+  root /var/www/{{ virtualhost.fqdn }}/html;
+  index index.html;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+}

@@ -4,6 +4,33 @@
     name: nginx
     state: present
   become: yes
+- name: Ensure docroot exists for each virtualhost
+  ansible.builtin.file:
+    src: virtualhost.j2
+    path: /var/www/{{ virtualhost.name }}/html
+  become: yes
+  loop: "{{ nginx.virtualhosts }}"
+  loop_control:
+    loop_var: virtualhost
+  when: nginx.virtualhosts is defined
+- name: Ensure default index.html exists for each virtualhost
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/{{ virtualhost.name }}/html/index.html
+  become: yes
+  loop: "{{ nginx.virtualhosts }}"
+  loop_control:
+    loop_var: virtualhost
+  when: nginx.virtualhosts is defined
+- name: Ensure default config file exists for each virtualhost
+  ansible.builtin.template:
+    src: virtualhost.j2
+    dest: /etc/nginx/http.d/{{ virtualhost.name }}.conf
+  become: yes
+  loop: "{{ nginx.virtualhosts }}"
+  loop_control:
+    loop_var: virtualhost
+  when: nginx.virtualhosts is defined
 - name: Ensure runit support for nginx is installed and enabled
   ansible.builtin.include_role:
     name: runit-service
