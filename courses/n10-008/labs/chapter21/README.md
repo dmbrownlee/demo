@@ -2,11 +2,10 @@
 # Chapter 21: Network Troubleshooting
 This assignment is part of a [self-study course](../README.md) to prepare for the CompTIA Network+ (N10-008) exam.
 ## Primary Resource
-Read chapter 21 of [CompTIA Network+ Certification All-in-One Exam Guide, Eighth Edition (Exam N10-008)](https://www.amazon.com/CompTIA-Network-Certification-N10-008-Comptia/dp/1264269056).  If you have an O'Reilly Online account, you can access the chapter directly [here](https://learning.oreilly.com/library/view/foo/xxxxxxxxxxxxx/ch21.xhtml).
+Read chapter 21 of [CompTIA Network+ Certification All-in-One Exam Guide, Eighth Edition (Exam N10-008)](https://www.amazon.com/CompTIA-Network-Certification-N10-008-Comptia/dp/1264269056).  If you have an O'Reilly Online account, you can access the chapter directly [here](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch21.xhtml).
 ## Addtional Resources
 
 ### Professor Messer: CompTIA N10-008 Network+ Training Course
-
 
 #### 5.1: Explain the network troubleshooting methodology
 - [Network Troubleshooting Methodology (6:35)](https://www.youtube.com/watch?v=L-hlrK9Dq7I&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=83)
@@ -22,5 +21,6 @@ Read chapter 21 of [CompTIA Network+ Certification All-in-One Exam Guide, Eighth
 - [General Network Troubleshooting (7:57)](https://www.youtube.com/watch?v=OKI4CIItKK8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=91)
 - [Common Network Issues - Part 1 (14:08)](https://www.youtube.com/watch?v=XfvBsCcJ500&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=92)
 - [Common Network Issues - Part 2 (14:22)](https://www.youtube.com/watch?v=W0Sm8mKwNII&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=93)
+
 ## Labs
 [lab21-1: No lab yet](lab21-1.md)</br>

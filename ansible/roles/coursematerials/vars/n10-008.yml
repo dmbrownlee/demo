@@ -46,26 +46,19 @@ study_guide:
         - text: 'Understanding the OSI Model (12:17)'
           type: link
           url: 'https://www.youtube.com/watch?v=owDh6FNJUog&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=2'
-        - text: 'Data Communication (12:47)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=jKjVTPpcZT0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=3'
+    - title: "Cabling and Topology"
+      lastpage: 66
+      oreilly_page: "ch02.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '1.2: Explain the characteristics of network topologies and network types'
           type: subheading
         - text: 'Network Topologies (6:58)'
           type: link
           url: 'https://www.youtube.com/watch?v=nKMrAvl960I&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=4'
-        - text: 'Network Types (14:30)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=6a-roIeJ_a4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=5'
-        - text: 'WAN Termination (2:55)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=bqJAbvKACN4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=6'
-        - text: 'Virtual Networks (6:13)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=A29g5-Os-u8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=7'
-        - text: 'Provider Links (6:22)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=M2cJtZXJrpE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=8'
         - text: '1.3: Summarize the types of cables and connectors and explain which is the appropriate type for a solution'
           type: subheading
         - text: 'Copper Cabling (9:26)'
@@ -77,15 +70,116 @@ study_guide:
         - text: 'Network Connectors (7:00)'
           type: link
           url: 'https://www.youtube.com/watch?v=BGzg_ZwiSzc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=11'
-        - text: 'Network Transceivers (7:33)'
+        - text: '5.2: Given a scenario, troubleshoot common cable connectivity issues and select the appropriate tools'
+          type: subheading
+        - text: 'Cable Connectivity (11:16)'
           type: link
-          url: 'https://www.youtube.com/watch?v=TsZ_9CVTEuw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=12'
-        - text: 'Cable Management (7:09)'
+          url: 'https://www.youtube.com/watch?v=Gf2shRh-5GU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=84'
+    - title: "Ethernet Basics"
+      lastpage: 90
+      oreilly_page: "ch03.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.3: Summarize the types of cables and connectors and explain which is the appropriate type for a solution'
+          type: subheading
+        - text: 'Copper Cabling (9:26)'
           type: link
-          url: 'https://www.youtube.com/watch?v=CMfSiqvj9Dc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=13'
+          url: 'https://www.youtube.com/watch?v=UO57e6cv5SA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=9'
+        - text: 'Network Connectors (7:00)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=BGzg_ZwiSzc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=11'
         - text: 'Ethernet Standards (9:00)'
           type: link
           url: 'https://www.youtube.com/watch?v=QFZX8qWuepE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=14'
+        - text: '2.1: Compare and contrast various devices, their features, and their appropriate placement on the network'
+          type: subheading
+        - text: 'Networked Devices (6:14)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=rWArzuqNLGM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=39'
+        - text: '2.3: Given a scenario, configure and deploy common Ethernet switching features'
+          type: subheading
+        - text: 'Interface Configurations (8:22)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=lWMvYfyizLw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=48'
+        - text: 'Straight-Through and Crossover Cables (6:52)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=3F-5lZ_3ZX4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=49'
+        - text: '5.2: Given a scenario, troubleshoot common cable connectivity issues and select the appropriate tools'
+          type: subheading
+        - text: 'Cable Connectivity (11:16)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=Gf2shRh-5GU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=84'
+    - title: "Ethernet Standards"
+      lastpage: 110
+      oreilly_page: "ch04.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.3: Summarize the types of cables and connectors and explain which is the appropriate type for a solution'
+          type: subheading
+        - text: 'Network Connectors (7:00)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=BGzg_ZwiSzc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=11'
+        - text: 'Network Transceivers (7:33)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=TsZ_9CVTEuw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=12'
+        - text: 'Ethernet Standards (9:00)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=QFZX8qWuepE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=14'
+    - title: "Installing a Physical Network"
+      lastpage: 170
+      oreilly_page: "ch05.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.2: Explain the characteristics of network topologies and network types'
+          type: subheading
+        - text: 'Provider Links (6:22)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=M2cJtZXJrpE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=8'
+        - text: '1.3: Summarize the types of cables and connectors and explain which is the appropriate type for a solution'
+          type: subheading
+        - text: 'Cable Management (7:09)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=CMfSiqvj9Dc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=13'
+        - text: '3.3: Explain high availability and disaster recovery concepts and summarize which is the best solution'
+          type: subheading
+        - text: 'Infrastructure Support (5:27)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=umcY3Kar_wc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=61'
+        - text: '4.5: Explain the importance of physical security'
+          type: subheading
+        - text: 'Physical Security (10:38)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=kv_q6AflUKw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=82'
+        - text: '5.2: Given a scenario, troubleshoot common cable connectivity issues and select the appropriate tools'
+          type: subheading
+        - text: 'Wired Network Troubleshooting (13:12)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=wHo-IpFblio&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=85'
+    - title: "TCP/IP Basics"
+      lastpage: 231
+      oreilly_page: "ch06.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.1: Compare and contrast the Open Systems Interconnection (OSI) model layers and encapsulation concepts'
+          type: subheading
+        - text: 'Understanding the OSI Model (12:17)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=owDh6FNJUog&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=2'
+        - text: 'Data Communication (12:47)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=jKjVTPpcZT0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=3'
         - text: '1.4: Given a scenario, configure a subnet and use appropriate IP addressing schemes'
           type: subheading
         - text: 'Binary Math (7:49)'
@@ -115,15 +209,43 @@ study_guide:
         - text: 'Seven-Second Subnetting (20:12)'
           type: link
           url: 'https://www.youtube.com/watch?v=SWy0MRfkXpQ&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=23'
-        - text: 'IPv6 Addressing (13:18)'
+        - text: '1.6: Explain the use and purpose of network services'
+          type: subheading
+        - text: 'DHCP Overview (8:36)'
           type: link
-          url: 'https://www.youtube.com/watch?v=mCo7Zg_0PP0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=24'
-        - text: 'IPv6 Subnet Masks (5:06)'
+          url: 'https://www.youtube.com/watch?v=ED99yLmMMfw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=30'
+        - text: 'Configuring DHCP (7:39)'
           type: link
-          url: 'https://www.youtube.com/watch?v=Rgsn8Gwiu9w&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=25'
-        - text: 'Configuring IPv6 (5:58)'
+          url: 'https://www.youtube.com/watch?v=0Ddl90OXYFo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=31'
+    - title: "Routing"
+      lastpage: 280
+      oreilly_page: "ch07.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.4: Given a scenario, configure a subnet and use appropriate IP addressing schemes'
+          type: subheading
+        - text: 'Network Address Translation (7:16)'
           type: link
-          url: 'https://www.youtube.com/watch?v=S0dKMst-ED0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=26'
+          url: 'https://www.youtube.com/watch?v=NkCx8AnzBaI&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=17'
+        - text: '2.2: Compare and contrast routing technologies and bandwidth management concepts'
+          type: subheading
+        - text: 'Dynamic Routing (8:11)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=RM_ME1cNJ54&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=42'
+        - text: 'Routing Technologies (16:34)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=HR59xk4umWY&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=43'
+    - title: "TCP/IP Applications"
+      lastpage: 316
+      oreilly_page: "ch08.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '1.5: Explain common ports and protocols, their application, and encrypted alternatives'
           type: subheading
         - text: 'Introduction to IP (14:09)'
@@ -137,76 +259,123 @@ study_guide:
           url: 'https://www.youtube.com/watch?v=K0o4XDkDRHA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=29'
         - text: '1.6: Explain the use and purpose of network services'
           type: subheading
-        - text: 'DHCP Overview (8:36)'
+        - text: 'An Overview of NTP (4:26)'
           type: link
-          url: 'https://www.youtube.com/watch?v=ED99yLmMMfw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=30'
-        - text: 'Configuring DHCP (7:39)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=0Ddl90OXYFo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=31'
+          url: 'https://www.youtube.com/watch?v=iBHRIu9MQr4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=34'
+    - title: "Network Numbering"
+      lastpage: 352
+      oreilly_page: "ch09.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.6: Explain the use and purpose of network services'
+          type: subheading
         - text: 'An Overview of DNS (10:25)'
           type: link
           url: 'https://www.youtube.com/watch?v=LNGOkJPd5pM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=32'
         - text: 'DNS Record Types (8:28)'
           type: link
           url: 'https://www.youtube.com/watch?v=NijONS9gMZ0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=33'
-        - text: 'An Overview of NTP (4:26)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=iBHRIu9MQr4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=34'
-        - text: '1.7: Explain basic corporate and datacenter network architecture'
+    - title: "Securing TCP/IP"
+      lastpage: 394
+      oreilly_page: "ch10.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.5: Explain common ports and protocols, their application, and encrypted alternatives'
           type: subheading
-        - text: 'Network Architectures (9:54)'
+        - text: 'Common Ports (17:03)'
           type: link
-          url: 'https://www.youtube.com/watch?v=23H0nA-_4YE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=35'
-        - text: 'Storage Area Networks (3:20)'
+          url: 'https://www.youtube.com/watch?v=fgC8hk4IfDk&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=28'
+        - text: 'Other Useful Protocols (7:39)'
           type: link
-          url: 'https://www.youtube.com/watch?v=prkPpAPm4lA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=36'
-        - text: '1.8: Summarize cloud concepts and connectivity options'
-          type: subheading
-        - text: 'Cloud Models (6:48)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=R6jV35zYB5U&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=37'
-        - text: 'Designing the Cloud (8:21)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=CiNStlKYkk0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=38'
+          url: 'https://www.youtube.com/watch?v=K0o4XDkDRHA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=29'
+    - title: "Swtich Features"
+      lastpage: 424
+      oreilly_page: "ch11.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '2.1: Compare and contrast various devices, their features, and their appropriate placement on the network'
           type: subheading
-        - text: 'Networked Devices (6:14)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=rWArzuqNLGM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=39'
         - text: 'Networking Devices (8:32)'
           type: link
           url: 'https://www.youtube.com/watch?v=hew1tfY-_D8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=40'
-        - text: 'Advanced Networking Devices (11:50)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=xohKfNxFy2s&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=41'
         - text: '2.2: Compare and contrast routing technologies and bandwidth management concepts'
           type: subheading
-        - text: 'Dynamic Routing (8:11)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=RM_ME1cNJ54&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=42'
         - text: 'Routing Technologies (16:34)'
           type: link
           url: 'https://www.youtube.com/watch?v=HR59xk4umWY&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=43'
         - text: '2.3: Given a scenario, configure and deploy common Ethernet switching features'
           type: subheading
-        - text: 'Introduction to Ethernet (12:00)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=CZmGuPjJfQI&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=44'
-        - text: 'Network Switching Overview (12:19)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=ND_wGVid51M&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=45'
         - text: 'VLANs and Trunking (10:30)'
           type: link
           url: 'https://www.youtube.com/watch?v=933KsYiuugg&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=46'
-        - text: 'Spanning Tree Protocol (6:52)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=xYyVwH3dYsA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=47'
         - text: 'Interface Configurations (8:22)'
           type: link
           url: 'https://www.youtube.com/watch?v=lWMvYfyizLw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=48'
-        - text: 'Straight-Through and Crossover Cables (6:52)'
+    - title: "IPv6"
+      lastpage: 448
+      oreilly_page: "ch12.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.4: Given a scenario, configure a subnet and use appropriate IP addressing schemes'
+          type: subheading
+        - text: 'IPv6 Addressing (13:18)'
           type: link
-          url: 'https://www.youtube.com/watch?v=3F-5lZ_3ZX4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=49'
+          url: 'https://www.youtube.com/watch?v=mCo7Zg_0PP0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=24'
+        - text: 'IPv6 Subnet Masks (5:06)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=Rgsn8Gwiu9w&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=25'
+        - text: 'Configuring IPv6 (5:58)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=S0dKMst-ED0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=26'
+    - title: "WAN Connectivity"
+      lastpage: 482
+      oreilly_page: "ch13.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.2: Explain the characteristics of network topologies and network types'
+          type: subheading
+        - text: 'Network Topologies (6:58)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=nKMrAvl960I&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=4'
+        - text: 'Network Types (14:30)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=6a-roIeJ_a4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=5'
+        - text: 'WAN Termination (2:55)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=bqJAbvKACN4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=6'
+        - text: '2.4: Given a scenario, install and configure the appropriate wireless standards and technologies'
+          type: subheading
+        - text: 'Cellular Standards (3:59)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=m1o7rS5q5Qo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=53'
+        - text: '4.4: Compare and contrast remote access methods and security implications'
+          type: subheading
+        - text: 'Remote Access (10:33)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=nHUApn4wCPo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=81'
+    - title: "Wireless Networking"
+      lastpage: 540
+      oreilly_page: "ch14.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '2.4: Given a scenario, install and configure the appropriate wireless standards and technologies'
           type: subheading
         - text: 'Wireless Standards (9:07)'
@@ -218,28 +387,68 @@ study_guide:
         - text: 'Wireless Encryption (8:51)'
           type: link
           url: 'https://www.youtube.com/watch?v=9EOpXkUykAA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=52'
-        - text: 'Cellular Standards (3:59)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=m1o7rS5q5Qo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=53'
         - text: '3.1: Given a scenario, use the appropriate statistics and sensors to ensure network availability'
           type: subheading
         - text: 'Performance Metrics (10:17)'
           type: link
           url: 'https://www.youtube.com/watch?v=YPD4Prvam9w&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=54'
-        - text: 'SNMP (6:43)'
+        - text: '4.3: Given a scenario, apply network hardening techniques'
+          type: subheading
+        - text: 'Wireless Security (9:25)'
           type: link
-          url: 'https://www.youtube.com/watch?v=p0ZIQ2HhkH8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=55'
-        - text: 'Logs and Monitoring (11:21)'
+          url: 'https://www.youtube.com/watch?v=ThwWlZ3rbtM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=80'
+        - text: '5.4: Given a scenario, troubleshoot common wireless connectivity issues'
+          type: subheading
+        - text: 'Wireless Troubleshooting (11:05)'
           type: link
-          url: 'https://www.youtube.com/watch?v=HQ_ehIXnw78&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=56'
+          url: 'https://www.youtube.com/watch?v=LIofZvLd_04&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=89'
+        - text: 'Common Wireless Issues (9:22)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=zyo5Iv6v3uU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=90'
+    - title: "Virtualization and Cloud Computing"
+      lastpage: 580
+      oreilly_page: "ch15.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.2: Explain the characteristics of network topologies and network types'
+          type: subheading
+        - text: 'Virtual Networks (6:13)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=A29g5-Os-u8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=7'
+        - text: '1.7: Explain basic corporate and datacenter network architecture'
+          type: subheading
+        - text: 'Network Architectures (9:54)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=23H0nA-_4YE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=35'
+        - text: '1.8: Summarize cloud concepts and connectivity options'
+          type: subheading
+        - text: 'Cloud Models (6:48)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=R6jV35zYB5U&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=37'
+        - text: 'Designing the Cloud (8:21)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=CiNStlKYkk0&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=38'
+    - title: "Data Centers"
+      lastpage: 604
+      oreilly_page: "ch16.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '1.7: Explain basic corporate and datacenter network architecture'
+          type: subheading
+        - text: 'Network Architectures (9:54)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=23H0nA-_4YE&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=35'
+        - text: 'Storage Area Networks (3:20)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=prkPpAPm4lA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=36'
         - text: '3.2: Explain the purpose of organizational documents and policies'
           type: subheading
-        - text: 'Plans and Procedures (9:28)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=SECh79s5bV4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=57'
-        - text: 'Security Policies (8:48)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=MC-wWu9Q_jM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=58'
         - text: 'Network Documentation (9:25)'
           type: link
           url: 'https://www.youtube.com/watch?v=ddB6y_f4ISM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=59'
@@ -260,23 +469,67 @@ study_guide:
         - text: 'Availability Concepts (3:07)'
           type: link
           url: 'https://www.youtube.com/watch?v=ZepiOehImWQ&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=64'
+    - title: "Integrating Network Devices"
+      lastpage: 628
+      oreilly_page: "ch17.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '2.1: Compare and contrast various devices, their features, and their appropriate placement on the network'
+          type: subheading
+        - text: 'Networked Devices (6:14)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=rWArzuqNLGM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=39'
+    - title: "Network Operations"
+      lastpage: 654
+      oreilly_page: "ch18.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '3.2: Explain the purpose of organizational documents and policies'
+          type: subheading
+        - text: 'Plans and Procedures (9:28)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=SECh79s5bV4&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=57'
+        - text: 'Security Policies (8:48)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=MC-wWu9Q_jM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=58'
+        - text: 'Network Documentation (9:25)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=ddB6y_f4ISM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=59'
+        - text: '3.3: Explain high availability and disaster recovery concepts and summarize which is the best solution'
+          type: subheading
+        - text: 'Availability Concepts (3:07)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=ZepiOehImWQ&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=64'
+        - text: '4.1: Explain common security concepts'
+          type: subheading
+        - text: 'Security Concepts (9:21)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=4wsj_nEI1Ds&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=66'
+        - text: 'Risk Management (10:08)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=uPFEEpRp9Cc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=69'
+    - title: "Protecting Your Network"
+      lastpage: 706
+      oreilly_page: "ch19.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '4.1: Explain common security concepts'
           type: subheading
         - text: 'CIA Triad (4:14)'
           type: link
           url: 'https://www.youtube.com/watch?v=3yqGCsuREfQ&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=65'
-        - text: 'Security Concepts (9:21)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=4wsj_nEI1Ds&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=66'
         - text: 'Defense in Depth (10:02)'
           type: link
           url: 'https://www.youtube.com/watch?v=1nUXQHr4l9g&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=67'
-        - text: 'Authentication Methods (8:15)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=-8P2fqO2nnA&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=68'
-        - text: 'Risk Management (10:08)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=uPFEEpRp9Cc&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=69'
         - text: '4.2: Compare and contrast common types of attacks'
           type: subheading
         - text: 'Denial of Service (5:46)'
@@ -311,19 +564,43 @@ study_guide:
         - text: 'Network Hardening (19:15)'
           type: link
           url: 'https://www.youtube.com/watch?v=SbG3z1Pl8YY&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=79'
-        - text: 'Wireless Security (9:25)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=ThwWlZ3rbtM&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=80'
-        - text: '4.4: Compare and contrast remote access methods and security implications'
-          type: subheading
-        - text: 'Remote Access (10:33)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=nHUApn4wCPo&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=81'
         - text: '4.5: Explain the importance of physical security'
           type: subheading
         - text: 'Physical Security (10:38)'
           type: link
           url: 'https://www.youtube.com/watch?v=kv_q6AflUKw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=82'
+    - title: "Network Monitoring"
+      lastpage: 730
+      oreilly_page: "ch20.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
+        - text: '3.1: Given a scenario, use the appropriate statistics and sensors to ensure network availability'
+          type: subheading
+        - text: 'Performance Metrics (10:17)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=YPD4Prvam9w&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=54'
+        - text: 'SNMP (6:43)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=p0ZIQ2HhkH8&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=55'
+        - text: 'Logs and Monitoring (11:21)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=HQ_ehIXnw78&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=56'
+        - text: '5.2: Given a scenario, troubleshoot common cable connectivity issues and select the appropriate tools'
+          type: subheading
+        - text: 'Cable Connectivity (11:16)'
+          type: link
+          url: 'https://www.youtube.com/watch?v=Gf2shRh-5GU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=84'
+    - title: "Network Troubleshooting"
+      lastpage: 776
+      oreilly_page: "ch21.xhtml"
+      labs:
+        - title: "No lab yet"
+      resources:
+        - text: 'Professor Messer: CompTIA N10-008 Network+ Training Course'
+          type: heading
         - text: '5.1: Explain the network troubleshooting methodology'
           type: subheading
         - text: 'Network Troubleshooting Methodology (6:35)'
@@ -331,12 +608,6 @@ study_guide:
           url: 'https://www.youtube.com/watch?v=L-hlrK9Dq7I&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=83'
         - text: '5.2: Given a scenario, troubleshoot common cable connectivity issues and select the appropriate tools'
           type: subheading
-        - text: 'Cable Connectivity (11:16)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=Gf2shRh-5GU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=84'
-        - text: 'Wired Network Troubleshooting (13:12)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=wHo-IpFblio&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=85'
         - text: 'Hardware Tools (16:56)'
           type: link
           url: 'https://www.youtube.com/watch?v=4TPSHsqE15s&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=86'
@@ -348,14 +619,6 @@ study_guide:
         - text: 'Command Line Tools (21:02)'
           type: link
           url: 'https://www.youtube.com/watch?v=6t9C72BXQHw&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=88'
-        - text: '5.4: Given a scenario, troubleshoot common wireless connectivity issues'
-          type: subheading
-        - text: 'Wireless Troubleshooting (11:05)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=LIofZvLd_04&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=89'
-        - text: 'Common Wireless Issues (9:22)'
-          type: link
-          url: 'https://www.youtube.com/watch?v=zyo5Iv6v3uU&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=90'
         - text: '5.5: Given a scenario, troubleshoot general networking issues'
           type: subheading
         - text: 'General Network Troubleshooting (7:57)'
@@ -367,103 +630,3 @@ study_guide:
         - text: 'Common Network Issues - Part 2 (14:22)'
           type: link
           url: 'https://www.youtube.com/watch?v=W0Sm8mKwNII&list=PLG49S3nxzAnlCJiCrOYuRYb6cne864a7G&index=93'
-    - title: "Cabling and Topology"
-      lastpage: 66
-      oreilly_page: "ch02.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Ethernet Basics"
-      lastpage: 90
-      oreilly_page: "ch03.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Ethernet Standards"
-      lastpage: 110
-      oreilly_page: "ch04.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Installing a Physical Network"
-      lastpage: 170
-      oreilly_page: "ch05.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "TCP/IP Basics"
-      lastpage: 231
-      oreilly_page: "ch06.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Routing"
-      lastpage: 280
-      oreilly_page: "ch07.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "TCP/IP Applications"
-      lastpage: 316
-      oreilly_page: "ch08.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Network Numbering"
-      lastpage: 352
-      oreilly_page: "ch09.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Securing TCP/IP"
-      lastpage: 394
-      oreilly_page: "ch10.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Swtich Features"
-      lastpage: 424
-      oreilly_page: "ch11.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "IPv6"
-      lastpage: 448
-      oreilly_page: "ch12.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "WAN Connectivity"
-      lastpage: 482
-      oreilly_page: "ch13.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Wireless Networking"
-      lastpage: 540
-      oreilly_page: "ch14.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Virtualization and Cloud Computing"
-      lastpage: 580
-      oreilly_page: "ch15.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Data Centers"
-      lastpage: 604
-      oreilly_page: "ch16.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Integrating Network Devices"
-      lastpage: 628
-      oreilly_page: "ch17.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Network Operations"
-      lastpage: 654
-      oreilly_page: "ch18.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Protecting Your Network"
-      lastpage: 706
-      oreilly_page: "ch19.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Network Monitoring"
-      lastpage: 730
-      oreilly_page: "ch20.xhtml"
-      labs:
-        - title: "No lab yet"
-    - title: "Network Troubleshooting"
-      lastpage: 776
-      oreilly_page: "ch21.xhtml"
-      labs:
-        - title: "No lab yet"
