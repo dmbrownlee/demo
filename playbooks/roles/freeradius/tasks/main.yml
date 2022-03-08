@@ -1,7 +1,7 @@
 ---
-- name: Ensure the dnsmasq package is installed
+- name: Ensure the freeradius packages are installed
   ansible.builtin.package:
-    name: freeradius
+    name: [ freeradius, freeradius-utils ]
     state: present
   become: yes
 # - name: Ensure the radiusd config file is current
