@@ -38,6 +38,9 @@ all:
     sdncontrollers:
       hosts:
         sdnc1:
+    radius:
+      hosts:
+        sdnc1:
     switches:
       hosts:
         switch2:

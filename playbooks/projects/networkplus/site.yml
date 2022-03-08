@@ -32,6 +32,8 @@
   roles:
     - role: faucet
       tags: [faucet]
+    - role: freeradius
+      tags: [freeradius]
     - role: bootstrap-routing-disable
       tags: [bootstrap_routing_disable]
 - name: Configure bootstrap interface on switches

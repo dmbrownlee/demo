@@ -1,0 +1,23 @@
+---
+- name: Ensure the dnsmasq package is installed
+  ansible.builtin.package:
+    name: freeradius
+    state: present
+  become: yes
+# - name: Ensure the radiusd config file is current
+#   ansible.builtin.template:
+#     dest: /etc/raddb/radiusd.conf
+#     src: "radiusd.conf.j2"
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   become: yes
+#   notify: reload_freeradius
+- name: Ensure runit support for freeradius is installed and enabled
+  ansible.builtin.include_role:
+    name: runit-service
+  vars:
+    service:
+      name: freeradius
+      startcmd: "/usr/sbin/radiusd -f -d /etc/raddb -n /etc/raddb/radiusd.conf"
+      enabled: true
