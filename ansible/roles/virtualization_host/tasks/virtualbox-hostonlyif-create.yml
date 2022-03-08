@@ -1,6 +1,7 @@
 ---
 - name: Create {{ hostonlyif.name }} 
   ansible.builtin.command: "VBoxManage hostonlyif create"
+  when: hostonlyif.name not in existing_hostonlyifs.stdout_lines
 - name: Ensure {{ hostonlyif.name }} is configured for IPv4
   ansible.builtin.command: "VBoxManage hostonlyif ipconfig {{ hostonlyif.name }} --ip {{ hostonlyif.ip }} --netmask {{ hostonlyif.netmask }}"
   when: hostonlyif.ip is defined

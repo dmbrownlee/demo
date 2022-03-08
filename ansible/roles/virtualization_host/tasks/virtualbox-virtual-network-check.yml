@@ -8,7 +8,6 @@
   register: existing_hostonlyifs
 - name: Loop through defined host-only interfaces
   ansible.builtin.include_tasks: virtualbox-hostonlyif-create.yml
-  when: hostonlyif.name not in existing_hostonlyifs.stdout_lines
   loop: "{{ hostonlyifs }}"
   loop_control:
     loop_var: hostonlyif
