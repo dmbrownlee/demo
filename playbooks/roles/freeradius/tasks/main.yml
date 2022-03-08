@@ -19,5 +19,5 @@
   vars:
     service:
       name: freeradius
-      startcmd: "/usr/sbin/radiusd -f -d /etc/raddb -n /etc/raddb/radiusd.conf"
+      startcmd: "/usr/sbin/radiusd -f -d /etc/raddb -n radiusd"
       enabled: true
