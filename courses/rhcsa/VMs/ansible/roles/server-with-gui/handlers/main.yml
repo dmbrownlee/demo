@@ -2,11 +2,11 @@
 # listen: start_gui
 - name: Ensure default systemd target is graphical
   listen: set_graphical_default
-  command: "systemctl set-default graphical.target"
+  ansible.builtin.command: "systemctl set-default graphical.target"
   become: yes
 - name: Ensure graphical.target is started
   listen: start_gui
-  systemd:
+  ansible.builtin.systemd:
     name: graphical.target
     state: started
   become: yes

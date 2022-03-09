@@ -1,12 +1,12 @@
 ---
 - name: Ensure the host is rebooted
   listen: reboot
-  reboot:
+  ansible.builtin.reboot:
     reboot_timeout: 600
   become: yes
 - name: Ensure getty processes are restarted
   listen: restart_getty
-  systemd:
+  ansible.builtin.systemd:
     name: getty@tty1
     state: restarted
   become: yes

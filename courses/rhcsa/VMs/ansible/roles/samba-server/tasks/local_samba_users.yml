@@ -1,6 +1,6 @@
 ---
 - name: Ensure Samba users have corresponding Linux users
-  user:
+  ansible.builtin.user:
     name: "{{ item }}"
     shell: /sbin/nologin
   become: yes
@@ -12,12 +12,12 @@
     - sambauser4
     - sambauser5
 - name: Get a list of Samba users that already exist in tdbsam database
-  shell: pdbedit -L | cut -f1 -d':'
+  ansible.builtin.shell: pdbedit -L | cut -f1 -d':'
   become: yes
   register: pdbedit
   changed_when: false
 - name: Ensure Samba users exist in tdbsam database
-  shell: echo -e "password\npassword" | smbpasswd -sa {{ item }}
+  ansible.builtin.shell: echo -e "password\npassword" | smbpasswd -sa {{ item }}
   when: item not in pdbedit.stdout
   become: yes
   with_items:

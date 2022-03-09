@@ -1,11 +1,11 @@
 ---
 - name: Ensure network variables are set ({{ item.netvars }})
-  include_vars:
+  ansible.builtin.include_vars:
     file: "netcfg-{{ item.netvars }}.yml"
     name: netcfg
   when: item.netvars is defined
 - name: Ensure {{ item.conn_name }} connection is present
-  nmcli:
+  community.general.nmcli:
     conn_name: "{{ item.conn_name }}"
     state: present
     autoconnect: "{{ item.autoconnect | default(omit) }}"
@@ -22,18 +22,18 @@
   become: yes
   debugger: on_failed
 - name: Get list of active connections
-  shell: nmcli c show --active | awk 'NR != 1 { print $1; }'
+  ansible.builtin.shell: nmcli c show --active | awk 'NR != 1 { print $1; }'
   changed_when: false
   register: active_connections
-- debug:
+- ansible.builtin.debug:
     var: active_connections
 - name: Ensure {{ item.conn_name }} connection is down
-  command: nmcli c down {{ item.conn_name }}
+  ansible.builtin.command: nmcli c down {{ item.conn_name }}
   changed_when: item.conn_name in active_connections.stdout_lines
   when: item.conn_name in active_connections.stdout_lines
   become: yes
 - name: Ensure /etc/hosts includes static additions for {{ item.netvars }}
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/hosts
     block: "{{ netcfg.hostfile_additions }}"
     marker: "# {mark} static entries for {{ item.netvars }} network"

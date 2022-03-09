@@ -1,6 +1,6 @@
 ---
 - name: Ensure Server With GUI environment is installed
-  dnf:
+  ansible.builtin.dnf:
     name: "@Server with GUI"
     state: present
   become: yes
@@ -8,7 +8,7 @@
     - set_graphical_default
     - start_gui
 - name: Ensure vagrant user is hidden from gdm login screen
-  copy:
+  ansible.builtin.copy:
     src: vagrant
     dest: /var/lib/AccountsService/users
     mode: '0600'

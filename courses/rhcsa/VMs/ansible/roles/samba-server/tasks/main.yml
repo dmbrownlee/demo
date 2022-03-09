@@ -1,24 +1,24 @@
 ---
 - name: Ensure Samba server and client is installed
-  yum:
+  ansible.builtin.yum:
     name: [samba, samba-client, samba-common-tools]
     state: present
   become: yes
 - name: Ensure host-specific shares have been configured
-  include_tasks: add-samba-share.yml
+  ansible.builtin.include_tasks: add-samba-share.yml
   loop: "{{ service.samba.shares }}"
   loop_control:
     loop_var: share
     label: "{{ share.sharename }}"
   when: service.samba.shares is defined
 - name: Ensure Samba systemd service is configured
-  service:
+  ansible.builtin.service:
     name: smb
     state: "{{ service.samba.state }}"
     enabled: "{{ service.samba.enabled }}"
   become: yes
 - name: Ensure Samba traffic is allowed through firewall
-  firewalld:
+  ansible.builtin.firewalld:
     service: "{{ item }}"
     state: "{{ service.samba.fw_state }}"
     permanent: "{{ service.samba.fw_permanent }}"

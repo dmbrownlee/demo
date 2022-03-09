@@ -1,36 +1,36 @@
 ---
 - name: Ensure the hostname is set
-  hostname:
+  ansible.builtin.hostname:
     name: "{{ inventory_hostname }}"
   become: yes
   notify: restart_getty
 - name: Ensure we accept the RPM GPG keys
-  rpm_key:
+  ansible.builtin.rpm_key:
     state: present
     key: /etc/pki/rpm-gpg/{{ item }}
   loop: "{{ rpm_gpg_keys }}"
   become: yes
   when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"
 - name: Ensure SELinux is in enforcing mode
-  selinux:
+  ansible.builtin.selinux:
     policy: targeted
     state: enforcing
   become: yes
   register: selinux
   notify: reboot
 - name: Ensure python libs for SELinux are installed
-  yum:
+  ansible.builtin.yum:
     name: python3-policycoreutils
     state: present
   become: yes
 - name: Ensure firewalld is started and enabled at boot
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: started
     enabled: yes
   become: yes
 - name: Ensure NetworkManager is started and enabled at boot
-  service:
+  ansible.builtin.service:
     name: NetworkManager
     state: started
     enabled: yes

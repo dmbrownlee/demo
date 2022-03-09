@@ -1,7 +1,7 @@
 ---
 - name: Ensure gdm is restarted
   listen: restart_gdm
-  systemd:
+  ansible.builtin.systemd:
     name: gdm
     state: reloaded
   become: yes

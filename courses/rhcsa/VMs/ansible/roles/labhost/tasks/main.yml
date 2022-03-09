@@ -1,6 +1,6 @@
 ---
 - name: Ensure necessary packages are installed
-  yum:
+  ansible.builtin.yum:
     #name: [nss-pam-ldapd, ipa-client, tcpdump, bind-utils, vim, screen, net-tools, nfs-utils, git]
     name:
       - tmux
@@ -12,12 +12,12 @@
     state: present
   become: yes
 - name: Ensure ansible is installed
-  package:
+  ansible.builtin.package:
     name: ansible
     state: present
   become: yes
 - name: Adding student account for learner
-  user:
+  ansible.builtin.user:
     name: student
     comment: student
     createhome: yes
@@ -30,7 +30,7 @@
   become: true
   notify: restart_gdm
 - name: Ensure this host recognizes its own hostname as local
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/ansible/hosts
     line: "{{ inventory_hostname }} ansible_connection=local"
   become: yes

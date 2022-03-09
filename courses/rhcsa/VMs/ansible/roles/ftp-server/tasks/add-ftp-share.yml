@@ -1,12 +1,12 @@
 ---
 - name: Ensure an SELinux policy exists for the FTP share ({{ share.name }})
-  sefcontext:
+  community.general.sefcontext:
     target: "{{ share.seregex }}"
     setype: "{{ share.setype }}"
     state: present
   become: yes
 - name: Ensure top level directory exists for the FTP share ({{ share.name }})
-  file:
+  ansible.builtin.file:
     path: "{{ share.path }}"
     owner: "{{ share.owner | default('root') }}"
     group: "{{ share.group | default('root') }}"

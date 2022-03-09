@@ -1,12 +1,12 @@
 ---
 - name: Ensure an SELinux policy exists for the Samba share ({{ share.sharename }})
-  sefcontext:
+  community.general.sefcontext:
     target: "{{ share.seregex }}"
     setype: "{{ share.setype }}"
     state: present
   become: yes
 - name: Ensure top level directory exists for the Samba share ({{ share.sharename }})
-  file:
+  ansible.builtin.file:
     path: "{{ share.path }}"
     owner: "{{ share.owner | default('root') }}"
     group: "{{ share.group | default('root') }}"
@@ -15,7 +15,7 @@
     setype: "{{ share.setype }}"
   become: yes
 - name: Ensure configuration exists for the Samba share ({{ share.sharename }})
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/samba/smb.conf
     marker: '# {mark} ANSIBLE MANAGED BLOCK: {{ share.sharename }}'
     block: |

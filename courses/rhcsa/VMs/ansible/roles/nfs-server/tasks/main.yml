@@ -1,24 +1,24 @@
 ---
 - name: Ensure the NFS server packages are installed
-  yum:
+  ansible.builtin.yum:
     name: nfs-utils
     state: present
   become: yes
 - name: Ensure host-specific shares have been configured
-  include_tasks: add-nfs-share.yml
+  ansible.builtin.include_tasks: add-nfs-share.yml
   loop: "{{ service.nfs.shares }}"
   loop_control:
     loop_var: share
     label: "{{ share.sharename }}"
   when: service.nfs.shares is defined
 - name: Ensure nfs-server systemd service is configured
-  service:
+  ansible.builtin.service:
     name: nfs-server
     state: "{{ service.nfs.state }}"
     enabled: "{{ service.nfs.enabled }}"
   become: yes
 - name: Ensure NFS traffic is allowed through firewall
-  firewalld:
+  ansible.builtin.firewalld:
     service: "{{ item }}"
     state: "{{ service.nfs.fw_state }}"
     permanent: "{{ service.nfs.fw_permanent }}"

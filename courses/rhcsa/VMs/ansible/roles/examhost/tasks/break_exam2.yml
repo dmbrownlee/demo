@@ -1,6 +1,6 @@
 ---
 - name: Ensure SELinux is configured for exam practice
-  selinux:
+  ansible.builtin.selinux:
     policy: targeted
     state: permissive
   become: yes
@@ -8,13 +8,13 @@
   notify: reboot
   when: exam_config == "exam2"
 - name: Ensure firewalld is configured for exam practice
-  service:
+  ansible.builtin.service:
     name: firewalld
     state: stopped
     enabled: no
   become: yes
 - name: Copy exam files to root's homedir
-  copy:
+  ansible.builtin.copy:
     dest: /root
     src: "{{ item }}"
   become: yes
@@ -22,7 +22,7 @@
     - exam2/README
     - exam2/pxeconf.tar
 - name: Remove yum repo files
-  file:
+  ansible.builtin.file:
     state: "{{ item }}"
     path: "/etc/yum.repos.d"
     owner: root
@@ -33,16 +33,16 @@
     - absent
     - directory
 - name: Ensure root cannot login on console
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/pam.d/login
     line: auth [user_unknown=ignore success=ok ignore=ignore default=bad] pam_securetty.so
   become: yes
-- file:
+- ansible.builtin.file:
     path: /etc/securetty
     state: touch
   become: yes
 - name: Ensure root password is "password" (obviously not for production)
-  user:
+  ansible.builtin.user:
     name: root
     update_password: always
     password: "$6$superfoo$3IVX1XHH.9sjUofpwlkQa8g91Y1VNxww4utLchyhSFG6RYPflXfwWcg4EVdZyJs8uEdy6r0TpYmcor0/k//lg1"

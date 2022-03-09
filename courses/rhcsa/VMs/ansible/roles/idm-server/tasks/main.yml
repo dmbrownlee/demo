@@ -1,17 +1,17 @@
 ---
 # The idm client module must be disabled before we can activate the server
 - name: Ensure the idm client module is removed
-  dnf:
+  ansible.builtin.dnf:
     name: '@idm:client'
     state: absent
   become: yes
 - name: Ensure the idm DL1 module is installed
-  dnf:
+  ansible.builtin.dnf:
     name: '@idm:DL1'
     state: present
   become: yes
 - name: Ensure packages for the IPA server are installed
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
@@ -22,7 +22,7 @@
   become: yes
 # Firewall needs to be enabled before configuring the IdM server
 - name: Ensure IdM server traffic is allowed through the firewall
-  firewalld:
+  ansible.builtin.firewalld:
     service: "{{ item }}"
     state: "{{ service.idm.fw_state }}"
     permanent: "{{ service.idm.fw_permanent }}"

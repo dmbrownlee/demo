@@ -1,6 +1,6 @@
 ---
 - name: Ensure nfs/labipa.example.com principal is added to host keytab
-  shell: "echo {{ passwords.krb5_admin }} | kinit admin; klist -k | grep -q nfs/labipa.example.com || ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab"
+  ansible.builtin.shell: "echo {{ passwords.krb5_admin }} | kinit admin; klist -k | grep -q nfs/labipa.example.com || ipa-getkeytab -s labipa.example.com -p nfs/labipa.example.com -k /etc/krb5.keytab"
   changed_when: false
   failed_when: false
   become: yes

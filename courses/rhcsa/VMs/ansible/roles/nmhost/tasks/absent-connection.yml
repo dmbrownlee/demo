@@ -1,6 +1,6 @@
 ---
 - name: Ensure {{ item.conn_name }} connection is absent
-  nmcli:
+  community.general.nmcli:
     conn_name: "{{ item.conn_name }}"
     state: absent
   become: yes
