@@ -226,6 +226,61 @@ Vagrant.configure("2") do |config|
       shell.inline = "echo"
     end
   end
+  #=== installhost2 (BIOS) ===
+  config.vm.define "installhost2", autostart: false do |node|
+    node.vm.box = "{{ distro }}-{{ version }}-core"
+    disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/{{ distro }}-{{ version }}-disk001.vmdk"
+    disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
+    disk2 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk002.vmdk"
+    node.vm.provider :virtualbox do |virtualbox|
+      virtualbox.name = "installhost2"
+      virtualbox.gui = true
+      virtualbox.memory = 2048
+      virtualbox.customize ["modifyvm", :id, "--firmware", "bios"]
+      # Dettach and destroy original disk
+      if File.file?(disk)
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--port", "0",
+          "--device", "0",
+          "--medium", 'none']
+        virtualbox.customize ['closemedium', 'disk', disk, '--delete']
+      end
+      # Create and attach a new, empty disk
+      if not File.file?(disk1)
+        virtualbox.customize ['createhd', '--filename', disk1, '--variant',
+          'Standard', '--size', 20 * 1024]
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--type", "hdd",
+          "--port", "0",
+          "--device", "0",
+          "--medium", disk1]
+      end
+      # Create and attach a new, empty, secondary disk
+      if not File.file?(disk2)
+        virtualbox.customize ['createhd', '--filename', disk2, '--variant',
+          'Standard', '--size', 20 * 1024]
+        virtualbox.customize ["storageattach", :id,
+          "--storagectl", "SATA Controller",
+          "--type", "hdd",
+          "--port", "1",
+          "--device", "0",
+          "--medium", disk2]
+      end
+      # Make sure the installation media is in the drive
+      virtualbox.customize ["storageattach", :id,
+        "--storagectl", "IDE Controller",
+        "--type", "dvddrive",
+        "--port", "0",
+        "--device", "0",
+        "--medium", "#{ENV["HOME"]}/Downloads/{{ iso_name }}"]
+      # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
+    end
+    node.vm.provision "default", type: :shell, run: "never" do |shell|
+      shell.inline = "echo"
+    end
+  end
 {% endif %}
 {% if virtualization == "libvirt" %}
   #=== pxeclient ===
