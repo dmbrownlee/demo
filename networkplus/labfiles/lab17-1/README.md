@@ -34,7 +34,7 @@ Voice over IP (VoIP) made it possible to communicate by voice right over an IP n
 #### SIP 
 SIP is a signaling protocol that supports voice calls, video conferencing, instant messaging, and media distribution. SIP handles initiating, maintaining, and terminating real-time sessions between the client and the server. 
 
-Answer the questions below. (Hint: use display filter `sip`)
+> Answer the questions below. (Hint: use display filter `sip`)
 
   A.1. In packet 3, the client starts the process by sending a REQUEST packet to the server at which IP address and on which port?
 
@@ -45,7 +45,7 @@ Answer the questions below. (Hint: use display filter `sip`)
 #### RTP and H.323
 RTP defines the type of packets used on the Internet to move voice or data from a server to clients. The vast majority of VoIP solutions available today use RTP. RTP controls the destination of the packets and identifies the type of information being transported. H.323 handles the initiation, setup, and delivery of VoIP sessions. It runs on top of RTP and is able to handle multicasting.
 
-Complete the steps and then answer the questions below.
+> Complete the steps and then answer the questions below.
 1. Select the stream with source port 4042 > Click Find Reverse to highlight both sides of the conversation 
 2. Click Analyze > Select the Reverse tab > Play Streams
 
