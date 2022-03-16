@@ -16,4 +16,4 @@ for d in VBoxDrv VBoxUSB VBoxNetFlt VBoxNetAdp; do
 done
 # Now that the drivers are loaded, configure the networking
 echo "Configuring Virtual Networks:"
-ansible-playbook -i localhost, -e ansible_python_interpreter=/usr/bin/python ~/demo/utils/.ansible/reconfigure-virtual-networks.yml
+ansible-playbook -i localhost, -e ansible_python_interpreter=/usr/bin/python3 ~/demo/utils/.ansible/reconfigure-virtual-networks.yml

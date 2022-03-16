@@ -19,12 +19,12 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
-- name: Ensure icons are added to the Dock
-  ansible.builtin.shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
-  register: dockadd
-  changed_when: "'item added at end' in dockadd.stdout"
-  loop: "{{ dockitems_to_add }}"
-  notify: launcher-restart-macosx
-  when:
-    - dockitems_to_add is defined
-    - (dockitems_to_add | length > 0)
+# - name: Ensure icons are added to the Dock
+#   ansible.builtin.shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
+#   register: dockadd
+#   changed_when: "'item added at end' in dockadd.stdout"
+#   loop: "{{ dockitems_to_add }}"
+#   notify: launcher-restart-macosx
+#   when:
+#     - dockitems_to_add is defined
+#     - (dockitems_to_add | length > 0)
