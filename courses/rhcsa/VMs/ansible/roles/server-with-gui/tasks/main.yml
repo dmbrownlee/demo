@@ -5,7 +5,6 @@
     state: present
   become: yes
 - name: Ensure default systemd target is graphical
-  listen: set_graphical_default
   ansible.builtin.command: "systemctl set-default graphical.target"
   become: yes
   notify:
