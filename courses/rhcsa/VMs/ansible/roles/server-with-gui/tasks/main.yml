@@ -4,8 +4,10 @@
     name: "@Server with GUI"
     state: present
   become: yes
+- name: Ensure default systemd target is graphical
+  ansible.builtin.command: "systemctl set-default graphical.target"
+  become: yes
   notify:
-    - set_graphical_default
     - start_gui
 - name: Ensure vagrant user is hidden from gdm login screen
   ansible.builtin.copy:
