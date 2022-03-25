@@ -9,24 +9,7 @@ Practice and understand more advanced storage types within linux.
 
 2. vagrant destroy server1 
 
-3. vagrant up server1 
-
-4. vagrant down server1 
-
-5. Add a drive to this machine
-	
-	a. Open virtual box and navigate to `settings`
-
-	b. Next select `storage` 
-
-	c. Towards the bottom you should see a "Drive" with a green `+` beside it, this is how we will add the drive 
-
-	d. This should open a new window, once open selecte the `create` option at the top 
-		i. I will generate a vdi with about 10gb of data 
-		ii. Once it is generated and in the list of drives, highlight the drive and select `choose`
-
-	e. once the disk is added to the virtual machine, we will want to ensure the machine sees this. Turn on the machine and run `lsblk`
-		i. you should see two block devices `sda` and `sdb`
+3. vagrant up server2 
 
 
 ## Installation and Configuration
@@ -50,13 +33,13 @@ Practice and understand more advanced storage types within linux.
 3. Next we will want to generate a pool (group), which stores all availble storage devices for stratis. Keep in mind, these generate `xfs` file systems. 
 
 									Note 
-`ensure you add the drive we generated earlier, for me this is sda`
+`ensure you add the drive and partition that is not being used by the operating system, you can do this by running `lsblk`. The drive listed for me this is sdb`
 
 ```
-	sudo stratis pool create my-pool /dev/sda
+	sudo stratis pool create my-pool /dev/sdb
 ```
 
-4. Awesome, now that we have a drive(s) added to this pool, we should generate a file system. 
+4. Awesome, now that we have a drive(s) added to this pool, we should generate a file system from that pool. 
 
 ```
 	sudo stratis fs create my-pool my-fs
@@ -81,8 +64,11 @@ In this section I will show you how to mount with systemd. Systemd is the future
 
 2. Now we will need a template for systemd mounting, lets use vdo as that will be our next lab. Keep in mind, this vdo mount will come in handy down the road.  
 
+									Note 
+`Installing vdo to configure stratis might not be the best way to actually configure stratis using systemd mounting, but vdo does have an example file that will help speed up the process. That is why I will mention it here.`
+
 ```
-	sudo apt install vdo -y 
+	sudo yum install --downloadonly vdo -y 
 ```
 
 									Note
@@ -123,3 +109,7 @@ In this section I will show you how to mount with systemd. Systemd is the future
 5. There are a few ways we can check this ranging from the `mount | grep stratis`, lets reboot and check if it mounts on boot. 
 
 	a. we can also run `lsblk` to see if uuid of the device is mounted to stratis1, which in my case it is. 
+	
+	
+While there are many use cases for stratis, we will not go into to much depth, the main purpose of this was to expose you to the basic setup and expose you more to systemd mounts. 
+Keep systemd mounting in mind, given it is a time saver, which is critical especially on the exam. 
