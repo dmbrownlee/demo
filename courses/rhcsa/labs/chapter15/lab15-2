@@ -19,7 +19,7 @@ Practice and understand more advanced storage types within linux.
 
 	b. Next select `storage` 
 
-	c. Towards the bottom you should see a "Drive" with a grenn `+` beside it, this is how we will add the drive 
+	c. Towards the bottom you should see a "Drive" with a green `+` beside it, this is how we will add the drive 
 
 	d. This should open a new window, once open selecte the `create` option at the top 
 		i. I will generate a vdi with about 10gb of data 
@@ -98,14 +98,14 @@ In this section I will show you how to mount with systemd. Systemd is the future
 
 	[Unit]
 	Description = Mount filesystem that lives on Stratis
-	name = dataSTR.mount
+	name = stratis1.mount
 	Requires = stratisd.service systemd-remount-fs.service
 	After = multi-user.target
 	Conflicts = umount.target
 
 	[Mount]
-	What = /stratis/stratpool/stratfs
-	Where = /dataSTR
+	What = /dev/stratis/my-pool/my-fs
+	Where = /stratis1
 	Type = xfs
 	Options = discard
 
