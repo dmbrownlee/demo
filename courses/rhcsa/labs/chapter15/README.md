@@ -27,4 +27,7 @@ Read chapter 15 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 2nd 
 - [Lesson 15 Lab Solution: Managing Advanced Storage (9:45)](https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_02_15_14)
 
 ## Labs
-[lab15-1: Practice LVM](lab15-1.md)</br>
+[lab15-1: LVM Practice](lab15-1.md)</br>
+[lab15-2: Stratis Practice](lab15-2.md)</br>
+[lab15-3: VDO Practice](lab15-3.md)</br>
+[lab15-4: Adding an additonal drive to a VirtualBox VM (optional)](lab15-4.md)</br>
