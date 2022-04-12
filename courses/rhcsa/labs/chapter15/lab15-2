@@ -1,0 +1,115 @@
+# lab15-2: Stratis 
+
+## Objective
+Practice and understand more advanced storage types within linux. 
+
+## Host Configuration
+
+1. cd /demo/courses/rhcsa/VMs
+
+2. vagrant destroy server1 
+
+3. vagrant up server2 
+
+
+## Installation and Configuration
+
+							Note
+
+1. First we will need to install the packages for setup, which includ `stratis-cli` and `stratisd`
+
+
+``` 
+	sudo yum install stratis-cli stratisd -y
+```
+
+2. After this, we will need to ensure the daemon is running, 
+
+```
+	sudo systemctl enable --now stratisd && sudo systemctl status stratisd
+```
+
+
+3. Next we will want to generate a pool (group), which stores all availble storage devices for stratis. Keep in mind, these generate `xfs` file systems. 
+
+									Note 
+`ensure you add the drive and partition that is not being used by the operating system, you can do this by running `lsblk`. The drive listed for me this is sdb`
+
+```
+	sudo stratis pool create my-pool /dev/sdb
+```
+
+4. Awesome, now that we have a drive(s) added to this pool, we should generate a file system from that pool. 
+
+```
+	sudo stratis fs create my-pool my-fs
+```
+	
+5. for verification that the pools and lists are generated we can run 
+
+```
+	sudo stratis pool && sudo stratis fs 
+```
+
+
+## Mounting Stratis with systemd
+
+In this section I will show you how to mount with systemd. Systemd is the future and is much easier to digest than /etc/fstab. While /etc/fstab is still a way of mounting devices, You will see people start transtioning to systemd mounting.
+
+1. lets start with a directory to mount our filesystem on, I will call mine stratis1 
+
+```
+	cd && mkdir stratis1 && ls
+```
+
+2. Now we will need a template for systemd mounting, lets use vdo as that will be our next lab. Keep in mind, this vdo mount will come in handy down the road.  
+
+									Note 
+`Installing vdo to configure stratis might not be the best way to actually configure stratis using systemd mounting, but vdo does have an example file that will help speed up the process. That is why I will mention it here.`
+
+```
+	sudo yum install --downloadonly vdo -y 
+```
+
+									Note
+`ensure the mount file is the same name as the mount point directory`
+
+```
+	sudo cp /usr/share/doc/vdo/examples/systemd/VDO.mount.example /etc/systemd/system/stratis1.mount
+```
+
+3.Great, now we will want to edit the stratis1.mount file, I prefer vim and encourage everyone to use vim, but I suppose you can use whatever text editor you are comfortable with. 
+
+-------------
+
+	[Unit]
+	Description = Mount filesystem that lives on Stratis
+	name = stratis1.mount
+	Requires = stratisd.service systemd-remount-fs.service
+	After = multi-user.target
+	Conflicts = umount.target
+
+	[Mount]
+	What = /dev/stratis/my-pool/my-fs
+	Where = /stratis1
+	Type = xfs
+	Options = discard
+
+	[Install]
+	WantedBy = multi-user.target	
+
+-------------
+
+4. Great, stat should be all the file perameters we need, now we need to ensure that `my-fs` is mounted onto the `stratis1` directory on boot, with our handy dandy `systemctl` tool 
+
+```
+	sudo systemctl enable --now stratis1.mount
+```
+
+5. There are a few ways we can check this ranging from the `mount | grep stratis`, lets reboot and check if it mounts on boot. 
+
+	a. we can also run `lsblk` to see if uuid of the device is mounted to stratis1, which in my case it is. 
+	
+	
+While there are many use cases for stratis, we will not go into to much depth, the main purpose of this was to expose you to the basic setup and expose you more to systemd mounts. 
+Keep systemd mounting in mind, given it is a time saver, which is critical especially on the exam. 

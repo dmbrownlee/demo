@@ -1,0 +1,98 @@
+# lab15-3: vdo 
+
+## Objective
+Practice and understand more advanced storage types within linux. 
+
+## Host Configuration
+ 
+1. cd /demo/courses/rhcsa/VMs
+ 
+2. vagrant destroy server1
+ 
+3. vagrant up server2
+
+## Installation and Configuration
+
+							Note
+
+1. First we will need to install the packages for setup, which is `vdo` (This should also includ kmod-vdo)
+
+
+``` 
+	sudo yum install vdo -y
+```
+
+2. After this, we will need to ensure the daemon is running, 
+
+```
+	sudo systemctl enable --now vdo && sudo systemctl status vdo
+```
+
+
+3. Next we will want to create a device and configure it using vdo command line tools  
+
+									Note 
+`We will want to ensure we have a free partition or drive create our file system on, we can rune `lsblk` to see what drives and partitions are availbel, for me this is sdb`
+
+```
+	sudo vdo create --name=vdo1 --device=/dev/sdb --vdoLogicalSize=1T
+```
+
+4. Awesome, now that we have assigned a block device for vdo, we will want to genereate a filesystem for this, we can us the mkfs. tool to do this, for me this will be an ext4 filesystem, just for fun.. 
+
+```
+	sudo mkfs.ext4 -E nodiscard /dev/mapper/vdo1
+```
+	
+## Mounting VDO with systemd
+
+In this section I will show you how to mount with systemd. Systemd is the future and is much easier to digest than /etc/fstab. While /etc/fstab is still a way of mounting devices, You will see people start transtioning to systemd mounting.
+
+1. lets start with a directory to mount our filesystem on, I will call mine vdo1 
+
+```
+	cd && mkdir vdo1 && ls
+```
+
+									Note
+`ensure the mount file is the same name as the mount point directory`
+
+```
+	sudo cp /usr/share/doc/vdo/examples/systemd/vdo.mount.example /etc/systemd/system/vdo1.mount
+```
+
+3.Great, now we will want to edit the vdo1.mount file, I prefer vim and encourage everyone to use vim, but I suppose you can use whatever text editor you are comfortable with. 
+
+-------------
+
+	[Unit]
+	Description = Mount filesystem that lives on VDO
+	name = vdo1.mount
+	Requires = vdo.service systemd-remount-fs.service
+	After = multi-user.target
+	Conflicts = umount.target
+
+	[Mount]
+	What = /dev/mapper/vdo1
+	Where = /vdoo1
+	Type = ext4
+	Options = discard
+
+	[Install]
+	WantedBy = multi-user.target	
+
+-------------
+
+4. Great, stat should be all the file perameters we need, now we need to ensure that `my-fs` is mounted onto the `vdo1` directory on boot, with our handy dandy `systemctl` tool 
+
+```
+	sudo systemctl enable --now vdo1.mount
+```
+
+5. There are a few ways we can check this ranging from the `mount | grep vdo`, lets reboot and check if it mounts on boot. 
+
+	a. we can also run `lsblk` to see if uuid of the device is mounted to vdo1, which in my case it is.
+
+
+You might be thinking "why did I just work the same lab twice in a row?"
+Well, vdo, startis and other storage managment software has its own drawbacks and perks. It wil lbe up to you which one is most appropriate in the field. These lessons are just to get you familiarized witht he workflow. if you prefer /etc/fstab, maybe work through these labs again trying to configure it that route, but the systemd configuration is going to be much easeier and much faster if you can familiarize yourself with where the vdo example files lives. 
