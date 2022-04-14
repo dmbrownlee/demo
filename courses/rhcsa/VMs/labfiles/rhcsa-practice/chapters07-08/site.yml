@@ -10,8 +10,15 @@
         content: |+
           # Practice for chapters 7 and 8
           # - create a group named "projectx"
-          # - add "student" to the projectx group
-          # - create a /var/data/projectx directory and ensure only projectx members can use it
+          # - add users "xuser1" and "xuser2" to the projectx group
+          # - create a group named "auditorx"
+          # - add user "xauditor" to the auditorx group
+          # - create a /var/data/projectx directory:
+          #   - ensure only projectx members can create files
+          #   - ensure projectx members can edit each others files
+          #   - ensure projectx members can delete only their own files
+          #   - ensure auditorx members can read the files
+          #   - ensure users have no access at all
       become: yes
 
 - name: Configure server2
