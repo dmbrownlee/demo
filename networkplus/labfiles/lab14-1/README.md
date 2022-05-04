@@ -5,9 +5,7 @@
 connectivity and performance issues.](https://www.comptia.jp/pdf/comptia-network-n10-007-v-3-0-exam-objectives.pdf)
 
 ## Setup 💻
-Locate the following packet captures under '/Users/[USERNAME]/demo/networkplus/labfiles/lab14-1' :
-- timing.pcapng
-- 
+Locate the packet captures under /Users/[USERNAME]/demo/networkplus/labfiles/lab14-1/ --> timing.pcapng,
 
 ## Lab Overview 🔬
 Network latency (aka slow wireless connection) is the delay in transmitting requests or data from the source to destination. This can be harder to troubleshoot than no connection at all because the device is properly connected to an SSID, has a valid IP address, and it runs well overall but still YouTube loads painfully slow and the Play store times out. Long delays or excessive latency are undesirable since they degrade the user experience. When troubleshooting network latency, we utilize Wireshark in many ways to quickly and efficiently discover the source of poor performance. 
@@ -63,5 +61,3 @@ _____
 [Chapter 14 Wireless Networking](https://learning.oreilly.com/library/view/comptia-network-certification/9781260122398/ch14.xhtml#ch14sec194) by Mike Meyers
 
 [Wireless Troubleshooting](https://www.professormesser.com/network-plus/n10-007/wireless-network-troubleshooting/) by Professor Messer
-
-[WiFi Encryption](https://www.cbtnuggets.com/learn/it-training/wireless-security-protocols-authentication-methods/3?autostart=1) by Keith Barker
