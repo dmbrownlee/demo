@@ -139,6 +139,12 @@ Vagrant.configure("2") do |config|
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
       virtualbox.memory = 2048
+      virtualbox.customize ["storageattach", :id,
+        "--storagectl", "IDE Controller",
+        "--port", "0",
+        "--device", "0",
+        "--type", "dvddrive",
+        "--medium", "emptydrive"]
     end
 {% endif %}
   end
@@ -161,6 +167,12 @@ Vagrant.configure("2") do |config|
           "--device", "0",
           "--medium", disk]
       end
+      virtualbox.customize ["storageattach", :id,
+        "--storagectl", "IDE Controller",
+        "--port", "0",
+        "--device", "0",
+        "--type", "dvddrive",
+        "--medium", "emptydrive"]
     end
 {% endif %}
   end
