@@ -1,0 +1,26 @@
+- name: Ensure confmgt user exists
+  ansible.builtin.user:
+    name: confmgt
+    state: present
+    system: yes
+  become: yes
+- name: Ensure confmgt user can use sudo
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/confmgt
+    content: 'confmgt ALL=(ALL) NOPASSWD: ALL'
+    owner: root
+    group: wheel
+    mode: 0440
+  become: yes
+- name: Ensure repo facts are set before using become
+  ansible.builtin.set_fact:
+    repo_user_dir: "{{ ansible_user_dir }}"
+    repo_user_id: "{{ ansible_user_id }}"
+- name: Ensure confmgt user has cronjob to run ansible-pull regularly
+  ansible.builtin.cron:
+    name: ansible-pull
+    state: present
+    user: confmgt
+    job: /usr/bin/ansible-pull -d {{ repo_user_dir }}/demo2 -u {{ repo_user_id }} -o -U https://github.com/dmbrownlee/demo.git -C release
+    minute: '*/10'
+  become: yes

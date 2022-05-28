@@ -1,0 +1,6 @@
+---
+- name: Configure host to update demo project using ansible-pull
+  hosts: localhost
+  connection: local
+  roles:
+    - demohost
