@@ -2,4 +2,5 @@
 package_section: |
   %packages --excludedocs --excludeWeakdeps
   @core --nodefaults
+  python36
   %end
