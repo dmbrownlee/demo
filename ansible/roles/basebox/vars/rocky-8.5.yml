@@ -11,5 +11,5 @@ install_file: "{{ distro }}-{{ version }}-{{ configuration }}-ks.cfg"
 templateks: "RedHat_64-ks.j2"
 repo_lines: |
   repo --name="epel" --baseurl=https://download.fedoraproject.org/pub/epel/$releasever/Everything/$basearch
-  repo --name=Rocky_BaseOS --mirrorlist=http://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever
+  repo --name=Rocky_BaseOS --mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=BaseOS-$releasever
   repo --name=Rocky_AppStream --mirrorlist=https://mirrors.rockylinux.org/mirrorlist?arch=$basearch&repo=AppStream-$releasever
