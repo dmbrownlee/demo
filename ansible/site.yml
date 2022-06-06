@@ -37,8 +37,8 @@
     - role: vagrantfile_rhcsa
       vars:
         distro: rocky
-        version: "8.5"
-        iso_name: "Rocky-8.5-x86_64-dvd1.iso"
+        version: "8.6"
+        iso_name: "Rocky-8.6-x86_64-dvd1.iso"
       tags: labenv_rhcsa
 
   post_tasks:
@@ -49,7 +49,7 @@
           tags: basebox
       vars:
         boxes:
-          - { distro: rocky, version: "8.5", configuration: core }
-          - { distro: rocky, version: "8.5", configuration: minimal }
-          - { distro: rocky, version: "8.5", configuration: gse }
+          - { distro: rocky, version: "8.6", configuration: core }
+          - { distro: rocky, version: "8.6", configuration: minimal }
+          - { distro: rocky, version: "8.6", configuration: gse }
       tags: basebox
