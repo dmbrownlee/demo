@@ -4,19 +4,18 @@
   hosts:
     - localhost
   tasks:
-    - name: Ensure SELinux is in permissive mode
-      selinux:
-        policy: targeted
-        state: permissive
-      become: yes
+    #- name: Ensure SELinux is in permissive mode
+    #  selinux:
+    #    policy: targeted
+    #    state: permissive
+    #  become: yes
     - name: Breaking something...
       user:
-        name: root
+        name: student
         password: "{{ 'somerandompassword' | password_hash('sha512', 'randomsalt') }}"
       become: yes
     - name: Breaking something...
-      shell: usermod -G $(id -nG {{ item }} | sed -e 's/ /,/' -e 's/,wheel//') {{ item }}
-      loop:
-        - student
-        - user
+      shell: usermod -G $(id -nG student | sed -e 's/ /,/' -e 's/,wheel//') student
+      become: yes
+    - ansible.builtin.command: systemctl reboot
       become: yes
