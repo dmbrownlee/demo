@@ -17,7 +17,7 @@
 - name: Ensure an exports file exists for the NFS share ({{ share.sharename }})
   ansible.builtin.copy:
     dest: /etc/exports.d/{{ share.sharename }}.exports
-    content: "{{ share.path }}	{{ share.export_options }})"
+    content: "{{ share.path }}	{{ share.export_options }}"
     owner: root
     group: root
     mode: '0644'
