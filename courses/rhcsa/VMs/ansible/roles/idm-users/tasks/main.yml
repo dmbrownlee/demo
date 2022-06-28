@@ -8,11 +8,11 @@
 - name: Ensure IPA lab users have been created
   ansible.builtin.shell: echo password | kinit admin; ipa user-add --first {{ item }} --last {{ item }} --homedir /home/ldap/{{ item }} {{ item }}
   when: item not in ipa_user_find.stdout_lines
-  loop: ipa_users
+  loop: "{{ ipa_users }}"
 - name: Ensure password has been set for IPA lab users just created
   ansible.builtin.shell: echo password | kinit admin; echo -e "password\npassword" | ipa passwd {{ item }}
   when: item not in ipa_user_find.stdout_lines
-  loop: ipa_users
+  loop: "{{ ipa_users }}"
 - name: Ensure homedirs exist for the LDAP users
   ansible.builtin.file:
     path: /home/ldap/{{ item }}
@@ -20,5 +20,5 @@
     owner: "{{ item }}"
     group: "{{ item }}"
     mode: 0755
-  loop: ipa_users
+  loop: "{{ ipa_users }}"
   become: yes
