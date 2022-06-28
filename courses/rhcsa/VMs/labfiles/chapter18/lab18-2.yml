@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Ensure this playbook is being run on server2
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname == "server2"
+        fail_msg: 'This playbook must be run on server2.'
+        quiet: yes
+    - name: Doing something...
+      ansible.builtin.command: dracut --force -o lvm
+      become: yes
+    - name: Rebooting...
+      ansible.builtin.shell: sleep 2 && /sbin/shutdown -r now --no-wall
+      async: 1
+      poll: 0
+      ignore_errors: true
+      become: yes

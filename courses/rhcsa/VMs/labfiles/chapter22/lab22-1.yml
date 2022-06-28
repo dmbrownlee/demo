@@ -1,0 +1,57 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Ensure this playbook is being run on server2
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname == "server2"
+        fail_msg: 'This playbook must be run on server2.'
+        quiet: yes
+    - name: Ensure SELinux is enabled (previous lab disabled it)
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+      become: yes
+    - name: Ensure web server packages are installed
+      ansible.builtin.yum:
+        name: ['httpd', 'php']
+        state: present
+      become: yes
+    - name: Ensure VirtualHost DocumentRoot exists
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - /var/www-testweb
+        - /var/www-testweb/html
+        - /var/www-testweb/cgi-bin
+      become: yes
+    - name: Ensure PHP content page exists
+      ansible.builtin.copy:
+        dest: /var/www-testweb/html/phpinfo.php
+        content: |
+          <?php phpinfo(); ?>
+      become: yes
+    - name: Ensure testweb has a different landing page
+      ansible.builtin.copy:
+        dest: /var/www-testweb/html/index.html
+        content: |
+          <html>
+          <title>Welcome to testweb</title>
+          <body><h1>Welcome to testweb</body>
+          </html>
+      become: yes
+    - name: Ensure firewall service is started
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: yes
+      become: yes
+    - name: Ensure firewall allows http traffic
+      ansible.posix.firewalld:
+        service: http
+        state: enabled
+        immediate: yes
+        permanent: yes
+        zone: internal
+      become: yes

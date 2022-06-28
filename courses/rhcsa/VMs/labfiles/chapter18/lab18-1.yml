@@ -1,16 +1,24 @@
 ---
 - hosts: localhost
-  become: yes
   tasks:
+    - name: Ensure this playbook is being run on server2
+      ansible.builtin.assert:
+        that:
+          - ansible_hostname == "server2"
+        fail_msg: 'This playbook must be run on server2.'
+        quiet: yes
     - name: Doing something...
       ansible.builtin.replace:
         path: /etc/default/grub
         regexp: 'GRUB_CMDLINE_LINUX="(.*) rhgb quiet"$'
         replace: 'GRUB_CMDLINE_LINUX="\1 fbcon=rotate:3"'
+      become: yes
     - name: Doing something...
       ansible.builtin.shell: grub2-mkconfig > /boot/grub2/grub.cfg 2> /dev/null
+      become: yes
     - name: Doing something...
       ansible.builtin.shell: sed -i -e 's/^initrd \/initramfs-/initrd \/initramfs_/' /boot/loader/entries/*.conf
+      become: yes
     - name: Rebooting...
       ansible.builtin.command: systemctl reboot
       become: yes
