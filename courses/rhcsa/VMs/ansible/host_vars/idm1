@@ -46,12 +46,12 @@ service:
         path: /home/ldap
         seregex: '/home/ldap(/.*)?'
         setype: nfs_t
-        export_options: '*(rw,sec=krb5p)'
+        export_options: '*(rw)'
       - sharename: nfsexport
         path: /srv/nfsexport
         seregex:  '/srv/nfsexport(/.*)?'
         setype: nfs_t
-        export_options: '*(rw,sec=krb5p)'
+        export_options: '*(rw)'
       - sharename: data
         path: /data
         seregex: '/data(/.*)?'
