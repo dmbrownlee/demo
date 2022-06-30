@@ -1,0 +1,17 @@
+---
+- name: Get a list of current automount maps for this location
+  ansible.builtin.shell: "echo password | kinit admin; ipa automountmap-find {{ location.name }} | sed -n 's/^  Map: //p'"
+  changed_when: false
+  register: ipa_automountmap_find
+- name: Ensure the automount map has been created
+  ansible.builtin.shell: echo password | kinit admin; ipa automountmap-add {{ location.name }} {{ map.name }}
+  when: map.name not in ipa_automountmap_find.stdout_lines
+- name: Configure automount keys if defined for this map
+  ansible.builtin.include_tasks: automountkey-add.yml
+  loop: "{{ map.keylines }}"
+  loop_control:
+    loop_var: key
+    label: "{{ key.name }} {{ key.info }}"
+  when:
+    - map.keylines is defined
+    - ( map.keylines | length > 0)

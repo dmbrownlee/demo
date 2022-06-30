@@ -35,6 +35,7 @@
   roles:
     - role: idm-server
     - role: idm-users
+    - role: idm-automounts
 
 - name: Configure access to labfiles from within the VM
   hosts: labhosts

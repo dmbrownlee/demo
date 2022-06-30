@@ -1,0 +1,5 @@
+---
+ipa_users:
+  - ldapuser1
+  - ldapuser2
+  - ldapuser3

@@ -1,0 +1,10 @@
+---
+- name: Configure IPA automount locations if defined
+  ansible.builtin.include_tasks: automountlocation-add.yml
+  loop: "{{ service.idm.ipa_automount_locations }}"
+  loop_control:
+    loop_var: location
+    label: "{{ location.name }}"
+  when:
+    - service.idm.ipa_automount_locations is defined
+    - ( service.idm.ipa_automount_locations | length > 0)
