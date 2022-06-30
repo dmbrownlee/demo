@@ -18,7 +18,7 @@
         state: permissive
       become: yes
     - name: Ensure Samba is configured
-      copy:
+      ansible.builtin.copy:
         dest: /etc/samba/smb.conf
         src: smb.conf
         owner: root
@@ -26,14 +26,14 @@
         mode: '0644'
       become: yes
     - name: Ensure smbuser1 account exists
-      user:
+      ansible.builtin.user:
         name: smbuser1
         create_home: no
         shell: /sbin/nologin
         password: "{{ 'password' | password_hash('sha512', 'randomsalt') }}"
       become: yes
     # - name: Ensure smbuser1 is also a samba user
-    #   shell: >
+    #   ansible.builtin.shell: >
     #     (pdbedit --user=smbuser1 2>&1 > /dev/null)
     #     || echo -e 'password\npassword'
     #     | smbpasswd -s -a smbuser1

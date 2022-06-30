@@ -5,7 +5,7 @@
     - server1
   tasks:
     - name: Creating the practice question doc...
-      copy:
+      ansible.builtin.copy:
         dest: "/root/chapter8-practice.txt"
         content: |+
           # Practice for chapters 7 and 8
@@ -27,7 +27,7 @@
     - localhost
   tasks:
     - name: Creating the practice question doc...
-      copy:
+      ansible.builtin.copy:
         dest: "/root/chapter8-practice.txt"
         content: |+
           # Practice for chapters 7 and 8
@@ -39,7 +39,7 @@
           # - SSH to server1 and follow the directions in /root/chapter8-practice.txt there
       become: yes
     - name: Changing something...
-      nmcli:
+      community.general.nmcli:
         conn_name: "example_com"
         state: absent
       become: yes

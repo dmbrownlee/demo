@@ -5,18 +5,18 @@
     - localhost
   tasks:
     - name: Ensure web server packages are installed
-      yum:
+      ansible.builtin.yum:
         name: ['httpd', 'php']
         state: present
       become: yes
     - name: Ensure server2 can resolve testweb.example.com to its own IP
-      replace:
+      ansible.builtin.replace:
         path: /etc/hosts
         regexp: '^(192.168.4.220 server2.example.com server2)$'
         replace: '\1 testweb.example.com testweb'
       become: yes
     - name: Ensure testweb virtual host exists
-      copy:
+      ansible.builtin.copy:
         src: testweb.conf
         dest: /etc/httpd/conf.d/testweb.conf
         owner: root
@@ -24,7 +24,7 @@
         mode: '0644'
       become: yes
     - name: Ensure VirtualHost DocumentRoot exists
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: directory
       with_items:
@@ -33,13 +33,13 @@
         - /var/www-testweb/cgi-bin
       become: yes
     - name: Ensure PHP content page exists
-      copy:
+      ansible.builtin.copy:
         dest: /var/www-testweb/html/phpinfo.php
         content: |
           <?php phpinfo(); ?>
       become: yes
     - name: Ensure testweb has a different landing page
-      copy:
+      ansible.builtin.copy:
         dest: /var/www-testweb/html/index.html
         content: |
           <html>
@@ -48,7 +48,7 @@
           </html>
       become: yes
     - name: Ensure firewall service is started
-      service:
+      ansible.builtin.service:
         name: firewalld
         state: started
         enabled: yes
@@ -59,7 +59,7 @@
         state: permissive
       become: yes
     - name: Doing something...
-      command: firewall-cmd --set-default-zone=public
+      ansible.builtin.command: firewall-cmd --set-default-zone=public
       become: yes
     - name: Doing something...
       ansible.posix.firewalld:
@@ -70,13 +70,13 @@
         zone: public
       become: yes
     - name: Doing something...
-      service:
+      ansible.builtin.service:
         name: firewalld
         state: stopped
         enabled: no
       become: yes
     - name: Doing something...
-      service:
+      ansible.builtin.service:
         name: httpd
         state: stopped
         enabled: no

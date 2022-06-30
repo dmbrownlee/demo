@@ -5,12 +5,12 @@
     - server1
   tasks:
     - name: Doing something...
-      file:
+      ansible.builtin.file:
         path: "/usr/share/man/man1/ps.1.gz"
         state: absent
       become: yes
     - name: Doing something...
-      file:
+      ansible.builtin.file:
         path: "/usr/share/man/man1p/ps.1p.gz"
         state: absent
       become: yes
@@ -21,25 +21,25 @@
     - localhost
   tasks:
     - name: Doing something...
-      yum:
+      ansible.builtin.yum:
         name: nginx
         state: present
       become: yes
     - name: Doing something...
-      command: tuned-adm profile balanced
+      ansible.builtin.command: tuned-adm profile balanced
       become: yes
     - name: Doing something...
-      file:
+      ansible.builtin.file:
         path: "/usr/share/man/man1/ps.1.gz"
         state: absent
       become: yes
     - name: Doing something...
-      file:
+      ansible.builtin.file:
         path: "/usr/share/man/man1p/ps.1p.gz"
         state: absent
       become: yes
     - name: Doing something...
-      file:
+      ansible.builtin.file:
         path: "/etc/yum.repos.d/CentOS-Linux-BaseOS.repo"
         state: absent
       become: yes

@@ -56,7 +56,7 @@
   become: yes
   when: ipastatus.rc == 4
 - name: Ensure cacert.p12 file is available via FTP
-  copy:
+  ansible.builtin.copy:
     src: /root/cacert.p12
     dest: /var/ftp/pub/cacert.p12
     remote_src: yes

@@ -39,7 +39,7 @@
             url: https://download.rockylinux.org/vault/rocky/8.5/BaseOS/x86_64/os/Packages/b/bash-completion-2.7-5.el8.noarch.rpm
             dest: /usr/share/nginx/html/repo/Packages
         - name: Run createrepo on the repo directory
-          command: createrepo /usr/share/nginx/html/repo
+          ansible.builtin.command: createrepo /usr/share/nginx/html/repo
       become: yes
 - name: Configure server2
   gather_facts: false
