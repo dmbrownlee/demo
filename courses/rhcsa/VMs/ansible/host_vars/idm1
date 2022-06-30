@@ -75,6 +75,10 @@ service:
     fw_permanent: yes
     fw_immediate: yes
     fw_zone: internal
+    smbusers:
+      - name: smbuser1
+      - name: smbuser2
+      - name: smbuser3
     shares:
       - sharename: samba
         path: /srv/samba

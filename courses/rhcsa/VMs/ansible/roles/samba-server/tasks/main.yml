@@ -28,3 +28,20 @@
     - samba
     - samba-client
   become: yes
+- name: Get a list of Samba users that already exist in tdbsam database
+  ansible.builtin.shell: pdbedit -L | cut -f1 -d':'
+  become: yes
+  register: pdbedit
+  changed_when: false
+  when:
+    - service.samba.smbusers is defined
+    - ( service.samba.smbusers | length > 0)
+- name: Ensure missing SMB user accounts are created
+  ansible.builtin.include_tasks: smbuser-add.yml
+  loop: "{{ service.samba.smbusers }}"
+  loop_control:
+    loop_var: smbuser
+    label: "{{ smbuser.name }}"
+  when:
+    - pdbedit.stdout is defined
+    - smbuser.name not in pdbedit.stdout

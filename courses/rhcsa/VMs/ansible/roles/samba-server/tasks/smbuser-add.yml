@@ -1,0 +1,9 @@
+---
+- name: Ensure Samba user has corresponding Linux user for file ownership
+  ansible.builtin.user:
+    name: "{{ smbuser.name }}"
+    shell: /sbin/nologin
+  become: yes
+- name: Ensure Samba user exists in tdbsam database
+  ansible.builtin.shell: echo -e "password\npassword" | smbpasswd -sa {{ smbuser.name }}
+  become: yes
