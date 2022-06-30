@@ -1077,6 +1077,40 @@ study_guide:
     - title: 'Managing Containers'
       lastpage: 570
       oreilly_page: 'ch26.xhtml'
+      resources:
+        - text: 'Red Hat Certified System Administrator (RHCSA), 3/e'
+          type: heading
+        - text: 'Lesson 27: Running Containers'
+          type: subheading
+        - text: 'Learning objectives (0:33)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_00'
+        - text: '27.1 Understanding Containers (11:19)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_01'
+        - text: '27.2 Running a Container (11:51)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_02'
+        - text: '27.3 Managing Images (10:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_03'
+        - text: '27.4 Managing Containers (10:42)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_04'
+        - text: '27.5 Attaching Storage to Containers (6:14)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_05'
+        - text: '27.6 Managing Containers as Services (10:26)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_06'
+        - text: 'Lesson 27 Lab: Managing Containers (1:00)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_07'
+        - text: 'Lesson 27 Lab Solution: Managing Containers (3:59)'
+          type: link
+          url: 'https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_08'
+      labs:
+        - title: "Convert epoch timestamps to human readable timestamps"
   # - text: 'Module 5: Sample Exam'
   #   type: subheading
   # - text: 'Module 5: Sample Exam (0:14)'
