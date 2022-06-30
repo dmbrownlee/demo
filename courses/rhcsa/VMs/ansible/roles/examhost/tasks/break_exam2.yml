@@ -1,6 +1,6 @@
 ---
 - name: Ensure SELinux is configured for exam practice
-  ansible.builtin.selinux:
+  ansible.posix.selinux:
     policy: targeted
     state: permissive
   become: yes

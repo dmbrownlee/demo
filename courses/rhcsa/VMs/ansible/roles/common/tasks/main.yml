@@ -12,7 +12,7 @@
   become: yes
   when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"
 - name: Ensure SELinux is in enforcing mode
-  ansible.builtin.selinux:
+  ansible.posix.selinux:
     policy: targeted
     state: enforcing
   become: yes

@@ -5,7 +5,7 @@
     - localhost
   tasks:
     #- name: Ensure SELinux is in permissive mode
-    #  selinux:
+    #  ansible.posix.selinux:
     #    policy: targeted
     #    state: permissive
     #  become: yes

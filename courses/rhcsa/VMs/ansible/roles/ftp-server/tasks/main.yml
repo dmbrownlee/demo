@@ -18,7 +18,7 @@
     enabled: "{{ service.ftp.enabled }}"
   become: yes
 - name: Ensure FTP traffic is allowed through firewall
-  ansible.builtin.firewalld:
+  ansible.posix.firewalld:
     service: ftp
     state: "{{ service.ftp.fw_state }}"
     permanent: "{{ service.ftp.fw_permanent }}"

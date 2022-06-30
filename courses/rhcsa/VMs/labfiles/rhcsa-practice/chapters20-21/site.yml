@@ -5,12 +5,12 @@
     - localhost
   tasks:
     - name: Ensure SELinux is in permissive mode
-      selinux:
+      ansible.posix.selinux:
         policy: targeted
         state: permissive
       become: yes
     - name: Ensure firewall allows HTTP traffic
-      firewalld:
+      ansible.posix.firewalld:
         service: http
         permanent: yes
         immediate: yes

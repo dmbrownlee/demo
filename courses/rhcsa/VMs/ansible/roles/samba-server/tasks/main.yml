@@ -18,7 +18,7 @@
     enabled: "{{ service.samba.enabled }}"
   become: yes
 - name: Ensure Samba traffic is allowed through firewall
-  ansible.builtin.firewalld:
+  ansible.posix.firewalld:
     service: "{{ item }}"
     state: "{{ service.samba.fw_state }}"
     permanent: "{{ service.samba.fw_permanent }}"

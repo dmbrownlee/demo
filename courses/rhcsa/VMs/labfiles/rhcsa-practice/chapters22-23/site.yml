@@ -54,7 +54,7 @@
         enabled: yes
       become: yes
     - name: Doing something...
-      selinux:
+      ansible.posix.selinux:
         policy: targeted
         state: permissive
       become: yes
@@ -62,7 +62,7 @@
       command: firewall-cmd --set-default-zone=public
       become: yes
     - name: Doing something...
-      firewalld:
+      ansible.posix.firewalld:
         interface: enp0s3
         state: enabled
         immediate: yes

@@ -18,7 +18,7 @@
     enabled: "{{ service.nfs.enabled }}"
   become: yes
 - name: Ensure NFS traffic is allowed through firewall
-  ansible.builtin.firewalld:
+  ansible.posix.firewalld:
     service: "{{ item }}"
     state: "{{ service.nfs.fw_state }}"
     permanent: "{{ service.nfs.fw_permanent }}"

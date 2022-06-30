@@ -5,7 +5,7 @@
     - localhost
   tasks:
     - name: Ensure firewall allows Samba traffic
-      firewalld:
+      ansible.posix.firewalld:
         service: samba
         state: enabled
         permanent: yes
@@ -13,7 +13,7 @@
         immediate: yes
       become: yes
     - name: Ensure SELinux is in permissive mode
-      selinux:
+      ansible.posix.selinux:
         policy: targeted
         state: permissive
       become: yes
