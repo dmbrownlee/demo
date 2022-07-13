@@ -21,4 +21,4 @@ Read chapter 26 of [Red Hat RHCSA 8 Cert Guide: EX200 (Certification Guide) 2nd 
 - [Lesson 27 Lab Solution: Managing Containers (3:59)](https://learning.oreilly.com/videos/red-hat-certified/9780135656495/9780135656495-RCSA_04_27_08)
 
 ## Labs
-[lab26-1: Convert epoch timestamps to human readable timestamps](lab26-1.md)</br>
+[lab26-1: Podman Container Practice](lab26-1.md)</br>
