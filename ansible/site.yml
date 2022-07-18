@@ -49,7 +49,7 @@
           tags: basebox
       vars:
         boxes:
-          - { distro: rocky, version: "8.6", configuration: core }
-          - { distro: rocky, version: "8.6", configuration: minimal }
-          - { distro: rocky, version: "8.6", configuration: gse }
+          - { distro: rocky, version: "9", configuration: core }
+          - { distro: rocky, version: "9", configuration: minimal }
+          - { distro: rocky, version: "9", configuration: gse }
       tags: basebox
