@@ -10,7 +10,7 @@ iso_name: "pfSense-CE-2.6.0-RELEASE-amd64.iso"
 install_file: "none"
 templateks: "none"
 iso:
-  url: "https://nyifiles.netgate.com/mirror/downloads/pfSense-CE-2.6.0-RELEASE-amd64.iso.gz"
+  url: "https://atxfiles.netgate.com/mirror/downloads/pfSense-CE-2.6.0-RELEASE-amd64.iso.gz"
   alturl: "none"
   gzipped: true
   gzip_checksum: "sha256:941a68c7f20c4b635447cceda429a027f816bdb78d54b8252bb87abf1fc22ee3"
