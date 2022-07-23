@@ -15,11 +15,11 @@
 
     # post_tasks:
   tasks:
-    - name: Ensure the required Vagrant baseboxes have been built
+    - name: Ensure the required Vagrant boxes have been built
       include_role:
-        name: basebox
+        name: vagrantbox
         apply:
-          tags: basebox
+          tags: vagrantbox
       vars:
         buildvms: true
         boxes:
@@ -27,4 +27,4 @@
           - { distro: rocky, version: "8.5", configuration: core }
           - { distro: rocky, version: "8.5", configuration: minimal }
           - { distro: rocky, version: "8.5", configuration: gse }
-      tags: basebox
+      tags: vagrantbox

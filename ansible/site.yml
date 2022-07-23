@@ -18,16 +18,16 @@
       tags: labenv_networkplus
 
   post_tasks:
-    - name: Ensure the required Vagrant baseboxes have been built
+    - name: Ensure the required Vagrant boxes have been built
       include_role:
-        name: basebox
+        name: vagrantbox
         apply:
-          tags: basebox
+          tags: vagrantbox
       vars:
         boxes:
           - { distro: debian, version: "11.1.0", configuration: default }
           # - { distro: pfsense, version: "2.6.0", configuration: default }
-      tags: basebox
+      tags: vagrantbox
 
 - name: Ensure virtual lab environment for rhcsa is configured
   hosts: localhost
@@ -42,14 +42,14 @@
       tags: labenv_rhcsa
 
   post_tasks:
-    - name: Ensure the required Vagrant baseboxes have been built
+    - name: Ensure the required Vagrant boxes have been built
       include_role:
-        name: basebox
+        name: vagrantbox
         apply:
-          tags: basebox
+          tags: vagrantbox
       vars:
         boxes:
           - { distro: rocky, version: "9", configuration: core }
           - { distro: rocky, version: "9", configuration: minimal }
           - { distro: rocky, version: "9", configuration: gse }
-      tags: basebox
+      tags: vagrantbox
