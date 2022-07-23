@@ -16,7 +16,7 @@
       VirtualBox Manager.  Just don't interact with the VM as it is being built
       as that might interfere with the build and cause it to fail.
 - name: Build box file ({{ distro }}-{{ version }}-{{ configuration }})
-  ansible.builtin.command: packer build -color=false -force -var "configuration={{ configuration }}" -var "username={{ vagrant.provisioning_user }}" -var "password={{ vagrant.provisioning_password }}" {{ distro }}-{{ version }}-{{ configuration }}.json
+  ansible.builtin.command: packer build -color=false -force {{ distro }}-{{ version }}-{{ configuration }}.json
   args:
     chdir: "{{ packer.build_dir }}"
     creates: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.box"

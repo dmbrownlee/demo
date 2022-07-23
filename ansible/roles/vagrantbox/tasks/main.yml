@@ -1,15 +1,10 @@
 ---
-# do one time only
-- name: Assert this host can use this role
+- name: Ensure the necessary host variables have been set
   ansible.builtin.assert:
-    that: ansible_distribution in role.supported_distributions
-    fail_msg: "This role is not supported on your host operating system."
-- name: Ensure the packer build directories exists before copying files there
-  # this is a bit hacky as it hardcodes a directory path for the Win10 box
-  ansible.builtin.file:
-    path: "{{ packer.build_dir }}"
-    state: directory
-    mode: '0700'
+    that: user.download_dir is defined and packer.build_dir is defined
+    fail_msg: |
+      This role requires both user.download_dir and packer.build_dir to be
+      defined.  Please ensure both of these are set in your host variables.
 - name: Get the list of currently available Vagrant base boxes
   ansible.builtin.shell: set -o pipefail && vagrant box list | awk '{ print $1 }'
   args:

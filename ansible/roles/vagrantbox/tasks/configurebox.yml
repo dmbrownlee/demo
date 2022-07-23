@@ -4,25 +4,10 @@
     boxname: "{{ distro }}-{{ version }}-{{ configuration }}"
 - name: Read variables from vars/{{ distro }}-{{ version }}.yml
   ansible.builtin.include_vars: "{{ distro }}-{{ version }}.yml"
-- name: Ensure we have a packer config file for {{ distro }}-{{ version }}-{{ configuration }}
-  ansible.builtin.template:
-    dest: "{{ packer.build_dir }}/{{ distro }}-{{ version }}-{{ configuration }}.json"
-    src: "{{ packer_template }}"
-    mode: '0600'
-    force: yes
-- name: Ensure we import the variables for the {{ configuration }} configuration
-  ansible.builtin.include_vars:
-    file: "{{ distro }}-{{ version }}-{{ configuration }}-packages.yml"
-- name: Ensure we have an installer file ({{ install_file }})
-  ansible.builtin.template:
-    dest: "{{ packer.build_dir }}/{{ install_file }}"
-    src: "{{ templateks }}"
-    mode: '0600'
-    force: yes
-  when: templateks is defined and templateks != 'none'
+  when: distro_uses_var_file
 - name: Check for gzipped ISO in download directory
   ansible.builtin.stat:
-    path: "{{ user.download_dir }}/{{ iso_name }}.gz"
+    path: "{{ user.download_dir }}/{{ iso.name }}.gz"
     checksum_algorithm: sha256
   register: gziso
   when: iso.gzipped
@@ -38,7 +23,7 @@
   ansible.builtin.command:
     cmd: gunzip -k {{ iso_name }}.gz
     chdir: "{{ user.download_dir }}"
-    creates: "{{ iso_name }}"
+    creates: "{{ iso.name }}"
   when: iso.gzipped
 - name: Build the base box if it is currently unavailable
   ansible.builtin.include_tasks: buildbox.yml
