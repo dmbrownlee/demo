@@ -1,4 +1,5 @@
 ---
 rpm_gpg_keys:
-  - RPM-GPG-KEY-rockyofficial
-  - RPM-GPG-KEY-EPEL-8
+  - RPM-GPG-KEY-EPEL-9
+  - RPM-GPG-KEY-Rocky-9
+  - RPM-GPG-KEY-Rocky-9-Testing
