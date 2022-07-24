@@ -1,6 +1,6 @@
 # vi: ft=yaml
 ---
-hostname: ansible2
+hostname: ansible2.example.com
 nmcons:
   present:
     - conn_name: vagrant

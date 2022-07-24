@@ -1,7 +1,8 @@
 ---
 - name: Ensure the hostname is set
   ansible.builtin.hostname:
-    name: "{{ ansible_fqdn }}"
+    name: "{{ hostname }}"
+    use: systemd
   become: yes
   notify: restart_getty
 - name: Ensure we accept the RPM GPG keys

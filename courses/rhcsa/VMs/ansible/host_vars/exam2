@@ -1,6 +1,6 @@
 # vi: ft=yaml
 ---
-hostname: exam2
+hostname: exam2.example.com
 exam_config: exam2
 nmcons:
   present:

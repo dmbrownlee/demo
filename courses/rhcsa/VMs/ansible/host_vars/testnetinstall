@@ -1,6 +1,6 @@
 # vi: ft=yaml
 ---
-hostname: testnetinstall
+hostname: testnetinstall.example.com
 nmcons:
   present:
     - conn_name: vagrant

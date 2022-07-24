@@ -1,6 +1,6 @@
 # vi: ft=yaml
 ---
-hostname: server2
+hostname: server2.example.com
 nmcons:
   present:
     - conn_name: vagrant
