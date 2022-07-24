@@ -5,5 +5,4 @@
 *.un~
 .DS_Store
 *.retry
-**/Vagrantfile
 courses/template

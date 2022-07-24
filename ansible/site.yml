@@ -13,11 +13,7 @@
   hosts: localhost
   tags: networkplus
 
-  roles:
-    - role: vagrantfile_networkplus
-      tags: labenv_networkplus
-
-  post_tasks:
+  tasks:
     - name: Ensure the required Vagrant boxes have been built
       include_role:
         name: vagrantbox
@@ -33,15 +29,7 @@
   hosts: localhost
   tags: rhcsa
 
-  roles:
-    - role: vagrantfile_rhcsa
-      vars:
-        distro: rocky
-        version: "8.6"
-        iso_name: "Rocky-8.6-x86_64-dvd1.iso"
-      tags: labenv_rhcsa
-
-  post_tasks:
+  tasks:
     - name: Ensure the required Vagrant boxes have been built
       include_role:
         name: vagrantbox
