@@ -204,7 +204,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "#{ENV["HOME"]}/Downloads/Rocky-9-x86_64-dvd.iso"]
+        "--medium", "#{ENV["HOME"]}/Downloads/Rocky-9.0-x86_64-dvd.iso"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
@@ -260,7 +260,7 @@ Vagrant.configure("2") do |config|
         "--type", "dvddrive",
         "--port", "0",
         "--device", "0",
-        "--medium", "#{ENV["HOME"]}/Downloads/Rocky-9-x86_64-dvd.iso"]
+        "--medium", "#{ENV["HOME"]}/Downloads/Rocky-9.0-x86_64-dvd.iso"]
       # virtualbox.customize ["modifyvm", :id, "--boot1", "DVD", "--boot2", "disk"]
     end
     node.vm.provision "default", type: :shell, run: "never" do |shell|
