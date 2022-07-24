@@ -1,0 +1,85 @@
+{
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_urls": [
+      "/Users/student/Downloads/Rocky-9.0-x86_64-dvd.iso",
+      "https://download.rockylinux.org/pub/rocky/9.0/isos/x86_64/Rocky-9.0-x86_64-dvd.iso"
+    ],
+    "iso_checksum": "sha256:55dbf904b35969be9f6d96f042b7470d1a3cb5c953bba47ab8f79740560d8a8d",
+    "iso_target_path": "/Users/student/Downloads/Rocky-9.0-x86_64-dvd.iso",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "40m",
+    "disk_size" : "20480",
+    "cpus": "1",
+    "memory": 1024,
+    "vm_name": "rocky-9-core",
+    "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
+
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--vram", "64"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+      ["modifyvm", "{{.Name}}", "--firmware", "EFI"],
+      ["setextradata", "{{.Name}}", "GUI/ScaleFactor", "2.0"]
+    ],
+            "boot_command": [
+          "e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rocky-9-core-ks.cfg<leftCtrlOn>x"
+    ],
+    "shutdown_command": "echo vagrant | sudo -S shutdown -P now"
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "/Users/student/keys/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {  "type": "shell",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/vagrant",
+                  "chmod 0440 /etc/sudoers.d/vagrant"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "yum -y install epel-release"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "yum -y install bzip2 make dkms kernel-devel kernel-headers"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "yum -y update"]
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "reboot"],
+       "expect_disconnect": true,
+       "pause_before": "10s"
+    },
+    {  "type": "shell",
+       "only": [ "virtualbox-iso" ],
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": [ "mount -t iso9660 -o ro /home/vagrant/VBoxGuestAdditions.iso /mnt",
+                   "cd /mnt",
+                   "./VBoxLinuxAdditions.run"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "output": "rocky-9-core.box"
+  }]
+}

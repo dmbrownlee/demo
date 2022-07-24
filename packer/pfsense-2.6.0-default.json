@@ -1,0 +1,102 @@
+{
+  "builders": [{
+    "vm_name": "pfsense-2.6.0-default",
+    "type": "virtualbox-iso",
+    "guest_os_type": "FreeBSD_64",
+    "iso_urls": [
+      "/Users/student/Downloads/pfSense-CE-2.6.0-RELEASE-amd64.iso"
+    ],
+    "iso_checksum": "sha256:f6520bb14a5e690c6533e4e8fbf4a48d2967f3bc35a713e716b9c64317a13f23",
+    "iso_target_path": "/Users/student/Downloads/pfSense-CE-2.6.0-RELEASE-amd64.iso",
+
+    "http_directory" : ".",
+    "http_port_min" : 9001,
+    "http_port_max" : 9001,
+
+    "ssh_username": "vagrant",
+    "ssh_password": "vagrant",
+    "ssh_wait_timeout": "40m",
+    "disk_size" : "20480",
+    "cpus": "1",
+    "memory": 1024,
+    "headless": true,
+    "hard_drive_interface": "sata",
+    "sata_port_count": 4,
+    "hard_drive_nonrotational": true,
+
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--vram", "64"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+      ["setextradata", "{{.Name}}", "GUI/ScaleFactor", "2.0"],
+      ["modifyvm", "{{.Name}}", "--nic2", "null"],
+      ["modifyvm", "{{.Name}}", "--nic3", "null"],
+      ["modifyvm", "{{.Name}}", "--nic4", "null"]
+    ],
+    "boot_wait": "30s",
+    "boot_command": [
+      "<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait> <wait><enter>",
+      "<wait><left><enter>",
+      "<wait1m>",
+      "<enter><wait><enter>",
+      "<wait2m>",
+      "<wait>8<enter>",
+      "<wait>adduser<enter>",
+      "<wait>vagrant<enter>",
+      "<wait>vagrant<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait>admins<enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait><enter>",
+      "<wait>vagrant<enter>",
+      "<wait>vagrant<enter>",
+      "<wait><enter>",
+      "<wait>yes<enter>",
+      "<wait>no<enter>",
+      "<wait>echo 'vagrant ALL=(ALL) NOPASSWD:ALL' >> /usr/local/etc/sudoers<enter>",
+      "<wait>pkg install -y pfSense-pkg-sudo bash<enter>",
+      "<wait10>exit<enter>",
+      "<wait>12<enter>",
+      "<wait>unset($config['interfaces']['wan']['blockpriv']);<enter>",
+      "<wait>write_config();<enter>",
+      "<wait>exec<enter>",
+      "<wait>exit<enter>",
+      "<wait>14<enter>",
+      "<wait>y<enter>",
+      "<wait>8<enter>",
+      "<wait>easyrule pass wan tcp any any 22<enter>",
+      "<wait>pfctl -d<enter>",
+      "<wait>exit<enter>"
+    ],
+    "shutdown_command": "echo vagrant | sudo -S poweroff"
+  }],
+  "provisioners": [
+    {  "type": "file",
+       "source": "/Users/student/keys/vagrant.pub",
+       "destination": "/tmp/vagrant.pub"
+    },
+    {  "type": "shell",
+       "execute_command": "echo 'vagrant' | {{ .Vars }} sudo -E -S sh -c '{{ .Path }}'",
+       "inline": ["mkdir -m 0700 /home/vagrant/.ssh",
+                  "mv /tmp/vagrant.pub /home/vagrant/.ssh/authorized_keys",
+                  "chown -R vagrant:vagrant /home/vagrant/.ssh",
+                  "chmod 644 /home/vagrant/.ssh/authorized_keys"]
+    }
+  ],
+  "post-processors": [{
+    "type": "vagrant",
+    "output": "pfsense-2.6.0-default.box"
+  }]
+}
