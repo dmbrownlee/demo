@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provider :virtualbox do |virtualbox|
     virtualbox.gui = false
-    virtualbox.memory = 1024
+    virtualbox.memory = 2048
     virtualbox.customize ["modifyvm", :id, "--firmware", "EFI"]
     virtualbox.customize ["modifyvm", :id, "--cableconnected1", "on"]
     virtualbox.customize ["modifyvm", :id, "--nic2", "natnetwork"]
@@ -78,7 +78,7 @@ Vagrant.configure("2") do |config|
     node.vm.box = "rocky-9-minimal"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "idm1"
-      virtualbox.memory = 2048
+      virtualbox.memory = 4096
     end
   end
 
@@ -88,7 +88,6 @@ Vagrant.configure("2") do |config|
     node.vm.box = "rocky-9-minimal"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "control"
-      virtualbox.memory = 2048
     end
   end
 
@@ -116,7 +115,6 @@ Vagrant.configure("2") do |config|
     node.vm.box = "rocky-9-gse"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
-      virtualbox.memory = 2048
       virtualbox.customize ["storageattach", :id,
         "--storagectl", "IDE Controller",
         "--port", "0",
@@ -167,7 +165,6 @@ Vagrant.configure("2") do |config|
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "installhost"
       virtualbox.gui = true
-      virtualbox.memory = 2048
       # Dettach and destroy original disk
       if File.file?(disk)
         virtualbox.customize ["storageattach", :id,
@@ -223,7 +220,6 @@ Vagrant.configure("2") do |config|
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "installhost2"
       virtualbox.gui = true
-      virtualbox.memory = 2048
       virtualbox.customize ["modifyvm", :id, "--firmware", "bios"]
       # Dettach and destroy original disk
       if File.file?(disk)
