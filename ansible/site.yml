@@ -25,7 +25,7 @@
           tags: vagrantbox
       vars:
         boxes:
-          - { distro: debian, version: "11.1.0", configuration: default }
+          - { distro: debian, version: "11.4.0", configuration: default }
           # - { distro: pfsense, version: "2.6.0", configuration: default, distro_uses_var_file: true }
       tags: vagrantbox
 

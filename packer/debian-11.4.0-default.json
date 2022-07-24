@@ -2,19 +2,19 @@
   "variables": {
     "username": "vagrant",
     "password": "vagrant",
-    "checksum": "sha256:8488abc1361590ee7a3c9b00ec059b29dfb1da40f8ba4adf293c7a30fa943eb2"
+    "checksum": "sha512:eeab770236777e588f6ce0f984a7f3e85d86295625010e78a0fca3e873f78188af7966b53319dde3ddcaaaa5d6b9c803e4d80470755e75796fbf0e96c973507f"
   },
   "builders": [{
-    "vm_name": "debian-11.1.0-default",
+    "vm_name": "debian-11.4.0-default",
     "type": "virtualbox-iso",
     "guest_os_type": "Debian_64",
     "iso_urls": [
-      "/Users/student/Downloads/debian-11.1.0-amd64-netinst.iso",
-      "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.1.0-amd64-netinst.iso",
-      "http://cdimage.debian.org/mirror/cdimage/archive/11.1.0/amd64/iso-cd/debian-11.1.0-amd64-netinst.iso"
+      "/Users/student/Downloads/debian-11.4.0-amd64-netinst.iso",
+      "http://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.4.0-amd64-netinst.iso",
+      "http://cdimage.debian.org/mirror/cdimage/archive/11.4.0/amd64/iso-cd/debian-11.4.0-amd64-netinst.iso"
     ],
     "iso_checksum": "{{ user `checksum` }}",
-    "iso_target_path": "/Users/student/Downloads/debian-11.1.0-amd64-netinst.iso",
+    "iso_target_path": "/Users/student/Downloads/debian-11.4.0-amd64-netinst.iso",
 
     "http_directory" : ".",
     "http_port_min" : 9001,
@@ -43,7 +43,7 @@
     "boot_command": [
         "<esc><wait>",
         "install <wait>",
-        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-11.1.0-preseed.cfg <wait>",
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/debian-11.4.0-preseed.cfg <wait>",
         "debian-installer=en_US.UTF-8 <wait>",
         "auto <wait>",
         "locale=en_US.UTF-8 <wait>",
@@ -90,6 +90,6 @@
   ],
   "post-processors": [{
     "type": "vagrant",
-    "output": "debian-11.1.0-default.box"
+    "output": "debian-11.4.0-default.box"
   }]
 }
