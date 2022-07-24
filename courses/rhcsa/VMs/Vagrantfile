@@ -74,6 +74,7 @@ Vagrant.configure("2") do |config|
   #====================
   #=== idm1 ==
   config.vm.define "idm1" do |node|
+    node.vm.hostname = "idm1.example.com"
     node.vm.box = "rocky-9-minimal"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "idm1"
@@ -83,6 +84,7 @@ Vagrant.configure("2") do |config|
 
   #=== control ==
   config.vm.define "control", autostart: false do |node|
+    node.vm.hostname = "control.example.com"
     node.vm.box = "rocky-9-minimal"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "control"
@@ -92,6 +94,7 @@ Vagrant.configure("2") do |config|
 
   #=== ansible1 ===
   config.vm.define "ansible1", autostart: false do |node|
+    node.vm.hostname = "ansible1.example.com"
     node.vm.box = "rocky-9-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "ansible1"
@@ -100,6 +103,7 @@ Vagrant.configure("2") do |config|
 
   #=== ansible2 ===
   config.vm.define "ansible2", autostart: false do |node|
+    node.vm.hostname = "ansible2.example.com"
     node.vm.box = "rocky-9-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "ansible2"
@@ -108,6 +112,7 @@ Vagrant.configure("2") do |config|
 
   #=== server1 ==
   config.vm.define "server1" do |node|
+    node.vm.hostname = "server1.example.com"
     node.vm.box = "rocky-9-gse"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "server1"
@@ -123,6 +128,7 @@ Vagrant.configure("2") do |config|
 
   #=== server2 ===
   config.vm.define "server2" do |node|
+    node.vm.hostname = "server2.example.com"
     node.vm.box = "rocky-9-minimal"
     disk = "#{ENV["HOME"]}/VirtualBox VMs/server2/server2_disk2.vmdk"
     node.vm.provider :virtualbox do |virtualbox|
@@ -152,6 +158,7 @@ Vagrant.configure("2") do |config|
   #==============================
   #=== installhost ===
   config.vm.define "installhost", autostart: false do |node|
+    node.vm.hostname = "installhost.example.com"
     node.vm.box = "rocky-9-core"
     disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/rocky-9-disk001.vmdk"
     disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
@@ -206,6 +213,7 @@ Vagrant.configure("2") do |config|
   end
   #=== installhost2 (BIOS) ===
   config.vm.define "installhost2", autostart: false do |node|
+    node.vm.hostname = "installhost2.example.com"
     node.vm.box = "rocky-9-core"
     disk = "#{ENV["HOME"]}/VirtualBox VMs/installhost/rocky-9-disk001.vmdk"
     disk1 = "#{ENV["HOME"]}/VirtualBox VMs/installhost/installhost-disk001.vmdk"
@@ -265,6 +273,7 @@ Vagrant.configure("2") do |config|
   #===================================
   #=== exam1 ===
   config.vm.define "exam1", autostart: false do |node|
+    node.vm.hostname = "exam1.example.com"
     node.vm.box = "rocky-9-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "exam1"
@@ -273,6 +282,7 @@ Vagrant.configure("2") do |config|
 
   #=== exam2 ===
   config.vm.define "exam2", autostart: false do |node|
+    node.vm.hostname = "exam2.example.com"
     node.vm.box = "rocky-9-core"
     node.vm.provider :virtualbox do |virtualbox|
       virtualbox.name = "exam2"
