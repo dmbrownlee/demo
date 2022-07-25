@@ -7,31 +7,18 @@ complete the tasks may make the exam esier or harder).
 
 - Configure sshd to listen to port 2022
 
-#==============================================================================
-# Ignore this task.  It is not currently possible with the existing base box
-#
-# - Create a 4GB logical volume named tftpboot in the existing volume group,
-#   format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
-#   the system is booted.
-#
-#==============================================================================
-
-- Your yum repo for BaseOS should use this mirrorlist URL:
-  http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=BaseOS&infra=$infra
-
-  (Note: if you are using Rocky or AlmaLinux instead of CentOS, your repo URL will be
-  different.  In that case, look at the repos configured on exam1)
-
-  (Tip: After you have configured the repo for the BaseOS, run "yum update" and
-  reinstall the package that provides the default repo config files to reenable
-  the other default yum repositories).
+- Create a 4GB logical volume named tftpboot in a new volume group,
+  format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
+  the system is booted.
 
 - Install the syslinux package, the Apache server, and a TFTP server.
 
-- Ensure the Apache web server and tftp are started when the system
-  boots and are accessible through the firewall.
+  (Hint: When troubleshooting a problem, it can be helpful to compare the
+   configuration of a machine that works to that one that doesn't.)
 
-- Extract the files in /root/pxeconf.tar relative to the /var directory.
+  (Tip: After you have configured the repo for the BaseOS, run "dnf4dd update" and
+  reinstall the package that provides the default repo config files to reenable
+  the other default yum repositories).
 
 - Copy the following files from /usr/share/syslinux to
   /var/lib/tftpboot/pxelinux:
@@ -44,14 +31,9 @@ complete the tasks may make the exam esier or harder).
   http://mirror.centos.org/centos/8/BaseOS/x86_64/os/isolinux/ and move them to
   /var/lib/tftpboot/pxelinux/.
 
-#==============================================================================
-# Ignore this task.  It is not currently possible with the existing base box
-#
-# - Create a 2GB logical volume named data in the existing volume group,
-#   format it with ext4, and make sure it gets mounted on /var/data by UUID when
-#   the system is booted.
-#
-#==============================================================================
+- Create a 2GB logical volume named data in any volume group with space,
+  format it with ext4, and make sure it gets mounted on /var/data by UUID when
+  the system is booted.
 
 - Create users xavier, jed, and hastin.  Make xavier and jed members of a group
   named accounting and hastin a member of a group named auditors.  Set their
