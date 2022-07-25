@@ -47,3 +47,9 @@
     update_password: always
     password: "$6$superfoo$3IVX1XHH.9sjUofpwlkQa8g91Y1VNxww4utLchyhSFG6RYPflXfwWcg4EVdZyJs8uEdy6r0TpYmcor0/k//lg1"
   become: yes
+- name: Ensure root login with a password is allowed
+  ansible.builtin.replace:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PermitRootLogin prohibit-password$'
+    replace: 'PermitRootLogin yes'
+  become: yes
