@@ -30,12 +30,12 @@
   roles:
     - role: samba-server
 
-- name: IdM Servers
-  hosts: idm_servers
-  roles:
-    - role: idm-server
-    - role: idm-users
-    - role: idm-automounts
+# - name: IdM Servers
+#   hosts: idm_servers
+#   roles:
+#     - role: idm-server
+#     - role: idm-users
+#     - role: idm-automounts
 
 - name: Configure access to labfiles from within the VM
   hosts: labhosts
