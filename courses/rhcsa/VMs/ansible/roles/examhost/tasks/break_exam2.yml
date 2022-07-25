@@ -1,5 +1,5 @@
 ---
-- name: name: Configuration step 1
+- name: Configuration step 1
   ansible.posix.selinux:
     policy: targeted
     state: permissive
@@ -7,13 +7,13 @@
   register: selinux
   notify: reboot
   when: exam_config == "exam2"
-- name: name: Configuration step 2
+- name: Configuration step 2
   ansible.builtin.service:
     name: firewalld
     state: stopped
     enabled: no
   become: yes
-- name: name: Configuration step 3
+- name: Configuration step 3
   ansible.builtin.copy:
     dest: /root
     src: "{{ item }}"
@@ -21,7 +21,7 @@
   with_items:
     - exam2/README
     - exam2/pxeconf.tar
-- name: name: Configuration step 4
+- name: Configuration step 4
   ansible.builtin.file:
     state: "{{ item }}"
     path: "/etc/yum.repos.d"
@@ -32,23 +32,23 @@
   with_items:
     - absent
     - directory
-- name: name: Configuration step 5
+- name: Configuration step 5
   ansible.builtin.lineinfile:
     path: /etc/pam.d/login
     line: auth [user_unknown=ignore success=ok ignore=ignore default=bad] pam_securetty.so
   become: yes
-- name: name: Configuration step 6
+- name: Configuration step 6
   ansible.builtin.file:
     path: /etc/securetty
     state: touch
   become: yes
-- name: name: Configuration step 7
+- name: Configuration step 7
   ansible.builtin.user:
     name: root
     update_password: always
     password: "$6$superfoo$3IVX1XHH.9sjUofpwlkQa8g91Y1VNxww4utLchyhSFG6RYPflXfwWcg4EVdZyJs8uEdy6r0TpYmcor0/k//lg1"
   become: yes
-- name: name: Configuration step 8
+- name: Configuration step 8
   ansible.builtin.replace:
     path: /etc/ssh/sshd_config
     regexp: '^#PermitRootLogin prohibit-password$'
