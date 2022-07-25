@@ -1,10 +1,10 @@
 ---
-- name: Ensure example_com connection has been removed
+- name: Configuration step 1
   community.general.nmcli:
     conn_name: "example_com"
     state: absent
   become: yes
-- name: Ensure unconfigured connection is configured for practice
+- name: Configuration step 2
   community.general.nmcli:
     conn_name: "unconfigured"
     state: present
@@ -15,14 +15,14 @@
     never_default4: "yes"
     type: "ethernet"
   become: yes
-- name: Copy exam files to root's homedir
+- name: Configuration step 3
   ansible.builtin.copy:
     dest: /root
     src: "{{ item }}"
   become: yes
   with_items:
     - exam1/README
-- name: Lock the root user's password
+- name: Configuration step 4
   ansible.builtin.user:
     name: root
     password: '!'
