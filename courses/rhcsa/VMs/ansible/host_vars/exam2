@@ -12,7 +12,8 @@ nmcons:
       netvars: rhcsa
       ifname: enp0s8
       autoconnect: yes
-      ip4: 192.168.4.230/24
+      ip4: 192.168.4.102/24
   absent:
     - conn_name: "enp0s3"
     - conn_name: "enp0s8"
+    - conn_name: "Wired connection 1"

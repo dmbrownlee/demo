@@ -16,3 +16,4 @@ nmcons:
   absent:
     - conn_name: "enp0s3"
     - conn_name: "enp0s8"
+    - conn_name: "Wired connection 1"
