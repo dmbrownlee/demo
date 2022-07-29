@@ -31,7 +31,7 @@
   format it with XFS, and make sure it gets mounted on /var/lib/tftpboot when
   the system is booted.
 
-- Create a 2GB logical volume named lv_share in the vg_data volume group,
+- Create a 2GB logical volume named lv_shares in the vg_data volume group,
   format it with ext4, and make sure it gets mounted on /var/shares by UUID when
   the system is booted.
 
@@ -41,7 +41,7 @@
 - Create a Stratis file system in pool1 with the name "repo" and ensure it is
   mounted by UUID to /var/webroot/repo when the system boots.
 
-- Grow the lv_share logical volume to consume all available space in the
+- Grow the lv_shares logical volume to consume all available space in the
   vg_data volume group.
 
 ================================================================================
@@ -81,9 +81,9 @@
 =
 ================================================================================
 
-- Create a rootless nginx container that replies to requests received by the
-  host on port 8080, serves content from /var/webroot on the host, and start
-  when the system is booted.
+- Create a rootless (run as user "container") bitnami/nginx container that
+  replies to requests received by the host on port 8080, serves content from
+  /var/webroot on the host, and start when the system is booted.
 
 ================================================================================
 =
@@ -99,6 +99,8 @@
   virtual optical drive on the host through the VM settings or by clicking
   the CD icon at the bottom of exam2's window)
 
+- Transfer ownership of /var/webroot/repo and its contents to user "container".
+
 ================================================================================
 =
 = Create a server for network installations (PXE)
@@ -113,9 +115,13 @@
 - Ensure the web server and TFTP server are listening for incoming connections
   and are not blocked by the firewall.
 
-- Copy the contents of /tftpboot to /var/lib/tftpboot/pxelinux
+- Copy the contents of /tftpboot to /var/lib/tftpboot/pxelinux preserving 
+  permissions and ownership.
 
 - Copy vmlinuz and initrd.img from the isolinux directory on the Rocky 9
   ISO media to /var/lib/tftpboot.
+
+- Unpack ~/pxeconf.tar relative to /var. (Note: I need to fix the contents of
+  this file so don't worry about whether PXE booting actually works)
 
 - Verify you can download files from exam2 to exam1 using tftp.
