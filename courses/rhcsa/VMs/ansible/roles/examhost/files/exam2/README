@@ -9,10 +9,15 @@
 
 - Make sure the firewall is enabled at boot.
 
+- Make the journal persist across reboots
+
 - Configure sshd to listen on port 2022 instead of 22
 
 - Use the system performance tuner to configure the recommended performance
   settings.
+
+  (Hint: When you run into a problem, a common troubleshooting technique is to
+  compare the configuration of a machine that works to that one that doesn't.)
 
 ================================================================================
 =
@@ -81,6 +86,8 @@
 =
 ================================================================================
 
+- Transfer ownership of /var/webroot and its contents to user "container".
+
 - Create a rootless (run as user "container") bitnami/nginx container that
   replies to requests received by the host on port 8080, serves content from
   /var/webroot on the host, and start when the system is booted.
@@ -91,15 +98,14 @@
 =
 ================================================================================
 
-- Copy the contents of the BaseOS directory on the Rocky 9 DVD media into
-  /var/webroot/repo directory and use the createrepo command to create the 
-  necessary files to use it as a software reposity.  Verify that it works.
+- As the user "container", Copy the contents of the BaseOS directory on the
+  Rocky 9 DVD media into /var/webroot/repo directory and use the createrepo
+  command to create the necessary files to use it as a software reposity.
+  Verify that it works.
 
   (Note: you can insert the ISO file in the ~/Downloads directory into the
   virtual optical drive on the host through the VM settings or by clicking
   the CD icon at the bottom of exam2's window)
-
-- Transfer ownership of /var/webroot/repo and its contents to user "container".
 
 ================================================================================
 =
@@ -107,10 +113,7 @@
 =
 ================================================================================
 
-- Install the syslinux package, the Apache server, and a TFTP server.
-
-  (Hint: When you run into a problem, a common troubleshooting technique is to
-  compare the configuration of a machine that works to that one that doesn't.)
+- Install the syslinux-tftpboot package and a TFTP server.
 
 - Ensure the web server and TFTP server are listening for incoming connections
   and are not blocked by the firewall.
