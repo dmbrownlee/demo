@@ -27,6 +27,19 @@ if [[ $# -gt 0 ]]; then
   APARGS="$APARGS -t $1"
 fi
 
+# There are assumptions the user is "student" to keep the playbooks simple.
+# Ensure "student" home directory is this user's directory.
+if [[ "$USER" != "student" ]]; then
+  STUDENT_HOME=$(echo $HOME | sed -e "s/$USER/student/")
+  if [[ ! -e $STUDENT_HOME ]]; then
+    echo "Creating symbolic link from $STUDENT_HOME to $HOME..."
+    sudo ln -s $HOME $STUDENT_HOME && echo done
+  elif [[ "$(readlink $STUDENT_HOME)" != "$HOME" ]]; then
+    echo "It is expected that your username is \"student\" or that $STUDENT_HOME is a symbolic link to $HOME. Unable to continue."
+    exit 1
+  fi
+fi
+
 function restore_backup() {
   BACKUP_DIR="$1"
   if [[ -f "$BACKUP_DIR/box-backup.tar" ]]; then
